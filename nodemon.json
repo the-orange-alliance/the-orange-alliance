@@ -1,0 +1,4 @@
+{
+  "ignore": ["node_modules/*", "config/*", "src/*", "client.tsx", "server.ts"],
+  "delay": 500
+}
