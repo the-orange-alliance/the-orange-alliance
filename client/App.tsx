@@ -6,9 +6,8 @@ class App extends React.Component {
   }
 
   public render() {
-    console.log('here');
     return (
-      <span>RENDER ON THE SERVER PLEASE</span>
+      <span>I'm a server-rendered page!</span>
     );
   }
 }

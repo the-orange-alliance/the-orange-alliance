@@ -11,21 +11,14 @@ const app: Application = express();
 const index: Buffer = fs.readFileSync(path.join(__dirname, 'public/index.html'));
 
 app.use('/public', express.static(path.resolve('public')));
-app.use('/', express.static(path.resolve('public')));
 
 app.get('/ping', (req: Request, res: Response) => {
   res.send('ping!');
 });
 
-app.get('/test', (req: Request, res: Response) => {
-  const body: string = renderToString(React.createElement(App, {}));
-  const data: string = index.toString().replace('{{{body}}}', body);
-  res.send({partial: body, full: data});
-});
-
 app.get('/', (req: Request, res: Response) => {
   const body: string = renderToString(React.createElement(App, {}));
-  res.send(index.toString().replace('{{{body}}}', body));
+  res.send(index.toString().replace('{{{body}}}', body).replace('index.js', 'public/index.js'));
 });
 
 app.listen(3000, () => {
