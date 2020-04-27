@@ -44,6 +44,7 @@ module.exports = {
     publicPath: "http://localhost:9090/",
     port: 9090
   },
+  mode: 'production',
   node: {
     __dirname: false
   }

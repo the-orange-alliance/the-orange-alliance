@@ -1,9 +1,7 @@
-import * as React from 'react';
-import {renderToString} from 'react-dom/server';
 import express, {Application, Request, Response} from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import App from '../client/App';
+import {render} from "./PageRenderer";
 
 const app: Application = express();
 
@@ -12,13 +10,13 @@ const index: Buffer = fs.readFileSync(path.join(__dirname, 'public/index.html'))
 
 app.use('/public', express.static(path.resolve('public')));
 
-app.get('/ping', (req: Request, res: Response) => {
+app.get('/ping', async (req: Request, res: Response) => {
   res.send('ping!');
 });
 
-app.get('/', (req: Request, res: Response) => {
-  const body: string = renderToString(React.createElement(App, {}));
-  res.send(index.toString().replace('{{{body}}}', body).replace('index.js', 'public/index.js'));
+// For now, send all routing to the client.
+app.get('*', async (req: Request, res: Response) => {
+  res.send(render(req, index));
 });
 
 app.listen(3000, () => {

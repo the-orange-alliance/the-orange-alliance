@@ -24,7 +24,7 @@ class App extends React.Component {
       <ThemeProvider theme={AppTheme}>
         <div>
           <AppResponsiveDrawer
-            title={'The Orange Aliance'}
+            title={'The Orange Alliance'}
             routes={Routes}
             content={
               <div>
