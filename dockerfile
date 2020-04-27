@@ -1,7 +1,7 @@
 FROM node:10
-WORKDIR /toa-dev-website
+WORKDIR .
 COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm install && npm run build && rm -rf node_modules
 EXPOSE 3000
 CMD ["node", "build/index.js"]
