@@ -14,6 +14,13 @@ app.get('/ping', async (req: Request, res: Response) => {
   res.send('ping!');
 });
 
+// All js files are returned as .js.gz to minimize load times.
+app.get('*.js', function (req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
+
 // For now, send all routing to the client.
 app.get('*', async (req: Request, res: Response) => {
   res.send(render(req, index));

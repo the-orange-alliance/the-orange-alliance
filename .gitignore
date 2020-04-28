@@ -1,5 +1,7 @@
 .idea/
 node_modules/
 public/*.js
+public/*.js.gz
 public/*.js.map
 build/
+stats/

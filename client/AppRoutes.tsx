@@ -10,6 +10,9 @@ import PublishIcon from '@material-ui/icons/Publish';
 import TranslateIcon from '@material-ui/icons/Translate';
 import VideoCamIcon from '@material-ui/icons/Videocam';
 
+/* import all of our pages here */
+import {HomePage} from "./pages";
+
 export interface IAppRoute {
   name: string;
   to: string;
@@ -25,7 +28,7 @@ const routes: IAppRoute[] = [
     icon: <HomeIcon/>,
     to: '/',
     group: 0,
-    component: () => <div>Home!</div>,
+    component: () => <HomePage/>,
     visible: true
   },
   {

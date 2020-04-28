@@ -1,20 +1,20 @@
 const path = require('path');
-const copy = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const DefinePlugin = require('webpack').DefinePlugin;
+const CompressionPlugin = require('compression-webpack-plugin');
 const {AggressiveMergingPlugin} = require('webpack').optimize;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  entry: path.resolve(__dirname, '../server/Server.ts'),
+  entry: path.resolve(__dirname, '../client/index.tsx'),
   devtool: "source-map",
   resolve: {
-    extensions: [".json", ".js", ".ts", ".tsx"]
+    extensions: [".json", ".js", ".ts", ".tsx", ".png", ".jpg"]
   },
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.join(__dirname, '../public'),
     filename: 'index.js',
-    publicPath: '../'
+    publicPath: '/public/'
   },
   module: {
     rules: [
@@ -34,19 +34,24 @@ module.exports = {
         loader: 'source-map-loader'
       },
       {
-        test: /\.(scss|css)$/,
-        loader: "ignore-loader"
-      },
-      {
         test: /\.(png|jpe?g|gif)$/,
         exclude: /node_modules/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.s[ac]ss$/i,
         use: [
-          {
-            loader: 'file-loader'
-          }
-        ]
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "../public"),
+    publicPath: "http://localhost:9090/",
+    port: 9090
   },
   mode: 'production',
   node: {
@@ -57,18 +62,21 @@ module.exports = {
     minimizer: [new TerserPlugin()]
   },
   plugins: [
-    new copy([
-      {from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../build/public')}
-    ]),
     new DefinePlugin({ // <-- key to reducing React's size
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new AggressiveMergingPlugin(),
+    new CompressionPlugin({
+      filename: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
-      reportFilename: path.join(__dirname, '../stats/server-stats.html')
+      reportFilename: path.join(__dirname, '../stats/client-stats.html')
     })
-  ],
-  target: "node"
+  ]
 };

@@ -6,6 +6,8 @@ import AppResponsiveDrawer from './AppResponsiveDrawer';
 import {ThemeProvider} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import './App.scss';
+
 class App extends React.Component {
   private routeComponents: React.ReactElement[];
 

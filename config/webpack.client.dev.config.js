@@ -16,26 +16,38 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         exclude: /node_modues/,
-        loader: 'ts-loader'
+        include: /client/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+          experimentalWatchApi: true,
+        }
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
+        include: /client/,
         loader: 'babel-loader'
       },
       {
         enforce: "pre",
         test: /\.js$/,
+        include: /client/,
         loader: 'source-map-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/,
         exclude: /node_modules/,
+        include: /client/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.s[ac]ss$/i,
         use: [
-          {
-            loader: 'file-loader'
-          }
-        ]
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
       }
     ]
   },

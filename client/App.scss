@@ -1,0 +1,18 @@
+$primary: #f89808;
+$secondary: #0f0f0f;
+
+.primary-bg {
+  background-color: $primary !important;
+}
+
+.secondary-bg {
+  background-color: $secondary !important;
+}
+
+.primary {
+  color: $primary;
+}
+
+.secondary {
+  color: $secondary !important;
+}
