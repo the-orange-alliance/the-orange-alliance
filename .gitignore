@@ -6,3 +6,4 @@ public/*.js.map
 public/*.json
 build/
 stats/
+*.env

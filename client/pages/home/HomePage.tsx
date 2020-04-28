@@ -21,8 +21,8 @@ class HomePage extends React.Component {
     return (
       <div>
         <Typography align={'center'} variant={'h3'}>The Orange Alliance</Typography>
-        <Typography align={'center'} variant={'body1'}>The official data provider for <i>FIRST</i> Tech Challenge</Typography>
-        <Grid container spacing={1}>
+        <Typography align={'center'} variant={'body1'} gutterBottom>The official data provider for <i>FIRST</i> Tech Challenge</Typography>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>

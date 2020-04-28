@@ -23,14 +23,18 @@ const useStyles = makeStyles((theme: Theme) =>
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
-        flexShrink: 0,
       },
+      flexShrink: 0,
+    },
+    drawerContainer: {
+      overflow: 'auto',
     },
     appBar: {
-      [theme.breakpoints.up('sm')]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-      },
+      zIndex: theme.zIndex.drawer + 1,
+      // [theme.breakpoints.up('sm')]: {
+      //   // width: `calc(100% - ${drawerWidth}px)`, // This makes a 'clipped' drawer
+      //   marginLeft: drawerWidth,
+      // },
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -100,7 +104,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     )
   }));
   const drawer = (
-    <div>
+    <div className={classes.drawerContainer}>
       <div className={classes.toolbar}>
         <RouterLink to={"/"}>
           <img src={''} className={`${classes.toolbarImage} fit-w`} alt={""}/>
@@ -113,7 +117,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -156,6 +160,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             variant="permanent"
             open
           >
+            <Toolbar/>
             {drawer}
           </Drawer>
         </Hidden>

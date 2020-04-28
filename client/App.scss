@@ -1,6 +1,8 @@
 $primary: #f89808;
 $secondary: #0f0f0f;
-$error: rgba(255,82,82,.13);
+$red: rgba(255,82,82,.13);
+$blue: rgba(68,138,255,.13);
+$grey: #f0f0f0;
 
 .primary-bg {
   background-color: $primary !important;
@@ -10,8 +12,16 @@ $error: rgba(255,82,82,.13);
   background-color: $secondary !important;
 }
 
-.error-bg {
-  background-color: $error !important;
+.red-bg {
+  background-color: $red !important;
+}
+
+.blue-bg {
+  background-color: $blue !important;
+}
+
+.grey-bg {
+  background-color: $grey !important;
 }
 
 .primary {
@@ -22,18 +32,42 @@ $error: rgba(255,82,82,.13);
   color: $secondary !important;
 }
 
-.error {
-  color: $error !important;
+.red {
+  color: $red !important;
 }
 
-a:not(.MuiButtonBase-root ),
-a:link:not(.MuiButtonBase-root ),
-a:visited:not(.MuiButtonBase-root ) {
+.blue {
+  color: $blue !important;
+}
+
+.grey {
+  color: $grey !important;
+}
+
+a:not(.MuiButtonBase-root),
+a:link:not(.MuiButtonBase-root),
+a:visited:not(.MuiButtonBase-root) {
   color: #1c9aff;
   text-decoration: none;
 }
 
-a:hover:not(.MuiButtonBase-root ) {
+a:hover:not(.MuiButtonBase-root) {
   color: #1d7ae6;
   text-decoration: underline;
+}
+
+.red-bg.winner {
+  background-color: #ffe5e5;
+}
+
+.blue-bg.winner {
+  background-color: #e5e5ff;
+}
+
+.simple-match-table > tbody > tr > td {
+  padding: 0;
+}
+
+.simple-match-table > tbody > tr > td > button {
+  padding: 16px;
 }
