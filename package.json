@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "description": "Progressive Web Application for The Orange Alliance",
   "scripts": {
+    "preserve": "webpack --config ./config/webpack.library.config.js",
     "serve": "webpack-dev-server --config ./config/webpack.client.dev.config.js --open",
     "build-client": "webpack -p --config ./config/webpack.client.prod.config.js",
     "build-server": "webpack -p --config ./config/webpack.server.config.js",

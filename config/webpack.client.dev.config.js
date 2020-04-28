@@ -1,4 +1,5 @@
 const path = require('path');
+const DllReferencePlugin = require('webpack').DllReferencePlugin;
 
 module.exports = {
   entry: path.resolve(__dirname, '../client/index.tsx'),
@@ -53,11 +54,18 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "../public"),
+    historyApiFallback: true,
     publicPath: "http://localhost:9090/",
     port: 9090
   },
   mode: 'production',
   node: {
     __dirname: false
-  }
+  },
+  plugins: [
+    new DllReferencePlugin({
+      context: path.join(__dirname, '../public'),
+      manifest: path.join(__dirname, '../public/library.json')
+    })
+  ]
 };

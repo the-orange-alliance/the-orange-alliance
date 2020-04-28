@@ -25,3 +25,15 @@ $error: rgba(255,82,82,.13);
 .error {
   color: $error !important;
 }
+
+a:not(.MuiButtonBase-root ),
+a:link:not(.MuiButtonBase-root ),
+a:visited:not(.MuiButtonBase-root ) {
+  color: #1c9aff;
+  text-decoration: none;
+}
+
+a:hover:not(.MuiButtonBase-root ) {
+  color: #1d7ae6;
+  text-decoration: underline;
+}

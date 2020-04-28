@@ -11,7 +11,7 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import VideoCamIcon from '@material-ui/icons/Videocam';
 
 /* import all of our pages here */
-import {HomePage} from "./pages";
+import {AboutPage, HomePage} from "./pages";
 
 export interface IAppRoute {
   name: string;
@@ -84,7 +84,7 @@ const routes: IAppRoute[] = [
     icon: <InfoIcon/>,
     to: '/about',
     group: 3,
-    component: () => <div>About!</div>,
+    component: () => <AboutPage/>,
     visible: true
   },
   {
