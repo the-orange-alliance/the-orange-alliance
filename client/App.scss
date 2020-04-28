@@ -1,5 +1,6 @@
 $primary: #f89808;
 $secondary: #0f0f0f;
+$error: rgba(255,82,82,.13);
 
 .primary-bg {
   background-color: $primary !important;
@@ -9,10 +10,18 @@ $secondary: #0f0f0f;
   background-color: $secondary !important;
 }
 
+.error-bg {
+  background-color: $error !important;
+}
+
 .primary {
-  color: $primary;
+  color: $primary !important;
 }
 
 .secondary {
   color: $secondary !important;
+}
+
+.error {
+  color: $error !important;
 }
