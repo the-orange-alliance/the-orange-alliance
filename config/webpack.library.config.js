@@ -14,6 +14,8 @@ module.exports = {
       'react-redux',
       'react-router',
       'react-router-dom',
+      'react-virtualized-auto-sizer',
+      'react-window',
       'redux',
       '@material-ui/core',
       '@material-ui/icons',

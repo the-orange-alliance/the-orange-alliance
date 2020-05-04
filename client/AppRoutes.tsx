@@ -11,7 +11,7 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import VideoCamIcon from '@material-ui/icons/Videocam';
 
 /* import all of our pages here */
-import {AboutPage, HomePage} from "./pages";
+import {AboutPage, HomePage, TeamsPage} from "./pages";
 
 export interface IAppRoute {
   name: string;
@@ -36,7 +36,7 @@ const routes: IAppRoute[] = [
     icon: <PeopleIcon/>,
     to: '/teams',
     group: 0,
-    component: () => <div>Teams!</div>,
+    component: () => <TeamsPage/>,
     visible: true
   },
   {
