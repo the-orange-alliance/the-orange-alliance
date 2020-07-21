@@ -36,7 +36,11 @@ class HomePage extends React.Component<{}, IState> {
     const {eventSize, teamSize} = this.state;
     return (
       <div>
+<<<<<<< Updated upstream
         <Typography align={'center'} variant={'h3'}>The Orange Alliance</Typography>
+=======
+        <Typography align={'center'} variant={'h3'} gutterBottom>The Orange Alliance</Typography>
+>>>>>>> Stashed changes
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6}>
             <Grid container spacing={2}>
