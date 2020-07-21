@@ -15,15 +15,11 @@ class StatisticCard extends React.Component<IProps> {
   }
 
   public render() {
-    const {title, subtitle, icon} = this.props;
+    const { title, subtitle, icon } = this.props;
     return (
       <Card>
         <CardHeader
-          avatar={
-            <Avatar className='primary-bg secondary'>
-              {icon}
-            </Avatar>
-          }
+          avatar={<Avatar className="primary-bg secondary">{icon}</Avatar>}
           title={title}
           subheader={subtitle}
         />

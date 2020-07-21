@@ -1,12 +1,14 @@
-import express, {Application, Request, Response} from 'express';
+import express, { Application, Request, Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
-import {render} from "./PageRenderer";
+import { render } from './PageRenderer';
 
 const app: Application = express();
 
 // Keep a cache of the app index file instead of reading every request.
-const index: Buffer = fs.readFileSync(path.join(__dirname, 'public/index.html'));
+const index: Buffer = fs.readFileSync(
+  path.join(__dirname, 'public/index.html')
+);
 
 app.use('/public', express.static(path.resolve('public')));
 

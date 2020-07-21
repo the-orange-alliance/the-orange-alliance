@@ -20,29 +20,33 @@ class SimpleMatchTable extends React.Component {
           <Table className={'simple-match-table'}>
             <TableHead className={'grey-bg'}>
               {/* TODO - Logic for 2-3 teams */}
-              <TableCell align='center' colSpan={2}>Teams</TableCell>
-              <TableCell align='center' colSpan={1}>Score</TableCell>
+              <TableCell align="center" colSpan={2}>
+                Teams
+              </TableCell>
+              <TableCell align="center" colSpan={1}>
+                Score
+              </TableCell>
             </TableHead>
             <TableBody>
               <TableRow className={'red-bg'}>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>3618</Button>
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>4003</Button>
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>12</Button>
                 </TableCell>
               </TableRow>
               <TableRow className={'blue-bg'}>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>3618</Button>
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>4003</Button>
                 </TableCell>
-                <TableCell align='center'>
+                <TableCell align="center">
                   <Button fullWidth>12</Button>
                 </TableCell>
               </TableRow>

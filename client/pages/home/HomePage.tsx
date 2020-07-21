@@ -3,14 +3,14 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import TOAProvider from "../../providers/TOAProvider";
+import TOAProvider from '../../providers/TOAProvider';
 
 // Component declarations
 import StatisticCard from '../../components/StatisticCard';
-import AnnouncementCard from "../../components/AnnouncementCard";
+import AnnouncementCard from '../../components/AnnouncementCard';
 
 // module declarations
-import LeaderboardsModule from "../../modules/LeaderboardsModule";
+import LeaderboardsModule from '../../modules/LeaderboardsModule';
 
 interface IState {
   eventSize: number;
@@ -28,34 +28,53 @@ class HomePage extends React.Component<{}, IState> {
   }
 
   public componentDidMount(): void {
-    TOAProvider.getAPI().getEventCount().then((eventSize: number) => {this.setState({eventSize})});
-    TOAProvider.getAPI().getTeamCount().then((teamSize: number) => {this.setState({teamSize})});
+    TOAProvider.getAPI()
+      .getEventCount()
+      .then((eventSize: number) => {
+        this.setState({ eventSize });
+      });
+    TOAProvider.getAPI()
+      .getTeamCount()
+      .then((teamSize: number) => {
+        this.setState({ teamSize });
+      });
   }
 
   public render() {
-    const {eventSize, teamSize} = this.state;
+    const { eventSize, teamSize } = this.state;
     return (
       <div>
-<<<<<<< Updated upstream
-        <Typography align={'center'} variant={'h3'}>The Orange Alliance</Typography>
-=======
-        <Typography align={'center'} variant={'h3'} gutterBottom>The Orange Alliance</Typography>
->>>>>>> Stashed changes
+        <Typography align={'center'} variant={'h3'} gutterBottom>
+          The Orange Alliance
+        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-                <StatisticCard title={`${eventSize}`} subtitle={'Events'} icon={<PeopleIcon/>}/>
+                <StatisticCard
+                  title={`${eventSize}`}
+                  subtitle={'Events'}
+                  icon={<PeopleIcon />}
+                />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <StatisticCard title={`${teamSize}`} subtitle={'Active Teams'} icon={<SportsEsportsIcon/>}/>
+                <StatisticCard
+                  title={`${teamSize}`}
+                  subtitle={'Active Teams'}
+                  icon={<SportsEsportsIcon />}
+                />
               </Grid>
               <Grid item xs={12}>
                 <AnnouncementCard
                   content={
                     <Typography variant={'body1'}>
-                      Due to the COVID-19 (Coronavirus) pandemic, <i>FIRST</i> has suspended all events for the duration of the season
-                      including the <i>FIRST</i> Championships. Refer to <a href='https://www.firstinspires.org/covid-19'>firstinspires.org/covid-19</a> for more information.
+                      Due to the COVID-19 (Coronavirus) pandemic, <i>FIRST</i>{' '}
+                      has suspended all events for the duration of the season
+                      including the <i>FIRST</i> Championships. Refer to{' '}
+                      <a href="https://www.firstinspires.org/covid-19">
+                        firstinspires.org/covid-19
+                      </a>{' '}
+                      for more information.
                     </Typography>
                   }
                 />
@@ -63,7 +82,7 @@ class HomePage extends React.Component<{}, IState> {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <LeaderboardsModule/>
+            <LeaderboardsModule />
           </Grid>
         </Grid>
       </div>

@@ -12,12 +12,10 @@ class AnnouncementCard extends React.Component<IProps> {
   }
 
   public render() {
-    const {content} = this.props;
+    const { content } = this.props;
     return (
-      <Card className='red-bg'>
-        <CardContent>
-          {content}
-        </CardContent>
+      <Card className="red-bg">
+        <CardContent>{content}</CardContent>
       </Card>
     );
   }
