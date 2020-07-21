@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import './App.scss';
 
 class App extends React.Component {
-  private routeComponents: React.ReactElement[];
+  private readonly routeComponents: React.ReactElement[];
 
   public constructor(props: any) {
     super(props);
