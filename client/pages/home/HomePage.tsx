@@ -4,6 +4,13 @@ import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import TOAProvider from "../../providers/TOAProvider";
+import {
+  ApplicationActions,
+  ISetTotalEventSize,
+  ISetTotalTeamSize,
+  setTotalEventSize,
+  setTotalTeamSize
+} from "../../stores/Actions";
 
 // Component declarations
 import StatisticCard from '../../components/StatisticCard';
@@ -11,30 +18,36 @@ import AnnouncementCard from "../../components/AnnouncementCard";
 
 // module declarations
 import LeaderboardsModule from "../../modules/LeaderboardsModule";
+import {IApplicationState} from "../../stores/Types";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
 
-interface IState {
+interface IProps {
   eventSize: number;
   teamSize: number;
+  setEventSize: (size: number) => ISetTotalEventSize;
+  setTeamSize: (size: number) => ISetTotalTeamSize;
 }
 
-class HomePage extends React.Component<{}, IState> {
-  public constructor(props: any) {
+class HomePage extends React.Component<IProps> {
+  public constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      eventSize: 0,
-      teamSize: 0
-    };
   }
 
   public componentDidMount(): void {
-    // Make requests here Kappa
-    TOAProvider.getAPI().getEventCount().then((eventSize: number) => {this.setState({eventSize})});
-    TOAProvider.getAPI().getTeamCount().then((teamSize: number) => {this.setState({teamSize})});
+    const {eventSize, teamSize, setEventSize, setTeamSize} = this.props;
+    /* Make requests here ONLY if we know they haven't already been made */
+    if (eventSize <= 0) {
+      TOAProvider.getAPI().getEventCount().then((eventSize: number) => {setEventSize(eventSize)});
+    }
+
+    if (teamSize <= 0) {
+      TOAProvider.getAPI().getTeamCount().then((teamSize: number) => {setTeamSize(teamSize)});
+    }
   }
 
   public render() {
-    const {eventSize, teamSize} = this.state;
+    const {eventSize, teamSize} = this.props;
     return (
       <div>
         <Typography align={'center'} variant={'h3'} gutterBottom>The Orange Alliance</Typography>
@@ -68,4 +81,18 @@ class HomePage extends React.Component<{}, IState> {
   }
 }
 
-export default HomePage;
+function mapStateToProps(state: IApplicationState) {
+  return {
+    eventSize: state.eventsTotal,
+    teamSize: state.teamsTotal
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
+  return {
+    setEventSize: (size: number) => dispatch(setTotalEventSize(size)),
+    setTeamSize: (size: number) => dispatch(setTotalTeamSize(size))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
