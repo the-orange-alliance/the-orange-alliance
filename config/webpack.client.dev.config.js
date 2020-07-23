@@ -3,9 +3,9 @@ const DllReferencePlugin = require('webpack').DllReferencePlugin;
 
 module.exports = {
   entry: path.resolve(__dirname, '../client/index.tsx'),
-  devtool: "source-map",
+  devtool: 'source-map',
   resolve: {
-    extensions: [".json", ".js", ".ts", ".tsx", ".png", ".jpg"]
+    extensions: ['.json', '.js', '.ts', '.tsx', '.png', '.jpg']
   },
   output: {
     path: path.join(__dirname, '../public'),
@@ -21,7 +21,7 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
-          experimentalWatchApi: true,
+          experimentalWatchApi: true
         }
       },
       {
@@ -31,7 +31,7 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
         include: /client/,
         loader: 'source-map-loader'
@@ -44,18 +44,14 @@ module.exports = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, "../public"),
+    contentBase: path.join(__dirname, '../public'),
     historyApiFallback: true,
-    publicPath: "http://localhost:9090/",
+    publicPath: 'http://localhost:9090/',
     port: 9090
   },
   mode: 'production',

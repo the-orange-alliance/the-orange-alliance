@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Route, Switch} from 'react-router';
+import { Route, Switch } from 'react-router';
 import AppTheme from './AppTheme';
-import Routes, {IAppRoute} from './AppRoutes';
+import Routes, { IAppRoute } from './AppRoutes';
 import AppResponsiveDrawer from './AppResponsiveDrawer';
-import {ThemeProvider} from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import './App.scss';
@@ -16,7 +16,12 @@ class App extends React.Component {
 
     this.routeComponents = Routes.map((r: IAppRoute, index: number) => {
       return (
-        <Route key={`route-${index}`} exact={true} path={r.to} component={r.component}/>
+        <Route
+          key={`route-${index}`}
+          exact={true}
+          path={r.to}
+          component={r.component}
+        />
       );
     });
   }
@@ -31,9 +36,7 @@ class App extends React.Component {
             content={
               <div>
                 <Container maxWidth={false}>
-                  <Switch>
-                    {this.routeComponents}
-                  </Switch>
+                  <Switch>{this.routeComponents}</Switch>
                 </Container>
               </div>
             }

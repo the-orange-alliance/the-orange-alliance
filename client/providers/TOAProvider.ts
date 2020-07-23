@@ -1,4 +1,4 @@
-import {API} from "@the-orange-alliance/api";
+import { API } from '@the-orange-alliance/api';
 
 class TOAProvider {
   private static _instance: TOAProvider;

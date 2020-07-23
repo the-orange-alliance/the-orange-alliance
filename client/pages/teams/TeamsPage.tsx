@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
 
-import SimpleTeamPaper from "../../components/SimpleTeamPaper";
+import SimpleTeamPaper from '../../components/SimpleTeamPaper';
 
 class TeamsPage extends React.Component {
   constructor(props: any) {
@@ -16,19 +16,17 @@ class TeamsPage extends React.Component {
   public render() {
     return (
       <div>
-        <Typography variant='h4' gutterBottom>Teams</Typography>
+        <Typography variant="h4" gutterBottom>
+          Teams
+        </Typography>
         <Card>
           <CardContent>
             <Grid container>
               <Grid item xs={12} sm={12} md={6}>
-                <List>
-                  {this.renderList(10)}
-                </List>
+                <List>{this.renderList(10)}</List>
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <List>
-                  {this.renderList(10)}
-                </List>
+                <List>{this.renderList(10)}</List>
               </Grid>
             </Grid>
             <Pagination count={10} color="primary" />
@@ -41,7 +39,7 @@ class TeamsPage extends React.Component {
   private renderList(count: number) {
     const items: any[] = [];
     for (let i = 0; i < count; i++) {
-      items.push(<SimpleTeamPaper key={count}/>);
+      items.push(<SimpleTeamPaper key={count} />);
     }
     return items;
   }

@@ -9,28 +9,33 @@ import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
-import {Link as RouterLink} from 'react-router-dom';
-import {IAppRoute} from "./AppRoutes";
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  createStyles
+} from '@material-ui/core/styles';
+import { Link as RouterLink } from 'react-router-dom';
+import { IAppRoute } from './AppRoutes';
 import ListItemLink from './components/ListItemLink';
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: 'flex'
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
-        width: drawerWidth,
+        width: drawerWidth
       },
-      flexShrink: 0,
+      flexShrink: 0
     },
     drawerContainer: {
-      overflow: 'auto',
+      overflow: 'auto'
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
+      zIndex: theme.zIndex.drawer + 1
       // [theme.breakpoints.up('sm')]: {
       //   // width: `calc(100% - ${drawerWidth}px)`, // This makes a 'clipped' drawer
       //   marginLeft: drawerWidth,
@@ -39,22 +44,22 @@ const useStyles = makeStyles((theme: Theme) =>
     menuButton: {
       marginRight: theme.spacing(2),
       [theme.breakpoints.up('sm')]: {
-        display: 'none',
-      },
+        display: 'none'
+      }
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth,
+      width: drawerWidth
     },
     toolbarImage: {
       padding: theme.spacing(1)
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  }),
+      padding: theme.spacing(3)
+    }
+  })
 );
 
 interface ResponsiveDrawerProps {
@@ -76,7 +81,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const routeGroups: Map<number, IAppRoute[]> = new Map();
   for (const route of routes) {
-    if (typeof routeGroups.get(route.group) === "undefined") {
+    if (typeof routeGroups.get(route.group) === 'undefined') {
       routeGroups.set(route.group, []);
     }
     if (route.visible) {
@@ -84,7 +89,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     }
   }
   let routesView: React.ReactElement[] = [];
-  routeGroups.forEach(((value: IAppRoute[], key: number) => {
+  routeGroups.forEach((value: IAppRoute[], key: number) => {
     const groupView = value.map((route: IAppRoute) => {
       return (
         <ListItemLink
@@ -96,18 +101,14 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         />
       );
     });
-    routesView.push(<Divider key={`div-${key}`}/>);
-    routesView.push(
-      <List key={key}>
-        {groupView}
-      </List>
-    )
-  }));
+    routesView.push(<Divider key={`div-${key}`} />);
+    routesView.push(<List key={key}>{groupView}</List>);
+  });
   const drawer = (
     <div className={classes.drawerContainer}>
       <div className={classes.toolbar}>
-        <RouterLink to={"/"}>
-          <img src={''} className={`${classes.toolbarImage} fit-w`} alt={""}/>
+        <RouterLink to={'/'}>
+          <img src={''} className={`${classes.toolbarImage} fit-w`} alt={''} />
         </RouterLink>
       </div>
       {routesView}
@@ -143,10 +144,10 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             open={mobileOpen}
             onClose={handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true // Better open performance on mobile.
             }}
           >
             {drawer}
@@ -155,12 +156,12 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         <Hidden xsDown implementation="css">
           <Drawer
             classes={{
-              paper: classes.drawerPaper,
+              paper: classes.drawerPaper
             }}
             variant="permanent"
             open
           >
-            <Toolbar/>
+            <Toolbar />
             {drawer}
           </Drawer>
         </Hidden>

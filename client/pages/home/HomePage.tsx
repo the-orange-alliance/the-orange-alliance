@@ -11,16 +11,16 @@ import {
   setTotalEventSize,
   setTotalTeamSize
 } from "../../stores/Actions";
-
-// Component declarations
-import StatisticCard from '../../components/StatisticCard';
-import AnnouncementCard from "../../components/AnnouncementCard";
-
-// module declarations
-import LeaderboardsModule from "../../modules/LeaderboardsModule";
 import {IApplicationState} from "../../stores/Types";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
+
+// Component declarations
+import StatisticCard from '../../components/StatisticCard';
+import AnnouncementCard from '../../components/AnnouncementCard';
+
+// module declarations
+import LeaderboardsModule from "../../modules/LeaderboardsModule";
 
 interface IProps {
   eventSize: number;
@@ -47,25 +47,40 @@ class HomePage extends React.Component<IProps> {
   }
 
   public render() {
-    const {eventSize, teamSize} = this.props;
+    const { eventSize, teamSize } = this.state;
     return (
       <div>
-        <Typography align={'center'} variant={'h3'} gutterBottom>The Orange Alliance</Typography>
+        <Typography align={'center'} variant={'h3'} gutterBottom>
+          The Orange Alliance
+        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
-                <StatisticCard title={`${eventSize}`} subtitle={'Events'} icon={<PeopleIcon/>}/>
+                <StatisticCard
+                  title={`${eventSize}`}
+                  subtitle={'Events'}
+                  icon={<PeopleIcon />}
+                />
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
-                <StatisticCard title={`${teamSize}`} subtitle={'Active Teams'} icon={<SportsEsportsIcon/>}/>
+                <StatisticCard
+                  title={`${teamSize}`}
+                  subtitle={'Active Teams'}
+                  icon={<SportsEsportsIcon />}
+                />
               </Grid>
               <Grid item xs={12}>
                 <AnnouncementCard
                   content={
                     <Typography variant={'body1'}>
-                      Due to the COVID-19 (Coronavirus) pandemic, <i>FIRST</i> has suspended all events for the duration of the season
-                      including the <i>FIRST</i> Championships. Refer to <a href='https://www.firstinspires.org/covid-19'>firstinspires.org/covid-19</a> for more information.
+                      Due to the COVID-19 (Coronavirus) pandemic, <i>FIRST</i>{' '}
+                      has suspended all events for the duration of the season
+                      including the <i>FIRST</i> Championships. Refer to{' '}
+                      <a href="https://www.firstinspires.org/covid-19">
+                        firstinspires.org/covid-19
+                      </a>{' '}
+                      for more information.
                     </Typography>
                   }
                 />
@@ -73,7 +88,7 @@ class HomePage extends React.Component<IProps> {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <LeaderboardsModule/>
+            <LeaderboardsModule />
           </Grid>
         </Grid>
       </div>

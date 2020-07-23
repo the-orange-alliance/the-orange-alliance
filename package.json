@@ -4,13 +4,25 @@
   "license": "MIT",
   "version": "0.0.1",
   "description": "Progressive Web Application for The Orange Alliance",
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "scripts": {
     "preserve": "webpack --config ./config/webpack.library.config.js",
     "serve": "webpack-dev-server --config ./config/webpack.client.dev.config.js --open",
     "build-client": "webpack -p --config ./config/webpack.client.prod.config.js",
     "build-server": "webpack -p --config ./config/webpack.server.config.js",
     "build": "npm run build-client && npm run build-server",
-    "start": "nodemon build/index.js --config nodemon.json"
+    "start": "nodemon build/index.js --config nodemon.json",
+    "prettier": "prettier --write ."
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
@@ -50,9 +62,12 @@
     "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
     "file-loader": "^6.0.0",
+    "husky": "^4.2.5",
     "ignore-loader": "^0.1.2",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.3",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "sass-loader": "^8.0.2",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.2.0",

@@ -6,11 +6,7 @@ class AboutPage extends React.Component {
   }
 
   public render() {
-    return (
-      <div>
-        Testing here.
-      </div>
-    );
+    return <div>Testing here.</div>;
   }
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {RouteProps} from 'react-router-dom';
+import { RouteProps } from 'react-router-dom';
 import CodeIcon from '@material-ui/icons/Code';
 import EventIcon from '@material-ui/icons/Event';
 import GavelIcon from '@material-ui/icons/Gavel';
@@ -11,7 +11,7 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import VideoCamIcon from '@material-ui/icons/Videocam';
 
 /* import all of our pages here */
-import {AboutPage, HomePage, TeamsPage} from "./pages";
+import { AboutPage, HomePage, TeamsPage } from './pages';
 
 export interface IAppRoute {
   name: string;
@@ -25,23 +25,23 @@ export interface IAppRoute {
 const routes: IAppRoute[] = [
   {
     name: 'Home',
-    icon: <HomeIcon/>,
+    icon: <HomeIcon />,
     to: '/',
     group: 0,
-    component: () => <HomePage/>,
+    component: () => <HomePage />,
     visible: true
   },
   {
     name: 'Teams',
-    icon: <PeopleIcon/>,
+    icon: <PeopleIcon />,
     to: '/teams',
     group: 0,
-    component: () => <TeamsPage/>,
+    component: () => <TeamsPage />,
     visible: true
   },
   {
     name: 'Events',
-    icon: <EventIcon/>,
+    icon: <EventIcon />,
     to: '/events',
     group: 0,
     component: () => <div>Events!</div>,
@@ -49,7 +49,7 @@ const routes: IAppRoute[] = [
   },
   {
     name: 'Streaming',
-    icon: <VideoCamIcon/>,
+    icon: <VideoCamIcon />,
     to: '/streaming',
     group: 0,
     component: () => <div>Streaming!</div>,
@@ -57,7 +57,7 @@ const routes: IAppRoute[] = [
   },
   {
     name: 'Select Language',
-    icon: <TranslateIcon/>,
+    icon: <TranslateIcon />,
     to: '/languages',
     group: 1,
     component: () => <div>Languages!</div>,
@@ -65,7 +65,7 @@ const routes: IAppRoute[] = [
   },
   {
     name: 'Add Data',
-    icon: <PublishIcon/>,
+    icon: <PublishIcon />,
     to: '/upload',
     group: 2,
     component: () => <div>Upload data</div>,
@@ -73,7 +73,7 @@ const routes: IAppRoute[] = [
   },
   {
     name: 'API',
-    icon: <CodeIcon/>,
+    icon: <CodeIcon />,
     to: '/api',
     group: 2,
     component: () => <div>Application Programming Interface!</div>,
@@ -81,15 +81,15 @@ const routes: IAppRoute[] = [
   },
   {
     name: 'About',
-    icon: <InfoIcon/>,
+    icon: <InfoIcon />,
     to: '/about',
     group: 3,
-    component: () => <AboutPage/>,
+    component: () => <AboutPage />,
     visible: true
   },
   {
     name: 'Privacy & Terms',
-    icon: <GavelIcon/>,
+    icon: <GavelIcon />,
     to: '/privacy',
     group: 3,
     component: () => <div>Privacy & Terms!</div>,
