@@ -47,7 +47,7 @@ class HomePage extends React.Component<IProps> {
   }
 
   public render() {
-    const { eventSize, teamSize } = this.state;
+    const { eventSize, teamSize } = this.props;
     return (
       <div>
         <Typography align={'center'} variant={'h3'} gutterBottom>
