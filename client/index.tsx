@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import {BrowserRouter} from "react-router-dom";
-import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore } from 'redux';
 import App from './App';
-import {IApplicationState} from "./stores/Types";
-import reducer, {defaultState} from "./stores/Reducer";
+import { IApplicationState } from './stores/Types';
+import reducer, { defaultState } from './stores/Reducer';
 
 // TODO - Determine if we received the state from the server.
 const state: IApplicationState = defaultState;
@@ -15,7 +15,7 @@ const isDev: boolean = true;
 const fullApp: React.ReactElement = (
   <Provider store={createStore(reducer, state)}>
     <BrowserRouter>
-      <App/>
+      <App />
     </BrowserRouter>
   </Provider>
 );

@@ -3,24 +3,24 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import TOAProvider from "../../providers/TOAProvider";
+import TOAProvider from '../../providers/TOAProvider';
 import {
   ApplicationActions,
   ISetTotalEventSize,
   ISetTotalTeamSize,
   setTotalEventSize,
   setTotalTeamSize
-} from "../../stores/Actions";
-import {IApplicationState} from "../../stores/Types";
-import {Dispatch} from "redux";
-import {connect} from "react-redux";
+} from '../../stores/Actions';
+import { IApplicationState } from '../../stores/Types';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
 // Component declarations
 import StatisticCard from '../../components/StatisticCard';
 import AnnouncementCard from '../../components/AnnouncementCard';
 
 // module declarations
-import LeaderboardsModule from "../../modules/LeaderboardsModule";
+import LeaderboardsModule from '../../modules/LeaderboardsModule';
 
 interface IProps {
   eventSize: number;
@@ -35,14 +35,22 @@ class HomePage extends React.Component<IProps> {
   }
 
   public componentDidMount(): void {
-    const {eventSize, teamSize, setEventSize, setTeamSize} = this.props;
+    const { eventSize, teamSize, setEventSize, setTeamSize } = this.props;
     /* Make requests here ONLY if we know they haven't already been made */
     if (eventSize <= 0) {
-      TOAProvider.getAPI().getEventCount().then((eventSize: number) => {setEventSize(eventSize)});
+      TOAProvider.getAPI()
+        .getEventCount()
+        .then((eventSize: number) => {
+          setEventSize(eventSize);
+        });
     }
 
     if (teamSize <= 0) {
-      TOAProvider.getAPI().getTeamCount().then((teamSize: number) => {setTeamSize(teamSize)});
+      TOAProvider.getAPI()
+        .getTeamCount()
+        .then((teamSize: number) => {
+          setTeamSize(teamSize);
+        });
     }
   }
 
