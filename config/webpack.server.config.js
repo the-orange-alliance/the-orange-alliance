@@ -2,14 +2,15 @@ const path = require('path');
 const copy = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const DefinePlugin = require('webpack').DefinePlugin;
-const {AggressiveMergingPlugin} = require('webpack').optimize;
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { AggressiveMergingPlugin } = require('webpack').optimize;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   entry: path.resolve(__dirname, '../server/Server.ts'),
-  devtool: "source-map",
+  devtool: 'source-map',
   resolve: {
-    extensions: [".json", ".js", ".ts", ".tsx"]
+    extensions: ['.json', '.js', '.ts', '.tsx']
   },
   output: {
     path: path.resolve(__dirname, '../build'),
@@ -29,13 +30,13 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
         loader: 'source-map-loader'
       },
       {
         test: /\.(scss|css)$/,
-        loader: "ignore-loader"
+        loader: 'ignore-loader'
       },
       {
         test: /\.(png|jpe?g|gif)$/,
@@ -58,9 +59,13 @@ module.exports = {
   },
   plugins: [
     new copy([
-      {from: path.resolve(__dirname, '../public'), to: path.resolve(__dirname, '../build/public')}
+      {
+        from: path.resolve(__dirname, '../public'),
+        to: path.resolve(__dirname, '../build/public')
+      }
     ]),
-    new DefinePlugin({ // <-- key to reducing React's size
+    new DefinePlugin({
+      // <-- key to reducing React's size
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new AggressiveMergingPlugin(),
@@ -70,5 +75,5 @@ module.exports = {
       reportFilename: path.join(__dirname, '../stats/server-stats.html')
     })
   ],
-  target: "node"
+  target: 'node'
 };

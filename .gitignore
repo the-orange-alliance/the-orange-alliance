@@ -3,5 +3,7 @@ node_modules/
 public/*.js
 public/*.js.gz
 public/*.js.map
+public/*.json
 build/
 stats/
+*.env
