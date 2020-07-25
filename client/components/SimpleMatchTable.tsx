@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Match from '@the-orange-alliance/api/lib/models/Match';
+import MatchParticipant from '@the-orange-alliance/api/lib/models/MatchParticipant';
+import MatchStations from '@the-orange-alliance/api/lib/models/types/MatchStations';
 
 interface IProps {
   match: Match;
@@ -25,8 +27,10 @@ class SimpleMatchTable extends React.Component<IProps> {
         <TableContainer component={Paper}>
           <Table className={'simple-match-table'}>
             <TableHead className={'grey-bg'}>
-              {/* TODO - Logic for 2-3 teams */}
-              <TableCell align="center" colSpan={2}>
+              <TableCell
+                align="center"
+                colSpan={match.participants.length > 4 ? 3 : 2}
+              >
                 Teams
               </TableCell>
               <TableCell align="center" colSpan={1}>
@@ -44,32 +48,45 @@ class SimpleMatchTable extends React.Component<IProps> {
   }
 
   private renderRedAlliance(match: Match) {
+    const { participants } = match;
+    const redAlliance: MatchParticipant[] = participants.filter(
+      (p: MatchParticipant) => p.station < MatchStations.Blue1
+    );
+    const redView = redAlliance.map((p: MatchParticipant) => {
+      return (
+        <TableCell key={p.matchParticipantKey} align="center">
+          <Button fullWidth>{p.teamKey}</Button>
+        </TableCell>
+      );
+    });
+    console.log(redAlliance);
     return (
       <TableRow className={'red-bg'}>
-        <TableCell align="center">
-          <Button fullWidth>3618</Button>
-        </TableCell>
-        <TableCell align="center">
-          <Button fullWidth>4003</Button>
-        </TableCell>
-        <TableCell align="center">
-          <Button fullWidth>12</Button>
+        {redView}
+        <TableCell>
+          <Button fullWidth>{match.redScore}</Button>
         </TableCell>
       </TableRow>
     );
   }
 
   private renderBlueAlliance(match: Match) {
+    const { participants } = match;
+    const blueAlliance: MatchParticipant[] = participants.filter(
+      (p: MatchParticipant) => p.station >= MatchStations.Blue1
+    );
+    const blueView = blueAlliance.map((p: MatchParticipant) => {
+      return (
+        <TableCell key={p.matchParticipantKey} align="center">
+          <Button fullWidth>{p.teamKey}</Button>
+        </TableCell>
+      );
+    });
     return (
       <TableRow className={'blue-bg'}>
-        <TableCell align="center">
-          <Button fullWidth>3618</Button>
-        </TableCell>
-        <TableCell align="center">
-          <Button fullWidth>4003</Button>
-        </TableCell>
-        <TableCell align="center">
-          <Button fullWidth>12</Button>
+        {blueView}
+        <TableCell>
+          <Button fullWidth>{match.blueScore}</Button>
         </TableCell>
       </TableRow>
     );
