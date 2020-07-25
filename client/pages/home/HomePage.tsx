@@ -6,14 +6,22 @@ import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import TOAProvider from '../../providers/TOAProvider';
 import {
   ApplicationActions,
+  ISetHighScoreElims,
+  ISetHighScoreOverall,
+  ISetHighScoreQuals,
   ISetTotalEventSize,
   ISetTotalTeamSize,
+  setHighScoreElims,
+  setHighScoreOverall,
+  setHighScoreQuals,
   setTotalEventSize,
   setTotalTeamSize
 } from '../../stores/Actions';
-import { IApplicationState } from '../../stores/Types';
+import { IApplicationState, IHighestScoringMatches } from '../../stores/Types';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import Match from '@the-orange-alliance/api/lib/models/Match';
+import Event from '@the-orange-alliance/api/lib/models/Event';
 
 // Component declarations
 import StatisticCard from '../../components/StatisticCard';
@@ -21,12 +29,17 @@ import AnnouncementCard from '../../components/AnnouncementCard';
 
 // module declarations
 import LeaderboardsModule from '../../modules/LeaderboardsModule';
+import { MatchParticipant } from '@the-orange-alliance/api/lib/models';
 
 interface IProps {
   eventSize: number;
   teamSize: number;
+  highScoreMatches: IHighestScoringMatches;
   setEventSize: (size: number) => ISetTotalEventSize;
   setTeamSize: (size: number) => ISetTotalTeamSize;
+  setHighScoreOverall: (match: Match) => ISetHighScoreOverall;
+  setHighScoreQuals: (match: Match) => ISetHighScoreQuals;
+  setHighScoreElims: (match: Match) => ISetHighScoreElims;
 }
 
 class HomePage extends React.Component<IProps> {
@@ -35,7 +48,16 @@ class HomePage extends React.Component<IProps> {
   }
 
   public componentDidMount(): void {
-    const { eventSize, teamSize, setEventSize, setTeamSize } = this.props;
+    const {
+      eventSize,
+      teamSize,
+      highScoreMatches,
+      setEventSize,
+      setTeamSize,
+      setHighScoreOverall,
+      setHighScoreQuals,
+      setHighScoreElims
+    } = this.props;
     /* Make requests here ONLY if we know they haven't already been made */
     if (eventSize <= 0) {
       TOAProvider.getAPI()
@@ -52,10 +74,65 @@ class HomePage extends React.Component<IProps> {
           setTeamSize(teamSize);
         });
     }
+
+    /* These following lines of code are EXACTLY why we need an API rewrite... */
+    if (highScoreMatches.overall.matchKey.length <= 0) {
+      TOAProvider.getAPI()
+        .getHighScoreMatch('all')
+        .then((match: Match) => {
+          TOAProvider.getAPI()
+            .getEvent(match.eventKey)
+            .then((event: Event) => {
+              match.event = event;
+              TOAProvider.getAPI()
+                .getMatchParticipants(match.matchKey)
+                .then((participants: MatchParticipant[]) => {
+                  match.participants = participants;
+                  setHighScoreOverall(match);
+                });
+            });
+        });
+    }
+
+    if (highScoreMatches.quals.matchKey.length <= 0) {
+      TOAProvider.getAPI()
+        .getHighScoreMatch('quals')
+        .then((match: Match) => {
+          TOAProvider.getAPI()
+            .getEvent(match.eventKey)
+            .then((event: Event) => {
+              match.event = event;
+              TOAProvider.getAPI()
+                .getMatchParticipants(match.matchKey)
+                .then((participants: MatchParticipant[]) => {
+                  match.participants = participants;
+                  setHighScoreQuals(match);
+                });
+            });
+        });
+    }
+
+    if (highScoreMatches.elims.matchKey.length <= 0) {
+      TOAProvider.getAPI()
+        .getHighScoreMatch('elims')
+        .then((match: Match) => {
+          TOAProvider.getAPI()
+            .getEvent(match.eventKey)
+            .then((event: Event) => {
+              match.event = event;
+              TOAProvider.getAPI()
+                .getMatchParticipants(match.matchKey)
+                .then((participants: MatchParticipant[]) => {
+                  match.participants = participants;
+                  setHighScoreElims(match);
+                });
+            });
+        });
+    }
   }
 
   public render() {
-    const { eventSize, teamSize } = this.props;
+    const { eventSize, teamSize, highScoreMatches } = this.props;
     return (
       <div>
         <Typography align={'center'} variant={'h3'} gutterBottom>
@@ -96,7 +173,7 @@ class HomePage extends React.Component<IProps> {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
-            <LeaderboardsModule />
+            <LeaderboardsModule highScoreMatches={highScoreMatches} />
           </Grid>
         </Grid>
       </div>
@@ -107,14 +184,18 @@ class HomePage extends React.Component<IProps> {
 function mapStateToProps(state: IApplicationState) {
   return {
     eventSize: state.eventsTotal,
-    teamSize: state.teamsTotal
+    teamSize: state.teamsTotal,
+    highScoreMatches: state.highScoreMatches
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
   return {
     setEventSize: (size: number) => dispatch(setTotalEventSize(size)),
-    setTeamSize: (size: number) => dispatch(setTotalTeamSize(size))
+    setTeamSize: (size: number) => dispatch(setTotalTeamSize(size)),
+    setHighScoreOverall: (match: Match) => dispatch(setHighScoreOverall(match)),
+    setHighScoreQuals: (match: Match) => dispatch(setHighScoreQuals(match)),
+    setHighScoreElims: (match: Match) => dispatch(setHighScoreElims(match))
   };
 }
 
