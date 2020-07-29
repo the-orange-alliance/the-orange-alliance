@@ -10,6 +10,9 @@ module.exports = {
   entry: path.resolve(__dirname, '../client/index.tsx'),
   devtool: 'source-map',
   resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared/index.ts')
+    },
     extensions: ['.json', '.js', '.ts', '.tsx', '.png', '.jpg']
   },
   output: {

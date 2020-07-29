@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import { IHighestScoringMatches } from '../stores/Types';
+import { IHighestScoringMatches } from 'shared';
 
 /* Components */
 import SimpleMatchTable from '../components/SimpleMatchTable';

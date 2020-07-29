@@ -15,9 +15,10 @@ import {
   setHighScoreOverall,
   setHighScoreQuals,
   setTotalEventSize,
-  setTotalTeamSize
-} from '../../stores/Actions';
-import { IApplicationState, IHighestScoringMatches } from '../../stores/Types';
+  setTotalTeamSize,
+  IApplicationState,
+  IHighestScoringMatches
+} from 'shared';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Match from '@the-orange-alliance/api/lib/models/Match';

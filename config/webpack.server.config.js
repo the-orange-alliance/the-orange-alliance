@@ -10,6 +10,10 @@ module.exports = {
   entry: path.resolve(__dirname, '../server/Server.ts'),
   devtool: 'source-map',
   resolve: {
+    alias: {
+      shared: path.resolve(__dirname, '../shared/index.ts'),
+      client: path.resolve(__dirname, '../client/App.tsx')
+    },
     extensions: ['.json', '.js', '.ts', '.tsx']
   },
   output: {
