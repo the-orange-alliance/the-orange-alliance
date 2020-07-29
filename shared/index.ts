@@ -18,6 +18,10 @@ import {
 import * as Types from './stores/Types';
 import { IApplicationState, IHighestScoringMatches } from './stores/Types';
 import Reducer, { defaultState } from './stores/Reducer';
+import TOAProvider from './providers/TOAProvider';
+
+import { IHomeProps } from './PageProperties';
+import { getHomeData } from './PageData';
 
 export {
   ApplicationActions,
@@ -39,5 +43,8 @@ export {
   Reducer,
   defaultState,
   IApplicationState,
-  IHighestScoringMatches
+  IHighestScoringMatches,
+  TOAProvider,
+  IHomeProps,
+  getHomeData
 };

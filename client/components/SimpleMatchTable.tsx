@@ -59,7 +59,6 @@ class SimpleMatchTable extends React.Component<IProps> {
         </TableCell>
       );
     });
-    console.log(redAlliance);
     return (
       <TableRow className={'red-bg'}>
         {redView}
