@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import { IHighestScoringMatches } from '../stores/Types';
+import { IHighestScoringMatches } from 'shared';
 
 /* Components */
 import SimpleMatchTable from '../components/SimpleMatchTable';
@@ -28,7 +28,7 @@ class LeaderboardsModule extends React.Component<IProps> {
         <CardContent>
           {this.renderMatch(
             'Highest Scoring Match',
-            'With Penalties',
+            '(With Penalties)',
             highScoreMatches.overall
           )}
         </CardContent>
@@ -36,7 +36,7 @@ class LeaderboardsModule extends React.Component<IProps> {
         <CardContent>
           {this.renderMatch(
             'Highest Scoring Quals Match',
-            'Without Penalties',
+            '(Without Penalties)',
             highScoreMatches.quals
           )}
         </CardContent>
@@ -44,7 +44,7 @@ class LeaderboardsModule extends React.Component<IProps> {
         <CardContent>
           {this.renderMatch(
             'Highest Scoring Elims Match',
-            'Without Penalties',
+            '(Without Penalties)',
             highScoreMatches.elims
           )}
         </CardContent>

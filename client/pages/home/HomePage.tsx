@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PeopleIcon from '@material-ui/icons/People';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import TOAProvider from '../../providers/TOAProvider';
 import {
   ApplicationActions,
   ISetHighScoreElims,
@@ -15,13 +14,16 @@ import {
   setHighScoreOverall,
   setHighScoreQuals,
   setTotalEventSize,
-  setTotalTeamSize
-} from '../../stores/Actions';
-import { IApplicationState, IHighestScoringMatches } from '../../stores/Types';
+  setTotalTeamSize,
+  IApplicationState,
+  IHighestScoringMatches,
+  TOAProvider,
+  getHomeData,
+  IHomeProps
+} from 'shared';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import Match from '@the-orange-alliance/api/lib/models/Match';
-import Event from '@the-orange-alliance/api/lib/models/Event';
 
 // Component declarations
 import StatisticCard from '../../components/StatisticCard';
@@ -29,7 +31,6 @@ import AnnouncementCard from '../../components/AnnouncementCard';
 
 // module declarations
 import LeaderboardsModule from '../../modules/LeaderboardsModule';
-import { MatchParticipant } from '@the-orange-alliance/api/lib/models';
 
 interface IProps {
   eventSize: number;
@@ -58,77 +59,16 @@ class HomePage extends React.Component<IProps> {
       setHighScoreQuals,
       setHighScoreElims
     } = this.props;
-    /* Make requests here ONLY if we know they haven't already been made */
-    if (eventSize <= 0) {
-      TOAProvider.getAPI()
-        .getEventCount()
-        .then((eventSize: number) => {
-          setEventSize(eventSize);
-        });
-    }
 
-    if (teamSize <= 0) {
-      TOAProvider.getAPI()
-        .getTeamCount()
-        .then((teamSize: number) => {
-          setTeamSize(teamSize);
-        });
-    }
-
-    /* These following lines of code are EXACTLY why we need an API rewrite... */
-    if (highScoreMatches.overall.matchKey.length <= 0) {
-      TOAProvider.getAPI()
-        .getHighScoreMatch('all')
-        .then((match: Match) => {
-          TOAProvider.getAPI()
-            .getEvent(match.eventKey)
-            .then((event: Event) => {
-              match.event = event;
-              TOAProvider.getAPI()
-                .getMatchParticipants(match.matchKey)
-                .then((participants: MatchParticipant[]) => {
-                  match.participants = participants;
-                  setHighScoreOverall(match);
-                });
-            });
-        });
-    }
-
-    if (highScoreMatches.quals.matchKey.length <= 0) {
-      TOAProvider.getAPI()
-        .getHighScoreMatch('quals')
-        .then((match: Match) => {
-          TOAProvider.getAPI()
-            .getEvent(match.eventKey)
-            .then((event: Event) => {
-              match.event = event;
-              TOAProvider.getAPI()
-                .getMatchParticipants(match.matchKey)
-                .then((participants: MatchParticipant[]) => {
-                  match.participants = participants;
-                  setHighScoreQuals(match);
-                });
-            });
-        });
-    }
-
-    if (highScoreMatches.elims.matchKey.length <= 0) {
-      TOAProvider.getAPI()
-        .getHighScoreMatch('elims')
-        .then((match: Match) => {
-          TOAProvider.getAPI()
-            .getEvent(match.eventKey)
-            .then((event: Event) => {
-              match.event = event;
-              TOAProvider.getAPI()
-                .getMatchParticipants(match.matchKey)
-                .then((participants: MatchParticipant[]) => {
-                  match.participants = participants;
-                  setHighScoreElims(match);
-                });
-            });
-        });
-    }
+    getHomeData({ eventSize, teamSize, highScoreMatches }).then(
+      (data: IHomeProps) => {
+        setEventSize(data.eventSize);
+        setTeamSize(data.teamSize);
+        setHighScoreOverall(data.highScoreMatches.overall);
+        setHighScoreQuals(data.highScoreMatches.quals);
+        setHighScoreElims(data.highScoreMatches.elims);
+      }
+    );
   }
 
   public render() {

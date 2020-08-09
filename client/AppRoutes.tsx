@@ -11,7 +11,7 @@ import TranslateIcon from '@material-ui/icons/Translate';
 import VideoCamIcon from '@material-ui/icons/Videocam';
 
 /* import all of our pages here */
-import { AboutPage, HomePage, TeamsPage } from './pages';
+import { AboutPage, HomePage, TeamsPage, EventsPage } from './pages';
 
 export interface IAppRoute {
   name: string;
@@ -44,7 +44,7 @@ const routes: IAppRoute[] = [
     icon: <EventIcon />,
     to: '/events',
     group: 0,
-    component: () => <div>Events!</div>,
+    component: () => <EventsPage />,
     visible: true
   },
   {

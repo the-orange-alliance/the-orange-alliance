@@ -4,8 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import App from './App';
-import { IApplicationState } from './stores/Types';
-import reducer, { defaultState } from './stores/Reducer';
+import { Reducer as reducer, defaultState, IApplicationState } from 'shared';
 
 // TODO - Determine if we received the state from the server.
 const state: IApplicationState = defaultState;

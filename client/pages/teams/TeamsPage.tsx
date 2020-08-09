@@ -7,10 +7,34 @@ import Pagination from '@material-ui/lab/Pagination';
 import Typography from '@material-ui/core/Typography';
 
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
+import Team from '@the-orange-alliance/api/lib/models/Team';
+import {
+  ApplicationActions,
+  IApplicationState,
+  ISetTeams,
+  setTeams,
+  getTeamsData,
+  ITeamsProps
+} from 'shared';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-class TeamsPage extends React.Component {
-  constructor(props: any) {
+interface IProps {
+  teams: Team[];
+  setTeams: (teams: Team[]) => ISetTeams;
+}
+
+class TeamsPage extends React.Component<IProps> {
+  constructor(props: IProps) {
     super(props);
+  }
+
+  public componentDidMount(): void {
+    const { teams, setTeams } = this.props;
+
+    getTeamsData({ teams }).then((props: ITeamsProps) => {
+      setTeams(props.teams);
+    });
   }
 
   public render() {
@@ -45,4 +69,16 @@ class TeamsPage extends React.Component {
   }
 }
 
-export default TeamsPage;
+function mapStateToProps(state: IApplicationState) {
+  return {
+    teams: state.teams
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<ApplicationActions>) {
+  return {
+    setTeams: (teams: Team[]) => dispatch(setTeams(teams))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamsPage);
