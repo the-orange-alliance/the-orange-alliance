@@ -1,5 +1,8 @@
 import { IHomeProps, TOAProvider } from './';
+import Team from '@the-orange-alliance/api/lib/models/Team';
+import Event from '@the-orange-alliance/api/lib/models/Event';
 import Match from '@the-orange-alliance/api/lib/models/Match';
+import { IEventsProps, ITeamsProps } from './PageProperties';
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;
@@ -12,6 +15,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
       new Promise<any>((resolve) => resolve(eventSize))
     );
   }
+
   if (teamSize <= 0) {
     promises.push(TOAProvider.getAPI().getTeamCount());
   } else {
@@ -101,6 +105,80 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
             elims: results[4]
           }
         });
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export async function getTeamsData(
+  prevProps: ITeamsProps
+): Promise<ITeamsProps> {
+  const { teams } = prevProps;
+  const promises: Array<Promise<any>> = [];
+
+  if (teams.length <= 0) {
+    promises.push(
+      new Promise<any>((resolve, reject) => {
+        try {
+          TOAProvider.getAPI()
+            .getTeams()
+            .then((teams: Team[]) => {
+              resolve(teams);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      })
+    );
+  } else {
+    promises.push(
+      new Promise<any>((resolve) => resolve(teams))
+    );
+  }
+
+  return new Promise<ITeamsProps>((resolve, reject) => {
+    try {
+      Promise.all(promises).then((results: any[]) => {
+        resolve({ teams: results[0] });
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export async function getEventsData(
+  prevProps: IEventsProps
+): Promise<IEventsProps> {
+  const { events } = prevProps;
+  const promises: Array<Promise<any>> = [];
+
+  if (events.length <= 0) {
+    promises.push(
+      new Promise<any>((resolve, reject) => {
+        try {
+          TOAProvider.getAPI()
+            .getEvents()
+            .then((events: Event[]) => {
+              resolve(events);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      })
+    );
+  } else {
+    promises.push(
+      new Promise<any>((resolve) => resolve(events))
+    );
+  }
+
+  return new Promise<IEventsProps>((resolve, reject) => {
+    try {
+      Promise.all(promises).then((results: any[]) => {
+        resolve({ events: results[0] });
       });
     } catch (e) {
       reject(e);

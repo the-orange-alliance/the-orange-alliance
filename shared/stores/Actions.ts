@@ -2,6 +2,7 @@ import * as Types from './Types';
 import { Action, ActionCreator } from 'redux';
 import Match from '@the-orange-alliance/api/lib/models/Match';
 import Team from '@the-orange-alliance/api/lib/models/Team';
+import Event from '@the-orange-alliance/api/lib/models/Event';
 
 export interface ISetTotalEventSize extends Action {
   type: Types.SET_TOTAL_EVENTS_COUNT;
@@ -36,6 +37,11 @@ export interface ISetMatches extends Action {
 export interface ISetTeams extends Action {
   type: Types.SET_TEAMS;
   payload: { teams: Team[] };
+}
+
+export interface ISetEvents extends Action {
+  type: Types.SET_EVENTS;
+  payload: { events: Event[] };
 }
 
 export const setTotalEventSize: ActionCreator<ISetTotalEventSize> = (
@@ -83,6 +89,11 @@ export const setTeams: ActionCreator<ISetTeams> = (teams: Team[]) => ({
   payload: { teams }
 });
 
+export const setEvents: ActionCreator<ISetEvents> = (events: Event[]) => ({
+  type: Types.SET_EVENTS,
+  payload: { events }
+});
+
 export type ApplicationActions =
   | ISetTotalEventSize
   | ISetTotalTeamSize
@@ -90,4 +101,5 @@ export type ApplicationActions =
   | ISetHighScoreQuals
   | ISetHighScoreElims
   | ISetMatches
-  | ISetTeams;
+  | ISetTeams
+  | ISetEvents;

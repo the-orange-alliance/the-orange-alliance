@@ -7,21 +7,23 @@ import {
   ISetTotalTeamSize,
   ISetTeams,
   ISetMatches,
+  ISetEvents,
   setHighScoreElims,
   setHighScoreOverall,
   setHighScoreQuals,
   setTotalEventSize,
   setTotalTeamSize,
   setTeams,
-  setMatches
+  setMatches,
+  setEvents
 } from './stores/Actions';
 import * as Types from './stores/Types';
 import { IApplicationState, IHighestScoringMatches } from './stores/Types';
 import Reducer, { defaultState } from './stores/Reducer';
 import TOAProvider from './providers/TOAProvider';
 
-import { IHomeProps } from './PageProperties';
-import { getHomeData } from './PageData';
+import { IHomeProps, ITeamsProps, IEventsProps } from './PageProperties';
+import { getHomeData, getTeamsData, getEventsData } from './PageData';
 
 export {
   ApplicationActions,
@@ -32,6 +34,7 @@ export {
   ISetTotalTeamSize,
   ISetMatches,
   ISetTeams,
+  ISetEvents,
   setHighScoreElims,
   setHighScoreOverall,
   setHighScoreQuals,
@@ -39,6 +42,7 @@ export {
   setTotalTeamSize,
   setTeams,
   setMatches,
+  setEvents,
   Types,
   Reducer,
   defaultState,
@@ -46,5 +50,9 @@ export {
   IHighestScoringMatches,
   TOAProvider,
   IHomeProps,
-  getHomeData
+  ITeamsProps,
+  IEventsProps,
+  getHomeData,
+  getTeamsData,
+  getEventsData
 };

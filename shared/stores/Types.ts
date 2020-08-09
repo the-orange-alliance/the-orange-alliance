@@ -5,6 +5,7 @@
  */
 import Match from '@the-orange-alliance/api/lib/models/Match';
 import Team from '@the-orange-alliance/api/lib/models/Team';
+import Event from '@the-orange-alliance/api/lib/models/Event';
 
 export interface IApplicationState {
   eventsTotal: number;
@@ -12,6 +13,7 @@ export interface IApplicationState {
   highScoreMatches: IHighestScoringMatches;
   matches: Match[];
   teams: Team[];
+  events: Event[];
 }
 
 export interface IHighestScoringMatches {
@@ -41,3 +43,6 @@ export type SET_MATCHES = typeof SET_MATCHES;
 
 export const SET_TEAMS: string = 'SET_TEAMS';
 export type SET_TEAMS = typeof SET_TEAMS;
+
+export const SET_EVENTS: string = 'SET_EVENTS';
+export type SET_EVENTS = typeof SET_EVENTS;

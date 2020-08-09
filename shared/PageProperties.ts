@@ -6,9 +6,19 @@
  * way to keep structure between the server/client, and abstract their logic.
  */
 import { IHighestScoringMatches } from './';
+import Event from '@the-orange-alliance/api/lib/models/Event';
+import Team from '@the-orange-alliance/api/lib/models/Team';
 
 export interface IHomeProps {
   eventSize: number;
   teamSize: number;
   highScoreMatches: IHighestScoringMatches;
+}
+
+export interface ITeamsProps {
+  teams: Team[];
+}
+
+export interface IEventsProps {
+  events: Event[];
 }

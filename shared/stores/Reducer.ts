@@ -2,6 +2,7 @@ import * as Types from './Types';
 import { Reducer } from 'redux';
 import {
   ApplicationActions,
+  ISetEvents,
   ISetHighScoreElims,
   ISetHighScoreOverall,
   ISetHighScoreQuals,
@@ -21,7 +22,8 @@ export const defaultState: Types.IApplicationState = {
     overall: new Match()
   },
   matches: [],
-  teams: []
+  teams: [],
+  events: []
 };
 
 const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
@@ -68,6 +70,9 @@ const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
     case Types.SET_TEAMS:
       action = action as ISetTeams;
       return { ...state, teams: action.payload.teams };
+    case Types.SET_EVENTS:
+      action = action as ISetEvents;
+      return { ...state, events: action.payload.events };
     default:
       return state;
   }
