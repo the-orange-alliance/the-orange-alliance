@@ -18,7 +18,12 @@ import {
   setEvents
 } from './stores/Actions';
 import * as Types from './stores/Types';
-import { IApplicationState, IHighestScoringMatches } from './stores/Types';
+import {
+  IApplicationState,
+  IApplicationStateJSON,
+  IHighestScoringMatches,
+  IHighestScoringMatchesJSON
+} from './stores/Types';
 import Reducer, { defaultState } from './stores/Reducer';
 import TOAProvider from './providers/TOAProvider';
 
@@ -47,7 +52,9 @@ export {
   Reducer,
   defaultState,
   IApplicationState,
+  IApplicationStateJSON,
   IHighestScoringMatches,
+  IHighestScoringMatchesJSON,
   TOAProvider,
   IHomeProps,
   ITeamsProps,

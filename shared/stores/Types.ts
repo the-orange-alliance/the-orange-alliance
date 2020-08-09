@@ -16,10 +16,25 @@ export interface IApplicationState {
   events: Event[];
 }
 
+export interface IApplicationStateJSON {
+  eventsTotal: number;
+  teamsTotal: number;
+  highScoreMatches: IHighestScoringMatchesJSON;
+  matches: any[];
+  teams: any[];
+  events: any[];
+}
+
 export interface IHighestScoringMatches {
   quals: Match;
   elims: Match;
   overall: Match;
+}
+
+export interface IHighestScoringMatchesJSON {
+  quals: any;
+  elims: any;
+  overall: any;
 }
 
 export const SET_TOTAL_EVENTS_COUNT: string = 'SET_TOTAL_EVENTS_COUNT';
