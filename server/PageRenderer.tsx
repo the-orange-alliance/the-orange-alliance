@@ -1,19 +1,12 @@
-import * as React from 'react';
-import { Request } from 'express';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router';
-import {
-  getHomeData,
-  IApplicationState,
-  IApplicationStateJSON,
-  IHomeProps,
-  defaultState,
-  Reducer
-} from 'shared';
-import App from '../client/App';
-import Event from '@the-orange-alliance/api/lib/models/Event';
-import Team from '@the-orange-alliance/api/lib/models/Team';
-import Match from '@the-orange-alliance/api/lib/models/Match';
+import * as React from "react";
+import { Request } from "express";
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router";
+import { getHomeData, IApplicationState, IApplicationStateJSON, IHomeProps, defaultState, Reducer } from "shared";
+import App from "../client/App";
+import Event from "@the-orange-alliance/api/lib/models/Event";
+import Team from "@the-orange-alliance/api/lib/models/Team";
+import Match from "@the-orange-alliance/api/lib/models/Match";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
@@ -21,21 +14,18 @@ export async function render(req: Request, file: Buffer): Promise<string> {
   const initialState: IApplicationState = await loadPageData(req, req.params);
   const store = createStore(Reducer, initialState);
   const state: IApplicationState = store.getState();
-  
+
   const app = React.createElement(App, { store: store });
   const router = React.createElement(StaticRouter, { location: req.url, context: context }, app);
   const fullApp = React.createElement(Provider, { store: store as any }, router);
   const body: string = renderToString(fullApp);
-  
+
   return file
     .toString()
-    .replace('{{{body}}}', body)
-	.replace("library.dll.js", "public/library.dll.js")
-    .replace('index.js', 'public/index.js')
-    .replace(
-      `['__REDUX__']`,
-      JSON.stringify(prepareState(state)).replace(/</g, '\\u003c')
-    );
+    .replace("{{{body}}}", body)
+    .replace("library.dll.js", "public/library.dll.js")
+    .replace("index.js", "public/index.js")
+    .replace(`['__REDUX__']`, JSON.stringify(prepareState(state)).replace(/</g, "\\u003c"));
 }
 
 function prepareState(state: IApplicationState): IApplicationStateJSON {
@@ -53,12 +43,9 @@ function prepareState(state: IApplicationState): IApplicationStateJSON {
   };
 }
 
-async function loadPageData(
-  req: any,
-  params?: any
-): Promise<IApplicationState> {
+async function loadPageData(req: any, params?: any): Promise<IApplicationState> {
   switch (req.path) {
-    case '/':
+    case "/":
       const defaultProps: IHomeProps = {
         eventSize: 0,
         teamSize: 0,
@@ -78,4 +65,4 @@ async function loadPageData(
     default:
       return defaultState;
   }
- 
+}
