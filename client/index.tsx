@@ -10,9 +10,10 @@ import { Reducer as reducer, defaultState, IApplicationState } from 'shared';
 const state: IApplicationState = defaultState;
 
 // MAKE SURE THIS VARIABLE IS SET CORRECTLY - TODO: Have CI handle this? Post-build?
-const isDev: boolean = true;
+const isDev: boolean = false;
+const store = createStore(reducer, state);
 const fullApp: React.ReactElement = (
-  <Provider store={createStore(reducer, state)}>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>

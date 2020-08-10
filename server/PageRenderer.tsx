@@ -2,14 +2,25 @@ import * as React from 'react';
 import { Request } from 'express';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import { IApplicationState, IApplicationStateJSON } from 'shared';
+import {
+  getHomeData,
+  IApplicationState,
+  IApplicationStateJSON,
+  IHomeProps,
+  defaultState,
+  Reducer
+} from 'shared';
 import App from '../client/App';
 import Event from '@the-orange-alliance/api/lib/models/Event';
 import Team from '@the-orange-alliance/api/lib/models/Team';
 import Match from '@the-orange-alliance/api/lib/models/Match';
+import { createStore } from 'redux';
 
-export function render(req: Request, file: Buffer): string {
+export async function render(req: Request, file: Buffer): Promise<string> {
   const app: React.ReactElement = React.createElement(App, {});
+  const initialState: IApplicationState = await loadPageData(req, req.params);
+  const store = createStore(Reducer, initialState);
+  const state: IApplicationState = store.getState();
   const fullApp: React.ReactElement = React.createElement(
     StaticRouter,
     { location: req.url, context: {} },
@@ -19,7 +30,11 @@ export function render(req: Request, file: Buffer): string {
   return file
     .toString()
     .replace('{{{body}}}', body)
-    .replace('index.js', 'public/index.js');
+    .replace('index.js', 'public/index.js')
+    .replace(
+      `['__REDUX__']`,
+      JSON.stringify(prepareState(state)).replace(/</g, '\\u003c')
+    );
 }
 
 function prepareState(state: IApplicationState): IApplicationStateJSON {
@@ -35,4 +50,31 @@ function prepareState(state: IApplicationState): IApplicationStateJSON {
       quals: state.highScoreMatches.quals.toJSON()
     }
   };
+}
+
+async function loadPageData(
+  req: any,
+  params?: any
+): Promise<IApplicationState> {
+  switch (req.path) {
+    case '/':
+      const defaultProps: IHomeProps = {
+        eventSize: 0,
+        teamSize: 0,
+        highScoreMatches: {
+          quals: new Match(),
+          overall: new Match(),
+          elims: new Match()
+        }
+      };
+      const props: IHomeProps = await getHomeData(defaultProps);
+      return {
+        ...defaultState,
+        eventsTotal: props.eventSize,
+        teamsTotal: props.teamSize,
+        highScoreMatches: props.highScoreMatches
+      };
+    default:
+      return defaultState;
+  }
 }

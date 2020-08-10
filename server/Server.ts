@@ -25,7 +25,7 @@ app.get('*.js', async (req, res, next) => {
 
 // For now, send all routing to the client.
 app.get('*', async (req: Request, res: Response) => {
-  res.send(render(req, index));
+  res.send(await render(req, index));
 });
 
 app.listen(3000, () => {
