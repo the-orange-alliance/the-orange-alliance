@@ -14,22 +14,23 @@ import App from '../client/App';
 import Event from '@the-orange-alliance/api/lib/models/Event';
 import Team from '@the-orange-alliance/api/lib/models/Team';
 import Match from '@the-orange-alliance/api/lib/models/Match';
-import { createStore } from 'redux';
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
 export async function render(req: Request, file: Buffer): Promise<string> {
-  const app: React.ReactElement = React.createElement(App, {});
   const initialState: IApplicationState = await loadPageData(req, req.params);
   const store = createStore(Reducer, initialState);
   const state: IApplicationState = store.getState();
-  const fullApp: React.ReactElement = React.createElement(
-    StaticRouter,
-    { location: req.url, context: {} },
-    app
-  );
+  
+  const app = React.createElement(App, { store: store });
+  const router = React.createElement(StaticRouter, { location: req.url, context: context }, app);
+  const fullApp = React.createElement(Provider, { store: store as any }, router);
   const body: string = renderToString(fullApp);
+  
   return file
     .toString()
     .replace('{{{body}}}', body)
+	.replace("library.dll.js", "public/library.dll.js")
     .replace('index.js', 'public/index.js')
     .replace(
       `['__REDUX__']`,
@@ -77,4 +78,4 @@ async function loadPageData(
     default:
       return defaultState;
   }
-}
+ 
