@@ -44,7 +44,7 @@ interface IProps {
   setHighScoreElims: (match: Match) => ISetHighScoreElims;
 }
 
-const HomePage = function (props: IProps) {
+const HomePage = function () {
   const { t } = useTranslation();
   const eventSize = useSelector((state: IApplicationState) => state.eventsTotal);
   const teamSize = useSelector((state: IApplicationState) => state.teamsTotal);

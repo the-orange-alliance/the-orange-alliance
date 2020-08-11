@@ -38,6 +38,7 @@
         "amazon_smile": "Amazon Smile",
         "privacy_and_terms": "Privacy & Terms",
         "official_ftc": "Official Data Provider for",
+        "select_language": "Select Language",
         "mytoa": {
             "hello": "Hello, {{ name }}",
             "guest": "Guest",
@@ -354,6 +355,9 @@
             "title": "Teams",
             "filter": "Filter by number, name, or location",
             "results": "{{ results }} Results"
+        },
+        "language": {
+            "title": "Select Language"
         }
     },
     "match_table": {
