@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Match from '@the-orange-alliance/api/lib/models/Match';
-import MatchParticipant from '@the-orange-alliance/api/lib/models/MatchParticipant';
-import MatchStations from '@the-orange-alliance/api/lib/models/types/MatchStations';
+import * as React from "react";
+import Button from "@material-ui/core/Button";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import Match from "@the-orange-alliance/api/lib/models/Match";
+import MatchParticipant from "@the-orange-alliance/api/lib/models/MatchParticipant";
+import MatchStations from "@the-orange-alliance/api/lib/models/types/MatchStations";
 
 interface IProps {
   match: Match;
@@ -25,15 +25,12 @@ class SimpleMatchTable extends React.Component<IProps> {
     return (
       <div>
         <TableContainer component={Paper}>
-          <Table className={'simple-match-table'}>
-            <TableHead className={'grey-bg'}>
-              <TableCell
-                align="center"
-                colSpan={match.participants.length > 4 ? 3 : 2}
-              >
+          <Table className={"simple-match-table"}>
+            <TableHead className={"grey-bg"}>
+              <TableCell align='center' colSpan={match.participants.length > 4 ? 3 : 2}>
                 Teams
               </TableCell>
-              <TableCell align="center" colSpan={1}>
+              <TableCell align='center' colSpan={1}>
                 Score
               </TableCell>
             </TableHead>
@@ -54,13 +51,13 @@ class SimpleMatchTable extends React.Component<IProps> {
     );
     const redView = redAlliance.map((p: MatchParticipant) => {
       return (
-        <TableCell key={p.matchParticipantKey} align="center">
+        <TableCell key={p.matchParticipantKey} align='center'>
           <Button fullWidth>{p.teamKey}</Button>
         </TableCell>
       );
     });
     return (
-      <TableRow className={'red-bg'}>
+      <TableRow className={"red-bg"}>
         {redView}
         <TableCell>
           <Button fullWidth>{match.redScore}</Button>
@@ -76,13 +73,13 @@ class SimpleMatchTable extends React.Component<IProps> {
     );
     const blueView = blueAlliance.map((p: MatchParticipant) => {
       return (
-        <TableCell key={p.matchParticipantKey} align="center">
+        <TableCell key={p.matchParticipantKey} align='center'>
           <Button fullWidth>{p.teamKey}</Button>
         </TableCell>
       );
     });
     return (
-      <TableRow className={'blue-bg'}>
+      <TableRow className={"blue-bg"}>
         {blueView}
         <TableCell>
           <Button fullWidth>{match.blueScore}</Button>

@@ -1,12 +1,9 @@
-import React from 'react';
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps
-} from 'react-router-dom';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Omit } from '@material-ui/types';
+import React from "react";
+import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router-dom";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { Omit } from "@material-ui/types";
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
@@ -20,7 +17,7 @@ export default function ListItemLink(props: ListItemLinkProps) {
 
   const renderLink = React.useMemo(
     () =>
-      React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
+      React.forwardRef<any, Omit<RouterLinkProps, "to">>((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
     [to]

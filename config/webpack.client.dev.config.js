@@ -1,19 +1,19 @@
-const path = require('path');
-const DllReferencePlugin = require('webpack').DllReferencePlugin;
+const path = require("path");
+const DllReferencePlugin = require("webpack").DllReferencePlugin;
 
 module.exports = {
-  entry: path.resolve(__dirname, '../client/index.tsx'),
-  devtool: 'source-map',
+  entry: path.resolve(__dirname, "../client/index.tsx"),
+  devtool: "source-map",
   resolve: {
     alias: {
-      shared: path.resolve(__dirname, '../shared/index.ts')
+      shared: path.resolve(__dirname, "../shared/index.ts")
     },
-    extensions: ['.json', '.js', '.ts', '.tsx', '.png', '.jpg']
+    extensions: [".json", ".js", ".ts", ".tsx", ".png", ".jpg"]
   },
   output: {
-    path: path.join(__dirname, '../public'),
-    filename: 'index.js',
-    publicPath: '/public/'
+    path: path.join(__dirname, "../public"),
+    filename: "index.js",
+    publicPath: "/public/"
   },
   module: {
     rules: [
@@ -21,7 +21,7 @@ module.exports = {
         test: /\.ts(x?)$/,
         exclude: /node_modues/,
         include: /client|shared/,
-        loader: 'ts-loader',
+        loader: "ts-loader",
         options: {
           transpileOnly: true,
           experimentalWatchApi: true
@@ -31,40 +31,40 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         include: /client/,
-        loader: 'babel-loader'
+        loader: "babel-loader"
       },
       {
-        enforce: 'pre',
+        enforce: "pre",
         test: /\.js$/,
         include: /client/,
-        loader: 'source-map-loader'
+        loader: "source-map-loader"
       },
       {
         test: /\.(png|jpe?g|gif)$/,
         exclude: /node_modules/,
         include: /client/,
-        loader: 'file-loader'
+        loader: "file-loader"
       },
       {
         test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ["style-loader", "css-loader", "sass-loader"]
       }
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, '../public'),
+    contentBase: path.join(__dirname, "../public"),
     historyApiFallback: true,
-    publicPath: 'http://localhost:9090/',
+    publicPath: "http://localhost:9090/",
     port: 9090
   },
-  mode: 'production',
+  mode: "production",
   node: {
     __dirname: false
   },
   plugins: [
     new DllReferencePlugin({
-      context: path.join(__dirname, '../public'),
-      manifest: path.join(__dirname, '../public/library.json')
+      context: path.join(__dirname, "../public"),
+      manifest: path.join(__dirname, "../public/library.json")
     })
   ]
 };

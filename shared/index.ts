@@ -16,14 +16,14 @@ import {
   setTeams,
   setMatches,
   setEvents
-} from './stores/Actions';
-import * as Types from './stores/Types';
-import { IApplicationState, IHighestScoringMatches } from './stores/Types';
-import Reducer, { defaultState } from './stores/Reducer';
-import TOAProvider from './providers/TOAProvider';
+} from "./stores/Actions";
+import * as Types from "./stores/Types";
+import { IApplicationState, IHighestScoringMatches } from "./stores/Types";
+import Reducer, { defaultState } from "./stores/Reducer";
+import TOAProvider from "./providers/TOAProvider";
 
-import { IHomeProps, ITeamsProps, IEventsProps } from './PageProperties';
-import { getHomeData, getTeamsData, getEventsData } from './PageData';
+import { IHomeProps, ITeamsProps, IEventsProps } from "./PageProperties";
+import { getHomeData, getTeamsData, getEventsData } from "./PageData";
 
 export {
   ApplicationActions,

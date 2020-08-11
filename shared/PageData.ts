@@ -1,8 +1,8 @@
-import { IHomeProps, TOAProvider } from './';
-import Team from '@the-orange-alliance/api/lib/models/Team';
-import Event from '@the-orange-alliance/api/lib/models/Event';
-import Match from '@the-orange-alliance/api/lib/models/Match';
-import { IEventsProps, ITeamsProps } from './PageProperties';
+import { IHomeProps, TOAProvider } from "./";
+import Team from "@the-orange-alliance/api/lib/models/Team";
+import Event from "@the-orange-alliance/api/lib/models/Event";
+import Match from "@the-orange-alliance/api/lib/models/Match";
+import { IEventsProps, ITeamsProps } from "./PageProperties";
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;
@@ -28,13 +28,9 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch(
-            'all'
-          );
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("all");
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
-          match.participants = await TOAProvider.getAPI().getMatchParticipants(
-            match.matchKey
-          );
+          match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
         } catch (e) {
           reject(e);
@@ -51,13 +47,9 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch(
-            'quals'
-          );
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("quals");
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
-          match.participants = await TOAProvider.getAPI().getMatchParticipants(
-            match.matchKey
-          );
+          match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
         } catch (e) {
           reject(e);
@@ -74,13 +66,9 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch(
-            'elims'
-          );
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("elims");
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
-          match.participants = await TOAProvider.getAPI().getMatchParticipants(
-            match.matchKey
-          );
+          match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
         } catch (e) {
           reject(e);
@@ -112,9 +100,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   });
 }
 
-export async function getTeamsData(
-  prevProps: ITeamsProps
-): Promise<ITeamsProps> {
+export async function getTeamsData(prevProps: ITeamsProps): Promise<ITeamsProps> {
   const { teams } = prevProps;
   const promises: Array<Promise<any>> = [];
 
@@ -149,9 +135,7 @@ export async function getTeamsData(
   });
 }
 
-export async function getEventsData(
-  prevProps: IEventsProps
-): Promise<IEventsProps> {
+export async function getEventsData(prevProps: IEventsProps): Promise<IEventsProps> {
   const { events } = prevProps;
   const promises: Array<Promise<any>> = [];
 
