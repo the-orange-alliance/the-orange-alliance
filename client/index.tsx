@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { createStore } from "redux";
+import "./i18n";
 import App from "./App";
 import { Reducer as reducer, defaultState, IApplicationState, IApplicationStateJSON } from "shared";
 import Event from "@the-orange-alliance/api/lib/models/Event";
@@ -22,9 +23,11 @@ if (!Array.isArray(stateCache)) {
 const isDev: boolean = false;
 const store = createStore(reducer, state);
 const fullApp: React.ReactElement = (
-  <Provider store={store}>
+  <Provider store={createStore(reducer, state)}>
     <BrowserRouter>
-      <App />
+      <React.Suspense fallback={<div></div>}>
+        <App />
+      </React.Suspense>
     </BrowserRouter>
   </Provider>
 );

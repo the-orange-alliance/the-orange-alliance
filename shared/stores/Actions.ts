@@ -1,8 +1,8 @@
-import * as Types from './Types';
-import { Action, ActionCreator } from 'redux';
-import Match from '@the-orange-alliance/api/lib/models/Match';
-import Team from '@the-orange-alliance/api/lib/models/Team';
-import Event from '@the-orange-alliance/api/lib/models/Event';
+import * as Types from "./Types";
+import { Action, ActionCreator } from "redux";
+import Match from "@the-orange-alliance/api/lib/models/Match";
+import Team from "@the-orange-alliance/api/lib/models/Team";
+import Event from "@the-orange-alliance/api/lib/models/Event";
 
 export interface ISetTotalEventSize extends Action {
   type: Types.SET_TOTAL_EVENTS_COUNT;
@@ -44,37 +44,27 @@ export interface ISetEvents extends Action {
   payload: { events: Event[] };
 }
 
-export const setTotalEventSize: ActionCreator<ISetTotalEventSize> = (
-  size: number
-) => ({
+export const setTotalEventSize: ActionCreator<ISetTotalEventSize> = (size: number) => ({
   type: Types.SET_TOTAL_EVENTS_COUNT,
   payload: { size }
 });
 
-export const setTotalTeamSize: ActionCreator<ISetTotalEventSize> = (
-  size: number
-) => ({
+export const setTotalTeamSize: ActionCreator<ISetTotalEventSize> = (size: number) => ({
   type: Types.SET_TOTAL_TEAMS_COUNT,
   payload: { size }
 });
 
-export const setHighScoreOverall: ActionCreator<ISetHighScoreOverall> = (
-  match: Match
-) => ({
+export const setHighScoreOverall: ActionCreator<ISetHighScoreOverall> = (match: Match) => ({
   type: Types.SET_HIGH_SCORE_MATCH_OVERALL,
   payload: { match }
 });
 
-export const setHighScoreQuals: ActionCreator<ISetHighScoreQuals> = (
-  match: Match
-) => ({
+export const setHighScoreQuals: ActionCreator<ISetHighScoreQuals> = (match: Match) => ({
   type: Types.SET_HIGH_SCORE_MATCH_QUALS,
   payload: { match }
 });
 
-export const setHighScoreElims: ActionCreator<ISetHighScoreElims> = (
-  match: Match
-) => ({
+export const setHighScoreElims: ActionCreator<ISetHighScoreElims> = (match: Match) => ({
   type: Types.SET_HIGH_SCORE_MATCH_ELIMS,
   payload: { match }
 });

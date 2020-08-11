@@ -1,13 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
+import { useTranslation } from "react-i18next";
 
-class AboutPage extends React.Component {
-  public constructor(props: any) {
-    super(props);
-  }
-
-  public render() {
-    return <div>Testing here.</div>;
-  }
-}
+const AboutPage = function () {
+  const { t } = useTranslation();
+  return <div>{t("pages.about.title")}</div>;
+};
 
 export default AboutPage;

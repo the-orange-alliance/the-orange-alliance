@@ -1,5 +1,5 @@
-import * as Types from './Types';
-import { Reducer } from 'redux';
+import * as Types from "./Types";
+import { Reducer } from "redux";
 import {
   ApplicationActions,
   ISetEvents,
@@ -10,8 +10,8 @@ import {
   ISetTeams,
   ISetTotalEventSize,
   ISetTotalTeamSize
-} from './Actions';
-import Match from '@the-orange-alliance/api/lib/models/Match';
+} from "./Actions";
+import Match from "@the-orange-alliance/api/lib/models/Match";
 
 export const defaultState: Types.IApplicationState = {
   eventsTotal: 0,

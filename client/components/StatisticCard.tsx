@@ -1,7 +1,7 @@
-import * as React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import * as React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 
 interface IProps {
   title: string;
@@ -19,7 +19,7 @@ class StatisticCard extends React.Component<IProps> {
     return (
       <Card>
         <CardHeader
-          avatar={<Avatar className="primary-bg secondary">{icon}</Avatar>}
+          avatar={<Avatar className='primary-bg secondary'>{icon}</Avatar>}
           title={title}
           subheader={subtitle}
         />

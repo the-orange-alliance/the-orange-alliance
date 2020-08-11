@@ -1,4 +1,4 @@
-import { API } from '@the-orange-alliance/api';
+import { API } from "@the-orange-alliance/api";
 
 class TOAProvider {
   private static _instance: TOAProvider;
@@ -6,14 +6,14 @@ class TOAProvider {
   private readonly api: API;
 
   public static getInstance(): TOAProvider {
-    if (typeof TOAProvider._instance === 'undefined') {
+    if (typeof TOAProvider._instance === "undefined") {
       TOAProvider._instance = new TOAProvider();
     }
     return TOAProvider._instance;
   }
 
   private constructor() {
-    this.api = new API('', 'TOA-WebApp-1920');
+    this.api = new API("", "TOA-WebApp-1920");
   }
 
   public getAPI(): API {
