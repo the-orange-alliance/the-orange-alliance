@@ -7,3 +7,4 @@ public/*.json
 build/
 stats/
 *.env
+*.map
