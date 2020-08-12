@@ -1,55 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
-  <meta charset="utf8" />
-  <title>The Orange Alliance</title>
-  <script>
-    window.__AXIOS_HOOKS_CACHE__ = ["__AXIOS__"];
-    window.__REDUX_STATE_CACHE__ = ["__REDUX__"];
-  </script>
-  <link rel="shortcut icon" type="image/x-icon" href="https://first.global/wp-content/uploads/2017/11/cropped-web-logo.png"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+<!--
+                                     Made With ❤ By
 
-  <style>
-    #loading {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #F5F6F7;
-      z-index: 1000;
-    }
-    .spinner {
-      display: inline-block;
-      border: 4px solid transparent;
-      border-radius: 50%;
-      border-top-color: #019b42;
-      animation: spin 1s linear infinite;
-      -webkit-animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    @-webkit-keyframes spin {
-      from { -webkit-transform: rotate(0deg); }
-      to { -webkit-transform: rotate(360deg); }
-    }
-  </style>
-  <script defer src="index.js" onload="loading.style.display='none'"></script>
-</head>
-<body>
-  <div id="loading">
-    <svg class="spinner" width="55px" height="55px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-    <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-    </svg>
-  </div>
-  <div id="app">{{{body}}}</div>
-</body>
+ _____ _           ___                                _    _ _ _
+|_   _| |__   ___ / _ \ _ __ __ _ _ __   __ _  ___   / \  | | (_) __ _ _ __   ___ ___
+  | | | '_ \ / _ \ | | | '__/ _` | '_ \ / _` |/ _ \ / _ \ | | | |/ _` | '_ \ / __/ _ \
+  | | | | | |  __/ |_| | | | (_| | | | | (_| |  __// ___ \| | | | (_| | | | | (_|  __/
+  |_| |_| |_|\___|\___/|_|  \__,_|_| |_|\__, |\___/_/   \_\_|_|_|\__,_|_| |_|\___\___|
+                                        |___/
+
+-->
+  <head>
+    <meta
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+    />
+    <meta property="og:title" content="The Orange Alliance" />
+    <meta property="og:description" content="The Orange Alliance is a match, event, and team data provider for FIRST Tech Challenge."/>
+    <meta property="og:image" content="https://theorangealliance.org/assets/imgs/icon512.png"/>
+    <meta charset="utf8" />
+    <title>The Orange Alliance</title>
+    <script>
+      window.__AXIOS_HOOKS_CACHE__ = ['__AXIOS__'];
+      window.__REDUX_STATE_CACHE__ = ['__REDUX__'];
+    </script>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="favicon.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+
+    <style>
+      #loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f6f7;
+        z-index: 1000;
+      }
+      .spinner {
+        display: inline-block;
+        border: 4px solid transparent;
+        border-radius: 50%;
+        border-top-color: #019b42;
+        animation: spin 1s linear infinite;
+        -webkit-animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes spin {
+        from {
+          -webkit-transform: rotate(0deg);
+        }
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script src="library.dll.js"></script>
+    <script defer src="index.js" onload="loading.style.display='none'"></script>
+  </head>
+  <body>
+    <div id="loading">
+      <svg
+        class="spinner"
+        width="55px"
+        height="55px"
+        viewBox="0 0 66 66"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="path"
+          fill="none"
+          stroke-width="6"
+          stroke-linecap="round"
+          cx="33"
+          cy="33"
+          r="30"
+        ></circle>
+      </svg>
+    </div>
+    <div id="app">{{{body}}}</div>
+  </body>
 </html>

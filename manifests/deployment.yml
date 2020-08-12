@@ -1,4 +1,4 @@
-apiVersion : apps/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: "toadevwebsite"
@@ -13,4 +13,4 @@ spec:
         - name: "toadevwebsite"
           image: "theorangealliance.azurecr.io/toadevwebsite"
           ports:
-          - containerPort: 3000
+            - containerPort: 3000
