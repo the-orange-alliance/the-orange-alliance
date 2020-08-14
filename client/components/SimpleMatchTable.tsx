@@ -13,6 +13,7 @@ import MatchStations from "@the-orange-alliance/api/lib/models/types/MatchStatio
 
 interface IProps {
   match: Match;
+  header?: boolean;
 }
 
 class SimpleMatchTable extends React.Component<IProps> {
@@ -21,19 +22,21 @@ class SimpleMatchTable extends React.Component<IProps> {
   }
 
   public render() {
-    const { match } = this.props;
+    const { match, header = true } = this.props;
     return (
       <div>
         <TableContainer component={Paper}>
           <Table className={"simple-match-table"}>
-            <TableHead className={"grey-bg"}>
-              <TableCell align='center' colSpan={match.participants.length > 4 ? 3 : 2}>
-                Teams
-              </TableCell>
-              <TableCell align='center' colSpan={1}>
-                Score
-              </TableCell>
-            </TableHead>
+            {header ? (
+              <TableHead className={"grey-bg"}>
+                <TableCell align='center' colSpan={match.participants.length > 4 ? 3 : 2}>
+                  Teams
+                </TableCell>
+                <TableCell align='center' colSpan={1}>
+                  Score
+                </TableCell>
+              </TableHead>
+            ) : null}
             <TableBody>
               {this.renderRedAlliance(match)}
               {this.renderBlueAlliance(match)}

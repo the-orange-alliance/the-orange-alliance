@@ -5,7 +5,8 @@ import chain from "i18next-chained-backend";
 import http from "i18next-http-backend";
 
 // Load selected language from localStorage
-var cachedLang: string | null = window.localStorage.getItem("i18n-language");
+var cachedLang: string | null = "en";
+/* window ? window.localStorage.getItem("i18n-language") : null; */
 
 i18n
   .use(chain)

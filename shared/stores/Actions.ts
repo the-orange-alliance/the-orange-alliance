@@ -3,6 +3,7 @@ import { Action, ActionCreator } from "redux";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import Event from "@the-orange-alliance/api/lib/models/Event";
+import { Ranking } from "@the-orange-alliance/api/lib/models";
 
 export interface ISetTotalEventSize extends Action {
   type: Types.SET_TOTAL_EVENTS_COUNT;
@@ -42,6 +43,25 @@ export interface ISetTeams extends Action {
 export interface ISetEvents extends Action {
   type: Types.SET_EVENTS;
   payload: { events: Event[] };
+}
+
+export interface ISetEventData extends Action {
+  type: Types.SET_EVENT_DATA;
+  payload: { event: Event };
+}
+
+export interface ISetEventMatches extends Action {
+  type: Types.SET_EVENT_MATCHES;
+  payload: {
+    matches: Match[];
+  };
+}
+
+export interface ISetEventRankings extends Action {
+  type: Types.SET_EVENT_RANKINGS;
+  payload: {
+    rankings: Ranking[];
+  };
 }
 
 export const setTotalEventSize: ActionCreator<ISetTotalEventSize> = (size: number) => ({
@@ -84,6 +104,27 @@ export const setEvents: ActionCreator<ISetEvents> = (events: Event[]) => ({
   payload: { events }
 });
 
+export const setEventData: ActionCreator<ISetEventData> = (event: Event) => ({
+  type: Types.SET_EVENT_DATA,
+  payload: {
+    event
+  }
+});
+
+export const setEventMatches: ActionCreator<ISetEventMatches> = (matches: Match[]) => ({
+  type: Types.SET_EVENT_MATCHES,
+  payload: {
+    matches
+  }
+});
+
+export const setEventRankings: ActionCreator<ISetEventRankings> = (rankings: Ranking[]) => ({
+  type: Types.SET_EVENT_RANKINGS,
+  payload: {
+    rankings
+  }
+});
+
 export type ApplicationActions =
   | ISetTotalEventSize
   | ISetTotalTeamSize
@@ -92,4 +133,7 @@ export type ApplicationActions =
   | ISetHighScoreElims
   | ISetMatches
   | ISetTeams
-  | ISetEvents;
+  | ISetEvents
+  | ISetEventData
+  | ISetEventMatches
+  | ISetEventRankings;

@@ -9,9 +9,13 @@ import {
   ISetMatches,
   ISetTeams,
   ISetTotalEventSize,
-  ISetTotalTeamSize
+  ISetTotalTeamSize,
+  ISetEventData,
+  ISetEventMatches,
+  ISetEventRankings
 } from "./Actions";
 import Match from "@the-orange-alliance/api/lib/models/Match";
+import Event from "@the-orange-alliance/api/lib/models/Event";
 
 export const defaultState: Types.IApplicationState = {
   eventsTotal: 0,
@@ -23,7 +27,8 @@ export const defaultState: Types.IApplicationState = {
   },
   matches: [],
   teams: [],
-  events: []
+  events: [],
+  currentEvent: new Event()
 };
 
 const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
@@ -73,6 +78,26 @@ const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
     case Types.SET_EVENTS:
       action = action as ISetEvents;
       return { ...state, events: action.payload.events };
+    case Types.SET_EVENT_DATA:
+      action = action as ISetEventData;
+      return {
+        ...state,
+        currentEvent: action.payload.event
+      };
+    case Types.SET_EVENT_MATCHES:
+      action = action as ISetEventMatches;
+      state.currentEvent.matches = action.payload.matches;
+      return { ...state, currentEvent: state.currentEvent };
+    case Types.SET_EVENT_RANKINGS:
+      action = action as ISetEventRankings;
+      let currentEvent = state.currentEvent;
+      return {
+        ...state,
+        currentEvent: {
+          ...currentEvent,
+          rankings: action.payload.rankings
+        }
+      };
     default:
       return state;
   }

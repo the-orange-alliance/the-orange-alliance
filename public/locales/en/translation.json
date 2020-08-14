@@ -214,7 +214,7 @@
                     "wlt_record": "W-L-T",
                     "qual_points": "Qualification Points",
                     "ranking_points": "Ranking Points",
-                    "tie_reaker_points": "Tie Breaker Points",
+                    "tie_breaker_points": "Tie Breaker Points",
                     "highest_score": "Highest Score",
                     "matches_played": "Matches Played",
                     "what_is_opr": "Offensive Power Rating, also know as OPR, is a stat that is often used in the FIRST community to compare the performance of teams on the field. OPRs are an interesting way to slice the data for teams at particular events, but aren't a perfect system for assessing a team's performance or contribution."
@@ -304,6 +304,11 @@
                     "verify_email": "Please verify your email and try again.",
                     "success_sent_verify_email": "Successfully sent a verification email."
                 }
+            },
+            "data_source": {
+                "data_sync": "Data provided by Live DataSync",
+                "affiliate": "Data provided by the Affiliate Partner",
+                "first": "Data provided by FIRST"
             }
         },
         "events": {
@@ -378,6 +383,12 @@
             "bold": "<b>Bold</b> is Winning Alliance</small>",
             "bold_and_black": "<b>Bold and Black</b> is Selected Team</small>",
             "surrogate": "<b>*</b> is Surrogate"
+        },
+        "levels": {
+            "finals": "Finals Matches",
+            "semifinals": "Semifinals Matches",
+            "quarterfinals": "Quarterfinals Matches",
+            "qualifications": "Qualification Matches"
         }
     },
     "no_data": {
@@ -391,5 +402,19 @@
         "events_filter": "No events found for this filter",
         "events_filter_long": "Try changing the season or region using the selectors above.",
         "match_breakdown": "No match breakdown found"
+    },
+    "month": {
+        "0": "Jan",
+        "1": "Feb",
+        "2": "Mar",
+        "3": "Apr",
+        "4": "May",
+        "5": "Jun",
+        "6": "Jul",
+        "7": "Aug",
+        "8": "Sep",
+        "9": "Oct",
+        "10": "Nov",
+        "11": "Dec"
     }
 }

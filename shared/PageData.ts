@@ -3,6 +3,7 @@ import Team from "@the-orange-alliance/api/lib/models/Team";
 import Event from "@the-orange-alliance/api/lib/models/Event";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import { IEventsProps, ITeamsProps } from "./PageProperties";
+import { Ranking } from "@the-orange-alliance/api/lib/models";
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;
@@ -168,4 +169,21 @@ export async function getEventsData(prevProps: IEventsProps): Promise<IEventsPro
       reject(e);
     }
   });
+}
+
+export async function getEventData(eventCode: string): Promise<Event> {
+  const event = await TOAProvider.getAPI().getEvent(eventCode);
+  const rankings = getEventRankings(eventCode);
+  const matches = getEventMatches(eventCode);
+  event.rankings = await rankings;
+  event.matches = await matches;
+  return event;
+}
+
+export async function getEventMatches(eventCode: string): Promise<Match[]> {
+  return await TOAProvider.getAPI().getEventMatches(eventCode);
+}
+
+export async function getEventRankings(eventCode: string): Promise<Ranking[]> {
+  return await TOAProvider.getAPI().getEventRankings(eventCode);
 }

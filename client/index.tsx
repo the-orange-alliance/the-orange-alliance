@@ -9,6 +9,7 @@ import { Reducer as reducer, defaultState, IApplicationState, IApplicationStateJ
 import Event from "@the-orange-alliance/api/lib/models/Event";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import Match from "@the-orange-alliance/api/lib/models/Match";
+import devToolsEnhancer from "remote-redux-devtools";
 
 const stateCache: IApplicationStateJSON = (window as any).__REDUX_STATE_CACHE__;
 delete (window as any).__REDUX_STATE_CACHE__;
@@ -21,7 +22,7 @@ if (!Array.isArray(stateCache)) {
 
 // MAKE SURE THIS VARIABLE IS SET CORRECTLY - TODO: Have CI handle this? Post-build?
 const isDev: boolean = false;
-const store = createStore(reducer, state);
+const store = createStore(reducer, state, devToolsEnhancer({ realtime: true }));
 const fullApp: React.ReactElement = (
   <Provider store={createStore(reducer, state)}>
     <BrowserRouter>

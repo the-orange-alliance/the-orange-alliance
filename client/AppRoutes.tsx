@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteProps } from "react-router-dom";
+import { RouteProps, Redirect, useParams } from "react-router-dom";
 import CodeIcon from "@material-ui/icons/Code";
 import EventIcon from "@material-ui/icons/Event";
 import GavelIcon from "@material-ui/icons/Gavel";
@@ -11,10 +11,9 @@ import TranslateIcon from "@material-ui/icons/Translate";
 import VideoCamIcon from "@material-ui/icons/Videocam";
 
 /* import all of our pages here */
-import { AboutPage, HomePage, TeamsPage, EventsPage } from "./pages";
+import { AboutPage, HomePage, TeamsPage, EventsPage, EventPage, LanguagePage } from "./pages";
 import { Button } from "@material-ui/core";
 import { changeLanguage } from "./i18n";
-import LanguagePage from "./pages/language/Language";
 
 export interface IAppRoute {
   name: string;
@@ -44,6 +43,26 @@ const routes: IAppRoute[] = [
     group: 0,
     component: () => <TeamsPage />,
     visible: true
+  },
+  {
+    name: "Event",
+    icon: <EventIcon />,
+    to: "/events/:eventCode",
+    group: 0,
+    component: () => {
+      // Redirect to /events/eventCode/rankings
+      const { eventCode } = useParams<{ eventCode: string }>();
+      return <Redirect to={`/events/${eventCode}/rankings`} />;
+    },
+    visible: false
+  },
+  {
+    name: "Event",
+    icon: <EventIcon />,
+    to: "/events/:eventCode/:tab",
+    group: 0,
+    component: () => <EventPage />,
+    visible: false
   },
   {
     name: "Events",
