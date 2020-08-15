@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { createStore } from "redux";
+import { useSSR } from "react-i18next";
 import "./i18n";
 import App from "./App";
 import { Reducer as reducer, defaultState, IApplicationState, IApplicationStateJSON } from "shared";
@@ -22,20 +23,28 @@ if (!Array.isArray(stateCache)) {
 // MAKE SURE THIS VARIABLE IS SET CORRECTLY - TODO: Have CI handle this? Post-build?
 const isDev: boolean = false;
 const store = createStore(reducer, state);
-const fullApp: React.ReactElement = (
-  <Provider store={createStore(reducer, state)}>
-    <BrowserRouter>
-      <React.Suspense fallback={<div></div>}>
-        <App />
-      </React.Suspense>
-    </BrowserRouter>
-  </Provider>
-);
+
+function FullApp() {
+  // If our english translation store exists, use the i18n cache.
+  if ((window as any).initialI18nStore?.en) {
+    useSSR((window as any).initialI18nStore, (window as any).initialLanguage);
+  }
+
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <React.Suspense fallback={<div></div>}>
+          <App />
+        </React.Suspense>
+      </BrowserRouter>
+    </Provider>
+  );
+}
 
 if (isDev) {
-  ReactDOM.render(fullApp, document.getElementById("app"));
+  ReactDOM.render(<FullApp />, document.getElementById("app"));
 } else {
-  ReactDOM.hydrate(fullApp, document.getElementById("app"));
+  ReactDOM.hydrate(<FullApp />, document.getElementById("app"));
 }
 
 function convertCacheToState(state: IApplicationState, stateJSON: IApplicationStateJSON): void {
