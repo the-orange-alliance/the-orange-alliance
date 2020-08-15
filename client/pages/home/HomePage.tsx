@@ -111,9 +111,8 @@ const HomePage = function () {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={6}>
-          <React.Suspense fallback={<div></div>}>
-            <LeaderboardsModule highScoreMatches={highScoreMatches} />
-          </React.Suspense>
+          {/* This is temporary. ReactDOMServer does not support Suspense, yet. */}
+          <LeaderboardsModule highScoreMatches={highScoreMatches} />
         </Grid>
       </Grid>
     </div>

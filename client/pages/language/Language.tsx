@@ -2,9 +2,17 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Typography } from "@material-ui/core";
 import { changeLanguage } from "../../i18n";
+import { useCookies } from "react-cookie";
 
 const LanguagePage = function () {
   const { t } = useTranslation();
+  const [cookies, setCookie] = useCookies(["i18next"]);
+
+  const changeCookieAndLanguage = (lang: string) => {
+    changeLanguage(lang);
+    setCookie("i18next", lang);
+  };
+
   return (
     <div>
       <Typography variant='h4' gutterBottom>
@@ -12,28 +20,28 @@ const LanguagePage = function () {
       </Typography>
       <Button
         onClick={() => {
-          changeLanguage("en");
+          changeCookieAndLanguage("en");
         }}
       >
         English
       </Button>
       <Button
         onClick={() => {
-          changeLanguage("es");
+          changeCookieAndLanguage("es");
         }}
       >
         Spanish
       </Button>
       <Button
         onClick={() => {
-          changeLanguage("he");
+          changeCookieAndLanguage("he");
         }}
       >
         Hebrew
       </Button>
       <Button
         onClick={() => {
-          changeLanguage("zh");
+          changeCookieAndLanguage("zh");
         }}
       >
         Chinese

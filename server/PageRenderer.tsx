@@ -21,6 +21,7 @@ import Match from "@the-orange-alliance/api/lib/models/Match";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import MatchParticipant from "@the-orange-alliance/api/lib/models/MatchParticipant";
+import { I18nextProvider } from "react-i18next";
 
 export async function render(req: Request, file: Buffer): Promise<string> {
   const initialState: IApplicationState = await loadPageData(req, req.params);
@@ -30,15 +31,29 @@ export async function render(req: Request, file: Buffer): Promise<string> {
 
   const app = React.createElement(App, { store: store });
   const router = React.createElement(StaticRouter, { location: req.url, context: context }, app);
-  const fullApp = React.createElement(Provider, { store: store as any }, router);
+  const provider = React.createElement(Provider, { store: store as any }, router);
+  const fullApp = React.createElement(I18nextProvider, { i18n: (req as any).i18n }, provider);
   const body: string = renderToString(fullApp);
+
+  // Preloading locales
+  const initialI18nStore: any = {};
+  (req as any).i18n.languages.forEach((l: any) => {
+    initialI18nStore[l] = (req as any).i18n.services.resourceStore.data[l];
+  });
+  const initialLanguage = (req as any).i18n.language;
+
+  // Since our translation files contain single quotes, escape the string with (`) characters.
+  // Since our translation files contain escaped double quotes, un-escape those string when going to JSON.
+  const langStore: any = "`" + JSON.stringify(initialI18nStore).replace(/\\"/g, ``) + "`";
 
   return file
     .toString()
     .replace("{{{body}}}", body)
     .replace("library.dll.js", "public/library.dll.js")
     .replace("index.js", "public/index.js")
-    .replace(`['__REDUX__']`, JSON.stringify(prepareState(state)).replace(/</g, "\\u003c"));
+    .replace(`['__REDUX__']`, JSON.stringify(prepareState(state)).replace(/</g, "\\u003c"))
+    .replace(`initialI18nStore = []`, `initialI18nStore = JSON.parse(${langStore})`)
+    .replace(`'en'`, `'${initialLanguage}'`);
 }
 
 function prepareState(state: IApplicationState): IApplicationStateJSON {
