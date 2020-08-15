@@ -5,7 +5,7 @@ import chain from "i18next-chained-backend";
 import http from "i18next-http-backend";
 
 // Load selected language from localStorage
-var cachedLang: string | null = window.localStorage.getItem("i18n-language");
+let cachedLang: string | null = typeof window === "undefined" ? null : window.localStorage.getItem("i18n-language");
 
 i18n
   .use(chain)
@@ -18,6 +18,9 @@ i18n
           loadPath: "/locales/{{lng}}/{{ns}}.json" // xhr load path for my own fallback
         }
       ]
+    },
+    react: {
+      useSuspense: false
     },
     lng: cachedLang ? cachedLang : "en",
     fallbackLng: "en",

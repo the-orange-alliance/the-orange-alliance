@@ -11,10 +11,7 @@ import TranslateIcon from "@material-ui/icons/Translate";
 import VideoCamIcon from "@material-ui/icons/Videocam";
 
 /* import all of our pages here */
-import { AboutPage, HomePage, TeamsPage, EventsPage } from "./pages";
-import { Button } from "@material-ui/core";
-import { changeLanguage } from "./i18n";
-import LanguagePage from "./pages/language/Language";
+import { AboutPage, HomePage, TeamsPage, EventsPage, LanguagesPage } from "./pages";
 
 export interface IAppRoute {
   name: string;
@@ -69,7 +66,7 @@ const routes: IAppRoute[] = [
     icon: <TranslateIcon />,
     to: "/languages",
     group: 1,
-    component: () => <LanguagePage />,
+    component: () => <LanguagesPage />,
     visible: true
   },
   {
