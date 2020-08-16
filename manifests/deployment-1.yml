@@ -4,6 +4,9 @@ metadata:
   name: "toasites-6619"
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: "toasites-6619"
   template:
     metadata:
       labels:
