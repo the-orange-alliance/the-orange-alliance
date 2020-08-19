@@ -67,7 +67,9 @@ function prepareState(state: IApplicationState): IApplicationStateJSON {
       elims: convertFullMatchToJSON(state.highScoreMatches.elims),
       overall: convertFullMatchToJSON(state.highScoreMatches.overall),
       quals: convertFullMatchToJSON(state.highScoreMatches.quals)
-    }
+    },
+    currentEvent: state.currentEvent, // TODO - Properly get data from server
+    currentEventInsights: state.currentEventInsights // TODO - Properly get data from server
   };
 }
 

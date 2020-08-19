@@ -88,7 +88,7 @@ const routes: IAppRoute[] = [
     icon: <TranslateIcon />,
     to: "/languages",
     group: 1,
-    component: () => <LanguagesPage />,
+    component: () => <LanguagePage />,
     visible: true
   },
   {

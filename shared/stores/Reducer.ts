@@ -92,14 +92,8 @@ const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
       return { ...state, currentEvent: state.currentEvent };
     case Types.SET_EVENT_RANKINGS:
       action = action as ISetEventRankings;
-      let currentEvent = state.currentEvent;
-      return {
-        ...state,
-        currentEvent: {
-          ...currentEvent,
-          rankings: action.payload.rankings
-        }
-      };
+      state.currentEvent.rankings = action.payload.rankings;
+      return { ...state, currentEvent: state.currentEvent };
     case Types.SET_EVENT_INSIGHTS:
       action = action as ISetEventInsights;
       return { ...state, currentEventInsights: action.payload.insights };
