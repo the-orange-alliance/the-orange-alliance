@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "toasites-6619"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "toasites-6619"
+  template:
+    metadata:
+      labels:
+        app: "toasites-6619"
+    spec:
+      containers:
+        - name: "toasites-6619"
+          image: "toarepository.azurecr.io/toasites"
+          ports:
+            - containerPort: 3000
