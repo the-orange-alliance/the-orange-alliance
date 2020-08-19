@@ -52,7 +52,6 @@ function MatchTeamDisplay({ match, color }: { match: Match; color: string }) {
   const teamCount = match.participants.length;
   const startPos = color === "red" ? 0 : teamCount / 2 - 1;
   const teams = match.participants.slice(startPos, startPos + teamCount / 2);
-  console.log(teamCount, startPos, teams);
 
   return (
     <Grid item xs={12}>

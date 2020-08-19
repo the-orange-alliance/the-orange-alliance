@@ -18,7 +18,8 @@ import {
   setEvents,
   setEventData,
   setEventMatches,
-  setEventRankings
+  setEventRankings,
+  setEventInsights
 } from "./stores/Actions";
 import * as Types from "./stores/Types";
 import {
@@ -31,7 +32,16 @@ import Reducer, { defaultState } from "./stores/Reducer";
 import TOAProvider from "./providers/TOAProvider";
 
 import { IHomeProps, ITeamsProps, IEventsProps } from "./PageProperties";
-import { getHomeData, getTeamsData, getEventsData, getEventData, getEventMatches, getEventRankings } from "./PageData";
+import {
+  getHomeData,
+  getTeamsData,
+  getEventsData,
+  getEventData,
+  getEventMatches,
+  getEventRankings,
+  getEventInsights,
+  getEventAwards
+} from "./PageData";
 
 export {
   ApplicationActions,
@@ -70,5 +80,7 @@ export {
   getEventMatches,
   setEventMatches,
   getEventRankings,
-  setEventRankings
+  setEventRankings,
+  getEventInsights,
+  setEventInsights
 };

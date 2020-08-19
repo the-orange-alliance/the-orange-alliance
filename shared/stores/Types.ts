@@ -6,6 +6,7 @@
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import Event from "@the-orange-alliance/api/lib/models/Event";
+import Insights from "@the-orange-alliance/api/lib/models/Insights";
 
 export interface IApplicationState {
   eventsTotal: number;
@@ -15,6 +16,7 @@ export interface IApplicationState {
   teams: Team[];
   events: Event[];
   currentEvent: Event;
+  currentEventInsights: Insights[];
 }
 
 export interface IApplicationStateJSON {
@@ -25,6 +27,7 @@ export interface IApplicationStateJSON {
   teams: any[];
   events: any[];
   currentEvent: Event;
+  currentEventInsights: Insights[];
 }
 
 export interface IHighestScoringMatches {
@@ -71,3 +74,9 @@ export type SET_EVENT_MATCHES = typeof SET_EVENT_MATCHES;
 
 export const SET_EVENT_RANKINGS: string = "SET_EVENT_RANKINGS";
 export type SET_EVENT_RANKINGS = typeof SET_EVENT_RANKINGS;
+
+export const SET_EVENT_INSIGHTS: string = "SET_EVENT_INSIGHTS";
+export type SET_EVENT_INSIGHTS = typeof SET_EVENT_INSIGHTS;
+
+export const SET_EVENT_AWARDS: string = "SET_EVENT_AWARDS";
+export type SET_EVENT_AWARDS = typeof SET_EVENT_AWARDS;

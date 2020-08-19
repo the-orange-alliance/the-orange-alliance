@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Tabs, AppBar, Tab } from "@material-ui/core";
-import { RankingTab, MatchesTab } from "./index";
+import { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab } from "./index";
 import { useTranslation } from "react-i18next";
 
 interface IProps {
@@ -24,6 +24,26 @@ const tabs: ITabProps[] = [
     tabRoute: "matches",
     translationKey: "pages.event.subpages.matches",
     component: () => <MatchesTab />
+  },
+  {
+    tabRoute: "teams",
+    translationKey: "pages.event.subpages.teams",
+    component: () => <TeamsTab />
+  },
+  {
+    tabRoute: "alliances",
+    translationKey: "pages.event.subpages.alliances",
+    component: () => <AlliancesTab />
+  },
+  {
+    tabRoute: "awards",
+    translationKey: "pages.event.subpages.awards",
+    component: () => <AwardsTab />
+  },
+  {
+    tabRoute: "insights",
+    translationKey: "pages.event.subpages.insights",
+    component: () => <InsightsTab />
   }
 ];
 

@@ -6,7 +6,7 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router";
 import { getEventData, setEventData } from "shared";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Fade } from "@material-ui/core";
 
 import IconCalendar from "@material-ui/icons/CalendarToday";
 import IconLocationPin from "@material-ui/icons/LocationOn";
@@ -39,7 +39,7 @@ const EventPage = function () {
   const startDate = strToDate(eventData.startDate);
 
   return (
-    <div>
+    <>
       <Typography variant='h4'>
         {startDate.getFullYear()} {eventData.fullEventName}
       </Typography>
@@ -64,10 +64,14 @@ const EventPage = function () {
           ? t("pages.event.data_source.first")
           : ""}
       </Typography>
-      <Paper>
+      <Paper
+        style={{
+          marginTop: "16px"
+        }}
+      >
         <EventTabs currentTab={tab} handleTabChange={setCurrentTab}></EventTabs>
       </Paper>
-    </div>
+    </>
   );
 };
 

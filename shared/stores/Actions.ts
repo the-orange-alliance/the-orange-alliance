@@ -3,7 +3,7 @@ import { Action, ActionCreator } from "redux";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import Event from "@the-orange-alliance/api/lib/models/Event";
-import { Ranking } from "@the-orange-alliance/api/lib/models";
+import { Ranking, Insights } from "@the-orange-alliance/api/lib/models";
 
 export interface ISetTotalEventSize extends Action {
   type: Types.SET_TOTAL_EVENTS_COUNT;
@@ -61,6 +61,13 @@ export interface ISetEventRankings extends Action {
   type: Types.SET_EVENT_RANKINGS;
   payload: {
     rankings: Ranking[];
+  };
+}
+
+export interface ISetEventInsights extends Action {
+  type: Types.SET_EVENT_INSIGHTS;
+  payload: {
+    insights: Insights[];
   };
 }
 
@@ -125,6 +132,13 @@ export const setEventRankings: ActionCreator<ISetEventRankings> = (rankings: Ran
   }
 });
 
+export const setEventInsights: ActionCreator<ISetEventInsights> = (insights: Insights[]) => ({
+  type: Types.SET_EVENT_INSIGHTS,
+  payload: {
+    insights
+  }
+});
+
 export type ApplicationActions =
   | ISetTotalEventSize
   | ISetTotalTeamSize
@@ -136,4 +150,5 @@ export type ApplicationActions =
   | ISetEvents
   | ISetEventData
   | ISetEventMatches
-  | ISetEventRankings;
+  | ISetEventRankings
+  | ISetEventInsights;
