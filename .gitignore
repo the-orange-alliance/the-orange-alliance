@@ -8,3 +8,4 @@ build/
 stats/
 *.env
 *.map
+public/*.js.LICENSE.txt
