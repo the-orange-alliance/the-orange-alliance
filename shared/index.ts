@@ -15,20 +15,33 @@ import {
   setTotalTeamSize,
   setTeams,
   setMatches,
-  setEvents
-} from './stores/Actions';
-import * as Types from './stores/Types';
+  setEvents,
+  setEventData,
+  setEventMatches,
+  setEventRankings,
+  setEventInsights
+} from "./stores/Actions";
+import * as Types from "./stores/Types";
 import {
   IApplicationState,
   IApplicationStateJSON,
   IHighestScoringMatches,
   IHighestScoringMatchesJSON
-} from './stores/Types';
-import Reducer, { defaultState } from './stores/Reducer';
-import TOAProvider from './providers/TOAProvider';
+} from "./stores/Types";
+import Reducer, { defaultState } from "./stores/Reducer";
+import TOAProvider from "./providers/TOAProvider";
 
-import { IHomeProps, ITeamsProps, IEventsProps } from './PageProperties';
-import { getHomeData, getTeamsData, getEventsData } from './PageData';
+import { IHomeProps, ITeamsProps, IEventsProps } from "./PageProperties";
+import {
+  getHomeData,
+  getTeamsData,
+  getEventsData,
+  getEventData,
+  getEventMatches,
+  getEventRankings,
+  getEventInsights,
+  getEventAwards
+} from "./PageData";
 
 export {
   ApplicationActions,
@@ -61,5 +74,13 @@ export {
   IEventsProps,
   getHomeData,
   getTeamsData,
-  getEventsData
+  getEventsData,
+  getEventData,
+  setEventData,
+  getEventMatches,
+  setEventMatches,
+  getEventRankings,
+  setEventRankings,
+  getEventInsights,
+  setEventInsights
 };

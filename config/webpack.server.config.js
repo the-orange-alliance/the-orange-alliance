@@ -1,6 +1,6 @@
 const path = require("path");
 const copy = require("copy-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+// const TerserPlugin = require("terser-webpack-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const { AggressiveMergingPlugin } = require("webpack").optimize;
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
@@ -57,16 +57,18 @@ module.exports = {
     __dirname: false
   },
   optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()]
+    minimize: true
+    // minimizer: [new TerserPlugin()] // TODO - Fix later. Broken in package dependency update.
   },
   plugins: [
-    new copy([
-      {
-        from: path.resolve(__dirname, "../public"),
-        to: path.resolve(__dirname, "../build/public")
-      }
-    ]),
+    new copy({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../public"),
+          to: path.resolve(__dirname, "../build/public")
+        }
+      ]
+    }),
     new DefinePlugin({
       // <-- key to reducing React's size
       "process.env.NODE_ENV": JSON.stringify("production")

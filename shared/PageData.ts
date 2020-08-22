@@ -3,6 +3,8 @@ import Team from "@the-orange-alliance/api/lib/models/Team";
 import Event from "@the-orange-alliance/api/lib/models/Event";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import { IEventsProps, ITeamsProps } from "./PageProperties";
+import { Ranking, EventParticipant, Alliance, Insights, AwardRecipient } from "@the-orange-alliance/api/lib/models";
+import e from "express";
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;
@@ -168,4 +170,47 @@ export async function getEventsData(prevProps: IEventsProps): Promise<IEventsPro
       reject(e);
     }
   });
+}
+
+export async function getEventData(eventCode: string): Promise<Event> {
+  const event = await TOAProvider.getAPI().getEvent(eventCode);
+  const teams = getEventTeams(eventCode);
+  const rankings = getEventRankings(eventCode);
+  const matches = getEventMatches(eventCode);
+  const alliances = getEventAlliances(eventCode);
+  const awards = getEventAwards(eventCode);
+  event.rankings = await rankings;
+  event.matches = await matches;
+  event.teams = await teams;
+  event.alliances = await alliances;
+  event.awards = await awards;
+  return event;
+}
+
+export async function getEventMatches(eventCode: string): Promise<Match[]> {
+  return await TOAProvider.getAPI().getEventMatches(eventCode);
+}
+
+export async function getEventRankings(eventCode: string): Promise<Ranking[]> {
+  return await TOAProvider.getAPI().getEventRankings(eventCode);
+}
+
+export async function getEventTeams(eventCode: string): Promise<EventParticipant[]> {
+  return (await TOAProvider.getAPI().getEventTeams(eventCode)).sort(
+    (a, b) => parseInt(a.teamKey) - parseInt(b.teamKey)
+  );
+}
+
+export async function getEventAlliances(eventCode: string): Promise<Alliance[]> {
+  return await TOAProvider.getAPI().getEventAlliances(eventCode);
+}
+
+export async function getEventInsights(eventCode: string): Promise<Insights[]> {
+  const qualInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "quals"))[0];
+  const elimInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "elims"))[0];
+  return [qualInsights, elimInsights];
+}
+
+export async function getEventAwards(eventCode: string): Promise<AwardRecipient[]> {
+  return await TOAProvider.getAPI().getEventAwards(eventCode);
 }

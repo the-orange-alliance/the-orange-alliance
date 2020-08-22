@@ -71,3 +71,15 @@ a:hover:not(.MuiButtonBase-root) {
 .simple-match-table > tbody > tr > td > button {
   padding: 16px;
 }
+
+.event-tabs {
+  padding: 16px;
+}
+
+.event-match-table {
+  font-size: 2rem;
+}
+
+.event-match-table td .MuiButton-text {
+  padding: 15px;
+}

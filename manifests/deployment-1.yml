@@ -1,4 +1,4 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "toasites-6619"
@@ -16,4 +16,4 @@ spec:
         - name: "toasites-6619"
           image: "toarepository.azurecr.io/toasites"
           ports:
-          - containerPort: 3000
+            - containerPort: 3000
