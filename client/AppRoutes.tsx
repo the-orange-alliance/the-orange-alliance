@@ -77,7 +77,7 @@ const routes: IAppRoute[] = [
     name: "Streaming",
     translationKey: "drawer.streaming",
     icon: <VideoCamIcon />,
-    to: "/streaming",
+    to: "/stream",
     group: 0,
     component: () => <div>Streaming!</div>,
     visible: true
@@ -95,7 +95,7 @@ const routes: IAppRoute[] = [
     name: "Add Data",
     translationKey: "drawer.add_data",
     icon: <PublishIcon />,
-    to: "/upload",
+    to: "/add-data",
     group: 2,
     component: () => <div>Upload data</div>,
     visible: true
@@ -104,7 +104,7 @@ const routes: IAppRoute[] = [
     name: "API",
     translationKey: "drawer.api",
     icon: <CodeIcon />,
-    to: "/api",
+    to: "/apidocs",
     group: 2,
     component: () => <div>Application Programming Interface!</div>,
     visible: true
@@ -122,7 +122,7 @@ const routes: IAppRoute[] = [
     name: "Privacy & Terms",
     translationKey: "drawer.privacy_and_terms",
     icon: <GavelIcon />,
-    to: "/privacy",
+    to: "/privacy-terms",
     group: 3,
     component: () => <div>Privacy & Terms!</div>,
     visible: true
