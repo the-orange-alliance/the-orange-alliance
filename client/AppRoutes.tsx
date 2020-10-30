@@ -11,7 +11,7 @@ import TranslateIcon from "@material-ui/icons/Translate";
 import VideoCamIcon from "@material-ui/icons/Videocam";
 
 /* import all of our pages here */
-import { AboutPage, HomePage, TeamsPage, EventsPage, EventPage, LanguagePage } from "./pages";
+import { AboutPage, HomePage, TeamsPage, EventsPage, EventPage, LanguagePage, PrivacyPage, UploadPage } from "./pages";
 import { Button } from "@material-ui/core";
 import { changeLanguage } from "./i18n";
 
@@ -97,7 +97,7 @@ const routes: IAppRoute[] = [
     icon: <PublishIcon />,
     to: "/add-data",
     group: 2,
-    component: () => <div>Upload data</div>,
+    component: () => <UploadPage />,
     visible: true
   },
   {
@@ -124,7 +124,7 @@ const routes: IAppRoute[] = [
     icon: <GavelIcon />,
     to: "/privacy-terms",
     group: 3,
-    component: () => <div>Privacy & Terms!</div>,
+    component: () => <PrivacyPage />,
     visible: true
   }
 ];
