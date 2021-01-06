@@ -28,7 +28,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@the-orange-alliance/api": "0.0.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "https-proxy-agent": "^5.0.0",
     "i18next": "^19.7.0",
