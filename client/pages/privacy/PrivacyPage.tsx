@@ -8,7 +8,7 @@ const PrivacyPage = function () {
 
   return (
     <div>
-      <Typography variant='h4'>{t("privacy_and_terms")}</Typography>
+      <Typography variant='h4'>{t("drawer.privacy_and_terms")}</Typography>
       <Paper variant='outlined'>
         <Tabs
           value={value}
