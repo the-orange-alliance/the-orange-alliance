@@ -3,10 +3,15 @@ import { Route, Switch } from "react-router-dom";
 import AppTheme from "./AppTheme";
 import Routes, { IAppRoute } from "./AppRoutes";
 import AppResponsiveDrawer from "./AppResponsiveDrawer";
-import { ThemeProvider } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import Container from "@mui/material/Container";
 
 import "./App.scss";
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 class App extends React.Component {
   private readonly routeComponents: React.ReactElement[];
@@ -21,21 +26,23 @@ class App extends React.Component {
 
   public render() {
     return (
-      <ThemeProvider theme={AppTheme}>
-        <div>
-          <AppResponsiveDrawer
-            title={"The Orange Alliance"}
-            routes={Routes}
-            content={
-              <div>
-                <Container maxWidth={false}>
-                  <Switch>{this.routeComponents}</Switch>
-                </Container>
-              </div>
-            }
-          />
-        </div>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={AppTheme}>
+          <div>
+            <AppResponsiveDrawer
+              title={"The Orange Alliance"}
+              routes={Routes}
+              content={
+                <div>
+                  <Container maxWidth={false}>
+                    <Switch>{this.routeComponents}</Switch>
+                  </Container>
+                </div>
+              }
+            />
+          </div>
+        </ThemeProvider>
+      </StyledEngineProvider>
     );
   }
 }

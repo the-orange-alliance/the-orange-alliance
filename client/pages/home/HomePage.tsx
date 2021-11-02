@@ -1,8 +1,8 @@
 import * as React from "react";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import PeopleIcon from "@material-ui/icons/People";
-import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import PeopleIcon from "@mui/icons-material/People";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {
   ApplicationActions,
   ISetHighScoreElims,

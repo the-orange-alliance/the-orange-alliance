@@ -11,8 +11,8 @@ import {
   Grid,
   Button,
   Typography
-} from "@material-ui/core";
-import IconPlay from "@material-ui/icons/PlayCircleOutline";
+} from "@mui/material";
+import IconPlay from "@mui/icons-material/PlayCircleOutline";
 
 interface IProps {
   match: Match;

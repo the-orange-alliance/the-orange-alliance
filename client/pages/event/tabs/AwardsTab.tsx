@@ -10,17 +10,17 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemIcon
-} from "@material-ui/core";
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, TOAProvider, getEventRankings, setEventRankings } from "shared";
 import { Ranking, AwardRecipient } from "@the-orange-alliance/api/lib/models";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { sort } from "../../../util/award-utils";
-import IconOne from "@material-ui/icons/LooksOneOutlined";
-import IconTwo from "@material-ui/icons/LooksTwoOutlined";
-import IconThree from "@material-ui/icons/Looks3Outlined";
-import IconTrophy from "@material-ui/icons/EmojiEventsOutlined";
+import IconOne from "@mui/icons-material/LooksOneOutlined";
+import IconTwo from "@mui/icons-material/LooksTwoOutlined";
+import IconThree from "@mui/icons-material/Looks3Outlined";
+import IconTrophy from "@mui/icons-material/EmojiEventsOutlined";
 
 const translation = "pages.event.subpages.awards.";
 

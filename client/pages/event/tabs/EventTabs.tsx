@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tabs, AppBar, Tab } from "@material-ui/core";
+import { Tabs, AppBar, Tab } from "@mui/material";
 import { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab } from "./index";
 import { useTranslation } from "react-i18next";
 

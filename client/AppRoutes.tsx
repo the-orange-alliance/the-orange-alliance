@@ -1,18 +1,18 @@
 import * as React from "react";
 import { RouteProps, Redirect, useParams } from "react-router-dom";
-import CodeIcon from "@material-ui/icons/Code";
-import EventIcon from "@material-ui/icons/Event";
-import GavelIcon from "@material-ui/icons/Gavel";
-import HomeIcon from "@material-ui/icons/Home";
-import InfoIcon from "@material-ui/icons/Info";
-import PeopleIcon from "@material-ui/icons/People";
-import PublishIcon from "@material-ui/icons/Publish";
-import TranslateIcon from "@material-ui/icons/Translate";
-import VideoCamIcon from "@material-ui/icons/Videocam";
+import CodeIcon from "@mui/icons-material/Code";
+import EventIcon from "@mui/icons-material/Event";
+import GavelIcon from "@mui/icons-material/Gavel";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
+import PeopleIcon from "@mui/icons-material/People";
+import PublishIcon from "@mui/icons-material/Publish";
+import TranslateIcon from "@mui/icons-material/Translate";
+import VideoCamIcon from "@mui/icons-material/Videocam";
 
 /* import all of our pages here */
 import { AboutPage, HomePage, TeamsPage, EventsPage, EventPage, LanguagePage } from "./pages";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { changeLanguage } from "./i18n";
 
 export interface IAppRoute {

@@ -1,15 +1,17 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
+import AppBar from "@mui/material/AppBar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Hidden from "@mui/material/Hidden";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { useTheme, Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { Link as RouterLink } from "react-router-dom";
 import { IAppRoute } from "./AppRoutes";
 import ListItemLink from "./components/ListItemLink";
@@ -123,6 +125,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             edge='start'
             onClick={handleDrawerToggle}
             className={classes.menuButton}
+            size='large'
           >
             <MenuIcon />
           </IconButton>
@@ -150,7 +153,7 @@ export default function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             {drawer}
           </Drawer>
         </Hidden>
-        <Hidden smDown implementation='css'>
+        <Hidden mdDown implementation='css'>
           <Drawer
             classes={{
               paper: classes.drawerPaper

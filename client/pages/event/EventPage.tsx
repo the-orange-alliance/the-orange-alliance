@@ -6,11 +6,11 @@ import { connect, useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { useParams, useHistory } from "react-router";
 import { getEventData, setEventData } from "shared";
-import { Typography, Paper, Fade } from "@material-ui/core";
+import { Typography, Paper, Fade } from "@mui/material";
 
-import IconCalendar from "@material-ui/icons/CalendarToday";
-import IconLocationPin from "@material-ui/icons/LocationOn";
-import IconProviderBadge from "@material-ui/icons/VerifiedUser";
+import IconCalendar from "@mui/icons-material/CalendarToday";
+import IconLocationPin from "@mui/icons-material/LocationOn";
+import IconProviderBadge from "@mui/icons-material/VerifiedUser";
 import { DataSource } from "@the-orange-alliance/api/lib/models/types/DataSource";
 import EventTabs from "./tabs/EventTabs";
 

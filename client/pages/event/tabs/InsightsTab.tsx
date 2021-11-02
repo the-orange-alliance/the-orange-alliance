@@ -13,7 +13,7 @@ import {
   ListItem,
   Typography,
   ListItemText
-} from "@material-ui/core";
+} from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, setEventMatches, getEventMatches, getEventInsights, setEventInsights } from "shared";
 import { Match, EventParticipant, Alliance, Insights } from "@the-orange-alliance/api/lib/models";

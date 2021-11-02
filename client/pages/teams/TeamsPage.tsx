@@ -1,10 +1,10 @@
 import * as React from "react";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import Pagination from "@material-ui/lab/Pagination";
-import Typography from "@material-ui/core/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import Pagination from "@mui/material/Pagination";
+import Typography from "@mui/material/Typography";
 
 import SimpleTeamPaper from "../../components/SimpleTeamPaper";
 import Team from "@the-orange-alliance/api/lib/models/Team";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { FormControl, Input, InputAdornment, InputLabel } from "@material-ui/core";
+import { FormControl, Input, InputAdornment, InputLabel } from "@mui/material";
 
 interface IProps {
   teams: Team[];
