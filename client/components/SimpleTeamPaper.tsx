@@ -1,17 +1,31 @@
 import * as React from "react";
-import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar/Avatar";
+import { Team } from "@the-orange-alliance/api/lib/models";
 
-const SimpleTeamPaper = function () {
+interface IProps {
+  team: Team;
+}
+
+const SimpleTeamPaper = (props: IProps) => {
+  const { team } = props;
+
+  const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+
+  const primaryText =
+    team.teamNameShort && team.teamNameShort.length > 0 ? team.teamNameShort : `Team #${team.teamKey}`;
+  const city = capitalizeFirstLetter(team.city ? `${team.city}, ` : "");
+  const stateProv = (team.stateProv ? `${team.stateProv}, ` : "").toUpperCase();
+  const country = (team.country ? `${team.country}` : "").toUpperCase();
+  const secondaryText = city + stateProv + country;
+
   return (
     <ListItem button>
       <ListItemAvatar>
-        <Avatar>FIM</Avatar>
+        <>{team.teamKey}</>
       </ListItemAvatar>
-      <ListItemText primary={"Team #33"} secondary={"Killer Bees"} />
+      <ListItemText primary={primaryText} secondary={secondaryText} />
     </ListItem>
   );
 };

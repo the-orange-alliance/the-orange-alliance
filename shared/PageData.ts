@@ -4,7 +4,6 @@ import Event from "@the-orange-alliance/api/lib/models/Event";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 import { IEventsProps, ITeamsProps } from "./PageProperties";
 import { Ranking, EventParticipant, Alliance, Insights, AwardRecipient } from "@the-orange-alliance/api/lib/models";
-import e from "express";
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;

@@ -9,31 +9,43 @@ import Typography from "@material-ui/core/Typography";
 import SimpleTeamPaper from "../../components/SimpleTeamPaper";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import { ApplicationActions, IApplicationState, ISetTeams, setTeams, getTeamsData, ITeamsProps } from "shared";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { FormControl, Input, InputAdornment, InputLabel } from "@material-ui/core";
 
 interface IProps {
   teams: Team[];
   setTeams: (teams: Team[]) => ISetTeams;
 }
 
-const TeamsPage = function () {
+const TeamsPage = () => {
   const { t } = useTranslation();
   const teams = useSelector((state: IApplicationState) => state.teams);
   const dispatch = useDispatch();
+
+  const [shownTeamsLeft, setShownTeamsLeft] = useState<JSX.Element[]>([]);
+  const [shownTeamsRight, setShownTeamsRight] = useState<JSX.Element[]>([]);
+
   React.useEffect(() => {
     getTeamsData({ teams }).then((props: ITeamsProps) => {
       dispatch(setTeams(props.teams));
+      setPage(1, props.teams);
     });
   }, []);
 
-  function renderList(count: number) {
-    const items: any[] = [];
-    for (let i = 0; i < count; i++) {
-      items.push(<SimpleTeamPaper key={count} />);
-    }
-    return items;
+  function onPageChange(e: React.ChangeEvent<unknown>, page: number) {
+    setPage(page);
+  }
+
+  function setPage(page: number, custTeams?: Team[]) {
+    if (!custTeams) custTeams = teams;
+    const startLocation = (page - 1) * 20;
+    const left = custTeams.slice(startLocation, startLocation + 10);
+    const right = custTeams.slice(startLocation + 10, startLocation + 20);
+    setShownTeamsLeft(left.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />));
+    setShownTeamsRight(right.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />));
   }
 
   return (
@@ -43,15 +55,19 @@ const TeamsPage = function () {
       </Typography>
       <Card>
         <CardContent>
+          <FormControl fullWidth>
+            <InputLabel htmlFor='teams-search'>Search Teams</InputLabel>
+            <Input id='teams-search' />
+          </FormControl>
           <Grid container>
             <Grid item xs={12} sm={12} md={6}>
-              <List>{renderList(10)}</List>
+              <List>{shownTeamsLeft}</List>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-              <List>{renderList(10)}</List>
+              <List>{shownTeamsRight}</List>
             </Grid>
           </Grid>
-          <Pagination count={10} color='primary' />
+          <Pagination count={Math.ceil(teams.length / 20)} color='primary' onChange={onPageChange} />
         </CardContent>
       </Card>
     </div>
