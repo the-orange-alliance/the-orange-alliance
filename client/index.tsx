@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
 import { createStore } from "redux";
 import { useSSR } from "react-i18next";
 import "./i18n";
@@ -10,6 +9,7 @@ import { Reducer as reducer, defaultState, IApplicationState, IApplicationStateJ
 import Event from "@the-orange-alliance/api/lib/models/Event";
 import Team from "@the-orange-alliance/api/lib/models/Team";
 import Match from "@the-orange-alliance/api/lib/models/Match";
+import { BrowserRouter } from "react-router-dom";
 
 const stateCache: IApplicationStateJSON = (window as any).__REDUX_STATE_CACHE__;
 delete (window as any).__REDUX_STATE_CACHE__;

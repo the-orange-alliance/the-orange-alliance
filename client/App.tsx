@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch } from "react-router-dom";
 import AppTheme from "./AppTheme";
 import Routes, { IAppRoute } from "./AppRoutes";
 import AppResponsiveDrawer from "./AppResponsiveDrawer";
