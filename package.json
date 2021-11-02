@@ -29,7 +29,6 @@
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.6",
     "@mui/styles": "^5.0.2",
-    "@mui/x-data-grid": "^5.0.0-beta.6",
     "@the-orange-alliance/api": "0.0.7",
     "axios": "^0.21.2",
     "bootstrap": "^5.1.3",
