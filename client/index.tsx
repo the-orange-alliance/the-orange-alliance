@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { useSSR } from "react-i18next";
 import "./i18n";
+import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
 import { Reducer as reducer, defaultState, IApplicationState, IApplicationStateJSON } from "shared";
 import Event from "@the-orange-alliance/api/lib/models/Event";
@@ -21,7 +22,7 @@ if (!Array.isArray(stateCache)) {
 }
 
 // MAKE SURE THIS VARIABLE IS SET CORRECTLY - TODO: Have CI handle this? Post-build?
-const isDev: boolean = false;
+const isDev = false;
 const store = createStore(reducer, state);
 
 function FullApp() {

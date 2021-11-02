@@ -67,7 +67,9 @@ const TeamsPage = () => {
               <List>{shownTeamsRight}</List>
             </Grid>
           </Grid>
-          <Pagination count={Math.ceil(teams.length / 20)} color='primary' onChange={onPageChange} />
+          <div className={"w-100 d-flex justify-content-center"}>
+            <Pagination count={Math.ceil(teams.length / 20)} color='primary' onChange={onPageChange} />
+          </div>
         </CardContent>
       </Card>
     </div>

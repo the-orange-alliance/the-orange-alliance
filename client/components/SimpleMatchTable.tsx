@@ -55,7 +55,9 @@ class SimpleMatchTable extends React.Component<IProps> {
     const redView = redAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align='center'>
-          <Button fullWidth>{p.teamKey}</Button>
+          <Button fullWidth color={"secondary"}>
+            {p.teamKey}
+          </Button>
         </TableCell>
       );
     });
@@ -63,7 +65,9 @@ class SimpleMatchTable extends React.Component<IProps> {
       <TableRow className={"red-bg"}>
         {redView}
         <TableCell>
-          <Button fullWidth>{match.redScore}</Button>
+          <Button fullWidth color={"secondary"}>
+            {match.redScore}
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -77,7 +81,9 @@ class SimpleMatchTable extends React.Component<IProps> {
     const blueView = blueAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align='center'>
-          <Button fullWidth>{p.teamKey}</Button>
+          <Button fullWidth color={"secondary"}>
+            {p.teamKey}
+          </Button>
         </TableCell>
       );
     });
@@ -85,7 +91,9 @@ class SimpleMatchTable extends React.Component<IProps> {
       <TableRow className={"blue-bg"}>
         {blueView}
         <TableCell>
-          <Button fullWidth>{match.blueScore}</Button>
+          <Button fullWidth color={"secondary"}>
+            {match.blueScore}
+          </Button>
         </TableCell>
       </TableRow>
     );

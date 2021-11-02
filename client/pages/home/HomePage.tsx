@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import PeopleIcon from "@mui/icons-material/People";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {
-  ApplicationActions,
   ISetHighScoreElims,
   ISetHighScoreOverall,
   ISetHighScoreQuals,
@@ -17,12 +16,10 @@ import {
   setTotalTeamSize,
   IApplicationState,
   IHighestScoringMatches,
-  TOAProvider,
   getHomeData,
   IHomeProps
 } from "shared";
-import { Dispatch } from "redux";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Match from "@the-orange-alliance/api/lib/models/Match";
 
 // Component declarations
@@ -44,7 +41,7 @@ interface IProps {
   setHighScoreElims: (match: Match) => ISetHighScoreElims;
 }
 
-const HomePage = function () {
+const HomePage = () => {
   const { t } = useTranslation();
   const eventSize = useSelector((state: IApplicationState) => state.eventsTotal);
   const teamSize = useSelector((state: IApplicationState) => state.teamsTotal);

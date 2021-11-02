@@ -17,9 +17,12 @@ module.exports = {
       "react-virtualized-auto-sizer",
       "react-window",
       "redux",
-      "@material-ui/core",
-      "@material-ui/icons",
-      "@material-ui/lab"
+      "@mui/icons-material",
+      "@mui/material",
+      "@mui/styles",
+      "@emotion/react",
+      "@emotion/styled",
+      "bootstrap"
     ]
   },
   output: {

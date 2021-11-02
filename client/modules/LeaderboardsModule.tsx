@@ -15,7 +15,7 @@ interface IProps {
   highScoreMatches: IHighestScoringMatches;
 }
 
-const LeaderboardsModule = function ({ highScoreMatches }: IProps) {
+const LeaderboardsModule = ({ highScoreMatches }: IProps) => {
   const { t } = useTranslation();
 
   function renderMatch(title: string, subtitle: string, match: Match) {
