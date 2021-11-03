@@ -12,7 +12,7 @@ import { ApplicationActions, IApplicationState, ISetTeams, setTeams, getTeamsDat
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { FormControl, Input, InputAdornment, InputLabel } from "@mui/material";
 
 interface IProps {
@@ -27,6 +27,11 @@ const TeamsPage = () => {
 
   const [shownTeamsLeft, setShownTeamsLeft] = useState<JSX.Element[]>([]);
   const [shownTeamsRight, setShownTeamsRight] = useState<JSX.Element[]>([]);
+  const [currentTeams, setCurrentTeams] = useState<Team[]>(teams);
+  const [numPages, setNumPages] = useState<number>(teams.length);
+
+  const doneTypingInt = 500;
+  let typingTimer: NodeJS.Timeout;
 
   React.useEffect(() => {
     getTeamsData({ teams }).then((props: ITeamsProps) => {
@@ -39,13 +44,31 @@ const TeamsPage = () => {
     setPage(page);
   }
 
+  // Pages ALWAYS START AT 1
   function setPage(page: number, custTeams?: Team[]) {
-    if (!custTeams) custTeams = teams;
+    if (!custTeams) custTeams = currentTeams;
+    setNumPages(Math.ceil(custTeams.length / 20));
     const startLocation = (page - 1) * 20;
     const left = custTeams.slice(startLocation, startLocation + 10);
     const right = custTeams.slice(startLocation + 10, startLocation + 20);
     setShownTeamsLeft(left.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />));
     setShownTeamsRight(right.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />));
+  }
+
+  function teamSearchOnChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      const query = event.target.value.toLowerCase();
+      const newTeams = teams.filter(
+        (team) =>
+          String(team.teamNumber).includes(query) ||
+          (team.teamNameShort && team.teamNameShort.toLowerCase().includes(query)) ||
+          (team.city && team.city.toLowerCase().includes(query)) ||
+          (team.country && team.country.toLowerCase().includes(query))
+      );
+      setCurrentTeams(newTeams);
+      setPage(1, newTeams);
+    }, doneTypingInt);
   }
 
   return (
@@ -56,8 +79,8 @@ const TeamsPage = () => {
       <Card>
         <CardContent>
           <FormControl fullWidth>
-            <InputLabel htmlFor='teams-search'>Search Teams</InputLabel>
-            <Input id='teams-search' />
+            <InputLabel htmlFor='teams-search'>{t("pages.teams.filter")}</InputLabel>
+            <Input id='teams-search' onChange={teamSearchOnChange} />
           </FormControl>
           <Grid container>
             <Grid item xs={12} sm={12} md={6}>
@@ -68,58 +91,13 @@ const TeamsPage = () => {
             </Grid>
           </Grid>
           <div className={"w-100 d-flex justify-content-center"}>
-            <Pagination count={Math.ceil(teams.length / 20)} color='primary' onChange={onPageChange} />
+            <Pagination count={numPages} color='primary' onChange={onPageChange} />
           </div>
         </CardContent>
       </Card>
     </div>
   );
 };
-
-/* class TeamsPage extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
-  public componentDidMount(): void {
-    const { teams, setTeams } = this.props;
-
-    getTeamsData({ teams }).then((props: ITeamsProps) => {
-      setTeams(props.teams);
-    });
-  }
-
-  public render() {
-    return (
-      <div>
-        <Typography variant="h4" gutterBottom>
-          Teams
-        </Typography>
-        <Card>
-          <CardContent>
-            <Grid container>
-              <Grid item xs={12} sm={12} md={6}>
-                <List>{this.renderList(10)}</List>
-              </Grid>
-              <Grid item xs={12} sm={12} md={6}>
-                <List>{this.renderList(10)}</List>
-              </Grid>
-            </Grid>
-            <Pagination count={10} color="primary" />
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  private renderList(count: number) {
-    const items: any[] = [];
-    for (let i = 0; i < count; i++) {
-      items.push(<SimpleTeamPaper key={count} />);
-    }
-    return items;
-  }
-} */
 
 function mapStateToProps(state: IApplicationState) {
   return {
