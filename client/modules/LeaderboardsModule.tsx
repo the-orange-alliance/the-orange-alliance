@@ -8,7 +8,7 @@ import { IHighestScoringMatches } from "shared";
 
 /* Components */
 import SimpleMatchTable from "../components/SimpleMatchTable";
-import Match from "@the-orange-alliance/api/lib/models/Match";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
 import { useTranslation } from "react-i18next";
 
 interface IProps {

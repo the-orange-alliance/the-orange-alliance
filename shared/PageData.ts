@@ -1,13 +1,15 @@
 import { IHomeProps, TOAProvider } from "./";
-import Team from "@the-orange-alliance/api/lib/models/Team";
-import Event from "@the-orange-alliance/api/lib/models/Event";
-import Match from "@the-orange-alliance/api/lib/models/Match";
-import { IEventsProps, ITeamsProps } from "./PageProperties";
-import { Ranking, EventParticipant, Alliance, Insights, AwardRecipient } from "@the-orange-alliance/api/lib/models";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
+import { IEventsProps, IRegionProps, ISeasonProps, ITeamsProps } from "./PageProperties";
+import { Ranking, EventParticipant, Alliance, Insights, AwardRecipient } from "@the-orange-alliance/api/lib/esm/models";
+import Season from "@the-orange-alliance/api/lib/esm/models/Season";
+import Region from "@the-orange-alliance/api/lib/esm/models/Region";
 
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   const { eventSize, teamSize, highScoreMatches } = prevProps;
-  const promises: Array<Promise<any>> = [];
+  const promises: Promise<any>[] = [];
 
   if (eventSize <= 0) {
     promises.push(TOAProvider.getAPI().getEventCount());
@@ -103,7 +105,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
 
 export async function getTeamsData(prevProps: ITeamsProps): Promise<ITeamsProps> {
   const { teams } = prevProps;
-  const promises: Array<Promise<any>> = [];
+  const promises: Promise<any>[] = [];
 
   if (teams.length <= 0) {
     promises.push(
@@ -111,8 +113,8 @@ export async function getTeamsData(prevProps: ITeamsProps): Promise<ITeamsProps>
         try {
           TOAProvider.getAPI()
             .getTeams()
-            .then((teams: Team[]) => {
-              resolve(teams);
+            .then((freshTeams: Team[]) => {
+              resolve(freshTeams);
             });
         } catch (e) {
           reject(e);
@@ -136,18 +138,94 @@ export async function getTeamsData(prevProps: ITeamsProps): Promise<ITeamsProps>
   });
 }
 
-export async function getEventsData(prevProps: IEventsProps): Promise<IEventsProps> {
-  const { events } = prevProps;
-  const promises: Array<Promise<any>> = [];
+export async function getRegionsData(prevProps: IRegionProps): Promise<IRegionProps> {
+  const { regions } = prevProps;
+  const promises: Promise<any>[] = [];
+
+  if (regions.length <= 0) {
+    promises.push(
+      new Promise<any>((resolve, reject) => {
+        try {
+          TOAProvider.getAPI()
+            .getRegions()
+            .then((freshRegions: Region[]) => {
+              resolve(freshRegions);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      })
+    );
+  } else {
+    promises.push(
+      new Promise<any>((resolve) => resolve(regions))
+    );
+  }
+
+  return new Promise<IRegionProps>((resolve, reject) => {
+    try {
+      Promise.all(promises).then((results: any[]) => {
+        resolve({ regions: results[0] });
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export async function getSeasonsData(prevProps: ISeasonProps): Promise<ISeasonProps> {
+  const { seasons } = prevProps;
+  const promises: Promise<any>[] = [];
+
+  if (seasons.length <= 0) {
+    promises.push(
+      new Promise<any>((resolve, reject) => {
+        try {
+          TOAProvider.getAPI()
+            .getSeasons()
+            .then((freshSeasons: Season[]) => {
+              resolve(freshSeasons);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      })
+    );
+  } else {
+    promises.push(
+      new Promise<any>((resolve) => resolve(seasons))
+    );
+  }
+
+  return new Promise<ISeasonProps>((resolve, reject) => {
+    try {
+      Promise.all(promises).then((results: any[]) => {
+        resolve({ seasons: results[0] });
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+export async function getEventsData(prevProps: IEventsProps, seasonKey: string): Promise<IEventsProps> {
+  let { events } = prevProps;
+  const promises: Promise<any>[] = [];
+
+  // Quick and dirty way to figure out what season we currently have
+  if (events.length > 0 && events[0].seasonKey !== seasonKey) {
+    // Requested season key does not match, invalidate data
+    events = [];
+  }
 
   if (events.length <= 0) {
     promises.push(
       new Promise<any>((resolve, reject) => {
         try {
           TOAProvider.getAPI()
-            .getEvents()
-            .then((events: Event[]) => {
-              resolve(events);
+            .getEvents({ season_key: seasonKey, includeTeamCount: true })
+            .then((freshEvents: Event[]) => {
+              resolve(freshEvents);
             });
         } catch (e) {
           reject(e);
@@ -206,6 +284,7 @@ export async function getEventAlliances(eventCode: string): Promise<Alliance[]> 
 
 export async function getEventInsights(eventCode: string): Promise<Insights[]> {
   const qualInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "quals"))[0];
+
   const elimInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "elims"))[0];
   return [qualInsights, elimInsights];
 }

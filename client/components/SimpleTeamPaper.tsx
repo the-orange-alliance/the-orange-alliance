@@ -2,7 +2,7 @@ import * as React from "react";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
-import { Team } from "@the-orange-alliance/api/lib/models";
+import { Team } from "@the-orange-alliance/api/lib/esm/models";
 
 interface IProps {
   team: Team;

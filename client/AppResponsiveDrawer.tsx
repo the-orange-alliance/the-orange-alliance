@@ -55,7 +55,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3)
+      padding: theme.spacing(2),
+      background: "#f5f6f7",
+      height: "100vh"
     }
   })
 );

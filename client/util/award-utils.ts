@@ -1,4 +1,4 @@
-import { AwardRecipient } from "@the-orange-alliance/api/lib/models";
+import { AwardRecipient } from "@the-orange-alliance/api/lib/esm/models";
 
 export function sort(items: AwardRecipient[]) {
   items.sort(function (a, b) {

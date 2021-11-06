@@ -7,9 +7,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Match from "@the-orange-alliance/api/lib/models/Match";
-import MatchParticipant from "@the-orange-alliance/api/lib/models/MatchParticipant";
-import MatchStations from "@the-orange-alliance/api/lib/models/types/MatchStations";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
+import MatchParticipant from "@the-orange-alliance/api/lib/esm/models/MatchParticipant";
+import MatchStations from "@the-orange-alliance/api/lib/esm/models/types/MatchStations";
 
 interface IProps {
   match: Match;

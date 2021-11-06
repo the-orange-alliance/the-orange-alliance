@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, setEventMatches, getEventMatches, getEventInsights, setEventInsights } from "shared";
-import { Match, EventParticipant, Alliance, Insights } from "@the-orange-alliance/api/lib/models";
+import { Match, EventParticipant, Alliance, Insights } from "@the-orange-alliance/api/lib/esm/models";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 

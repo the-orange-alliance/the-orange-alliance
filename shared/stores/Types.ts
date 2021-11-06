@@ -3,10 +3,12 @@
  * given time the state itself may not hold the most current up-to-date information.
  * At this point, it is the web application's job to recognize this, and update the state properly.
  */
-import Match from "@the-orange-alliance/api/lib/models/Match";
-import Team from "@the-orange-alliance/api/lib/models/Team";
-import Event from "@the-orange-alliance/api/lib/models/Event";
-import Insights from "@the-orange-alliance/api/lib/models/Insights";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
+import Insights from "@the-orange-alliance/api/lib/esm/models/Insights";
+import Region from "@the-orange-alliance/api/lib/esm/models/Region";
+import Season from "@the-orange-alliance/api/lib/esm/models/Season";
 
 export interface IApplicationState {
   eventsTotal: number;
@@ -15,6 +17,8 @@ export interface IApplicationState {
   matches: Match[];
   teams: Team[];
   events: Event[];
+  regions: Region[];
+  seasons: Season[];
   currentEvent: Event;
   currentEventInsights: Insights[];
 }
@@ -80,3 +84,9 @@ export type SET_EVENT_INSIGHTS = typeof SET_EVENT_INSIGHTS;
 
 export const SET_EVENT_AWARDS: string = "SET_EVENT_AWARDS";
 export type SET_EVENT_AWARDS = typeof SET_EVENT_AWARDS;
+
+export const SET_REGIONS: string = "SET_REGIONS";
+export type SET_REGIONS = typeof SET_EVENT_AWARDS;
+
+export const SET_SEASONS: string = "SET_SEASONS";
+export type SET_SEASONS = typeof SET_SEASONS;

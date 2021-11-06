@@ -2,7 +2,7 @@ import * as React from "react";
 import { Table, TableCell, TableHead, TableBody, TableRow } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, setEventMatches, getEventMatches } from "shared";
-import { Match, EventParticipant, Alliance } from "@the-orange-alliance/api/lib/models";
+import { Match, EventParticipant, Alliance } from "@the-orange-alliance/api/lib/esm/models";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 

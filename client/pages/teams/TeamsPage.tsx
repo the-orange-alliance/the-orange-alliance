@@ -7,7 +7,7 @@ import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 
 import SimpleTeamPaper from "../../components/SimpleTeamPaper";
-import Team from "@the-orange-alliance/api/lib/models/Team";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
 import { ApplicationActions, IApplicationState, ISetTeams, setTeams, getTeamsData, ITeamsProps } from "shared";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";

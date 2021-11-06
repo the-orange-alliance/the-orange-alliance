@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, TOAProvider, getEventRankings, setEventRankings } from "shared";
-import { Ranking, AwardRecipient } from "@the-orange-alliance/api/lib/models";
+import { Ranking, AwardRecipient } from "@the-orange-alliance/api/lib/esm/models";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { sort } from "../../../util/award-utils";

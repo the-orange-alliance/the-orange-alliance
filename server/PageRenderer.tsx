@@ -15,13 +15,15 @@ import {
   getEventsData
 } from "shared";
 import App from "../client/App";
-import Event from "@the-orange-alliance/api/lib/models/Event";
-import Team from "@the-orange-alliance/api/lib/models/Team";
-import Match from "@the-orange-alliance/api/lib/models/Match";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import MatchParticipant from "@the-orange-alliance/api/lib/models/MatchParticipant";
+import MatchParticipant from "@the-orange-alliance/api/lib/esm/models/MatchParticipant";
 import { I18nextProvider } from "react-i18next";
+
+const currentSeason = "2122";
 
 export async function render(req: Request, file: Buffer): Promise<string> {
   const initialState: IApplicationState = await loadPageData(req, req.params);
@@ -101,7 +103,7 @@ async function loadPageData(req: any, params?: any): Promise<IApplicationState> 
       };
     case "/events":
       const defaultEventsProps: IEventsProps = { events: [] };
-      const eventsProps: IEventsProps = await getEventsData(defaultEventsProps);
+      const eventsProps: IEventsProps = await getEventsData(defaultEventsProps, currentSeason);
       return {
         ...defaultState,
         events: eventsProps.events

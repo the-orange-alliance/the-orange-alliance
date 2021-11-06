@@ -9,6 +9,7 @@
     "object-literal-shorthand": false,
     "member-ordering": false,
     "ordered-imports": false,
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "radix": false
   }
 }

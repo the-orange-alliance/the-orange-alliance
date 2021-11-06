@@ -20,7 +20,7 @@ import {
   IHomeProps
 } from "shared";
 import { useSelector, useDispatch } from "react-redux";
-import Match from "@the-orange-alliance/api/lib/models/Match";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
 
 // Component declarations
 import StatisticCard from "../../components/StatisticCard";

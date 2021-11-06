@@ -8,6 +8,8 @@ import {
   ISetTeams,
   ISetMatches,
   ISetEvents,
+  ISetRegions,
+  ISetSeasons,
   setHighScoreElims,
   setHighScoreOverall,
   setHighScoreQuals,
@@ -16,6 +18,8 @@ import {
   setTeams,
   setMatches,
   setEvents,
+  setRegions,
+  setSeasons,
   setEventData,
   setEventMatches,
   setEventRankings,
@@ -31,7 +35,7 @@ import {
 import Reducer, { defaultState } from "./stores/Reducer";
 import TOAProvider from "./providers/TOAProvider";
 
-import { IHomeProps, ITeamsProps, IEventsProps } from "./PageProperties";
+import { IHomeProps, ITeamsProps, IEventsProps, IRegionProps, ISeasonProps } from "./PageProperties";
 import {
   getHomeData,
   getTeamsData,
@@ -40,7 +44,9 @@ import {
   getEventMatches,
   getEventRankings,
   getEventInsights,
-  getEventAwards
+  getEventAwards,
+  getRegionsData,
+  getSeasonsData
 } from "./PageData";
 
 export {
@@ -53,6 +59,8 @@ export {
   ISetMatches,
   ISetTeams,
   ISetEvents,
+  ISetRegions,
+  ISetSeasons,
   setHighScoreElims,
   setHighScoreOverall,
   setHighScoreQuals,
@@ -61,6 +69,8 @@ export {
   setTeams,
   setMatches,
   setEvents,
+  setRegions,
+  setSeasons,
   Types,
   Reducer,
   defaultState,
@@ -72,11 +82,15 @@ export {
   IHomeProps,
   ITeamsProps,
   IEventsProps,
+  IRegionProps,
+  ISeasonProps,
   getHomeData,
   getTeamsData,
   getEventsData,
   getEventData,
   setEventData,
+  getSeasonsData,
+  getRegionsData,
   getEventMatches,
   setEventMatches,
   getEventRankings,

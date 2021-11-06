@@ -1,5 +1,5 @@
 import * as React from "react";
-import Event from "@the-orange-alliance/api/lib/models/Event";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
 import { IApplicationState, IEventsProps, getEventsData, ISetEvents, ApplicationActions, setEvents } from "shared";
 import { Dispatch } from "redux";
 import { connect, useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import { Typography, Paper, Fade } from "@mui/material";
 import IconCalendar from "@mui/icons-material/CalendarToday";
 import IconLocationPin from "@mui/icons-material/LocationOn";
 import IconProviderBadge from "@mui/icons-material/VerifiedUser";
-import { DataSource } from "@the-orange-alliance/api/lib/models/types/DataSource";
+import { DataSource } from "@the-orange-alliance/api/lib/esm/models/types/DataSource";
 import EventTabs from "./tabs/EventTabs";
 
 const EventPage = function () {

@@ -6,8 +6,10 @@
  * way to keep structure between the server/client, and abstract their logic.
  */
 import { IHighestScoringMatches } from "./";
-import Event from "@the-orange-alliance/api/lib/models/Event";
-import Team from "@the-orange-alliance/api/lib/models/Team";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
+import Season from "@the-orange-alliance/api/lib/esm/models/Season";
+import Region from "@the-orange-alliance/api/lib/esm/models/Region";
 
 export interface IHomeProps {
   eventSize: number;
@@ -21,4 +23,12 @@ export interface ITeamsProps {
 
 export interface IEventsProps {
   events: Event[];
+}
+
+export interface IRegionProps {
+  regions: Region[];
+}
+
+export interface ISeasonProps {
+  seasons: Season[];
 }

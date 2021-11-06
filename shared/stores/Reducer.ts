@@ -13,10 +13,12 @@ import {
   ISetEventData,
   ISetEventMatches,
   ISetEventRankings,
-  ISetEventInsights
+  ISetEventInsights,
+  ISetRegions,
+  ISetSeasons
 } from "./Actions";
-import Match from "@the-orange-alliance/api/lib/models/Match";
-import Event from "@the-orange-alliance/api/lib/models/Event";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
 
 export const defaultState: Types.IApplicationState = {
   eventsTotal: 0,
@@ -29,6 +31,8 @@ export const defaultState: Types.IApplicationState = {
   matches: [],
   teams: [],
   events: [],
+  regions: [],
+  seasons: [],
   currentEvent: new Event(),
   currentEventInsights: []
 };
@@ -97,6 +101,12 @@ const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
     case Types.SET_EVENT_INSIGHTS:
       action = action as ISetEventInsights;
       return { ...state, currentEventInsights: action.payload.insights };
+    case Types.SET_REGIONS:
+      action = action as ISetRegions;
+      return { ...state, regions: action.payload.regions };
+    case Types.SET_SEASONS:
+      action = action as ISetSeasons;
+      return { ...state, season: action.payload.seasons };
     default:
       return state;
   }

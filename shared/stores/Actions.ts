@@ -1,9 +1,9 @@
 import * as Types from "./Types";
 import { Action, ActionCreator } from "redux";
-import Match from "@the-orange-alliance/api/lib/models/Match";
-import Team from "@the-orange-alliance/api/lib/models/Team";
-import Event from "@the-orange-alliance/api/lib/models/Event";
-import { Ranking, Insights } from "@the-orange-alliance/api/lib/models";
+import Match from "@the-orange-alliance/api/lib/esm/models/Match";
+import Team from "@the-orange-alliance/api/lib/esm/models/Team";
+import Event from "@the-orange-alliance/api/lib/esm/models/Event";
+import { Ranking, Insights, Season, Region } from "@the-orange-alliance/api/lib/esm/models";
 
 export interface ISetTotalEventSize extends Action {
   type: Types.SET_TOTAL_EVENTS_COUNT;
@@ -68,6 +68,20 @@ export interface ISetEventInsights extends Action {
   type: Types.SET_EVENT_INSIGHTS;
   payload: {
     insights: Insights[];
+  };
+}
+
+export interface ISetRegions extends Action {
+  type: Types.SET_REGIONS;
+  payload: {
+    regions: Region[];
+  };
+}
+
+export interface ISetSeasons extends Action {
+  type: Types.SET_SEASONS;
+  payload: {
+    seasons: Season[];
   };
 }
 
@@ -139,6 +153,20 @@ export const setEventInsights: ActionCreator<ISetEventInsights> = (insights: Ins
   }
 });
 
+export const setRegions: ActionCreator<ISetRegions> = (regions: Region[]) => ({
+  type: Types.SET_REGIONS,
+  payload: {
+    regions
+  }
+});
+
+export const setSeasons: ActionCreator<ISetSeasons> = (seasons: Season[]) => ({
+  type: Types.SET_SEASONS,
+  payload: {
+    seasons
+  }
+});
+
 export type ApplicationActions =
   | ISetTotalEventSize
   | ISetTotalTeamSize
@@ -151,4 +179,6 @@ export type ApplicationActions =
   | ISetEventData
   | ISetEventMatches
   | ISetEventRankings
-  | ISetEventInsights;
+  | ISetEventInsights
+  | ISetRegions
+  | ISetSeasons;

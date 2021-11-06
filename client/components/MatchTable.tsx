@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Match, MatchParticipant } from "@the-orange-alliance/api/lib/models";
+import { Match, MatchParticipant } from "@the-orange-alliance/api/lib/esm/models";
 import {
   Paper,
   Table,
