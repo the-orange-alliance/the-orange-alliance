@@ -7,12 +7,14 @@ import { Ranking, EventParticipant, Alliance, Insights, AwardRecipient } from "@
 import Season from "@the-orange-alliance/api/lib/esm/models/Season";
 import Region from "@the-orange-alliance/api/lib/esm/models/Region";
 
+export const currentSeason = "2122";
+
 export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
-  const { eventSize, teamSize, highScoreMatches } = prevProps;
+  const { eventSize, teamSize, highScoreMatches, matchSize } = prevProps;
   const promises: Promise<any>[] = [];
 
   if (eventSize <= 0) {
-    promises.push(TOAProvider.getAPI().getEventCount());
+    promises.push(TOAProvider.getAPI().getEventCount({ season_key: currentSeason }));
   } else {
     promises.push(
       new Promise<any>((resolve) => resolve(eventSize))
@@ -20,7 +22,15 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
   }
 
   if (teamSize <= 0) {
-    promises.push(TOAProvider.getAPI().getTeamCount());
+    promises.push(TOAProvider.getAPI().getTeamCount({ last_active: currentSeason }));
+  } else {
+    promises.push(
+      new Promise<any>((resolve) => resolve(teamSize))
+    );
+  }
+
+  if (matchSize <= 0) {
+    promises.push(TOAProvider.getAPI().getSeasonMatchCount({ season_key: currentSeason, played: true }));
   } else {
     promises.push(
       new Promise<any>((resolve) => resolve(teamSize))
@@ -31,7 +41,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("all");
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("all", { seasonKey: currentSeason });
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
           match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
@@ -50,7 +60,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("quals");
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("quals", { seasonKey: currentSeason });
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
           match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
@@ -69,7 +79,7 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
     promises.push(
       new Promise<any>(async (resolve, reject) => {
         try {
-          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("elims");
+          const match: Match = await TOAProvider.getAPI().getHighScoreMatch("elims", { seasonKey: currentSeason });
           match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
           match.participants = await TOAProvider.getAPI().getMatchParticipants(match.matchKey);
           resolve(match);
@@ -90,10 +100,11 @@ export async function getHomeData(prevProps: IHomeProps): Promise<IHomeProps> {
         resolve({
           eventSize: results[0],
           teamSize: results[1],
+          matchSize: results[2],
           highScoreMatches: {
-            overall: results[2],
-            quals: results[3],
-            elims: results[4]
+            overall: results[3],
+            quals: results[4],
+            elims: results[5]
           }
         });
       });
@@ -256,11 +267,13 @@ export async function getEventData(eventCode: string): Promise<Event> {
   const matches = getEventMatches(eventCode);
   const alliances = getEventAlliances(eventCode);
   const awards = getEventAwards(eventCode);
+  const insights = getEventInsights(eventCode);
   event.rankings = await rankings;
   event.matches = await matches;
   event.teams = await teams;
   event.alliances = await alliances;
   event.awards = await awards;
+  event.insights = await insights;
   return event;
 }
 
@@ -286,7 +299,13 @@ export async function getEventInsights(eventCode: string): Promise<Insights[]> {
   const qualInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "quals"))[0];
 
   const elimInsights = (await TOAProvider.getAPI().getEventInsights(eventCode, "elims"))[0];
-  return [qualInsights, elimInsights];
+
+  const resp: Insights[] = [];
+  if (qualInsights !== undefined) resp.push(qualInsights);
+  if (qualInsights === undefined && elimInsights !== undefined) resp.push(new Insights(), elimInsights);
+  else if (elimInsights !== undefined) resp.push(elimInsights);
+
+  return resp;
 }
 
 export async function getEventAwards(eventCode: string): Promise<AwardRecipient[]> {

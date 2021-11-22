@@ -14,6 +14,7 @@ import Region from "@the-orange-alliance/api/lib/esm/models/Region";
 export interface IHomeProps {
   eventSize: number;
   teamSize: number;
+  matchSize: number;
   highScoreMatches: IHighestScoringMatches;
 }
 

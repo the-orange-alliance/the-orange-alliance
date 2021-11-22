@@ -3,10 +3,10 @@ import { List, ListItem, ListItemText, ListItemAvatar, Button } from "@mui/mater
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, setEventMatches, getEventMatches } from "shared";
 import { Match, EventParticipant } from "@the-orange-alliance/api/lib/esm/models";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const TeamsTab = function () {
+const TeamsTab = () => {
   const { t } = useTranslation();
   const { eventCode } = useParams<{ eventCode: string }>();
   const dispatch = useDispatch();

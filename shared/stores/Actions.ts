@@ -15,6 +15,11 @@ export interface ISetTotalTeamSize extends Action {
   payload: { size: number };
 }
 
+export interface ISetTotalMatchSize extends Action {
+  type: Types.SET_TOTAL_MATCH_COUNT;
+  payload: { size: number };
+}
+
 export interface ISetHighScoreOverall extends Action {
   type: Types.SET_HIGH_SCORE_MATCH_OVERALL;
   payload: { match: Match };
@@ -95,6 +100,11 @@ export const setTotalTeamSize: ActionCreator<ISetTotalEventSize> = (size: number
   payload: { size }
 });
 
+export const setTotalMatchSize: ActionCreator<ISetTotalMatchSize> = (size: number) => ({
+  type: Types.SET_TOTAL_MATCH_COUNT,
+  payload: { size }
+});
+
 export const setHighScoreOverall: ActionCreator<ISetHighScoreOverall> = (match: Match) => ({
   type: Types.SET_HIGH_SCORE_MATCH_OVERALL,
   payload: { match }
@@ -170,6 +180,7 @@ export const setSeasons: ActionCreator<ISetSeasons> = (seasons: Season[]) => ({
 export type ApplicationActions =
   | ISetTotalEventSize
   | ISetTotalTeamSize
+  | ISetTotalMatchSize
   | ISetHighScoreOverall
   | ISetHighScoreQuals
   | ISetHighScoreElims

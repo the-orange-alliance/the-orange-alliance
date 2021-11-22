@@ -1,13 +1,12 @@
 import * as React from "react";
 import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import { Event } from "@the-orange-alliance/api/lib/esm/models";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import { readableDate } from "../util/common-utils";
-import { CalendarTodayOutlined } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   event: Event;
@@ -30,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SimpleEventPaper = (props: IProps) => {
   const { event } = props;
   const classes = useStyles();
+  const history = useHistory();
 
   const secondaryTxt =
     event.startDate === event.endDate
@@ -41,8 +41,13 @@ const SimpleEventPaper = (props: IProps) => {
         )} to ${readableDate(event.endDate)}`;
 
   // TODO: figure out LTR
+
+  function onClick() {
+    history.push(`/events/${event.eventKey}`);
+  }
+
   return (
-    <ListItem button>
+    <ListItem button onClick={onClick}>
       {event.teamCount > 0 && <div className={classes.dataIndicator}></div>}
       <ListItemText primary={event.fullEventName} secondary={secondaryTxt} />
     </ListItem>

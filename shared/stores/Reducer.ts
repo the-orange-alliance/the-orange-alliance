@@ -10,6 +10,7 @@ import {
   ISetTeams,
   ISetTotalEventSize,
   ISetTotalTeamSize,
+  ISetTotalMatchSize,
   ISetEventData,
   ISetEventMatches,
   ISetEventRankings,
@@ -23,6 +24,7 @@ import Event from "@the-orange-alliance/api/lib/esm/models/Event";
 export const defaultState: Types.IApplicationState = {
   eventsTotal: 0,
   teamsTotal: 0,
+  matchesTotal: 0,
   highScoreMatches: {
     quals: new Match(),
     elims: new Match(),
@@ -48,6 +50,9 @@ const reducer: Reducer<Types.IApplicationState, ApplicationActions> = (
     case Types.SET_TOTAL_TEAMS_COUNT:
       action = action as ISetTotalTeamSize;
       return { ...state, teamsTotal: action.payload.size };
+    case Types.SET_TOTAL_MATCH_COUNT:
+      action = action as ISetTotalMatchSize;
+      return { ...state, matchesTotal: action.payload.size };
     case Types.SET_HIGH_SCORE_MATCH_OVERALL:
       action = action as ISetHighScoreOverall;
       return {

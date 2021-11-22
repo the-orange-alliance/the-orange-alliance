@@ -51,6 +51,7 @@ if (isDev) {
 function convertCacheToState(state: IApplicationState, stateJSON: IApplicationStateJSON): void {
   if (stateJSON.teamsTotal > 0) state.teamsTotal = stateJSON.teamsTotal;
   if (stateJSON.eventsTotal > 0) state.eventsTotal = stateJSON.eventsTotal;
+  if (stateJSON.matchesTotal > 0) state.matchesTotal = stateJSON.matchesTotal;
   if (stateJSON.teams.length > 0) state.teams = stateJSON.teams.map((e: any) => new Team().fromJSON(e));
   if (stateJSON.events.length > 0) state.events = stateJSON.events.map((e: any) => new Event().fromJSON(e));
   if (stateJSON.matches.length > 0) state.matches = stateJSON.matches.map((e: any) => new Match().fromJSON(e));

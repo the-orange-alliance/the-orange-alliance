@@ -2,11 +2,11 @@ import * as React from "react";
 import { Table, TableCell, TableHead, TableBody, TableRow } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { IApplicationState, setEventMatches, getEventMatches } from "shared";
-import { Match, EventParticipant, Alliance } from "@the-orange-alliance/api/lib/esm/models";
-import { useParams } from "react-router";
+import { Match, Alliance } from "@the-orange-alliance/api/lib/esm/models";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const AlliancesTab = function () {
+const AlliancesTab = () => {
   const { t } = useTranslation();
   const { eventCode } = useParams<{ eventCode: string }>();
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const AlliancesTab = function () {
       </TableHead>
       <TableBody>
         {alliances.map((alliance: Alliance) => (
-          <TableRow>
+          <TableRow key={alliance.seed}>
             <TableCell>Alliance {alliance.seed}</TableCell>
             <TableCell>#{alliance.captain.teamKey}</TableCell>
             <TableCell>#{alliance.pick1.teamKey}</TableCell>

@@ -1,26 +1,12 @@
 import * as React from "react";
-import {
-  Table,
-  TableCell,
-  TableHead,
-  TableBody,
-  TableRow,
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  List,
-  ListItem,
-  Typography,
-  ListItemText
-} from "@mui/material";
+import { Grid, Card, CardHeader, CardContent, List, ListItem, ListItemText } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { IApplicationState, setEventMatches, getEventMatches, getEventInsights, setEventInsights } from "shared";
-import { Match, EventParticipant, Alliance, Insights } from "@the-orange-alliance/api/lib/esm/models";
-import { useParams } from "react-router";
+import { IApplicationState, getEventInsights, setEventInsights } from "shared";
+import { Insights } from "@the-orange-alliance/api/lib/esm/models";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const InsightsTab = function () {
+const InsightsTab = () => {
   const { t } = useTranslation();
   const { eventCode } = useParams<{ eventCode: string }>();
   const dispatch = useDispatch();

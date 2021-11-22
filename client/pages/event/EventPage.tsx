@@ -1,12 +1,10 @@
 import * as React from "react";
-import Event from "@the-orange-alliance/api/lib/esm/models/Event";
-import { IApplicationState, IEventsProps, getEventsData, ISetEvents, ApplicationActions, setEvents } from "shared";
-import { Dispatch } from "redux";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { IApplicationState } from "shared";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { useParams, useHistory } from "react-router";
+import { useParams, useHistory } from "react-router-dom";
 import { getEventData, setEventData } from "shared";
-import { Typography, Paper, Fade } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 import IconCalendar from "@mui/icons-material/CalendarToday";
 import IconLocationPin from "@mui/icons-material/LocationOn";
@@ -14,23 +12,17 @@ import IconProviderBadge from "@mui/icons-material/VerifiedUser";
 import { DataSource } from "@the-orange-alliance/api/lib/esm/models/types/DataSource";
 import EventTabs from "./tabs/EventTabs";
 
-const EventPage = function () {
+const EventPage = () => {
   const { t } = useTranslation();
   const eventData = useSelector((state: IApplicationState) => state.currentEvent);
   const dispatch = useDispatch();
   const { eventCode, tab } = useParams<{ eventCode: string; tab: string }>();
-  const history = useHistory();
   React.useEffect(() => {
     getEventData(eventCode).then((event) => {
       console.log(event);
       dispatch(setEventData(event));
     });
   }, []);
-
-  function setCurrentTab(tab: string) {
-    console.log(tab);
-    history.replace(`/events/${eventCode}/${tab}`);
-  }
 
   function strToDate(dateString: string) {
     return new Date(Date.parse(dateString));
@@ -69,7 +61,7 @@ const EventPage = function () {
           marginTop: "16px"
         }}
       >
-        <EventTabs currentTab={tab} handleTabChange={setCurrentTab}></EventTabs>
+        <EventTabs key={eventData.eventKey} currentTab={tab} event={eventData} />
       </Paper>
     </>
   );

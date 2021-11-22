@@ -12,7 +12,6 @@ import VideoCamIcon from "@mui/icons-material/Videocam";
 
 /* import all of our pages here */
 import { AboutPage, HomePage, TeamsPage, EventsPage, EventPage, LanguagePage } from "./pages";
-import { Button } from "@mui/material";
 import { changeLanguage } from "./i18n";
 
 export interface IAppRoute {

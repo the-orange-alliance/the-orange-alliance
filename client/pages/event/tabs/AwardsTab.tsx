@@ -1,20 +1,9 @@
 import * as React from "react";
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  ListItemIcon
-} from "@mui/material";
+import { ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { IApplicationState, TOAProvider, getEventRankings, setEventRankings } from "shared";
-import { Ranking, AwardRecipient } from "@the-orange-alliance/api/lib/esm/models";
-import { useParams } from "react-router";
+import { IApplicationState } from "shared";
+import { AwardRecipient } from "@the-orange-alliance/api/lib/esm/models";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { sort } from "../../../util/award-utils";
 import IconOne from "@mui/icons-material/LooksOneOutlined";
@@ -24,7 +13,7 @@ import IconTrophy from "@mui/icons-material/EmojiEventsOutlined";
 
 const translation = "pages.event.subpages.awards.";
 
-const AwardsTab = function () {
+const AwardsTab = () => {
   const { t } = useTranslation();
 
   function getHeader(awardRecipient: AwardRecipient) {

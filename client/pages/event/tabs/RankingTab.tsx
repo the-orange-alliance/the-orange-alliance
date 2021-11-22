@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { IApplicationState, TOAProvider, getEventRankings, setEventRankings } from "shared";
+import { IApplicationState, getEventRankings, setEventRankings } from "shared";
 import { Ranking } from "@the-orange-alliance/api/lib/esm/models";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const RankingTab = function () {
+const RankingTab = () => {
   const { t } = useTranslation();
   const { eventCode } = useParams<{ eventCode: string }>();
   const dispatch = useDispatch();

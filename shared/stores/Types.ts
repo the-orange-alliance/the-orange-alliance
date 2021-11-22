@@ -13,6 +13,7 @@ import Season from "@the-orange-alliance/api/lib/esm/models/Season";
 export interface IApplicationState {
   eventsTotal: number;
   teamsTotal: number;
+  matchesTotal: number;
   highScoreMatches: IHighestScoringMatches;
   matches: Match[];
   teams: Team[];
@@ -26,6 +27,7 @@ export interface IApplicationState {
 export interface IApplicationStateJSON {
   eventsTotal: number;
   teamsTotal: number;
+  matchesTotal: number;
   highScoreMatches: IHighestScoringMatchesJSON;
   matches: any[];
   teams: any[];
@@ -51,6 +53,9 @@ export type SET_TOTAL_EVENTS_COUNT = typeof SET_TOTAL_EVENTS_COUNT;
 
 export const SET_TOTAL_TEAMS_COUNT: string = "SET_TOTAL_TEAMS_COUNT";
 export type SET_TOTAL_TEAMS_COUNT = typeof SET_TOTAL_TEAMS_COUNT;
+
+export const SET_TOTAL_MATCH_COUNT: string = "SET_TOTAL_MATCH_COUNT";
+export type SET_TOTAL_MATCH_COUNT = typeof SET_TOTAL_MATCH_COUNT;
 
 export const SET_HIGH_SCORE_MATCH_OVERALL: string = "SET_HIGH_SCORE_MATCH_OVERALL";
 export type SET_HIGH_SCORE_MATCH_OVERALL = typeof SET_HIGH_SCORE_MATCH_OVERALL;
