@@ -1,3 +1,3 @@
-const CURRENT_SEASON = '2122'
+const CURRENT_SEASON = '2122';
 
-export {CURRENT_SEASON};
+export { CURRENT_SEASON };

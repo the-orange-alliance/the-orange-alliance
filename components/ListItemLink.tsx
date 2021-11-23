@@ -1,8 +1,8 @@
-import React from "react";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import NextMuiLink from "./NextMuiLink";
+import React from 'react';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import NextMuiLink from './NextMuiLink';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;

@@ -1,5 +1,5 @@
-import TOAProvider from "../../providers/TOAProvider";
-import {undefinedToNull} from "../../util/common-utils";
+import TOAProvider from '../../providers/TOAProvider';
+import { undefinedToNull } from '../../util/common-utils';
 import {
   Season,
   Team,
@@ -9,34 +9,34 @@ import {
   Ranking,
   AwardRecipient,
   Media
-} from "@the-orange-alliance/api/lib/cjs/models";
-import {MatchSorter} from "../../util/match-utils";
-import {EventSorter} from "../../util/event-utils";
-import { sort } from "../../util/award-utils";
+} from '@the-orange-alliance/api/lib/cjs/models';
+import { MatchSorter } from '../../util/match-utils';
+import { EventSorter } from '../../util/event-utils';
+import { sort } from '../../util/award-utils';
 
 interface IRawTeamProps {
-  team: any
-  topOpr: any,
-  wlt: {wins: number, losses: number, ties: number},
-  media: any[],
-  rankings: any[],
-  events: any[],
-  awards: any[],
-  matches: any,
-  seasons: any[]
+  team: any;
+  topOpr: any;
+  wlt: { wins: number; losses: number; ties: number };
+  media: any[];
+  rankings: any[];
+  events: any[];
+  awards: any[];
+  matches: any;
+  seasons: any[];
 }
 
 interface ITeamProps {
-  team: Team
-  topOpr: Ranking | null,
-  matches: any
-  wlt: {wins: number, losses: number, ties: number}
-  seasons: Season[]
+  team: Team;
+  topOpr: Ranking | null;
+  matches: any;
+  wlt: { wins: number; losses: number; ties: number };
+  seasons: Season[];
 }
 
 const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
   const team = new Team().fromJSON(props.team);
-  team.rankings = props.rankings.map((r: any) => new Ranking().fromJSON(r))
+  team.rankings = props.rankings.map((r: any) => new Ranking().fromJSON(r));
   team.events = props.events.map((e: any) => new Event().fromJSON(e));
   team.awards = props.awards.map((a: any) => new AwardRecipient().fromJSON(a));
   team.media = props.media.map((m: any) => new Media().fromJSON(m));
@@ -49,29 +49,32 @@ const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
     event.awards = awards;
 
     // Map rankings to event
-    event.rankings = team.rankings.filter(r => r.eventKey.toLowerCase() === event.eventKey.toLowerCase())
+    event.rankings = team.rankings.filter(
+      r => r.eventKey.toLowerCase() === event.eventKey.toLowerCase()
+    );
 
     // Map matches to event
-    event.matches = props.matches[event.eventKey].filter((m: any) => m.event_key.toLowerCase() === event.eventKey.toLowerCase());
+    event.matches = props.matches[event.eventKey].filter(
+      (m: any) => m.event_key.toLowerCase() === event.eventKey.toLowerCase()
+    );
     event.matches = event.matches.map((m: any) => new Match().fromJSON(m));
   }
 
-
   return {
     team: team,
-    topOpr: (props.topOpr) ? new Ranking().fromJSON(props.topOpr) : null,
+    topOpr: props.topOpr ? new Ranking().fromJSON(props.topOpr) : null,
     wlt: props.wlt,
     matches: props.matches,
-    seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
-  }
-}
+    seasons: props.seasons.map((s: any) => new Season().fromJSON(s))
+  };
+};
 
 const getTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeamProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getTeam(teamKey),
     TOAProvider.getAPI().getSeasons(),
     TOAProvider.getAPI().getTeamEvents(teamKey, seasonKey),
-    TOAProvider.getAPI().getTeamWLT(teamKey, {season_key: seasonKey}),
+    TOAProvider.getAPI().getTeamWLT(teamKey, { season_key: seasonKey }),
     TOAProvider.getAPI().getTeamMedia(teamKey, seasonKey),
     TOAProvider.getAPI().getTeamAwards(teamKey, seasonKey),
     TOAProvider.getAPI().getTeamRankings(teamKey, seasonKey)
@@ -82,7 +85,9 @@ const getTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeam
   data[1] = getTeamSeasons(data[1], data[0]);
 
   // Get all team events for season
-  let events = await Promise.all(data[2].map((result: EventParticipant) => TOAProvider.getAPI().getEvent(result.eventKey)))
+  let events = await Promise.all(
+    data[2].map((result: EventParticipant) => TOAProvider.getAPI().getEvent(result.eventKey))
+  );
 
   // Sort out empty events
   events = events.filter(result => result !== null);
@@ -103,9 +108,9 @@ const getTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeam
     awards: data[5].map(a => undefinedToNull(a.toJSON())),
     rankings: data[6].map(r => undefinedToNull(r.toJSON())),
     matches: matches,
-    topOpr: combinedOpr ? undefinedToNull(combinedOpr.toJSON()) : null,
-  }
-}
+    topOpr: combinedOpr ? undefinedToNull(combinedOpr.toJSON()) : null
+  };
+};
 
 const getTopOpr = (events: Ranking[]): Ranking | null => {
   let topOPR = new Ranking();
@@ -114,30 +119,38 @@ const getTopOpr = (events: Ranking[]): Ranking | null => {
       topOPR = ranking;
     }
   }
-  return (topOPR.rankKey !== '') ? topOPR : null;
-}
+  return topOPR.rankKey !== '' ? topOPR : null;
+};
 
 const getTeamSeasons = (seasons: Season[], team: Team): Season[] => {
   const lastActive = parseInt(team.lastActive);
   const rookieYearString = team.rookieYear.toString();
   const rookieYear2Digit = parseInt(rookieYearString[2] + rookieYearString[3]);
-  const rookieYear = parseInt(rookieYear2Digit + '' + (rookieYear2Digit + 1))
+  const rookieYear = parseInt(rookieYear2Digit + '' + (rookieYear2Digit + 1));
 
   return seasons.filter(s => {
     const key = parseInt(s.seasonKey);
     return key >= rookieYear && key <= lastActive;
   });
-}
+};
 
 const getEventMatches = async (events: Event[], teamKey: string): Promise<any[]> => {
   events = new EventSorter().sort(events).reverse();
-  const responseMap = {} as any
+  const responseMap = {} as any;
 
-  await Promise.all(events.map(event => TOAProvider.getAPI().getEventMatches(event.eventKey).then((data: Match[]) => {
-    responseMap[event.eventKey] = sortAndFind(teamKey, data).map(m => undefinedToNull(m.toJSON()));
-  })))
+  await Promise.all(
+    events.map(event =>
+      TOAProvider.getAPI()
+        .getEventMatches(event.eventKey)
+        .then((data: Match[]) => {
+          responseMap[event.eventKey] = sortAndFind(teamKey, data).map(m =>
+            undefinedToNull(m.toJSON())
+          );
+        })
+    )
+  );
   return responseMap;
-}
+};
 
 const sortAndFind = (teamKey: string, matches: Match[]): Match[] => {
   let teamMatches = [];
@@ -152,7 +165,7 @@ const sortAndFind = (teamKey: string, matches: Match[]): Match[] => {
   const sorter = new MatchSorter();
   teamMatches = sorter.sort(teamMatches, 0, teamMatches.length - 1);
   return teamMatches;
-}
+};
 
-export {parseTeamProps, getTeamData};
-export type {IRawTeamProps, ITeamProps}
+export { parseTeamProps, getTeamData };
+export type { IRawTeamProps, ITeamProps };

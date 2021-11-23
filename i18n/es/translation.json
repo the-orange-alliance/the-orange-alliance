@@ -1,406 +1,406 @@
 {
-    "config": {
-      "name": "Español",
-      "englishName": "Spanish",
-      "direction": "ltr"
-    },
-  
-    "general": {
-      "team": "Equipo",
-      "teams": "Equipos",
-      "event": "Evento",
-      "events": "Eventos",
-      "match": "Partido",
-      "matches": "Partidos",
-      "live": "VIVO",
-      "here": "Aquí",
-      "verify": "Verificar",
-      "add": "Añadir",
-      "close": "Cerrar",
-      "save": "Salvar",
-      "error_occurred": "Se ha producido un error, inténtelo de nuevo más tarde",
-      "search_text_long": "Buscar equipos y eventos",
-      "search_text_short": "Equipo # o evento",
-      "add_to_mytoa": "Aumentar myTOA",
-      "remove_from_mytoa": "Quitar de myTOA"
-    },
-  
-    "drawer": {
-      "home": "Página de inicio",
-      "teams": "Equipos",
-      "events": "Eventos",
-      "streaming": "Transmisión en directo",
-      "android_app": "Aplicación de Android",
-      "ios_app": "Aplicación de iOS",
-      "add_data": "Agregar datos",
-      "api": "API",
-      "github": "GitHub",
-      "about": "Sobre",
-      "donate": "Donar",
-      "amazon_smile": "Amazon Smile",
-      "privacy_and_terms": "Privacidad y términos",
-      "official_ftc": "Proveedor Oficial de Datos para",
-      "mytoa": {
-        "hello": "Hola, {{ name }}",
-        "guest": "Invitado",
-        "register": "Registro",
-        "login": "Iniciar sesión"
-      }
-    },
-  
-    "pages": {
-      "add_data": {
-        "title": "Agregar datos",
-        "short_info": "¿Tiene algunos datos que le gustaría agregar a The Orange Alliance?",
-        "datasync": "DataSync - Sincroniza su evento en vivo con TOA",
-        "add_event_data": "Agregar resultados de eventos una vez finalizado el evento",
-        "add_match_video": "Agregar vídeo de partido",
-        "add_event_stream": "Agregar Transmisión en directo de evento",
-        "stream_your_event": "Transmite tu evento en el canal de Twitch de TOA"
-      },
-  
-      "404": {
-        "title": "Página no encontrada",
-        "short_info": "Parece que has seguido un enlace roto o un equipo/evento/partido que no existe."
-      },
-  
-      "about": {
-        "title": "Sobre nosotros"
-      },
-  
-      "account": {
-        "logout": "Cerrar sesión",
-        "level": "Nivel {{ level }}",
-        "no_verify": "Por favor considere verificar su correo electrónico",
-        "why_verify": "Para disfrutar de todas las funciones de tu cuenta, tu dirección de correo electrónico debe verificarse.",
-        "manage_events": "Administrar eventos",
-        "division_tab": {
-          "manage_leagues": "Gestionar Ligas",
-          "select_season": "Seleccionar Temporada",
-          "create_league": "Crear Liga",
-          "create_league_div": "Crear División de La Liga",
-          "division_key": "Clave de División",
-          "leagues": "Ligas",
-          "league_divisions": "Divisiones de Liga",
-          "create_league_fields": {
-            "league_key": "Clave de la Liga",
-            "league_description": "Descripción de la Liga",
-            "division_desc": "Descripción de la División"
-          }
-        },
-        "notifications_card": {
-          "title": "Notificaciones",
-          "summary": "Recibe notificaciones push en función de la configuración de tus eventos.",
-          "grant_access": "Conceder Acceso",
-          "enabled": "Las notificaciones están habilitadas en este dispositivo",
-          "blocked": "Las notificaciones están bloqueadas en este dispositivo",
-          "help": "Para deshabilitar el bloqueo de notificaciones, haga clic en el icono de candado a la izquierda de la dirección web, haga clic en Configuración del sitio y cambie el permiso de notificaciones."
-        },
-        "api_card": {
-          "title": "Construye cosas increíbles con nuestros API",
-          "your_key": "Aquí está su clave de API:",
-          "no_key": "Usted no tiene ninguna clave existente",
-          "generate_key": "Generar una clave de API",
-          "generating_key": "Generando una clave API...",
-          "docs": "Puede ver nuestros documentación completa de API en"
-        },
-        "account_settings": "Configuración de la cuenta",
-        "reset_password": "Restablecer la contraseña",
-        "reset_password_email": "Se ha enviado un correo electrónico de restablecimiento de contraseña.",
-        "link_account": "Vincular {{ name }} cuenta",
-        "unlink_account": "desconectar {{ name }} cuenta",
-        "link_phone": "Enlace número de teléfono",
-        "unlink_phone": "Desvincular el número de teléfono",
-        "success_link": "Cuenta de {{ name }} vinculada correctamente",
-        "success_unlink": "Cuenta de {{ name }} desenlazada correctamente",
-        "last_signin": "Última sesión",
-        "league_creation_success": "¡Liga creada con éxito!",
-        "league_deletion_success": "¡Liga eliminada con éxito!",
-        "league_division_creation_success": "¡Creación exitosa de división de la liga!",
-        "league_division_deletion_success": "¡Eliminó con éxito la división de la liga!",
-        "datasync_card": {
-          "title": "Sincroniza su evento en vivo con TOA",
-          "docs": "Puede ver nuestros documentación completa de DataSync en"
-        },
-        "create_event_card": {
-          "title": "Crear evento",
-          "create": "Crear",
-          "event_id": "ID de evento",
-          "event_type": "Tipo de evento",
-          "league": "Liga",
-          "region": "Región",
-          "season": "Temporada",
-          "division_number": "Número de división",
-          "division_name": "Nombre de división",
-          "advancement_spots": "Avanzar lugares",
-          "advancement_event": "Advanzar evento",
-          "number_fields": "Número de canchas",
-          "number_alliances": "Número de alianzas",
-          "success": "Evento creado con éxito",
-          "dual_division": "Dual Division",
-          "advanced": "Advanced"
-        },
-        "dump_cache": {
-          "title": "Caché de volcado",
-          "general": "General",
-          "dump": "Volcado",
-          "success": "Caché de volcado con éxito"
-        },
-        "retriever": {
-          "title": "Cobrador",
-          "success_events": "Creado con éxito {{ value }} eventos",
-          "success_teams": "Creado con éxito {{ value }} equipos"
-        },
-        "subpages": {
-          "login": {
-            "title": "Iniciar sesión",
-            "email": "Correo electrónico",
-            "password": "Contraseña",
-            "login": "Iniciar sesión",
-            "forgot_password": "¿Olvidó la contraseña?",
-            "login_google": "Iniciar sesión con Google",
-            "login_github": "Iniciar sesión con GitHub",
-            "no_account_linked": "Esta cuenta no está vinculada a ninguna cuenta myTOA. Por favor inicie sesión para vincularlo."
-          },
-          "register": {
-            "title": "Registro",
-            "full_name": "Nombre completo",
-            "email": "Correo electrónico",
-            "password": "Contraseña",
-            "confirm_password": "Confirmar la contraseña",
-            "your_team": "Su equipo #",
-            "sign_up": "Inscribirse"
-          }
-        }
-      },
-  
-      "home": {
-        "title": "Página de inicio",
-        "short_info": "The Orange Alliance es el proveedor <b>oficial</b> para informacion de eventos, equipos, y partidos para <i>FIRST</i> Tech Challenge",
-        "active_teams": "Equipos activos",
-        "matches_played": "Partidos jugados",
-        "todays_events": "Eventos de hoy",
-        "no_events_today": "No hay eventos que ocurran hoy.",
-        "leaderboards": {
-          "title": "Tablas de clasificación",
-          "high_score_qual": "La calificación de puntuación mas alta",
-          "high_score_elim": "El partido de eliminación de puntuación más alto",
-          "high_score_all": "El partido de puntuación mas alta",
-          "with_enalties": "Con penaltis",
-          "penalty_free": "Sin penaltis"
-        }
-      },
-  
-      "event": {
-        "event_info": "Información del evento",
-        "game_info": "Información del juego",
-        "view_website": "Ver sitio web del evento",
-        "event_key": "Clave de evento",
-        "stream_available": "¡La transmisión en directo esta disponible!",
-        "alliances_count": "{{ value }} Alianzas",
-        "fields_count": "{{ value }} Canchas",
-        "matches_per_team": "{{ value }} partidos por equipo",
-        "settings": {
-          "title": "Configuración del evento",
-          "favorite": "Favorito",
-          "favorite_summary": "Puede guardar equipos, eventos y mucho más para facilitar el acceso marcándolos como \"favoritos\".",
-          "notification_settings": "Configuración de notificación",
-          "notification_settings_summary": "Suscribirse a algo le permite obtener una notificación push cada vez que hay una actualización.",
-          "match_scores": "Puntuaciones de partido",
-          "schedule_updated": "Horario de partidos publicado",
-          "awards_posted": "Premios publicados",
-          "alliances_posted": "Selección de alianzas",
-          "saved": "¡La configuración del evento se ha guardado correctamente!",
-          "failed": "Error al guardar la configuración del evento. Inténtelo de nuevo más tarde"
-        },
-        "subpages": {
-          "rankings": {
-            "title": "Clasificaciones",
-            "rank": "Rango",
-            "team": "Equipo",
-            "wlt_record": "G-P-E",
-            "qual_points": "Puntos de calificación",
-            "ranking_points": "Puntos de ranking",
-            "tie_breaker_points": "Puntos de desempate",
-            "highest_score": "Puntuación más alta",
-            "matches_played": "Partidos jugados",
-            "what_is_opr": "La clasificación de potencia ofensiva, también conocido como CPO, es una estadística que se utiliza a menudo en la comunidad FIRST para comparar el rendimiento de los equipos sobre el terreno. Los CPO son una forma interesante de segmentar los datos de los equipos en eventos concretos, pero no son un sistema perfecto para evaluar el rendimiento o la contribución de un equipo."
-          },
-          "matches": {
-            "title": "Partidos"
-          },
-          "teams": {
-            "title": "Equipos"
-          },
-          "alliances": {
-            "title": "Alianzas"
-          },
-          "awards": {
-            "title": "Premios"
-          },
-          "insights": {
-            "title": "Percepciónes",
-            "qual": "Requisito",
-            "playoff": "Desempate",
-            "high_score": "Puntuación alta",
-            "avg_score": "Puntuación media",
-            "avg_winning_score": "Puntuación media de victoria",
-            "avg_winning_margin": "Margen promedio de victoria",
-            "prc_landed": "% de robots desembarcados",
-            "prc_latched": "% de robots enclavados",
-            "prc_sampling": "% de muestras exitosas",
-            "prc_claiming": "% de depots reclamado",
-            "prc_parking": "% de robots aparcados",
-            "avg_golds": "Promedio # de minerales de oro en bodega de carga",
-            "avg_silvers": "Promedio # de minerales de plata en bodega de carga",
-            "avg_depot": "Promedio # de minerales en el depósito"
-          },
-          "for-participants": {
-            "title": "Para los participantes",
-            "pits_map": "Mapa de pits",
-            "venue_map": "Mapa del lugar",
-            "schedule": "Horario de evento"
-          },
-          "admin": {
-            "title": "Administración",
-            "playlist_card": {
-              "title": "Añadir videos de partidos de una lista de reproducción de YouTube",
-              "playlist_url": "URL de lista de reproducción",
-              "load": "Cargar",
-              "confirm": "Confirmar y subir",
-              "successfully": "Subido exitosamente {{ value }} videos",
-              "error": "No pudimos encontrar vídeos de partidos",
-              "invalid_url": "URL no válida, no pudimos encontrar una lista de reproducción de YouTube"
-            },
-            "update_info_card": {
-              "title": "Editar la información del evento",
-              "event_name": "Nombre del evento",
-              "website": "El sitio web",
-              "start_date": "Fecha de inicio",
-              "end_date": "Fecha de finalización",
-              "venue": "Lugar",
-              "city": "Ciudad",
-              "state": "Estado",
-              "country": "País",
-              "update": "Actualización",
-              "upload": "Subir",
-              "image_only": "Puede subir sólo como una imagen",
-              "choose_image": "Elegir imagen...",
-              "successfully": "Actualizado correctamente la información del evento"
-            },
-            "stream_card": {
-              "add_stream": "Añadir transmisión en directo",
-              "unlink_stream": "Desvincular transmisión en directo",
-              "currently_linked": "Transmisión en directo vinculada actualmente",
-              "url": "{{ provider }} URL",
-              "stream_name": "Nombre de transmisión en directo",
-              "link": "Conectar",
-              "unlink": "Desconectar",
-              "stream": "{{ provider }} transmisión en directo",
-              "success_linked": "Transmisión en directo vinculada correctamente",
-              "success_unlinked": "Transmisión en directo desenlazada correctamente"
-            },
-            "delete_card": {
-              "delete_event": "Eliminar evento",
-              "delete_failed": "Error al eliminar",
-              "delete": "Eliminar",
-              "delete_all_data": "ELIMINAR TODOS LOS DATOS DE ESTE EVENTO",
-              "delete_sure": "¿ESTÁ SEGURO DE QUE DESEA ELIMINAR EL EVENTO?",
-              "delete_final": "ESTO BORRARÁ EL EVENTO"
-            },
-            "verify_email": "Por favor verifica su correo electrónico e inténtalo de nuevo.",
-            "success_sent_verify_email": "Se ha enviado un correo electrónico de verificación correctamente."
-          }
-        }
-      },
-  
-      "events": {
-        "filter_season": "Temporada",
-        "filter_region": "Región",
-        "filter": "Opciones de filtrado",
-        "clear_filter": "Borrar filtro"
-      },
-  
-      "match": {
-        "match_info": "Información del partido",
-        "match_key": "Clave de partido",
-        "scheduled_time": "Hora programada",
-        "no_video": "No hay vídeo disponible",
-        "add_one": "Añadir una"
-      },
-  
-      "streams": {
-        "event_results": "Resultados del evento",
-        "close_stream": "Cerrar la transmisión",
-        "select_stream": "Seleccionar stream",
-        "show_chat": "Mostrar chat",
-        "select": "Seleccionar",
-        "cancel": "Cancelar",
-        "layouts": {
-          "title": "Seleccionar diseño",
-          "single_view": "Vista individual",
-          "vertical_split_view": "Vista dividida vertical",
-          "horizontal_split_view": "Vista dividida horizontal",
-          "1_2_view": "1+2 vista",
-          "1_4_view": "1+4 vista",
-          "quad_view": "Vista cuádruple"
-        }
-      },
-  
-      "team": {
-        "team_info": "Información del equipo",
-        "event_results": "Resultados del evento",
-        "part_of_region": "Parte de la región de {{ regionKey }}",
-        "website": "Sitio web",
-        "rookie_year": "Año novato",
-        "last_active": "Última temporada activa",
-        "awards_in_season": "{{ awards }} premios en la temporada {{ season }}",
-        "robot_profile": {
-          "title": "Robot",
-          "engineering_notebook": "Cuaderno de la ingeniería",
-          "robot_reveal": "Robot revelar",
-          "photos": "Fotos"
-        }
-      },
-  
-      "teams": {
-        "title": "Equipos",
-        "filter": "Filtrar por número, nombre o ubicación",
-        "results": "{{ results }} Resultados"
-      }
-    },
-  
-    "match_table": {
-      "teams": "Equipos",
-      "score": "Puntuación",
-      "scores": "Puntuaciónes",
-      "blue_alliance": "Alianza azul",
-      "red_alliance": "Alianza rojo",
-      "blue_score": "Puntuación azul",
-      "red_score": "Puntuación roja",
-      "no_matches_for_event": "No hay datos de partidos disponibles para este evento.",
-      "match": "Partido",
-      "view_team": "Ver equipo",
-      "rank": "Rango",
-      "wlt": "GPE",
-      "played": "Jugó",
-      "help": {
-        "bold": "<b>Negrita</b> está ganando la alianza</small>",
-        "bold_and_black": "<b>Negrita y Negro</b> es equipo seleccionado</small>",
-        "surrogate": "<b>*</b> es suplente"
-      }
-    },
-  
-    "no_data": {
-      "teams": "No se encontraron equipos",
-      "teams_long": "No hay equipos que coincidan con esa consulta",
-      "events": "No se encontraron eventos",
-      "event_long": "NO SE HAN REPORTADO RESULTADOS PARA ESTE EVENTO.",
-      "streams_long": "Actualmente no hay transmisiones activas.",
-      "events_for_season": "No hay eventos para {{ season }} la temporada",
-      "events_for_season_long": "Este equipo aún no ha jugado en ningún evento esta temporada.<br/>Intenta cambiar la temporada usando el selector de arriba.",
-      "events_filter": "No se han encontrado eventos para este filtro",
-      "events_filter_long": "Intente cambiar la temporada o la región con los selectores anteriores.",
-      "match_breakdown": "No se ha encontrado ningún desglose de coincidencias"
+  "config": {
+    "name": "Español",
+    "englishName": "Spanish",
+    "direction": "ltr"
+  },
+
+  "general": {
+    "team": "Equipo",
+    "teams": "Equipos",
+    "event": "Evento",
+    "events": "Eventos",
+    "match": "Partido",
+    "matches": "Partidos",
+    "live": "VIVO",
+    "here": "Aquí",
+    "verify": "Verificar",
+    "add": "Añadir",
+    "close": "Cerrar",
+    "save": "Salvar",
+    "error_occurred": "Se ha producido un error, inténtelo de nuevo más tarde",
+    "search_text_long": "Buscar equipos y eventos",
+    "search_text_short": "Equipo # o evento",
+    "add_to_mytoa": "Aumentar myTOA",
+    "remove_from_mytoa": "Quitar de myTOA"
+  },
+
+  "drawer": {
+    "home": "Página de inicio",
+    "teams": "Equipos",
+    "events": "Eventos",
+    "streaming": "Transmisión en directo",
+    "android_app": "Aplicación de Android",
+    "ios_app": "Aplicación de iOS",
+    "add_data": "Agregar datos",
+    "api": "API",
+    "github": "GitHub",
+    "about": "Sobre",
+    "donate": "Donar",
+    "amazon_smile": "Amazon Smile",
+    "privacy_and_terms": "Privacidad y términos",
+    "official_ftc": "Proveedor Oficial de Datos para",
+    "mytoa": {
+      "hello": "Hola, {{ name }}",
+      "guest": "Invitado",
+      "register": "Registro",
+      "login": "Iniciar sesión"
     }
+  },
+
+  "pages": {
+    "add_data": {
+      "title": "Agregar datos",
+      "short_info": "¿Tiene algunos datos que le gustaría agregar a The Orange Alliance?",
+      "datasync": "DataSync - Sincroniza su evento en vivo con TOA",
+      "add_event_data": "Agregar resultados de eventos una vez finalizado el evento",
+      "add_match_video": "Agregar vídeo de partido",
+      "add_event_stream": "Agregar Transmisión en directo de evento",
+      "stream_your_event": "Transmite tu evento en el canal de Twitch de TOA"
+    },
+
+    "404": {
+      "title": "Página no encontrada",
+      "short_info": "Parece que has seguido un enlace roto o un equipo/evento/partido que no existe."
+    },
+
+    "about": {
+      "title": "Sobre nosotros"
+    },
+
+    "account": {
+      "logout": "Cerrar sesión",
+      "level": "Nivel {{ level }}",
+      "no_verify": "Por favor considere verificar su correo electrónico",
+      "why_verify": "Para disfrutar de todas las funciones de tu cuenta, tu dirección de correo electrónico debe verificarse.",
+      "manage_events": "Administrar eventos",
+      "division_tab": {
+        "manage_leagues": "Gestionar Ligas",
+        "select_season": "Seleccionar Temporada",
+        "create_league": "Crear Liga",
+        "create_league_div": "Crear División de La Liga",
+        "division_key": "Clave de División",
+        "leagues": "Ligas",
+        "league_divisions": "Divisiones de Liga",
+        "create_league_fields": {
+          "league_key": "Clave de la Liga",
+          "league_description": "Descripción de la Liga",
+          "division_desc": "Descripción de la División"
+        }
+      },
+      "notifications_card": {
+        "title": "Notificaciones",
+        "summary": "Recibe notificaciones push en función de la configuración de tus eventos.",
+        "grant_access": "Conceder Acceso",
+        "enabled": "Las notificaciones están habilitadas en este dispositivo",
+        "blocked": "Las notificaciones están bloqueadas en este dispositivo",
+        "help": "Para deshabilitar el bloqueo de notificaciones, haga clic en el icono de candado a la izquierda de la dirección web, haga clic en Configuración del sitio y cambie el permiso de notificaciones."
+      },
+      "api_card": {
+        "title": "Construye cosas increíbles con nuestros API",
+        "your_key": "Aquí está su clave de API:",
+        "no_key": "Usted no tiene ninguna clave existente",
+        "generate_key": "Generar una clave de API",
+        "generating_key": "Generando una clave API...",
+        "docs": "Puede ver nuestros documentación completa de API en"
+      },
+      "account_settings": "Configuración de la cuenta",
+      "reset_password": "Restablecer la contraseña",
+      "reset_password_email": "Se ha enviado un correo electrónico de restablecimiento de contraseña.",
+      "link_account": "Vincular {{ name }} cuenta",
+      "unlink_account": "desconectar {{ name }} cuenta",
+      "link_phone": "Enlace número de teléfono",
+      "unlink_phone": "Desvincular el número de teléfono",
+      "success_link": "Cuenta de {{ name }} vinculada correctamente",
+      "success_unlink": "Cuenta de {{ name }} desenlazada correctamente",
+      "last_signin": "Última sesión",
+      "league_creation_success": "¡Liga creada con éxito!",
+      "league_deletion_success": "¡Liga eliminada con éxito!",
+      "league_division_creation_success": "¡Creación exitosa de división de la liga!",
+      "league_division_deletion_success": "¡Eliminó con éxito la división de la liga!",
+      "datasync_card": {
+        "title": "Sincroniza su evento en vivo con TOA",
+        "docs": "Puede ver nuestros documentación completa de DataSync en"
+      },
+      "create_event_card": {
+        "title": "Crear evento",
+        "create": "Crear",
+        "event_id": "ID de evento",
+        "event_type": "Tipo de evento",
+        "league": "Liga",
+        "region": "Región",
+        "season": "Temporada",
+        "division_number": "Número de división",
+        "division_name": "Nombre de división",
+        "advancement_spots": "Avanzar lugares",
+        "advancement_event": "Advanzar evento",
+        "number_fields": "Número de canchas",
+        "number_alliances": "Número de alianzas",
+        "success": "Evento creado con éxito",
+        "dual_division": "Dual Division",
+        "advanced": "Advanced"
+      },
+      "dump_cache": {
+        "title": "Caché de volcado",
+        "general": "General",
+        "dump": "Volcado",
+        "success": "Caché de volcado con éxito"
+      },
+      "retriever": {
+        "title": "Cobrador",
+        "success_events": "Creado con éxito {{ value }} eventos",
+        "success_teams": "Creado con éxito {{ value }} equipos"
+      },
+      "subpages": {
+        "login": {
+          "title": "Iniciar sesión",
+          "email": "Correo electrónico",
+          "password": "Contraseña",
+          "login": "Iniciar sesión",
+          "forgot_password": "¿Olvidó la contraseña?",
+          "login_google": "Iniciar sesión con Google",
+          "login_github": "Iniciar sesión con GitHub",
+          "no_account_linked": "Esta cuenta no está vinculada a ninguna cuenta myTOA. Por favor inicie sesión para vincularlo."
+        },
+        "register": {
+          "title": "Registro",
+          "full_name": "Nombre completo",
+          "email": "Correo electrónico",
+          "password": "Contraseña",
+          "confirm_password": "Confirmar la contraseña",
+          "your_team": "Su equipo #",
+          "sign_up": "Inscribirse"
+        }
+      }
+    },
+
+    "home": {
+      "title": "Página de inicio",
+      "short_info": "The Orange Alliance es el proveedor <b>oficial</b> para informacion de eventos, equipos, y partidos para <i>FIRST</i> Tech Challenge",
+      "active_teams": "Equipos activos",
+      "matches_played": "Partidos jugados",
+      "todays_events": "Eventos de hoy",
+      "no_events_today": "No hay eventos que ocurran hoy.",
+      "leaderboards": {
+        "title": "Tablas de clasificación",
+        "high_score_qual": "La calificación de puntuación mas alta",
+        "high_score_elim": "El partido de eliminación de puntuación más alto",
+        "high_score_all": "El partido de puntuación mas alta",
+        "with_enalties": "Con penaltis",
+        "penalty_free": "Sin penaltis"
+      }
+    },
+
+    "event": {
+      "event_info": "Información del evento",
+      "game_info": "Información del juego",
+      "view_website": "Ver sitio web del evento",
+      "event_key": "Clave de evento",
+      "stream_available": "¡La transmisión en directo esta disponible!",
+      "alliances_count": "{{ value }} Alianzas",
+      "fields_count": "{{ value }} Canchas",
+      "matches_per_team": "{{ value }} partidos por equipo",
+      "settings": {
+        "title": "Configuración del evento",
+        "favorite": "Favorito",
+        "favorite_summary": "Puede guardar equipos, eventos y mucho más para facilitar el acceso marcándolos como \"favoritos\".",
+        "notification_settings": "Configuración de notificación",
+        "notification_settings_summary": "Suscribirse a algo le permite obtener una notificación push cada vez que hay una actualización.",
+        "match_scores": "Puntuaciones de partido",
+        "schedule_updated": "Horario de partidos publicado",
+        "awards_posted": "Premios publicados",
+        "alliances_posted": "Selección de alianzas",
+        "saved": "¡La configuración del evento se ha guardado correctamente!",
+        "failed": "Error al guardar la configuración del evento. Inténtelo de nuevo más tarde"
+      },
+      "subpages": {
+        "rankings": {
+          "title": "Clasificaciones",
+          "rank": "Rango",
+          "team": "Equipo",
+          "wlt_record": "G-P-E",
+          "qual_points": "Puntos de calificación",
+          "ranking_points": "Puntos de ranking",
+          "tie_breaker_points": "Puntos de desempate",
+          "highest_score": "Puntuación más alta",
+          "matches_played": "Partidos jugados",
+          "what_is_opr": "La clasificación de potencia ofensiva, también conocido como CPO, es una estadística que se utiliza a menudo en la comunidad FIRST para comparar el rendimiento de los equipos sobre el terreno. Los CPO son una forma interesante de segmentar los datos de los equipos en eventos concretos, pero no son un sistema perfecto para evaluar el rendimiento o la contribución de un equipo."
+        },
+        "matches": {
+          "title": "Partidos"
+        },
+        "teams": {
+          "title": "Equipos"
+        },
+        "alliances": {
+          "title": "Alianzas"
+        },
+        "awards": {
+          "title": "Premios"
+        },
+        "insights": {
+          "title": "Percepciónes",
+          "qual": "Requisito",
+          "playoff": "Desempate",
+          "high_score": "Puntuación alta",
+          "avg_score": "Puntuación media",
+          "avg_winning_score": "Puntuación media de victoria",
+          "avg_winning_margin": "Margen promedio de victoria",
+          "prc_landed": "% de robots desembarcados",
+          "prc_latched": "% de robots enclavados",
+          "prc_sampling": "% de muestras exitosas",
+          "prc_claiming": "% de depots reclamado",
+          "prc_parking": "% de robots aparcados",
+          "avg_golds": "Promedio # de minerales de oro en bodega de carga",
+          "avg_silvers": "Promedio # de minerales de plata en bodega de carga",
+          "avg_depot": "Promedio # de minerales en el depósito"
+        },
+        "for-participants": {
+          "title": "Para los participantes",
+          "pits_map": "Mapa de pits",
+          "venue_map": "Mapa del lugar",
+          "schedule": "Horario de evento"
+        },
+        "admin": {
+          "title": "Administración",
+          "playlist_card": {
+            "title": "Añadir videos de partidos de una lista de reproducción de YouTube",
+            "playlist_url": "URL de lista de reproducción",
+            "load": "Cargar",
+            "confirm": "Confirmar y subir",
+            "successfully": "Subido exitosamente {{ value }} videos",
+            "error": "No pudimos encontrar vídeos de partidos",
+            "invalid_url": "URL no válida, no pudimos encontrar una lista de reproducción de YouTube"
+          },
+          "update_info_card": {
+            "title": "Editar la información del evento",
+            "event_name": "Nombre del evento",
+            "website": "El sitio web",
+            "start_date": "Fecha de inicio",
+            "end_date": "Fecha de finalización",
+            "venue": "Lugar",
+            "city": "Ciudad",
+            "state": "Estado",
+            "country": "País",
+            "update": "Actualización",
+            "upload": "Subir",
+            "image_only": "Puede subir sólo como una imagen",
+            "choose_image": "Elegir imagen...",
+            "successfully": "Actualizado correctamente la información del evento"
+          },
+          "stream_card": {
+            "add_stream": "Añadir transmisión en directo",
+            "unlink_stream": "Desvincular transmisión en directo",
+            "currently_linked": "Transmisión en directo vinculada actualmente",
+            "url": "{{ provider }} URL",
+            "stream_name": "Nombre de transmisión en directo",
+            "link": "Conectar",
+            "unlink": "Desconectar",
+            "stream": "{{ provider }} transmisión en directo",
+            "success_linked": "Transmisión en directo vinculada correctamente",
+            "success_unlinked": "Transmisión en directo desenlazada correctamente"
+          },
+          "delete_card": {
+            "delete_event": "Eliminar evento",
+            "delete_failed": "Error al eliminar",
+            "delete": "Eliminar",
+            "delete_all_data": "ELIMINAR TODOS LOS DATOS DE ESTE EVENTO",
+            "delete_sure": "¿ESTÁ SEGURO DE QUE DESEA ELIMINAR EL EVENTO?",
+            "delete_final": "ESTO BORRARÁ EL EVENTO"
+          },
+          "verify_email": "Por favor verifica su correo electrónico e inténtalo de nuevo.",
+          "success_sent_verify_email": "Se ha enviado un correo electrónico de verificación correctamente."
+        }
+      }
+    },
+
+    "events": {
+      "filter_season": "Temporada",
+      "filter_region": "Región",
+      "filter": "Opciones de filtrado",
+      "clear_filter": "Borrar filtro"
+    },
+
+    "match": {
+      "match_info": "Información del partido",
+      "match_key": "Clave de partido",
+      "scheduled_time": "Hora programada",
+      "no_video": "No hay vídeo disponible",
+      "add_one": "Añadir una"
+    },
+
+    "streams": {
+      "event_results": "Resultados del evento",
+      "close_stream": "Cerrar la transmisión",
+      "select_stream": "Seleccionar stream",
+      "show_chat": "Mostrar chat",
+      "select": "Seleccionar",
+      "cancel": "Cancelar",
+      "layouts": {
+        "title": "Seleccionar diseño",
+        "single_view": "Vista individual",
+        "vertical_split_view": "Vista dividida vertical",
+        "horizontal_split_view": "Vista dividida horizontal",
+        "1_2_view": "1+2 vista",
+        "1_4_view": "1+4 vista",
+        "quad_view": "Vista cuádruple"
+      }
+    },
+
+    "team": {
+      "team_info": "Información del equipo",
+      "event_results": "Resultados del evento",
+      "part_of_region": "Parte de la región de {{ regionKey }}",
+      "website": "Sitio web",
+      "rookie_year": "Año novato",
+      "last_active": "Última temporada activa",
+      "awards_in_season": "{{ awards }} premios en la temporada {{ season }}",
+      "robot_profile": {
+        "title": "Robot",
+        "engineering_notebook": "Cuaderno de la ingeniería",
+        "robot_reveal": "Robot revelar",
+        "photos": "Fotos"
+      }
+    },
+
+    "teams": {
+      "title": "Equipos",
+      "filter": "Filtrar por número, nombre o ubicación",
+      "results": "{{ results }} Resultados"
+    }
+  },
+
+  "match_table": {
+    "teams": "Equipos",
+    "score": "Puntuación",
+    "scores": "Puntuaciónes",
+    "blue_alliance": "Alianza azul",
+    "red_alliance": "Alianza rojo",
+    "blue_score": "Puntuación azul",
+    "red_score": "Puntuación roja",
+    "no_matches_for_event": "No hay datos de partidos disponibles para este evento.",
+    "match": "Partido",
+    "view_team": "Ver equipo",
+    "rank": "Rango",
+    "wlt": "GPE",
+    "played": "Jugó",
+    "help": {
+      "bold": "<b>Negrita</b> está ganando la alianza</small>",
+      "bold_and_black": "<b>Negrita y Negro</b> es equipo seleccionado</small>",
+      "surrogate": "<b>*</b> es suplente"
+    }
+  },
+
+  "no_data": {
+    "teams": "No se encontraron equipos",
+    "teams_long": "No hay equipos que coincidan con esa consulta",
+    "events": "No se encontraron eventos",
+    "event_long": "NO SE HAN REPORTADO RESULTADOS PARA ESTE EVENTO.",
+    "streams_long": "Actualmente no hay transmisiones activas.",
+    "events_for_season": "No hay eventos para {{ season }} la temporada",
+    "events_for_season_long": "Este equipo aún no ha jugado en ningún evento esta temporada.<br/>Intenta cambiar la temporada usando el selector de arriba.",
+    "events_filter": "No se han encontrado eventos para este filtro",
+    "events_filter_long": "Intente cambiar la temporada o la región con los selectores anteriores.",
+    "match_breakdown": "No se ha encontrado ningún desglose de coincidencias"
   }
+}
