@@ -25,15 +25,28 @@ const EventTabs = ({ event }: IProps) => {
 
   useEffect(() => {
     const newTabs = getTabs();
-    setSelectedTab(findTabByPath(newTabs, tab_key));
+    const tabByPath = findTabByPath(newTabs, tab_key);
+    if(tabByPath > -1) {
+      setSelectedTab(tabByPath);
+    } else {
+      tabHandler(null, 0, newTabs)
+    }
     setTabs(newTabs);
-
     // Register Router change listener
+    router.events.off('routeChangeComplete', () => {});
     router.events.on('routeChangeComplete', (url) => {
       const parts = url.split('/');
+      if(parts[1] !== 'events' || parts[2] !== event.eventKey) {
+        router.events.off('routeChangeComplete', () => {});
+        return;
+      }
       const tab_key = parts[parts.length - 1];
-      const index = tabs.findIndex(t => t.tabRoute === tab_key);
-      if(index > -1 && index !== selectedTab) setSelectedTab(index);
+      const index = newTabs.findIndex(t => t.tabRoute === tab_key);
+      if(index > -1 && index !== selectedTab) {
+        setSelectedTab(index);
+      } else if( index < 0 && tab_key !== newTabs[0].tabRoute) {
+        tabHandler(null, 0, newTabs);
+      }
     });
   }, []);
 
@@ -95,11 +108,11 @@ const EventTabs = ({ event }: IProps) => {
     return newTabs;
   }
 
-  function tabHandler(e: SyntheticEvent, value: number) {
+  function tabHandler(e: SyntheticEvent | null, value: number, newTabs?: ITabProps[]) {
+    if (!newTabs) newTabs = tabs;
     router.push({
-      pathname: `/events/${event.eventKey}/${tabs[value].tabRoute}`
+      pathname: `/events/${event.eventKey}/${newTabs[value].tabRoute}`
     }, undefined, {shallow: true})
-    setSelectedTab(value);
   }
 
   function getSelectedTab(): React.ReactElement {

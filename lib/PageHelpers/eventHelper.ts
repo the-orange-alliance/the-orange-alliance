@@ -62,6 +62,17 @@ const getEventData = async (eventKey: string): Promise<IRawEventProps> => {
   const insights = [data[6][0], data[7][0]];
   const streams = data[8];
 
+   const newInsights = [];
+  for(const i of insights) {
+    if(i) {
+      const insight = undefinedToNull(i.toJSON()) as any;
+      insight.high_score_match = undefinedToNull(insight.high_score_match);
+      newInsights.push(insight);
+    } else {
+      newInsights.push(null);
+    }
+  }
+
   return {
     event: undefinedToNull(event.toJSON()),
     teams: teams.map(t => undefinedToNull(t.toJSON())),
@@ -69,7 +80,7 @@ const getEventData = async (eventKey: string): Promise<IRawEventProps> => {
     matches: matches.map(m => undefinedToNull(m.toJSON())),
     alliances: alliances.map(a => undefinedToNull(a.toJSON())),
     awards: awards.map(a => undefinedToNull(a.toJSON())),
-    insights: insights.map(i => undefinedToNull((typeof i !== "undefined") ? i.toJSON() : null)),
+    insights: newInsights,
     streams: streams.map(s => undefinedToNull(s.toJSON())),
   }
 }

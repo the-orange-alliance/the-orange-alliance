@@ -48,7 +48,7 @@ const MatchesTab = (props: IProps) => {
 
   return (
     <Table className='event-match-table'>
-      <TableHead>
+      <TableHead style={{backgroundColor: 'rgb(240, 240, 240)'}}>
         <TableRow>
           <TableCell>
             <Typography align='center'>{t("match_table.match")}</Typography>

@@ -53,7 +53,7 @@ const MatchTeamDisplay = ({ match, color }: { match: Match; color: string }) => 
       <Grid container>
         {teams.map((team: MatchParticipant) => (
           <Grid key={team.teamKey} item xs={(24 / teamCount) as 3 | 4} className={`${color}-bg`}>
-            <Button fullWidth>
+            <Button fullWidth color={'inherit'}>
               <a href={`/teams/${team.teamKey}`}>{team.teamKey}</a>
             </Button>
           </Grid>
@@ -65,7 +65,7 @@ const MatchTeamDisplay = ({ match, color }: { match: Match; color: string }) => 
 const MatchScoreDisplay = ({ score, color }: { score: number; color: string }) => {
   return (
     <Grid item xs={12} className={`${color}-bg`}>
-      <Button fullWidth>{score}</Button>
+      <Button fullWidth color={'inherit'}>{score}</Button>
     </Grid>
   );
 }

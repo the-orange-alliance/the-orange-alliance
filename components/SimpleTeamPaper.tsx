@@ -3,6 +3,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import { Team } from "@the-orange-alliance/api/lib/cjs/models";
+import Link from 'next/link';
 
 interface IProps {
   team: Team;
@@ -21,12 +22,14 @@ const SimpleTeamPaper = (props: IProps) => {
   const secondaryText = city + stateProv + country;
 
   return (
-    <ListItem button>
-      <ListItemAvatar>
-        <>{team.teamKey}</>
-      </ListItemAvatar>
-      <ListItemText primary={primaryText} secondary={secondaryText} />
-    </ListItem>
+    <Link href={`/teams/${team.teamKey}`}>
+      <ListItem button>
+        <ListItemAvatar>
+          <>{team.teamKey}</>
+        </ListItemAvatar>
+        <ListItemText primary={primaryText} secondary={secondaryText} />
+      </ListItem>
+    </Link>
   );
 };
 

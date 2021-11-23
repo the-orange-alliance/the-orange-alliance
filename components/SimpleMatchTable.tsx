@@ -70,12 +70,14 @@ const SimpleMatchTable = (props: IProps) => {
         <Table className={"simple-match-table"}>
           {header ? (
             <TableHead className={"grey-bg"}>
-              <TableCell align='center' colSpan={match.participants.length > 4 ? 3 : 2}>
-                Teams
-              </TableCell>
-              <TableCell align='center' colSpan={1}>
-                Score
-              </TableCell>
+              <TableRow>
+                <TableCell align='center' colSpan={match.participants.length > 4 ? 3 : 2}>
+                  Teams
+                </TableCell>
+                <TableCell align='center' colSpan={1}>
+                  Score
+                </TableCell>
+              </TableRow>
             </TableHead>
           ) : null}
           <TableBody>

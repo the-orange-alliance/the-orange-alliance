@@ -1,3 +1,5 @@
+import {Season} from "@the-orange-alliance/api/lib/cjs/models";
+
 function readableDate(date: Date | string): string {
   if (typeof date === "string") date = new Date(date);
   const shortMonth = getShortMonth(date.getMonth());
@@ -37,8 +39,17 @@ const undefinedToNull = (o: any): object | null => {
   if(typeof o === 'undefined' || o === null) return null;
   for (const key of Object.keys(o)) {
     if (typeof o[key] === 'undefined') o[key] = null;
+    if (Array.isArray(o[key])) {
+      for(const item in o[key]) o[key][item] = undefinedToNull(o[key][item]);
+    }
   }
   return o;
 }
 
-export { readableDate, undefinedToNull };
+const getSeasonString = (season: Season) => {
+  const codeOne = season.seasonKey.toString().substring(0, 2);
+  const codeTwo = season.seasonKey.toString().substring(2, 4);
+  return "20" + codeOne + "/" + codeTwo + " - " + season.description;
+}
+
+export { readableDate, undefinedToNull, getSeasonString };
