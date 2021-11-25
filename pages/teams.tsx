@@ -1,6 +1,6 @@
-import * as React from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
+import type { NextPage } from 'next';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
-import { ChangeEvent, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -13,10 +13,7 @@ import {
   Typography
 } from '@mui/material';
 import { useTranslate } from '../i18n/i18n';
-import type { NextPage } from 'next';
 import SimpleTeamPaper from '../components/SimpleTeamPaper';
-import { jsx } from '@emotion/react';
-import JSX = jsx.JSX;
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../lib/PageHelpers/teamsHelper';
 
@@ -33,7 +30,7 @@ const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
   const doneTypingInt = 500;
   let typingTimer: NodeJS.Timeout;
 
-  React.useEffect(() => {
+  useEffect(() => {
     setPage(1, teams);
   }, []);
 
