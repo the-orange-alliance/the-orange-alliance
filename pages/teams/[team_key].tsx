@@ -8,16 +8,16 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  List,
-  ListItem, LinearProgress
+  LinearProgress, Tab, Tabs, Fab, ImageList, ImageListItem
 } from "@mui/material";
 import {
-  Celebration,
+  Book,
+  Celebration, Create,
   Explore,
   Facebook, Flag,
-  Flare, FlashOn, Hotel,
+  Flare, FlashOn, GitHub, Hotel,
   Public,
-  Room,
+  Room, YouTube,
 } from "@mui/icons-material"
 import {useTranslate} from "../../i18n/i18n";
 import {GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType, NextPage} from "next";
@@ -28,18 +28,31 @@ import {useRouter} from "next/router";
 import {useState} from "react";
 import {Season} from "@the-orange-alliance/api/lib/cjs/models";
 import Link from 'next/link';
+import NextImg from 'next/image';
 import {MatchesTab} from "../../components/EventTabs";
 
 const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslate();
   const router = useRouter();
 
-  const {team, wlt, topOpr, seasons} = parseTeamProps(props as IRawTeamProps)
+  const {
+    team,
+    wlt,
+    topOpr,
+    seasons,
+    cad,
+    github,
+    images,
+    notebook,
+    reveal,
+    matches
+  } = parseTeamProps(props as IRawTeamProps)
   const querySeason = (router.query.season_key && !Array.isArray(router.query.season_key)) ? seasons.find(s => s.seasonKey === router.query.season_key) ?? seasons[0] : seasons[0];
   const lastActive = (team.lastActive) ? seasons.find(s => s.seasonKey === team.lastActive) : undefined;
 
-  const [selectedSeason, setSelectedSeason] = useState<Season>(querySeason)
-  const [fetching, setFetching] = useState<boolean>(false)
+  const [selectedSeason, setSelectedSeason] = useState<Season>(querySeason);
+  const [fetching, setFetching] = useState<boolean>(false);
+  const [tab, setTab] = useState<number>(0);
 
   const getUrl = () => {
     let website = team.website;
@@ -209,10 +222,27 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
             </CardContent>
           </Card>
 
-          {/* Team Events */}
-          <Card className={'mt-md-5 mt-3 mb-1'}>
+
+          {/* Team Events/Robot */}
+          <Card className={'mt-md-5 mt-3 mb-1 pt-0'}>
+
+            {/* Nav Tabs */}
+            <Tabs
+              value={tab}
+              onChange={(e, val) => setTab(val)}
+              variant="fullWidth"
+              scrollButtons="auto"
+              className={'mb-2 mt-0'}
+            >
+              <Tab label={t('pages.team.event_results')}/>
+              {(github || reveal || cad || notebook || images.length > 0) &&
+              <Tab label={t('pages.team.robot_profile.title')}/>
+              }
+            </Tabs>
+
             <CardContent>
-              {team.events.map(event => (
+              {/* Team Event Data*/}
+              {tab === 0 && team.events.map(event => (
                 <Card key={event.eventKey} className={'mb-4'} style={{border: '1px solid rgba(0, 0, 0, 0.15)'}}>
                   <CardContent>
                     <Box>
@@ -248,7 +278,66 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                   </CardContent>
                 </Card>
               ))
+              }
 
+              {/* Team 'Robot' Page */}
+              {tab === 1 &&
+              <Box>
+                {(github || cad || notebook) &&
+                <Typography variant={'h6'} className="mb-1">{team.teamNameShort} ❤️ Open Source</Typography>
+                }
+                {github &&
+                <Box className={'m-2'}>
+                  <Fab href={github.mediaLink} target={'_blank'} className={'text-white'}
+                       style={{backgroundColor: `#24292e`}} variant={'extended'}>
+                    <GitHub className={'me-2'}/>GitHub
+                  </Fab>
+                </Box>
+                }
+                {cad &&
+                <Box className={'m-2'}>
+                  <Fab href={cad.mediaLink} target={'_blank'} className={'text-white'}
+                       style={{backgroundColor: `#9c27b0`}}
+                       variant={'extended'}>
+                    <Create className={'me-2'}/>CAD Design
+                  </Fab>
+                </Box>
+                }
+                {notebook &&
+                <Box className={'m-2'}>
+                  <Fab href={notebook.mediaLink} target={'_blank'} className={'text-white'}
+                       style={{backgroundColor: `#0097a7`}}
+                       variant={'extended'}>
+                    <Book className={'me-2'}/>{t('pages.team.robot_profile.engineering_notebook')}
+                  </Fab>
+                </Box>
+                }
+                {reveal &&
+                <Box className={'m-2'}>
+                  <Fab href={reveal.mediaLink} target={'_blank'} className={'text-white'}
+                       style={{backgroundColor: `#b71c1c`}}
+                       variant={'extended'}>
+                    <YouTube className={'me-2'}/>{t('pages.team.robot_profile.engineering_notebook')}
+                  </Fab>
+                </Box>
+                }
+                {(github || cad || notebook) && images.length > 0 &&
+                <Divider className={'mb-3 mt-3'}/>
+                }
+                {images.length > 0 &&
+                <Box className={'m-2'}>
+                  <Typography variant={'h6'}>{t('pages.team.robot_profile.photos')}</Typography>
+                  <ImageList variant={'masonry'}>
+                    {images.map(m => (
+                      <ImageListItem className={'w-100'} key={m.mediaKey}>
+                        <NextImg src={m.mediaLink} alt={'Team Media Image'}/>
+                      </ImageListItem>
+                    ))
+                    }
+                  </ImageList>
+                </Box>
+                }
+              </Box>
               }
             </CardContent>
           </Card>

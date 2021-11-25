@@ -1,18 +1,19 @@
 import TOAProvider from "../../providers/TOAProvider";
 import {undefinedToNull} from "../../util/common-utils";
 import {
-  Season,
-  Team,
-  Match,
+  AwardRecipient,
   Event,
   EventParticipant,
+  Match,
+  Media,
   Ranking,
-  AwardRecipient,
-  Media
+  Season,
+  Team
 } from "@the-orange-alliance/api/lib/cjs/models";
 import {MatchSorter} from "../../util/match-utils";
 import {EventSorter} from "../../util/event-utils";
-import { sort } from "../../util/award-utils";
+import {sort} from "../../util/award-utils";
+import {MediaTypeTeam} from "@the-orange-alliance/api/lib/cjs/models/types/MediaType";
 
 interface IRawTeamProps {
   team: any
@@ -31,7 +32,12 @@ interface ITeamProps {
   topOpr: Ranking | null,
   matches: any
   wlt: {wins: number, losses: number, ties: number}
-  seasons: Season[]
+  seasons: Season[],
+  github: Media | null,
+  cad: Media | null,
+  notebook: Media | null,
+  reveal: Media | null,
+  images: Media[]
 }
 
 const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
@@ -56,6 +62,34 @@ const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
     event.matches = event.matches.map((m: any) => new Match().fromJSON(m));
   }
 
+  // Process Media
+  const images = [];
+  let github = null;
+  let cad = null;
+  let notebook = null;
+  let reveal = null;
+  if (team.media) {
+    for (const media of team.media) {
+      console.log(media)
+      switch(media.mediaType) {
+        case MediaTypeTeam.Github:
+          github = media;
+          break;
+        case MediaTypeTeam.RobotReveal:
+          reveal = media;
+          break;
+        case MediaTypeTeam.CAD:
+          cad = media;
+          break;
+        case MediaTypeTeam.EngNotebook:
+          notebook = media;
+          break;
+        case MediaTypeTeam.RobotImage:
+          images.push(media)
+          break;
+      }
+    }
+  }
 
   return {
     team: team,
@@ -63,6 +97,11 @@ const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
     wlt: props.wlt,
     matches: props.matches,
     seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
+    github: github,
+    cad: cad,
+    reveal: reveal,
+    images: images,
+    notebook: notebook
   }
 }
 
@@ -125,7 +164,7 @@ const getTeamSeasons = (seasons: Season[], team: Team): Season[] => {
 
   return seasons.filter(s => {
     const key = parseInt(s.seasonKey);
-    return key >= rookieYear && key <= lastActive;
+    return key >= rookieYear;
   });
 }
 
