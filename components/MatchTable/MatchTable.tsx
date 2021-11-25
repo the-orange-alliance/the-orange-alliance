@@ -11,12 +11,14 @@ import {
   Grid,
   Drawer,
   Box,
-  CircularProgress
+  CircularProgress,
+  IconButton,
+  Divider
 } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import MatchTableRow from './MatchTableRow';
-import { ArrowForwardIos, PlayCircleOutline } from '@mui/icons-material';
+import { ArrowForwardIos, Close, PlayCircleOutline } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { CURRENT_SEASON } from '../../constants';
 import { useEffect, useState } from 'react';
@@ -364,6 +366,19 @@ const MatchesTable = (props: IProps) => {
         }}
       >
         <Box>
+          {selectedMatch && [
+            <Grid container direction={'row'} className={'w-100 text-center grey-bg'}>
+              <Grid item xs={11} className={'mt-1'}>
+                <Typography variant={'h6'}>{selectedMatch.matchName}</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton onClick={() => setDrawerOpen(false)}>
+                  <Close />
+                </IconButton>
+              </Grid>
+            </Grid>,
+            <Divider key={'divider'} />
+          ]}
           {selectedMatch && selectedMatch.details.matchKey === '' && (
             <Box className={'text-center mt-5'} sx={{ minWidth: 300 }}>
               <CircularProgress />

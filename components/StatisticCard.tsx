@@ -1,25 +1,48 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
+import { Box, BoxProps, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
-interface IProps {
+interface Props {
   title: string;
   subtitle: string;
   icon: React.ReactElement;
 }
+type NativeAttrs = Omit<BoxProps, keyof Props>;
+export type StatisticCardProps = Props & NativeAttrs;
 
-const StatisticCard = (props: IProps) => {
-  const { title, subtitle, icon } = props;
+const StatisticCard = ({ title, subtitle, icon, sx, ...props }: StatisticCardProps) => {
+  const theme = useTheme();
 
   return (
-    <Card>
-      <CardHeader
-        avatar={<Avatar className="primary-bg secondary">{icon}</Avatar>}
-        title={title}
-        subheader={subtitle}
-      />
-    </Card>
+    <Box
+      sx={{
+        bgcolor: 'white',
+        p: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        borderRadius: 4,
+        ...sx
+      }}
+      {...props}
+    >
+      <Avatar
+        sx={{
+          bgcolor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+          mr: 2
+        }}
+      >
+        {icon}
+      </Avatar>
+      <Box>
+        <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
+        <Typography
+          sx={{ color: theme.palette.grey[600], lineHeight: 'normal', fontSize: '0.875rem' }}
+        >
+          {subtitle}
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

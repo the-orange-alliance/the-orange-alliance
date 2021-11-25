@@ -1,33 +1,20 @@
-import * as React from 'react';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import Link from 'next/link';
 import { Typography, Paper } from '@mui/material';
-import {
-  CalendarToday,
-  LocationOn,
-  Public,
-  Verified,
-  VerifiedUser,
-  Videocam
-} from '@mui/icons-material';
+import { CalendarToday, LocationOn, Public, VerifiedUser, Videocam } from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
 import { useTranslate } from '../../../i18n/i18n';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage
-} from 'next';
 import {
   getEventData,
   IRawEventProps,
   parseEventProps
 } from '../../../lib/PageHelpers/eventHelper';
 import EventTabs from '../../../components/EventTabs/EventTabs';
-import Link from 'next/link';
 
-const EventPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const EventPage: NextPage<IRawEventProps> = props => {
   const t = useTranslate();
 
-  const { event: eventData, streams } = parseEventProps(props as IRawEventProps);
+  const { event: eventData, streams } = parseEventProps(props);
 
   function strToDate(dateString: string) {
     return new Date(Date.parse(dateString));

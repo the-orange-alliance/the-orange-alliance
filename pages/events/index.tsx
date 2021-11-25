@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useEffect } from 'react';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import {
   Autocomplete,
   Box,
@@ -17,18 +18,16 @@ import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Region, Season, Week, Event } from '@the-orange-alliance/api/lib/cjs/models';
-import SimpleEventPaper from '../components/SimpleEventPaper';
+import SimpleEventPaper from '../../components/SimpleEventPaper';
 import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage
-} from 'next';
-import { getEventsData, IRawEventsProps, parseEventsProps } from '../lib/PageHelpers/eventsHelper';
-import { useTranslate } from '../i18n/i18n';
+  getEventsData,
+  IRawEventsProps,
+  parseEventsProps
+} from '../../lib/PageHelpers/eventsHelper';
+import { useTranslate } from '../../i18n/i18n';
 import { useRouter } from 'next/router';
-import { CURRENT_SEASON } from '../constants';
-import { getSeasonString } from '../util/common-utils';
+import { CURRENT_SEASON } from '../../constants';
+import { getSeasonString } from '../../util/common-utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   filterSelect: {
@@ -41,11 +40,11 @@ interface AutoComplete<T> {
   parent: T;
 }
 
-const EventsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const EventsPage: NextPage<IRawEventsProps> = props => {
   const classes = useStyles();
   const router = useRouter();
   const t = useTranslate();
-  const { events, regions, seasons, weeks } = parseEventsProps(props as IRawEventsProps);
+  const { events, regions, seasons, weeks } = parseEventsProps(props);
 
   const [localRegions, setLocalRegions] = useState<AutoComplete<Region>[]>([]);
   const [localSeasons, setLocalSeasons] = useState<AutoComplete<Season>[]>([]);
@@ -54,7 +53,7 @@ const EventsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServe
   const [selectedTab, setSelectedTab] = useState<string>('');
   const [fetching, setFetching] = useState<boolean>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Set current week
     if (weeks.length > 0) setSelectedTab(weeks[0].weekKey);
 
@@ -264,7 +263,7 @@ const EventsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServe
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  return {props: await getEventsData(context.query.season_key, context.query.region_key)};
+  return { props: await getEventsData(context.query.season_key, context.query.region_key) };
 };
 
 export default EventsPage;

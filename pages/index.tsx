@@ -1,9 +1,4 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-  InferGetServerSidePropsType
-} from 'next';
+import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Container, Grid, Typography } from '@mui/material';
 import { People, SportsEsports } from '@mui/icons-material';
 import { NextSeo } from 'next-seo';
@@ -13,19 +8,22 @@ import { useTranslate } from '../i18n/i18n';
 import { getHomeData, IRawHomeProps, parseHomeProps } from '../lib/PageHelpers/homeHelper';
 import LeaderboardsModule from '../components/LeaderboardsModule';
 
-const Home: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPage<IRawHomeProps> = props => {
   const t = useTranslate();
 
-  const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore } = parseHomeProps(
-    props as IRawHomeProps
-  );
+  const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore } =
+    parseHomeProps(props);
 
   return (
     <>
       <NextSeo title={`The Orange Alliance`} description={'we cool bois'} />
       <Container sx={{ bgcolor: '#f5f6f7' }}>
         <div>
-          <Typography align={'center'} variant={'h3'} gutterBottom>
+          <Typography
+            component="h1"
+            align="center"
+            sx={{ fontSize: '2rem', fontWeight: 500, my: 6 }}
+          >
             The Orange Alliance
           </Typography>
           <Grid container spacing={3}>
@@ -77,9 +75,7 @@ const Home: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideP
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return { props: await getHomeData() };
 };
 

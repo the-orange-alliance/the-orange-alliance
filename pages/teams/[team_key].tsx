@@ -1,4 +1,7 @@
-import * as React from 'react';
+import { useState } from 'react';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import NextImage from 'next/image';
 import {
   Typography,
   Card,
@@ -31,28 +34,18 @@ import {
   YouTube
 } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-  NextPage
-} from 'next';
 import { getTeamData, IRawTeamProps, parseTeamProps } from '../../lib/PageHelpers/teamHelper';
 import { getSeasonString, readableDate } from '../../util/common-utils';
 import { CURRENT_SEASON } from '../../constants';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
-import NextImg from 'next/image';
-import { MatchesTab } from '../../components/EventTabs';
 import MatchesTable from '../../components/MatchTable/MatchTable';
 
-const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const TeamPage: NextPage<IRawTeamProps> = props => {
   const t = useTranslate();
   const router = useRouter();
 
   const { team, wlt, topOpr, seasons, cad, github, images, notebook, reveal, matches } =
-    parseTeamProps(props as IRawTeamProps);
+    parseTeamProps(props);
   const querySeason =
     router.query.season_key && !Array.isArray(router.query.season_key)
       ? seasons.find(s => s.seasonKey === router.query.season_key) ?? seasons[0]
@@ -67,10 +60,10 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
 
   const getUrl = () => {
     let website = team.website;
-    website = website.substr(website.indexOf(':') + 3); // Taking off the http/s
+    website = website.substring(website.indexOf(':') + 3); // Taking off the http/s
     if (website.endsWith('/') || website.endsWith('?') || website.endsWith('#')) {
       // Taking off unnecessary chars
-      website = website.substr(0, website.length - 1);
+      website = website.substring(0, website.length - 1);
     }
 
     return website.startsWith('www.') ? website.substring(4, website.length) : website;
@@ -429,7 +422,7 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                       <ImageList variant={'masonry'}>
                         {images.map(m => (
                           <ImageListItem className={'w-100'} key={m.mediaKey}>
-                            <NextImg src={m.mediaLink} alt={'Team Media Image'} />
+                            <NextImage src={m.mediaLink} alt={'Team Media Image'} />
                           </ImageListItem>
                         ))}
                       </ImageList>
