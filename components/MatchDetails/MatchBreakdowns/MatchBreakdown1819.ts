@@ -1,11 +1,12 @@
-import { MatchBreakdownTitle, MatchBreakdownField, MatchBreakdownRow } from '../../../models/MatchBreakdownRow';
-import RoverRuckusMatchDetails from '../../../models/game-specifics/RoverRuckusMatchDetails';
-import Match from '../../../models/Match';
+import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
+import RoverRuckusMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/RoverRuckusMatchDetails';
+import { MatchBreakdownField, MatchBreakdownRow, MatchBreakdownTitle } from '../MatchBreakdownRow';
 
 export default class MatchBreakdown1819 {
-
   getRows(match: Match): MatchBreakdownRow[] {
-    const details: RoverRuckusMatchDetails = new RoverRuckusMatchDetails().fromJSON(match.details.toJSON());
+    const details: RoverRuckusMatchDetails = new RoverRuckusMatchDetails().fromJSON(
+      match.details.toJSON()
+    );
     return [
       MatchBreakdownTitle('Autonomous', match.redAutoScore, match.blueAutoScore),
       MatchBreakdownField('Landing', details.redAutoLand, details.blueAutoLand, 30),
@@ -16,7 +17,12 @@ export default class MatchBreakdown1819 {
       MatchBreakdownTitle('Teleop', match.redTeleScore, match.blueTeleScore),
       MatchBreakdownField('Gold Minerals', details.redDriverGold, details.blueDriverGold, 5),
       MatchBreakdownField('Silver Minerals', details.redDriverSilver, details.blueDriverSilver, 5),
-      MatchBreakdownField('Any Mineral in Depot', details.redDriverDepot, details.blueDriverDepot, 2),
+      MatchBreakdownField(
+        'Any Mineral in Depot',
+        details.redDriverDepot,
+        details.blueDriverDepot,
+        2
+      ),
 
       MatchBreakdownTitle('End Game', match.redEndScore, match.blueEndScore),
       MatchBreakdownField('Robots Latched', details.redEndLatch, details.blueEndLatch, 50),

@@ -43,9 +43,9 @@ import { CURRENT_SEASON } from '../../constants';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
-import Link from 'next/link';
 import NextImg from 'next/image';
 import { MatchesTab } from '../../components/EventTabs';
+import MatchesTable from '../../components/MatchTable/MatchTable';
 
 const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslate();
@@ -303,7 +303,7 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                   >
                     <CardContent>
                       <Box>
-                        <Link href={`/events/${event.eventKey}/rankings`}>
+                        <a className={'text-black'} href={`/events/${event.eventKey}/rankings`}>
                           <Typography variant={'h5'}>
                             <b>
                               {event.divisionName
@@ -311,7 +311,7 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                                 : event.eventName}
                             </b>
                           </Typography>
-                        </Link>
+                        </a>
                         <Typography variant={'subtitle2'}>
                           {event.city}, {event.stateProv ? event.stateProv + ', ' : ''}
                           {event.country} on {readableDate(event.startDate)}
@@ -343,7 +343,7 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                           </Typography>
                         ))}
                         {event.matches.length > 0 && (
-                          <MatchesTab
+                          <MatchesTable
                             event={event}
                             forceSmall
                             disableSingleTeamTeam

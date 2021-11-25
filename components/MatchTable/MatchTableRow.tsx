@@ -2,16 +2,23 @@ import * as React from 'react';
 import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { TableRow, TableCell, Grid, Typography, Box } from '@mui/material';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
-import { CURRENT_SEASON } from '../constants';
+import { CURRENT_SEASON } from '../../constants';
 
 interface IProps {
   match: Match;
   forceSmall?: boolean;
   selectedTeam?: MatchParticipant | null;
   setSelectedTeam?: (participant: MatchParticipant | null) => void;
+  setSelectedMatch?: (match: Match | null) => void;
 }
 
-const MatchTable = ({ match, forceSmall, selectedTeam, setSelectedTeam }: IProps) => {
+const MatchTableRow = ({
+  match,
+  forceSmall,
+  selectedTeam,
+  setSelectedTeam,
+  setSelectedMatch
+}: IProps) => {
   const sideBySideSx = forceSmall
     ? { display: 'none' }
     : { display: { xs: `none`, md: 'table-row' } };
@@ -23,7 +30,12 @@ const MatchTable = ({ match, forceSmall, selectedTeam, setSelectedTeam }: IProps
     <>
       {/* SIDE-BY-SIDE ALLIANCES */}
       <TableRow sx={sideBySideSx}>
-        <TableCell className={'p-0'} padding={'none'}>
+        <TableCell
+          className={'p-0'}
+          padding={'none'}
+          onClick={() => setSelectedMatch && setSelectedMatch(match)}
+          style={{ cursor: 'pointer' }}
+        >
           <Typography align="center">{match.matchName}</Typography>
         </TableCell>
         <TableCell>
@@ -79,7 +91,10 @@ const MatchTable = ({ match, forceSmall, selectedTeam, setSelectedTeam }: IProps
 
       {/* STACKED ALLIANCES */}
       <TableRow sx={stackedSx}>
-        <TableCell>
+        <TableCell
+          onClick={() => setSelectedMatch && setSelectedMatch(match)}
+          style={{ cursor: 'pointer' }}
+        >
           <Typography align="center">{match.matchName}</Typography>
         </TableCell>
         <TableCell>
@@ -211,4 +226,4 @@ const MatchScoreDisplay = ({
   );
 };
 
-export default MatchTable;
+export default MatchTableRow;

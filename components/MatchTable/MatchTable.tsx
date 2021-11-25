@@ -9,15 +9,19 @@ import {
   Button,
   Snackbar,
   Grid,
+  Drawer,
+  Box,
+  CircularProgress
 } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
-import MatchTableRow from '../MatchTableRow';
-import IconPlay from '@mui/icons-material/PlayCircleOutline';
-import { ArrowForwardIos } from '@mui/icons-material';
+import MatchTableRow from './MatchTableRow';
+import { ArrowForwardIos, PlayCircleOutline } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { CURRENT_SEASON } from '../../constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import MatchDetailsCard from '../MatchDetails/MatchDetailsCard';
+import TOAProvider from '../../providers/TOAProvider';
 
 interface IProps {
   event: Event;
@@ -26,12 +30,39 @@ interface IProps {
   disableSelection?: boolean;
 }
 
-const MatchesTab = (props: IProps) => {
+const MatchesTable = (props: IProps) => {
   const router = useRouter();
   const { forceSmall, disableSelection, disableSingleTeamTeam } = props;
   const { matches } = props.event;
   const t = useTranslate();
   const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(null);
+  const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!drawerOpen && selectedMatch) {
+      setTimeout(() => setSelectedMatch(null), 200);
+    }
+  }, [drawerOpen]);
+
+  useEffect(() => {
+    if (selectedMatch) setDrawerOpen(true);
+    if (selectedMatch && selectedMatch.details.matchKey === '') {
+      TOAProvider.getAPI()
+        .getMatchDetails(selectedMatch.matchKey)
+        .then(dtls => {
+          const copy = new Match().fromJSON(selectedMatch.toJSON());
+          copy.details = dtls;
+          // Set these details because this technically should reference to the original data we got from the server
+          // This way, the next time the user loads these details they exist
+          selectedMatch.details = dtls;
+          setSelectedMatch(copy);
+        })
+        .catch(() => {
+          setDrawerOpen(false);
+        });
+    }
+  }, [selectedMatch]);
 
   const sideBySideSx = forceSmall
     ? { display: 'none' }
@@ -103,6 +134,7 @@ const MatchesTab = (props: IProps) => {
               forceSmall={forceSmall}
               setSelectedTeam={disableSelection ? () => {} : setSelectedTeam}
               selectedTeam={disableSelection ? null : selectedTeam}
+              setSelectedMatch={setSelectedMatch}
             />
           ))}
         </>
@@ -161,10 +193,10 @@ const MatchesTab = (props: IProps) => {
                 <TableCell className={'p-0 text-center'} padding={'none'}>
                   {m.videoURL ? (
                     <a href={m.videoURL}>
-                      <IconPlay />
+                      <PlayCircleOutline />
                     </a>
                   ) : (
-                    <IconPlay color={'disabled'} />
+                    <PlayCircleOutline color={'disabled'} />
                   )}
                 </TableCell>
                 <TableCell className={`p-0 ${bg}-bg`} padding={'none'}>
@@ -172,6 +204,7 @@ const MatchesTab = (props: IProps) => {
                     className={'match-table-text win'}
                     style={{ padding: '17px' }}
                     align="center"
+                    onClick={() => setSelectedMatch(m)}
                   >
                     {m.matchName}
                   </Typography>
@@ -318,8 +351,31 @@ const MatchesTab = (props: IProps) => {
           </Button>
         }
       />
+
+      {/* SELECTED MATCH TRAY */}
+      <Drawer
+        anchor={'right'}
+        open={drawerOpen}
+        transitionDuration={200}
+        PaperProps={{ style: { maxWidth: '90%' } }}
+        onClose={() => setDrawerOpen(false)}
+        sx={theme => {
+          return { zIndex: theme.zIndex.drawer + 2 };
+        }}
+      >
+        <Box>
+          {selectedMatch && selectedMatch.details.matchKey === '' && (
+            <Box className={'text-center mt-5'} sx={{ minWidth: 300 }}>
+              <CircularProgress />
+            </Box>
+          )}
+          {selectedMatch && selectedMatch.details.matchKey !== '' && (
+            <MatchDetailsCard match={selectedMatch} />
+          )}
+        </Box>
+      </Drawer>
     </>
   );
 };
 
-export default MatchesTab;
+export default MatchesTable;

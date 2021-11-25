@@ -95,10 +95,6 @@ a:hover:not(.MuiButtonBase-root) {
   padding: 16px;
 }
 
-.event-tabs {
-  padding: 16px;
-}
-
 .event-match-table {
   font-size: 2rem;
 }
@@ -120,4 +116,8 @@ a:hover:not(.MuiButtonBase-root) {
 .badge-warning {
   color: #212529;
   background-color: #ffc107
+}
+
+.match-table-cell {
+  padding: 17px;
 }

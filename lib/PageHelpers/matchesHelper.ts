@@ -1,106 +1,50 @@
-import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
+import {
+  Match,
+  Event,
+  MatchParticipant,
+  MatchDetails
+} from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
-import { CURRENT_SEASON } from '../../constants';
 import { undefinedToNull } from '../../util/common-utils';
+import { getMatchDetails } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/GameData';
 
-interface IRawHomeProps {
-  teamSize: number;
-  matchSize: number;
-  overallHighScoreMatch: any;
-  qualsHighScoreMatch: any;
-  elimsHighScoreMatch: any;
-  overallHighScoreParticipants: any;
-  qualsHighScoreParticipants: any;
-  elimsHighScoreParticipants: any;
-  overallHighScoreEvent: any;
-  qualsHighScoreEvent: any;
-  elimsHighScoreEvent: any;
+interface IRawMatchesProps {
+  match: any;
+  matchDetails: any;
+  matchParticipants: any[];
+  event: any;
 }
 
-interface IHomeProps {
-  teamSize: number;
-  matchSize: number;
-  overallHighScore: Match;
-  qualsHighScore: Match;
-  elimsHighScore: Match;
+interface IMatchesProps {
+  match: Match;
 }
 
-const getHighScoreMatch = (type: 'all' | 'elims' | 'quals' | 'single_team'): Promise<Match> => {
-  return new Promise<Match>(async (resolve, reject) => {
-    try {
-      const match: Match = await TOAProvider.getAPI().getHighScoreMatch(type, {
-        seasonKey: CURRENT_SEASON
-      });
-      const res = await Promise.all([
-        TOAProvider.getAPI().getEvent(match.eventKey),
-        TOAProvider.getAPI().getMatchParticipants(match.matchKey)
-      ]);
-      match.event = res[0];
-      match.participants = res[1];
-      resolve(match);
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
-const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
-  const overall = new Match().fromJSON(props.overallHighScoreMatch);
-  overall.event = new Event().fromJSON(props.overallHighScoreEvent);
-  overall.participants = props.overallHighScoreParticipants.map((p: any) =>
-    new MatchParticipant().fromJSON(p)
-  );
-
-  const quals = new Match().fromJSON(props.qualsHighScoreMatch);
-  quals.event = new Event().fromJSON(props.qualsHighScoreEvent);
-  quals.participants = props.qualsHighScoreParticipants.map((p: any) =>
-    new MatchParticipant().fromJSON(p)
-  );
-
-  const elims = new Match().fromJSON(props.elimsHighScoreMatch);
-  elims.event = new Event().fromJSON(props.elimsHighScoreEvent);
-  elims.participants = props.elimsHighScoreParticipants.map((p: any) =>
-    new MatchParticipant().fromJSON(p)
-  );
-
+const parseMatchesProps = (props: IRawMatchesProps): IMatchesProps => {
+  const match = new Match().fromJSON(props.match);
+  match.event = new Event().fromJSON(props.event);
+  match.details = getMatchDetails(match.event.seasonKey).fromJSON(props.matchDetails);
+  match.participants = props.matchParticipants.map((p: any) => new MatchParticipant().fromJSON(p));
   return {
-    matchSize: props.matchSize,
-    teamSize: props.teamSize,
-    overallHighScore: overall,
-    qualsHighScore: quals,
-    elimsHighScore: elims
+    match: match
   };
 };
 
-const getHomeData = async (): Promise<IRawHomeProps> => {
-  const homePageResults = await Promise.all([
-    TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
-    TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
-    getHighScoreMatch('all'),
-    getHighScoreMatch('quals'),
-    getHighScoreMatch('elims')
+const getMatchesData = async (matchKey: string): Promise<IRawMatchesProps> => {
+  const split = matchKey.split('-');
+  const data = await Promise.all([
+    TOAProvider.getAPI().getMatch(matchKey),
+    TOAProvider.getAPI().getMatchDetails(matchKey),
+    TOAProvider.getAPI().getMatchParticipants(matchKey),
+    TOAProvider.getAPI().getEvent(`${split[0]}-${split[1]}-${split[2]}`)
   ]);
 
   return {
-    teamSize: homePageResults[0],
-    matchSize: homePageResults[1],
-    overallHighScoreMatch: undefinedToNull(homePageResults[2].toJSON()),
-    qualsHighScoreMatch: undefinedToNull(homePageResults[3].toJSON()),
-    elimsHighScoreMatch: undefinedToNull(homePageResults[4].toJSON()),
-    overallHighScoreEvent: undefinedToNull(homePageResults[2].event.toJSON()),
-    qualsHighScoreEvent: undefinedToNull(homePageResults[3].event.toJSON()),
-    elimsHighScoreEvent: undefinedToNull(homePageResults[4].event.toJSON()),
-    overallHighScoreParticipants: homePageResults[2].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    ),
-    qualsHighScoreParticipants: homePageResults[3].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    ),
-    elimsHighScoreParticipants: homePageResults[4].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    )
+    match: undefinedToNull(data[0].toJSON()),
+    matchDetails: undefinedToNull(data[1].toJSON()),
+    matchParticipants: data[2].map(p => undefinedToNull(p.toJSON())),
+    event: undefinedToNull(data[3].toJSON())
   };
 };
 
-export {getHighScoreMatch, parseHomeProps, getHomeData};
-export type {IHomeProps, IRawHomeProps};
+export { parseMatchesProps, getMatchesData };
+export type { IMatchesProps, IRawMatchesProps };

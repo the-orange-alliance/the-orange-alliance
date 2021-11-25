@@ -1,3 +1,5 @@
+import { Check, Close } from '@mui/icons-material';
+
 export class MatchBreakdownConstants {
   trueValue = -1000;
   falseValue = -2000;
@@ -46,17 +48,17 @@ export class MatchBreakdownRow {
 
     const constants = new MatchBreakdownConstants();
     this.redIcon =
-      this.red === constants.trueValue
-        ? 'check'
-        : this.red === constants.falseValue
-        ? 'close'
-        : null;
+      this.red === constants.trueValue ? (
+        <Check />
+      ) : this.red === constants.falseValue ? (
+        <Close />
+      ) : null;
     this.blueIcon =
-      this.blue === constants.trueValue
-        ? 'check'
-        : this.blue === constants.falseValue
-        ? 'close'
-        : null;
+      this.blue === constants.trueValue ? (
+        <Check />
+      ) : this.blue === constants.falseValue ? (
+        <Close />
+      ) : null;
   }
 
   getRedPoints(): string {

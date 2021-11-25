@@ -20,8 +20,14 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
         <Typography variant={'subtitle1'} gutterBottom>
           {subtitle}
         </Typography>
-        <Typography variant={'h6'}>{match.event?.eventName}</Typography>
-        <Typography variant={'subtitle1'}>{match.matchName}</Typography>
+        <Typography variant={'subtitle1'}>
+          <a href={`/events/${match.event?.eventKey}/rankings`}>{match.event?.eventName}</a>
+        </Typography>
+        <Typography variant={'body2'}>
+          <a className={'mb-2 text-black'} href={`/matches/${match.matchKey}`}>
+            {match.matchName}
+          </a>
+        </Typography>
         <SimpleMatchTable match={match} />
       </div>
     );

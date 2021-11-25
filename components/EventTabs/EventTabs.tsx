@@ -126,7 +126,7 @@ const EventTabs = ({ event }: IProps) => {
   return (
     <>
       {tabs && tabs.length > 0 && (
-        <div className="event-tabs">
+        <div>
           <Tabs
             onChange={tabHandler}
             value={selectedTab}
