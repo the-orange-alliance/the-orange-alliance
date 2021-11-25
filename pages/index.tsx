@@ -19,7 +19,11 @@ const Home: NextPage<IRawHomeProps> = props => {
       <NextSeo title={`The Orange Alliance`} description={'we cool bois'} />
       <Container sx={{ bgcolor: '#f5f6f7' }}>
         <div>
-          <Typography align={'center'} variant={'h3'} gutterBottom>
+          <Typography
+            component="h1"
+            align="center"
+            sx={{ fontSize: '2rem', fontWeight: 500, my: 6 }}
+          >
             The Orange Alliance
           </Typography>
           <Grid container spacing={3}>
