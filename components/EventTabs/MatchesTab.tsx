@@ -6,28 +6,35 @@ import {
   TableCell,
   TableBody,
   Typography,
+  Button,
+  Snackbar,
+  SnackbarContent,
+  Box,
   Grid,
-  Button
+  Badge
 } from '@mui/material';
-import { Match, Event, Ranking, Team } from '@the-orange-alliance/api/lib/cjs/models';
+import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import MatchTable from '../MatchTable';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { CURRENT_SEASON } from '../../constants';
+import { useState } from 'react';
 
 interface IProps {
   event: Event;
   forceSmall?: boolean;
   disableSingleTeamTeam?: boolean;
+  disableSelection?: boolean;
 }
 
 const MatchesTab = (props: IProps) => {
   const router = useRouter();
-  const { forceSmall } = props;
+  const { forceSmall, disableSelection, disableSingleTeamTeam } = props;
   const { matches } = props.event;
   const t = useTranslate();
+  const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(null);
 
   const sideBySideSx = forceSmall
     ? { display: 'none' }
@@ -93,7 +100,13 @@ const MatchesTab = (props: IProps) => {
 
           {/* Match Rows */}
           {matches.map((match: Match) => (
-            <MatchTable key={match.matchKey} match={match} forceSmall={forceSmall} />
+            <MatchTable
+              key={match.matchKey}
+              match={match}
+              forceSmall={forceSmall}
+              setSelectedTeam={disableSelection ? () => {} : setSelectedTeam}
+              selectedTeam={disableSelection ? null : selectedTeam}
+            />
           ))}
         </>
       );
@@ -102,6 +115,7 @@ const MatchesTab = (props: IProps) => {
   };
 
   const pushToTeamsPage = (teamKey: string) => {
+    if (teamKey === '') return;
     if (props.event.seasonKey !== CURRENT_SEASON) {
       router.push({ pathname: `/teams/${teamKey}`, query: { season_key: props.event.seasonKey } });
     } else {
@@ -117,7 +131,7 @@ const MatchesTab = (props: IProps) => {
         const rank = props.event.rankings.find(r => r.teamKey === key);
         return (
           <>
-            {!props.disableSingleTeamTeam && (
+            {!disableSingleTeamTeam && (
               <TableRow key={key}>
                 <TableCell
                   className={'p-0 text-center'}
@@ -185,78 +199,129 @@ const MatchesTab = (props: IProps) => {
     return null;
   };
 
+  const snackbarMessage = (): JSX.Element | null => {
+    if (!selectedTeam) return null;
+    const rank = props.event.rankings.find(t => t.teamKey === selectedTeam.teamKey);
+    if (!rank) return null;
+    return (
+      <>
+        <Typography>
+          <b>#{rank.teamKey}</b> {rank.team.teamNameShort}
+        </Typography>
+        <Grid container direction={'row'}>
+          <Grid item>
+            <span className={'badge badge-success mt-1 me-1 p-2'}>
+              <b>
+                {rank.wins}-{rank.losses}-{rank.ties}
+              </b>{' '}
+              {t('match_table.wlt')}
+            </span>
+          </Grid>
+          <Grid item>
+            <span className={'badge badge-info mt-1 ms-1 me-1 p-2'}>
+              <b>{rank.rank}</b> {t('match_table.rank')}
+            </span>
+          </Grid>
+          <Grid item>
+            <span className={'badge badge-warning mt-1 ms-1 me-1 p-2'}>
+              <b>{rank.played}</b> {t('match_table.played')}
+            </span>
+          </Grid>
+        </Grid>
+      </>
+    );
+  };
+
   return (
-    <Table className="event-match-table">
-      <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
-        {!singleTeamEvent && (
-          <>
-            {/* SIDE-BY-SIDE MATCH TABLE HEADER */}
-            <TableRow sx={sideBySideSx}>
+    <>
+      {/* MATCH TABLE */}
+      <Table className="event-match-table">
+        <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
+          {!singleTeamEvent && (
+            <>
+              {/* SIDE-BY-SIDE MATCH TABLE HEADER */}
+              <TableRow sx={sideBySideSx}>
+                <TableCell>
+                  <Typography align="center">{t('match_table.match')}</Typography>
+                </TableCell>
+                <TableCell />
+                <TableCell>
+                  <Typography align="center">{t('match_table.red_alliance')}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography align="center">{t('match_table.blue_alliance')}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography align="center">{t('match_table.red_score')}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography align="center">{t('match_table.blue_score')}</Typography>
+                </TableCell>
+              </TableRow>
+
+              {/* STACKED MATCH TABLE HEADER */}
+              <TableRow sx={stackedSx}>
+                <TableCell>
+                  <Typography align="center">{t('match_table.match')}</Typography>
+                </TableCell>
+                <TableCell />
+                <TableCell>
+                  <Typography align="center">{t('match_table.red_alliance')}</Typography>
+                  <Typography align="center">{t('match_table.blue_alliance')}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography align="center">{t('match_table.red_score')}</Typography>
+                  <Typography align="center">{t('match_table.blue_score')}</Typography>
+                </TableCell>
+              </TableRow>
+            </>
+          )}
+          {singleTeamEvent && (
+            <TableRow>
+              {!disableSingleTeamTeam && (
+                <TableCell>
+                  <Typography align="center">Team</Typography>
+                </TableCell>
+              )}
+              <TableCell />
               <TableCell>
                 <Typography align="center">{t('match_table.match')}</Typography>
               </TableCell>
-              <TableCell />
               <TableCell>
-                <Typography align="center">{t('match_table.red_alliance')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography align="center">{t('match_table.blue_alliance')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography align="center">{t('match_table.red_score')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography align="center">{t('match_table.blue_score')}</Typography>
+                <Typography align="center">{t('match_table.scores')}</Typography>
               </TableCell>
             </TableRow>
+          )}
+        </TableHead>
 
-            {/* STACKED MATCH TABLE HEADER */}
-            <TableRow sx={stackedSx}>
-              <TableCell>
-                <Typography align="center">{t('match_table.match')}</Typography>
-              </TableCell>
-              <TableCell />
-              <TableCell>
-                <Typography align="center">{t('match_table.red_alliance')}</Typography>
-                <Typography align="center">{t('match_table.blue_alliance')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography align="center">{t('match_table.red_score')}</Typography>
-                <Typography align="center">{t('match_table.blue_score')}</Typography>
-              </TableCell>
-            </TableRow>
-          </>
-        )}
-        {singleTeamEvent && (
-          <TableRow>
-            {!props.disableSingleTeamTeam && (
-              <TableCell>
-                <Typography align="center">Team</Typography>
-              </TableCell>
-            )}
-            <TableCell />
-            <TableCell>
-              <Typography align="center">{t('match_table.match')}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography align="center">{t('match_table.scores')}</Typography>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableHead>
+        <TableBody>
+          {!singleTeamEvent && (
+            <>
+              {renderTournamentLevel(f, 'match_table.levels.finals')}
+              {renderTournamentLevel(sf, 'match_table.levels.semifinals')}
+              {renderTournamentLevel(qf, 'match_table.levels.quarterfinals')}
+              {renderTournamentLevel(qual, 'match_table.levels.qualifications')}
+            </>
+          )}
+          {singleTeamEvent && renderSingleTeams()}
+        </TableBody>
+      </Table>
 
-      <TableBody>
-        {!singleTeamEvent && (
-          <>
-            {renderTournamentLevel(f, 'match_table.levels.finals')}
-            {renderTournamentLevel(sf, 'match_table.levels.semifinals')}
-            {renderTournamentLevel(qf, 'match_table.levels.quarterfinals')}
-            {renderTournamentLevel(qual, 'match_table.levels.qualifications')}
-          </>
-        )}
-        {singleTeamEvent && renderSingleTeams()}
-      </TableBody>
-    </Table>
+      {/* SELECTED TEAM SNACKBAR */}
+      <Snackbar
+        open={selectedTeam !== null}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center'
+        }}
+        message={snackbarMessage()}
+        action={
+          <Button size="small" onClick={() => pushToTeamsPage(selectedTeam?.teamKey ?? '')}>
+            {t('match_table.view_team')} <ArrowForwardIos />
+          </Button>
+        }
+      />
+    </>
   );
 };
 

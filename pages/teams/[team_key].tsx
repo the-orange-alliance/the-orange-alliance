@@ -343,7 +343,12 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                           </Typography>
                         ))}
                         {event.matches.length > 0 && (
-                          <MatchesTab event={event} forceSmall disableSingleTeamTeam />
+                          <MatchesTab
+                            event={event}
+                            forceSmall
+                            disableSingleTeamTeam
+                            disableSelection
+                          />
                         )}
                         {event.matches.length < 1 && <Typography variant={'body1'} />}
                       </Box>

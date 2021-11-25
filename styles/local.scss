@@ -30,6 +30,10 @@ $grey: #f0f0f0;
   background-color: $blue-win !important;
 }
 
+.selected-bg {
+  background-color: rgb(251, 204, 129) !important;
+}
+
 .grey-bg {
   background-color: $grey !important;
 }
@@ -101,4 +105,19 @@ a:hover:not(.MuiButtonBase-root) {
 
 .event-match-table td .MuiButton-text {
   padding: 15px;
+}
+
+.badge-success {
+  color: #fff;
+  background-color: #28a745
+}
+
+.badge-info {
+  color: #fff;
+  background-color: #17a2b8
+}
+
+.badge-warning {
+  color: #212529;
+  background-color: #ffc107
 }
