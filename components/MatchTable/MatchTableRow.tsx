@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import { TableRow, TableCell, Grid, Button, Typography, Box, GridSize } from '@mui/material';
+import { TableRow, TableCell, Grid, Typography, Box } from '@mui/material';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
-import { useState } from 'react';
 import { CURRENT_SEASON } from '../constants';
 
 interface IProps {
