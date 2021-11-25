@@ -1,4 +1,4 @@
-import Event from "@the-orange-alliance/api/lib/cjs/models/Event";
+import Event from '@the-orange-alliance/api/lib/cjs/models/Event';
 
 export class EventFilter {
   private events: Event[];
@@ -14,9 +14,9 @@ export class EventFilter {
   }
 
   public filterArray(query: string) {
-    if (query && query.trim() !== "") {
+    if (query && query.trim() !== '') {
       this.eventsFiltered = this.events.filter((event: Event) => {
-        return (event.regionKey || "null").toLowerCase() === query.toLowerCase();
+        return (event.regionKey || 'null').toLowerCase() === query.toLowerCase();
       });
     } else {
       this.eventsFiltered = this.events;
@@ -24,16 +24,16 @@ export class EventFilter {
   }
 
   public searchFilter(query: string) {
-    if (query && query.trim() !== "" && query !== null) {
-      this.eventsFiltered = this.events.filter((event) => {
+    if (query && query.trim() !== '' && query !== null) {
+      this.eventsFiltered = this.events.filter(event => {
         query = query.toLowerCase();
 
-        const eventRegion = (event.regionKey || "null").toLowerCase();
-        const eventCity = (event.city + "" || "null").toLowerCase();
-        const eventStateProv = (event.stateProv + "" || "null").toLowerCase();
-        const eventCountry = (event.country + "" || "null").toLowerCase();
-        const eventName = (event.eventName || "null").toLowerCase();
-        const eventKey = (event.eventKey || "null").toLowerCase();
+        const eventRegion = (event.regionKey || 'null').toLowerCase();
+        const eventCity = (event.city + '' || 'null').toLowerCase();
+        const eventStateProv = (event.stateProv + '' || 'null').toLowerCase();
+        const eventCountry = (event.country + '' || 'null').toLowerCase();
+        const eventName = (event.eventName || 'null').toLowerCase();
+        const eventKey = (event.eventKey || 'null').toLowerCase();
 
         const containsRegion = eventRegion.indexOf(query) > -1;
         const containsCity = eventCity.indexOf(query) > -1;
@@ -42,7 +42,14 @@ export class EventFilter {
         const containsName = eventName.indexOf(query) > -1;
         const someKey = eventKey === query;
 
-        return containsRegion || containsCity || containsStateProv || containsCountry || containsName || someKey;
+        return (
+          containsRegion ||
+          containsCity ||
+          containsStateProv ||
+          containsCountry ||
+          containsName ||
+          someKey
+        );
       });
     } else {
       this.eventsFiltered = this.events;

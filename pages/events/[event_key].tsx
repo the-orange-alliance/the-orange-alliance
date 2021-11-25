@@ -1,16 +1,18 @@
-import {GetServerSideProps, GetServerSidePropsContext} from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const NoTabRoute = () => {
-  return <></>
-}
+  return <></>;
+};
 
 export default NoTabRoute;
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   return {
     redirect: {
       destination: context.resolvedUrl + '/rankings',
-      permanent: false,
+      permanent: false
     }
-  }
-}
+  };
+};

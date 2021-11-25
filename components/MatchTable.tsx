@@ -1,22 +1,17 @@
-import * as React from "react";
-import { Match, MatchParticipant } from "@the-orange-alliance/api/lib/cjs/models";
-import {
-  TableRow,
-  TableCell,
-  Grid,
-  Button,
-  Typography
-} from "@mui/material";
-import IconPlay from "@mui/icons-material/PlayCircleOutline";
+import * as React from 'react';
+import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
+import { TableRow, TableCell, Grid, Button, Typography } from '@mui/material';
+import IconPlay from '@mui/icons-material/PlayCircleOutline';
 
 interface IProps {
   match: Match;
 }
+
 const MatchTable = ({ match }: IProps) => {
   return (
     <TableRow>
       <TableCell>
-        <Typography align='center'>{match.matchName}</Typography>
+        <Typography align="center">{match.matchName}</Typography>
       </TableCell>
       <TableCell>
         {match.videoURL ? (
@@ -27,25 +22,25 @@ const MatchTable = ({ match }: IProps) => {
           <IconPlay />
         )}
       </TableCell>
-      <TableCell padding={"none"}>
+      <TableCell padding={'none'}>
         <Grid container>
-          <MatchTeamDisplay match={match} color='red'/>
-          <MatchTeamDisplay match={match} color='blue'/>
+          <MatchTeamDisplay match={match} color="red" />
+          <MatchTeamDisplay match={match} color="blue" />
         </Grid>
       </TableCell>
-      <TableCell padding={"none"}>
+      <TableCell padding={'none'}>
         <Grid container>
-          <MatchScoreDisplay score={match.redScore} color='red'/>
-          <MatchScoreDisplay score={match.blueScore} color='blue'/>
+          <MatchScoreDisplay score={match.redScore} color="red" />
+          <MatchScoreDisplay score={match.blueScore} color="blue" />
         </Grid>
       </TableCell>
     </TableRow>
   );
-}
+};
 
 const MatchTeamDisplay = ({ match, color }: { match: Match; color: string }) => {
   const teamCount = match.participants.length;
-  const startPos = color === "red" ? 0 : teamCount / 2 - 1;
+  const startPos = color === 'red' ? 0 : teamCount / 2 - 1;
   const teams = match.participants.slice(startPos, startPos + teamCount / 2);
 
   return (
@@ -61,13 +56,15 @@ const MatchTeamDisplay = ({ match, color }: { match: Match; color: string }) => 
       </Grid>
     </Grid>
   );
-}
+};
 const MatchScoreDisplay = ({ score, color }: { score: number; color: string }) => {
   return (
     <Grid item xs={12} className={`${color}-bg`}>
-      <Button fullWidth color={'inherit'}>{score}</Button>
+      <Button fullWidth color={'inherit'}>
+        {score}
+      </Button>
     </Grid>
   );
-}
+};
 
 export default MatchTable;

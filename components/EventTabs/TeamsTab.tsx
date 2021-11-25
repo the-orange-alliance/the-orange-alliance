@@ -1,18 +1,18 @@
-import * as React from "react";
-import { List, ListItem, ListItemText, ListItemAvatar, Button } from "@mui/material";
-import { EventParticipant, Event } from "@the-orange-alliance/api/lib/cjs/models";
+import * as React from 'react';
+import { List, ListItem, ListItemText, ListItemAvatar, Button } from '@mui/material';
+import { EventParticipant, Event } from '@the-orange-alliance/api/lib/cjs/models';
 
 interface IProps {
-  event: Event
+  event: Event;
 }
 
 const TeamsTab = (props: IProps) => {
-  const {teams} = props.event;
+  const { teams } = props.event;
 
   return (
     <List>
       {teams.map((team: EventParticipant) => (
-        <ListItem key={team.teamKey} component='a' button href={`/teams/${team.teamKey}`}>
+        <ListItem key={team.teamKey} component="a" button href={`/teams/${team.teamKey}`}>
           <ListItemAvatar>
             <Button disabled>{team.teamKey}</Button>
           </ListItemAvatar>

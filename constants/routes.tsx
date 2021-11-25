@@ -1,13 +1,13 @@
-import * as React from "react";
-import CodeIcon from "@mui/icons-material/Code";
-import EventIcon from "@mui/icons-material/Event";
-import GavelIcon from "@mui/icons-material/Gavel";
-import HomeIcon from "@mui/icons-material/Home";
-import InfoIcon from "@mui/icons-material/Info";
-import PeopleIcon from "@mui/icons-material/People";
-import PublishIcon from "@mui/icons-material/Publish";
-import TranslateIcon from "@mui/icons-material/Translate";
-import VideoCamIcon from "@mui/icons-material/Videocam";
+import * as React from 'react';
+import CodeIcon from '@mui/icons-material/Code';
+import EventIcon from '@mui/icons-material/Event';
+import GavelIcon from '@mui/icons-material/Gavel';
+import HomeIcon from '@mui/icons-material/Home';
+import InfoIcon from '@mui/icons-material/Info';
+import PeopleIcon from '@mui/icons-material/People';
+import PublishIcon from '@mui/icons-material/Publish';
+import TranslateIcon from '@mui/icons-material/Translate';
+import VideoCamIcon from '@mui/icons-material/Videocam';
 
 // import { changeLanguage } from "./i18n";
 
@@ -22,88 +22,88 @@ export interface IAppRoute {
 
 const routes: IAppRoute[] = [
   {
-    name: "Home",
-    translationKey: "drawer.home",
+    name: 'Home',
+    translationKey: 'drawer.home',
     icon: <HomeIcon />,
-    to: "/",
+    to: '/',
     group: 0,
     visible: true
   },
   {
-    name: "Teams",
-    translationKey: "drawer.teams",
+    name: 'Teams',
+    translationKey: 'drawer.teams',
     icon: <PeopleIcon />,
-    to: "/teams",
+    to: '/teams',
     group: 0,
     visible: true
   },
   {
-    name: "Event",
+    name: 'Event',
     icon: <EventIcon />,
-    to: "/events/:eventCode",
+    to: '/events/:eventCode',
     group: 0,
     visible: false
   },
   {
-    name: "Event",
+    name: 'Event',
     icon: <EventIcon />,
-    to: "/events/:eventCode/:tab",
+    to: '/events/:eventCode/:tab',
     group: 0,
     visible: false
   },
   {
-    name: "Events",
-    translationKey: "drawer.events",
+    name: 'Events',
+    translationKey: 'drawer.events',
     icon: <EventIcon />,
-    to: "/events",
+    to: '/events',
     group: 0,
     visible: true
   },
   {
-    name: "Streaming",
-    translationKey: "drawer.streaming",
+    name: 'Streaming',
+    translationKey: 'drawer.streaming',
     icon: <VideoCamIcon />,
-    to: "/streaming",
+    to: '/streaming',
     group: 0,
     visible: true
   },
   {
-    name: "Select Language",
-    translationKey: "drawer.select_language",
+    name: 'Select Language',
+    translationKey: 'drawer.select_language',
     icon: <TranslateIcon />,
-    to: "/languages",
+    to: '/languages',
     group: 1,
     visible: true
   },
   {
-    name: "Add Data",
-    translationKey: "drawer.add_data",
+    name: 'Add Data',
+    translationKey: 'drawer.add_data',
     icon: <PublishIcon />,
-    to: "/upload",
+    to: '/upload',
     group: 2,
     visible: true
   },
   {
-    name: "API",
-    translationKey: "drawer.api",
+    name: 'API',
+    translationKey: 'drawer.api',
     icon: <CodeIcon />,
-    to: "/api",
+    to: '/api',
     group: 2,
     visible: true
   },
   {
-    name: "About",
-    translationKey: "drawer.about",
+    name: 'About',
+    translationKey: 'drawer.about',
     icon: <InfoIcon />,
-    to: "/about",
+    to: '/about',
     group: 3,
     visible: true
   },
   {
-    name: "Privacy & Terms",
-    translationKey: "drawer.privacy_and_terms",
+    name: 'Privacy & Terms',
+    translationKey: 'drawer.privacy_and_terms',
     icon: <GavelIcon />,
-    to: "/privacy",
+    to: '/privacy',
     group: 3,
     visible: true
   }

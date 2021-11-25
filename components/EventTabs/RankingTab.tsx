@@ -1,26 +1,26 @@
-import * as React from "react";
-import { Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
-import { Ranking, Event } from "@the-orange-alliance/api/lib/cjs/models";
-import {useTranslate} from "../../i18n/i18n";
+import * as React from 'react';
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Ranking, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import { useTranslate } from '../../i18n/i18n';
 
 interface IProps {
-  event: Event
+  event: Event;
 }
 
 const RankingTab = (props: IProps) => {
-  const {rankings} = props.event;
+  const { rankings } = props.event;
   const t = useTranslate();
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>{t("pages.event.subpages.rankings.rank")}</TableCell>
-          <TableCell>{t("pages.event.subpages.rankings.team")}</TableCell>
-          <TableCell>{t("pages.event.subpages.rankings.ranking_points")}</TableCell>
-          <TableCell>{t("pages.event.subpages.rankings.tie_breaker_points")}</TableCell>
-          <TableCell>{t("pages.event.subpages.rankings.highest_score")}</TableCell>
-          <TableCell>{t("pages.event.subpages.rankings.matches_played")}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.rank')}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.team')}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.ranking_points')}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.tie_breaker_points')}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.highest_score')}</TableCell>
+          <TableCell>{t('pages.event.subpages.rankings.matches_played')}</TableCell>
           <TableCell>OPR</TableCell>
           <TableCell>NP-OPR</TableCell>
         </TableRow>

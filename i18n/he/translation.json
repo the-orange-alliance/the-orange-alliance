@@ -1,406 +1,406 @@
 {
-    "config": {
-      "name": "עברית",
-      "englishName": "Hebrew",
-      "direction": "rtl"
-    },
-  
-    "general": {
-      "team": "קבוצה",
-      "teams": "קבוצות",
-      "event": "אירוע",
-      "events": "אירועים",
-      "match": "מקצה",
-      "matches": "מקצים",
-      "live": "LIVE",
-      "here": "כאן",
-      "verify": "אימות",
-      "add": "הוספה",
-      "close": "סגירה",
-      "save": "שמירה",
-      "error_occurred": "אירעה שגיאה, אנא נסו שוב מאוחר יותר",
-      "search_text_long": "חפש קבוצה או אירוע",
-      "search_text_short": "מס׳ קבוצה או שם אירוע",
-      "add_to_mytoa": "הוספה ל־myTOA",
-      "remove_from_mytoa": "הסרה מ־myTOA"
-    },
-  
-    "drawer": {
-      "home": "בית",
-      "teams": "קבוצות",
-      "events": "אירועים",
-      "streaming": "שידוריים חיים",
-      "android_app": "אפליקציית Android",
-      "ios_app": "אפליקציית iOS",
-      "add_data": "הוספת מידע",
-      "api": "API",
-      "github": "GitHub",
-      "about": "אודות",
-      "donate": "תרומה",
-      "amazon_smile": "Amazon Smile",
-      "privacy_and_terms": "פרטיות ותנאי שימוש",
-      "official_ftc": "ספק התוצאות הרשמי עבור ",
-      "mytoa": {
-        "hello": "שלום {{ name }}",
-        "guest": "אורח",
-        "register": "הרשמה",
-        "login": "התחברות"
-      }
-    },
-  
-    "pages": {
-      "add_data": {
-        "title": "הוספת מידע",
-        "short_info": "יש לכם מידע שאתם רוצים להוסיף לThe Orange Alliance?",
-        "datasync": "DataSync - סנכרן את האירוע שלך עם TOA בלייב",
-        "add_event_data": "הוספת תוצאות אירוע לאחר סיומו",
-        "add_match_video": "הוספת סרטון של מקצה",
-        "add_event_stream": "הוספת שידור חי של אירוע",
-        "stream_your_event": "שדר את האירוע שלך בערוץ Twitch שלנו"
-      },
-  
-      "404": {
-        "title": "העמוד לא נמצא",
-        "short_info": "נראה הגעתם לכאן על ידי לינק שבור. או שנכנסתם לקבוצה/אירוע/מקצה שלא קיימים."
-      },
-  
-      "about": {
-        "title": "אודותינו"
-      },
-  
-      "account": {
-        "logout": "התנתקות",
-        "level": "רמה {{ level }}",
-        "no_verify": "בבקשה אמת את האימייל שלך",
-        "why_verify": "כדי ליהנות מכל האפשרויות של חשבונך, יש לאמת את כתובת האימייל שלך.",
-        "manage_events": "נהל אירועים",
-        "division_tab": {
-          "manage_leagues": "נהל ליגות",
-          "select_season": "בחר עונה",
-          "create_league": "צור ליגה",
-          "create_league_div": "צור League Division",
-          "division_key": "Division Key",
-          "leagues": "ליגות",
-          "league_divisions": "League Divisions",
-          "create_league_fields": {
-            "league_key": "מזהה ליגה (באנגלית)",
-            "league_description": "תיאור הליגה",
-            "division_desc": "תיאור ה־Division"
-          }
-        },
-        "notifications_card": {
-          "title": "התראות",
-          "summary": "לקבל הודעת דחיפה לפי הגדרות האירועים שלך.",
-          "grant_access": "הענק גישה",
-          "enabled": "ההתראות מאופשרות במכשיר זה",
-          "blocked": "ההתראות חסומות במכשיר זה",
-          "help": "כדי לבטל את החסימה, לחץ על סמל המנעול מימין לכתובת האתר, לחץ על הגדרות אתר ושנה את הרשאת ההתראות."
-        },
-        "api_card": {
-          "title": "בנה דברים מדהימים עם ה־API שלנו",
-          "your_key": "זה המפתח API שלך:",
-          "no_key": "אין לך מפתח API קיים עוד",
-          "generate_key": "צור מפתח",
-          "generating_key": "מייצר מפתח API...",
-          "docs": "ניתן לבדוק את תיעוד ה־API המלא שלנו בכתובת"
-        },
-        "account_settings": "הגדרות חשבון",
-        "reset_password": "איפוס סיסמה",
-        "reset_password_email": "מייל לאיפוס סיסמה נשלח אליך.",
-        "link_account": "קישור חשבון {{ name }}",
-        "unlink_account": "ניתוק חשבון {{ name }}",
-        "link_phone": "קישור מספר טלפון",
-        "unlink_phone": "ניתוק מספר טלפון",
-        "success_link": "חשבון {{ name }} קושר בהצלחה",
-        "success_unlink": "חשבון {{ name }} נותק בהצלחה",
-        "last_signin": "התחברות אחרונה",
-        "league_creation_success": "הליגה נוצרה בהצלחה!",
-        "league_deletion_success": "הליגה נמחקה בהצלחה!",
-        "league_division_creation_success": "ה־League Division נוצר בהצלחה",
-        "league_division_deletion_success": "ה־League Division נמחק בהצלחה",
-        "datasync_card": {
-          "title": "סנכרן את האירוע שלך עם TOA בלייב",
-          "docs": "ניתן לבדוק את תיעוד ה־DataSync המלא שלנו"
-        },
-        "create_event_card": {
-          "title": "יצירת אירוע",
-          "create": "יצירה",
-          "event_id": "מזהה אירוע (באנגלית)",
-          "event_type": "סוג אירוע",
-          "league": "ליגה",
-          "region": "אזור",
-          "season": "עונה",
-          "division_number": "מספר הבית",
-          "division_name": "שם הבית",
-          "advancement_spots": "Advancement Spots",
-          "advancement_event": "אירוע התקדמות",
-          "number_fields": "מספר המגרשים",
-          "number_alliances": "מספר הבריתות",
-          "success": "האירוע נוצר בהצלחה",
-          "dual_division": "2 בתים",
-          "advanced": "מתקדם"
-        },
-        "dump_cache": {
-          "title": "ניקיון מטמון",
-          "general": "כללי",
-          "dump": "ניקיון",
-          "success": "המטמון נוקה בהצלחה"
-        },
-        "retriever": {
-          "title": "מייבא נתונים",
-          "success_events": "{{value}} אירועים נוצרו בהצלחה",
-          "success_teams": "{{value}} קבוצות נוצרו בהצלחה"
-        },
-        "subpages": {
-          "login": {
-            "title": "התחברות",
-            "email": "דואר אלקטרוני",
-            "password": "סיסמה",
-            "login": "התחברות",
-            "forgot_password": "שכחת סיסמה?",
-            "login_google": "התחברות עם Google",
-            "login_github": "התחברות עם Github",
-            "no_account_linked": "חשבון זה אינו מקושר לחשבון myTOA כלשהו. היכנס כדי לקשר אותו."
-          },
-          "register": {
-            "title": "הרשמה",
-            "full_name": "שם מלא",
-            "email": "דואר אלקטרוני",
-            "password": "סיסמה",
-            "confirm_password": "אימות סיסמה",
-            "your_team": "מספר הקבוצה שלך",
-            "sign_up": "הרשמה"
-          }
-        }
-      },
-  
-      "home": {
-        "title": "בית",
-        "short_info": "The Orange Alliance הוא ספק התוצאות, האירועים והקבוצות <b>הרשמי</b> של <i>FIRST</i> Tech Challenge.",
-        "active_teams": "קבוצות פעילות",
-        "matches_played": "מקצים ששוחקו",
-        "todays_events": "אירועי היום",
-        "no_events_today": "אין אירועים שמתרחשים היום.",
-        "leaderboards": {
-          "title": "לוח שיאים",
-          "high_score_qual": "ניקוד מקצה דירוג הגבוה ביותר",
-          "high_score_elim": "ניקוד מקצה פלייאוף הגבוה ביותר",
-          "high_score_all": "ניקוד המקצה הגבוה ביותר",
-          "with_enalties": "כולל עונשין",
-          "penalty_free": "ללא עונשין"
-        }
-      },
-  
-      "event": {
-        "event_info": "פרטי האירוע",
-        "game_info": "פרטי המשחק",
-        "view_website": "הצג את אתר האירוע",
-        "event_key": "קוד אירוע",
-        "stream_available": "צפה בשידור החי",
-        "alliances_count": "{{ value }} בריתות",
-        "matches_per_team": "{{ value }} מקצים לקבוצה",
-        "fields_count": "{{ value }} מגרשים",
-        "settings": {
-          "title": "הגדרות אירוע",
-          "favorite": "מועדף",
-          "favorite_summary": "ניתן לשמור קבוצות, אירועים, ועוד עבור גישה קלה על ידי סימון כ\"מועדפים\".",
-          "notification_settings": "הגדרות התראה",
-          "notification_settings_summary": "הרשמה למשהו תאפשר לך לקבל הודעת דחיפה בכל פעם שיש עדכון.",
-          "match_scores": "ניקוד מקצים",
-          "schedule_updated": "פרסום לוח המקצים",
-          "awards_posted": "פרסום פרסים",
-          "alliances_posted": "בחירת בריתות",
-          "saved": "ההגדרות שלך נשמרו בהצלחה!",
-          "failed": "שמירת הגדרות האירוע נכשלה. אנא נסה שוב מאוחר יותר"
-        },
-        "subpages": {
-          "rankings": {
-            "title": "דירוגים",
-            "rank": "דירוג",
-            "team": "קבוצה",
-            "wlt_record": "ניצחון-הפסד-תיקו",
-            "qual_points": "נקודות Qualification",
-            "ranking_points": "נקודות Ranking",
-            "tie_breaker_points": "נקודות שובר שיוויון",
-            "highest_score": "הניקוד הכי גבוה",
-            "matches_played": "מקצים ששוחקו",
-            "what_is_opr": "Offensive Power Rating, הידוע גם כ־OPR, הוא סטטיסטיקה המשומשת לעיתים קרובות בקהילת FIRST בכדי להשוות את הביצועים של קבוצות על המגרש. OPR זה דרך מעניינת לפרוס את הנתונים עבור קבוצות באירועים מסוימים, אבל זה לא תמיד המערכת הכי טובה להערכת הביצועים של קבוצה."
-          },
-          "matches": {
-            "title": "מקצים"
-          },
-          "teams": {
-            "title": "קבוצות"
-          },
-          "alliances": {
-            "title": "בריתות"
-          },
-          "awards": {
-            "title": "פרסים"
-          },
-          "insights": {
-            "title": "תובנות",
-            "qual": "משחקי דירוג",
-            "playoff": "פלייאוף",
-            "high_score": "ניקוד הכי גבוה",
-            "avg_score": "ממוצע נקודות",
-            "avg_winning_score": "ממוצע ניקוד מנצח",
-            "avg_winning_margin": "ממוצע הפרשי ניצחון",
-            "prc_landed": "אחוזי רובוטים שנחתו",
-            "prc_latched": "אחוזי רובטים שטפסו",
-            "prc_sampling": "% of Successful Samples",
-            "prc_claiming": "% of Depots Claimed",
-            "prc_parking": "אחוזי רובוטים חונים",
-            "avg_golds": "ממוצע מינרלים זהובים בלנדר",
-            "avg_silvers": "ממוצע מינרלים כסופים בלנדר",
-            "avg_depot": "ממוצע מינרלים במכתש"
-          },
-          "for-participants": {
-            "title": "למשתתפים",
-            "pits_map": "מפת פיטים",
-            "venue_map": "מפת האולם",
-            "schedule": "לוח זמנים"
-          },
-          "admin": {
-            "title": "ניהול",
-            "playlist_card": {
-              "title": "הוספת סרטוני מקצים מ־YouTube Playlist",
-              "playlist_url": "Playlist URL",
-              "load": "טעינה",
-              "confirm": "אישור והעלאה",
-              "successfully": "הועלו בהצלחה {{ value }} סרטונים",
-              "error": "לא הצלחנו למצוא סרטונים של מקצים",
-              "invalid_url": "URL לא תקני, לא הצלחנו למצוא פלייליסט YouTube"
-            },
-            "update_info_card": {
-              "title": "ערוך את פרטי האירוע שלך",
-              "event_name": "שם האירוע",
-              "website": "אתר",
-              "start_date": "תאריך התחלה",
-              "end_date": "תאריך סיום",
-              "venue": "אולם",
-              "city": "עיר",
-              "state": "מחוז (ארה\"ב בלבד)",
-              "country": "מדינה",
-              "update": "עדכון",
-              "upload": "העלאה",
-              "image_only": "ניתן להעלות את זה כתמונה בלבד",
-              "choose_image": "בחר תמונה...",
-              "successfully": "פרטי האירוע עודכנו בהצלחה"
-            },
-            "stream_card": {
-              "add_stream": "הוספת שידור חי",
-              "unlink_stream": "ניתוק שידור חי",
-              "currently_linked": "שידור חי מקושר כרגע",
-              "url": "{{ provider }} URL",
-              "stream_name": "שם השידור",
-              "link": "קישור",
-              "unlink": "ניתוק",
-              "stream": "שידור חי {{ provider }}",
-              "success_linked": "שידור חי קושר בהצלחה",
-              "success_unlinked": "שידור חי נותק בהצלחה"
-            },
-            "delete_card": {
-              "delete_event": "מחיקת אירוע",
-              "delete_failed": "המחיקה נכשלה",
-              "delete": "מחיקה",
-              "delete_all_data": "אתה תמחק את כל הנתונים מאירוע זה!",
-              "delete_sure": "האם אתה בטוח שאתה רוצה למחוק את האירוע?",
-              "delete_final": "זה ימחק את האירוע!"
-            },
-            "verify_email": "בבקשה אמת את האימייל שלך ונסה שנית.",
-            "success_sent_verify_email": "אמייל אימות נשלח אלייך בהצלחה."
-          }
-        }
-      },
-  
-      "events": {
-        "filter_season": "עונה",
-        "filter_region": "איזור",
-        "filter": "אפשרויות סינון",
-        "clear_filter": "נקה פילטרים"
-      },
-  
-      "match": {
-        "match_info": "פרטי המקצה",
-        "match_key": "קוד מקצה",
-        "scheduled_time": "מועד מתוכנן",
-        "no_video": "אין סרטון זמין",
-        "add_one": "הוסף אחד"
-      },
-  
-      "streams": {
-        "event_results": "תוצאות אירוע",
-        "close_stream": "סגור שידור",
-        "select_stream": "בחר שידור",
-        "show_chat": "הצגת צ'אט",
-        "select": "בחר",
-        "cancel": "ביטול",
-        "layouts": {
-          "title": "בחר פריסה",
-          "single_view": "תצוגה יחידה",
-          "vertical_split_view": "תצוגת מפוצלת אנכית",
-          "horizontal_split_view": "תצוגת מפוצלת אופקית",
-          "1_2_view": "תצוגת 1+2",
-          "1_4_view": "תצוגת 1+4",
-          "quad_view": "תצוגה ריבועית"
-        }
-      },
-  
-      "team": {
-        "team_info": "פרטי הקבוצה",
-        "event_results": "תוצאות אירועים",
-        "part_of_region": "חלק מאזור {{ regionKey }}",
-        "website": "אתר",
-        "rookie_year": "שנת הקמה",
-        "last_active": "עונת פעילות אחרונה",
-        "awards_in_season": "{{ awards }} פרסים ב{{ season }}",
-        "robot_profile": {
-          "title": "רובוט",
-          "engineering_notebook": "מחברת הנדסה",
-          "robot_reveal": "רובוט רוויל",
-          "photos": "תמונות"
-        }
-      },
-  
-      "teams": {
-        "title": "קבוצות",
-        "filter": "סנן לפי מספר, שם, או מיקום",
-        "results": "{{ results }} תוצאות"
-      }
-    },
-  
-    "match_table": {
-      "teams": "קבוצות",
-      "score": "ניקוד",
-      "scores": "ניקוד",
-      "blue_alliance": "ברית כחולה",
-      "red_alliance": "ברית אדומה",
-      "blue_score": "ניקוד כחול",
-      "red_score": "ניקוד אדום",
-      "no_matches_for_event": "אין מידע על מקצים עבור אירוע זה.",
-      "match": "מקצה",
-      "view_team": "הצג קבוצה",
-      "rank": "דירוג",
-      "wlt": "WLT",
-      "played": "שוחקו",
-      "help": {
-        "bold": "<b>מוגדש</b> זה הברית המנצחת</small>",
-        "bold_and_black": "<b>מוגדש ושחור</b> זה הקבוצה שנבחרה</small>",
-        "surrogate": "<b>*</b> זה Surrogate"
-      }
-    },
-  
-    "no_data": {
-      "teams": "לא נמצאו קבוצות",
-      "teams_long": "לא נמצאו קבוצות",
-      "events": "לא נמצאו אירועים",
-      "event_long": "לא דווחו תוצאות עבור אירוע זה.",
-      "streams_long": "אין כרגע שידורים חיים פועלים.",
-      "events_for_season": "אין אירועים עבור עונת {{ season }}",
-      "events_for_season_long": "הקבוצה הזאת עדיין לא שיחקה באף אירוע העונה.<br/>נסה לשנות את העונה דרך כפתור הבחירה שלמעלה.",
-      "events_filter": "לא נמצאו אירועים עבור סינון זה",
-      "events_filter_long": "נסה לשנות את העונה או את האזור דרך כפתורי הבחירה שלמעלה.",
-      "match_breakdown": "לא נמצא מידע על מקצה"
+  "config": {
+    "name": "עברית",
+    "englishName": "Hebrew",
+    "direction": "rtl"
+  },
+
+  "general": {
+    "team": "קבוצה",
+    "teams": "קבוצות",
+    "event": "אירוע",
+    "events": "אירועים",
+    "match": "מקצה",
+    "matches": "מקצים",
+    "live": "LIVE",
+    "here": "כאן",
+    "verify": "אימות",
+    "add": "הוספה",
+    "close": "סגירה",
+    "save": "שמירה",
+    "error_occurred": "אירעה שגיאה, אנא נסו שוב מאוחר יותר",
+    "search_text_long": "חפש קבוצה או אירוע",
+    "search_text_short": "מס׳ קבוצה או שם אירוע",
+    "add_to_mytoa": "הוספה ל־myTOA",
+    "remove_from_mytoa": "הסרה מ־myTOA"
+  },
+
+  "drawer": {
+    "home": "בית",
+    "teams": "קבוצות",
+    "events": "אירועים",
+    "streaming": "שידוריים חיים",
+    "android_app": "אפליקציית Android",
+    "ios_app": "אפליקציית iOS",
+    "add_data": "הוספת מידע",
+    "api": "API",
+    "github": "GitHub",
+    "about": "אודות",
+    "donate": "תרומה",
+    "amazon_smile": "Amazon Smile",
+    "privacy_and_terms": "פרטיות ותנאי שימוש",
+    "official_ftc": "ספק התוצאות הרשמי עבור ",
+    "mytoa": {
+      "hello": "שלום {{ name }}",
+      "guest": "אורח",
+      "register": "הרשמה",
+      "login": "התחברות"
     }
+  },
+
+  "pages": {
+    "add_data": {
+      "title": "הוספת מידע",
+      "short_info": "יש לכם מידע שאתם רוצים להוסיף לThe Orange Alliance?",
+      "datasync": "DataSync - סנכרן את האירוע שלך עם TOA בלייב",
+      "add_event_data": "הוספת תוצאות אירוע לאחר סיומו",
+      "add_match_video": "הוספת סרטון של מקצה",
+      "add_event_stream": "הוספת שידור חי של אירוע",
+      "stream_your_event": "שדר את האירוע שלך בערוץ Twitch שלנו"
+    },
+
+    "404": {
+      "title": "העמוד לא נמצא",
+      "short_info": "נראה הגעתם לכאן על ידי לינק שבור. או שנכנסתם לקבוצה/אירוע/מקצה שלא קיימים."
+    },
+
+    "about": {
+      "title": "אודותינו"
+    },
+
+    "account": {
+      "logout": "התנתקות",
+      "level": "רמה {{ level }}",
+      "no_verify": "בבקשה אמת את האימייל שלך",
+      "why_verify": "כדי ליהנות מכל האפשרויות של חשבונך, יש לאמת את כתובת האימייל שלך.",
+      "manage_events": "נהל אירועים",
+      "division_tab": {
+        "manage_leagues": "נהל ליגות",
+        "select_season": "בחר עונה",
+        "create_league": "צור ליגה",
+        "create_league_div": "צור League Division",
+        "division_key": "Division Key",
+        "leagues": "ליגות",
+        "league_divisions": "League Divisions",
+        "create_league_fields": {
+          "league_key": "מזהה ליגה (באנגלית)",
+          "league_description": "תיאור הליגה",
+          "division_desc": "תיאור ה־Division"
+        }
+      },
+      "notifications_card": {
+        "title": "התראות",
+        "summary": "לקבל הודעת דחיפה לפי הגדרות האירועים שלך.",
+        "grant_access": "הענק גישה",
+        "enabled": "ההתראות מאופשרות במכשיר זה",
+        "blocked": "ההתראות חסומות במכשיר זה",
+        "help": "כדי לבטל את החסימה, לחץ על סמל המנעול מימין לכתובת האתר, לחץ על הגדרות אתר ושנה את הרשאת ההתראות."
+      },
+      "api_card": {
+        "title": "בנה דברים מדהימים עם ה־API שלנו",
+        "your_key": "זה המפתח API שלך:",
+        "no_key": "אין לך מפתח API קיים עוד",
+        "generate_key": "צור מפתח",
+        "generating_key": "מייצר מפתח API...",
+        "docs": "ניתן לבדוק את תיעוד ה־API המלא שלנו בכתובת"
+      },
+      "account_settings": "הגדרות חשבון",
+      "reset_password": "איפוס סיסמה",
+      "reset_password_email": "מייל לאיפוס סיסמה נשלח אליך.",
+      "link_account": "קישור חשבון {{ name }}",
+      "unlink_account": "ניתוק חשבון {{ name }}",
+      "link_phone": "קישור מספר טלפון",
+      "unlink_phone": "ניתוק מספר טלפון",
+      "success_link": "חשבון {{ name }} קושר בהצלחה",
+      "success_unlink": "חשבון {{ name }} נותק בהצלחה",
+      "last_signin": "התחברות אחרונה",
+      "league_creation_success": "הליגה נוצרה בהצלחה!",
+      "league_deletion_success": "הליגה נמחקה בהצלחה!",
+      "league_division_creation_success": "ה־League Division נוצר בהצלחה",
+      "league_division_deletion_success": "ה־League Division נמחק בהצלחה",
+      "datasync_card": {
+        "title": "סנכרן את האירוע שלך עם TOA בלייב",
+        "docs": "ניתן לבדוק את תיעוד ה־DataSync המלא שלנו"
+      },
+      "create_event_card": {
+        "title": "יצירת אירוע",
+        "create": "יצירה",
+        "event_id": "מזהה אירוע (באנגלית)",
+        "event_type": "סוג אירוע",
+        "league": "ליגה",
+        "region": "אזור",
+        "season": "עונה",
+        "division_number": "מספר הבית",
+        "division_name": "שם הבית",
+        "advancement_spots": "Advancement Spots",
+        "advancement_event": "אירוע התקדמות",
+        "number_fields": "מספר המגרשים",
+        "number_alliances": "מספר הבריתות",
+        "success": "האירוע נוצר בהצלחה",
+        "dual_division": "2 בתים",
+        "advanced": "מתקדם"
+      },
+      "dump_cache": {
+        "title": "ניקיון מטמון",
+        "general": "כללי",
+        "dump": "ניקיון",
+        "success": "המטמון נוקה בהצלחה"
+      },
+      "retriever": {
+        "title": "מייבא נתונים",
+        "success_events": "{{value}} אירועים נוצרו בהצלחה",
+        "success_teams": "{{value}} קבוצות נוצרו בהצלחה"
+      },
+      "subpages": {
+        "login": {
+          "title": "התחברות",
+          "email": "דואר אלקטרוני",
+          "password": "סיסמה",
+          "login": "התחברות",
+          "forgot_password": "שכחת סיסמה?",
+          "login_google": "התחברות עם Google",
+          "login_github": "התחברות עם Github",
+          "no_account_linked": "חשבון זה אינו מקושר לחשבון myTOA כלשהו. היכנס כדי לקשר אותו."
+        },
+        "register": {
+          "title": "הרשמה",
+          "full_name": "שם מלא",
+          "email": "דואר אלקטרוני",
+          "password": "סיסמה",
+          "confirm_password": "אימות סיסמה",
+          "your_team": "מספר הקבוצה שלך",
+          "sign_up": "הרשמה"
+        }
+      }
+    },
+
+    "home": {
+      "title": "בית",
+      "short_info": "The Orange Alliance הוא ספק התוצאות, האירועים והקבוצות <b>הרשמי</b> של <i>FIRST</i> Tech Challenge.",
+      "active_teams": "קבוצות פעילות",
+      "matches_played": "מקצים ששוחקו",
+      "todays_events": "אירועי היום",
+      "no_events_today": "אין אירועים שמתרחשים היום.",
+      "leaderboards": {
+        "title": "לוח שיאים",
+        "high_score_qual": "ניקוד מקצה דירוג הגבוה ביותר",
+        "high_score_elim": "ניקוד מקצה פלייאוף הגבוה ביותר",
+        "high_score_all": "ניקוד המקצה הגבוה ביותר",
+        "with_enalties": "כולל עונשין",
+        "penalty_free": "ללא עונשין"
+      }
+    },
+
+    "event": {
+      "event_info": "פרטי האירוע",
+      "game_info": "פרטי המשחק",
+      "view_website": "הצג את אתר האירוע",
+      "event_key": "קוד אירוע",
+      "stream_available": "צפה בשידור החי",
+      "alliances_count": "{{ value }} בריתות",
+      "matches_per_team": "{{ value }} מקצים לקבוצה",
+      "fields_count": "{{ value }} מגרשים",
+      "settings": {
+        "title": "הגדרות אירוע",
+        "favorite": "מועדף",
+        "favorite_summary": "ניתן לשמור קבוצות, אירועים, ועוד עבור גישה קלה על ידי סימון כ\"מועדפים\".",
+        "notification_settings": "הגדרות התראה",
+        "notification_settings_summary": "הרשמה למשהו תאפשר לך לקבל הודעת דחיפה בכל פעם שיש עדכון.",
+        "match_scores": "ניקוד מקצים",
+        "schedule_updated": "פרסום לוח המקצים",
+        "awards_posted": "פרסום פרסים",
+        "alliances_posted": "בחירת בריתות",
+        "saved": "ההגדרות שלך נשמרו בהצלחה!",
+        "failed": "שמירת הגדרות האירוע נכשלה. אנא נסה שוב מאוחר יותר"
+      },
+      "subpages": {
+        "rankings": {
+          "title": "דירוגים",
+          "rank": "דירוג",
+          "team": "קבוצה",
+          "wlt_record": "ניצחון-הפסד-תיקו",
+          "qual_points": "נקודות Qualification",
+          "ranking_points": "נקודות Ranking",
+          "tie_breaker_points": "נקודות שובר שיוויון",
+          "highest_score": "הניקוד הכי גבוה",
+          "matches_played": "מקצים ששוחקו",
+          "what_is_opr": "Offensive Power Rating, הידוע גם כ־OPR, הוא סטטיסטיקה המשומשת לעיתים קרובות בקהילת FIRST בכדי להשוות את הביצועים של קבוצות על המגרש. OPR זה דרך מעניינת לפרוס את הנתונים עבור קבוצות באירועים מסוימים, אבל זה לא תמיד המערכת הכי טובה להערכת הביצועים של קבוצה."
+        },
+        "matches": {
+          "title": "מקצים"
+        },
+        "teams": {
+          "title": "קבוצות"
+        },
+        "alliances": {
+          "title": "בריתות"
+        },
+        "awards": {
+          "title": "פרסים"
+        },
+        "insights": {
+          "title": "תובנות",
+          "qual": "משחקי דירוג",
+          "playoff": "פלייאוף",
+          "high_score": "ניקוד הכי גבוה",
+          "avg_score": "ממוצע נקודות",
+          "avg_winning_score": "ממוצע ניקוד מנצח",
+          "avg_winning_margin": "ממוצע הפרשי ניצחון",
+          "prc_landed": "אחוזי רובוטים שנחתו",
+          "prc_latched": "אחוזי רובטים שטפסו",
+          "prc_sampling": "% of Successful Samples",
+          "prc_claiming": "% of Depots Claimed",
+          "prc_parking": "אחוזי רובוטים חונים",
+          "avg_golds": "ממוצע מינרלים זהובים בלנדר",
+          "avg_silvers": "ממוצע מינרלים כסופים בלנדר",
+          "avg_depot": "ממוצע מינרלים במכתש"
+        },
+        "for-participants": {
+          "title": "למשתתפים",
+          "pits_map": "מפת פיטים",
+          "venue_map": "מפת האולם",
+          "schedule": "לוח זמנים"
+        },
+        "admin": {
+          "title": "ניהול",
+          "playlist_card": {
+            "title": "הוספת סרטוני מקצים מ־YouTube Playlist",
+            "playlist_url": "Playlist URL",
+            "load": "טעינה",
+            "confirm": "אישור והעלאה",
+            "successfully": "הועלו בהצלחה {{ value }} סרטונים",
+            "error": "לא הצלחנו למצוא סרטונים של מקצים",
+            "invalid_url": "URL לא תקני, לא הצלחנו למצוא פלייליסט YouTube"
+          },
+          "update_info_card": {
+            "title": "ערוך את פרטי האירוע שלך",
+            "event_name": "שם האירוע",
+            "website": "אתר",
+            "start_date": "תאריך התחלה",
+            "end_date": "תאריך סיום",
+            "venue": "אולם",
+            "city": "עיר",
+            "state": "מחוז (ארה\"ב בלבד)",
+            "country": "מדינה",
+            "update": "עדכון",
+            "upload": "העלאה",
+            "image_only": "ניתן להעלות את זה כתמונה בלבד",
+            "choose_image": "בחר תמונה...",
+            "successfully": "פרטי האירוע עודכנו בהצלחה"
+          },
+          "stream_card": {
+            "add_stream": "הוספת שידור חי",
+            "unlink_stream": "ניתוק שידור חי",
+            "currently_linked": "שידור חי מקושר כרגע",
+            "url": "{{ provider }} URL",
+            "stream_name": "שם השידור",
+            "link": "קישור",
+            "unlink": "ניתוק",
+            "stream": "שידור חי {{ provider }}",
+            "success_linked": "שידור חי קושר בהצלחה",
+            "success_unlinked": "שידור חי נותק בהצלחה"
+          },
+          "delete_card": {
+            "delete_event": "מחיקת אירוע",
+            "delete_failed": "המחיקה נכשלה",
+            "delete": "מחיקה",
+            "delete_all_data": "אתה תמחק את כל הנתונים מאירוע זה!",
+            "delete_sure": "האם אתה בטוח שאתה רוצה למחוק את האירוע?",
+            "delete_final": "זה ימחק את האירוע!"
+          },
+          "verify_email": "בבקשה אמת את האימייל שלך ונסה שנית.",
+          "success_sent_verify_email": "אמייל אימות נשלח אלייך בהצלחה."
+        }
+      }
+    },
+
+    "events": {
+      "filter_season": "עונה",
+      "filter_region": "איזור",
+      "filter": "אפשרויות סינון",
+      "clear_filter": "נקה פילטרים"
+    },
+
+    "match": {
+      "match_info": "פרטי המקצה",
+      "match_key": "קוד מקצה",
+      "scheduled_time": "מועד מתוכנן",
+      "no_video": "אין סרטון זמין",
+      "add_one": "הוסף אחד"
+    },
+
+    "streams": {
+      "event_results": "תוצאות אירוע",
+      "close_stream": "סגור שידור",
+      "select_stream": "בחר שידור",
+      "show_chat": "הצגת צ'אט",
+      "select": "בחר",
+      "cancel": "ביטול",
+      "layouts": {
+        "title": "בחר פריסה",
+        "single_view": "תצוגה יחידה",
+        "vertical_split_view": "תצוגת מפוצלת אנכית",
+        "horizontal_split_view": "תצוגת מפוצלת אופקית",
+        "1_2_view": "תצוגת 1+2",
+        "1_4_view": "תצוגת 1+4",
+        "quad_view": "תצוגה ריבועית"
+      }
+    },
+
+    "team": {
+      "team_info": "פרטי הקבוצה",
+      "event_results": "תוצאות אירועים",
+      "part_of_region": "חלק מאזור {{ regionKey }}",
+      "website": "אתר",
+      "rookie_year": "שנת הקמה",
+      "last_active": "עונת פעילות אחרונה",
+      "awards_in_season": "{{ awards }} פרסים ב{{ season }}",
+      "robot_profile": {
+        "title": "רובוט",
+        "engineering_notebook": "מחברת הנדסה",
+        "robot_reveal": "רובוט רוויל",
+        "photos": "תמונות"
+      }
+    },
+
+    "teams": {
+      "title": "קבוצות",
+      "filter": "סנן לפי מספר, שם, או מיקום",
+      "results": "{{ results }} תוצאות"
+    }
+  },
+
+  "match_table": {
+    "teams": "קבוצות",
+    "score": "ניקוד",
+    "scores": "ניקוד",
+    "blue_alliance": "ברית כחולה",
+    "red_alliance": "ברית אדומה",
+    "blue_score": "ניקוד כחול",
+    "red_score": "ניקוד אדום",
+    "no_matches_for_event": "אין מידע על מקצים עבור אירוע זה.",
+    "match": "מקצה",
+    "view_team": "הצג קבוצה",
+    "rank": "דירוג",
+    "wlt": "WLT",
+    "played": "שוחקו",
+    "help": {
+      "bold": "<b>מוגדש</b> זה הברית המנצחת</small>",
+      "bold_and_black": "<b>מוגדש ושחור</b> זה הקבוצה שנבחרה</small>",
+      "surrogate": "<b>*</b> זה Surrogate"
+    }
+  },
+
+  "no_data": {
+    "teams": "לא נמצאו קבוצות",
+    "teams_long": "לא נמצאו קבוצות",
+    "events": "לא נמצאו אירועים",
+    "event_long": "לא דווחו תוצאות עבור אירוע זה.",
+    "streams_long": "אין כרגע שידורים חיים פועלים.",
+    "events_for_season": "אין אירועים עבור עונת {{ season }}",
+    "events_for_season_long": "הקבוצה הזאת עדיין לא שיחקה באף אירוע העונה.<br/>נסה לשנות את העונה דרך כפתור הבחירה שלמעלה.",
+    "events_filter": "לא נמצאו אירועים עבור סינון זה",
+    "events_filter_long": "נסה לשנות את העונה או את האזור דרך כפתורי הבחירה שלמעלה.",
+    "match_breakdown": "לא נמצא מידע על מקצה"
   }
+}

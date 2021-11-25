@@ -1,11 +1,9 @@
 /**
  * Created by Kyle Flynn on 5/28/2017.
  */
-import Match from "@the-orange-alliance/api/lib/cjs/models/Match";
-
+import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 
 export class MatchType {
-
   /*
     0 - Practice Match
     1 - Qualification Match
@@ -27,11 +25,9 @@ export class MatchType {
   static SEMIS_MATCH_1 = 31;
   static SEMIS_MATCH_2 = 32;
   static FINALS_MATCH = 4;
-
 }
 
 export class MatchParser {
-
   match: Match;
 
   constructor(match: any) {
@@ -94,18 +90,17 @@ export class MatchParser {
     let number = '';
     for (let i = 0; i < match_number.length; i++) {
       if (match_number[i] !== '0') {
-        number =  match_number.substring(i, match_number.length);
+        number = match_number.substring(i, match_number.length);
         break;
       }
     }
     return parseInt(number, 10);
   }
-
 }
 
 export class MatchSorter {
-
-  constructor() {}
+  constructor() {
+  }
 
   public sort(items: Match[], left: number, right: number) {
     let pivot, partitionIndex;
@@ -157,7 +152,5 @@ export class MatchSorter {
       }
       return match1.tournamentLevel > match2.tournamentLevel ? -1 : 1;
     }
-
   }
-
 }

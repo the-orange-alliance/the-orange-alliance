@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as en from "./en/translation.json"
-import * as es from "./es/translation.json"
-import * as he from "./he/translation.json"
-import * as zh from "./zh/translation.json"
+import * as en from './en/translation.json';
+import * as es from './es/translation.json';
+import * as he from './he/translation.json';
+import * as zh from './zh/translation.json';
 
 const translations = { en, es, he, zh } as any;
 
@@ -10,12 +10,15 @@ function getPath(obj: any, path: string) {
   return path.split('.').reduce((acc, item) => (acc && acc[item] ? acc[item] : null), obj);
 }
 
-const UserLanguageContext = React.createContext({ userLanguage: '', setUserLanguage: () => {} });
+const UserLanguageContext = React.createContext({
+  userLanguage: '',
+  setUserLanguage: () => {}
+});
 if (process.env.NODE_ENV !== 'production') {
   UserLanguageContext.displayName = 'UserLanguage';
 }
 
-export function UserLanguageProvider(props: {children: any, defaultUserLanguage: string}) {
+export function UserLanguageProvider(props: { children: any; defaultUserLanguage: string }) {
   const { children, defaultUserLanguage } = props;
 
   const [userLanguage, setUserLanguage] = React.useState(defaultUserLanguage);
@@ -30,7 +33,6 @@ export function UserLanguageProvider(props: {children: any, defaultUserLanguage:
   );
 }
 
-
 export function useUserLanguage() {
   return React.useContext(UserLanguageContext).userLanguage;
 }
@@ -39,7 +41,7 @@ export function useSetUserLanguage() {
   return React.useContext(UserLanguageContext).setUserLanguage;
 }
 
-const warnedOnce: {[key: string]: boolean} = {};
+const warnedOnce: { [key: string]: boolean } = {};
 
 export function useTranslate() {
   const userLanguage = useUserLanguage();
@@ -69,6 +71,6 @@ export function useTranslate() {
 
         return translation;
       },
-    [userLanguage],
+    [userLanguage]
   );
 }
