@@ -63,7 +63,7 @@ const routes: IAppRoute[] = [
     name: 'Streaming',
     translationKey: 'drawer.streaming',
     icon: <VideoCamIcon />,
-    to: '/streaming',
+    to: '/streams',
     group: 0,
     visible: true
   },

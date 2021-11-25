@@ -367,7 +367,12 @@ const MatchesTable = (props: IProps) => {
       >
         <Box>
           {selectedMatch && [
-            <Grid container direction={'row'} className={'w-100 text-center grey-bg'}>
+            <Grid
+              key={'header'}
+              container
+              direction={'row'}
+              className={'w-100 text-center grey-bg'}
+            >
               <Grid item xs={11} className={'mt-1'}>
                 <Typography variant={'h6'}>{selectedMatch.matchName}</Typography>
               </Grid>

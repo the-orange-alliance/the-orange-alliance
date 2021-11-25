@@ -354,7 +354,13 @@
         "horizontal_split_view": "Horizontal Split View",
         "1_2_view": "1+2 View",
         "1_4_view": "1+4 View",
-        "quad_view": "Quad View"
+        "quad_view": "Quad View",
+        "1_3_view": "1+3 View",
+        "6_view": "3x2 View",
+        "1_6_view": "1+6 View",
+        "8_view_horiz": "8 View (Horizontal)",
+        "8_view_vert": "8 View (Vertical)",
+        "3_3_view": "3x3 View"
       }
     },
     "team": {

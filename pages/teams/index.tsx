@@ -12,10 +12,10 @@ import {
   Pagination,
   Typography
 } from '@mui/material';
-import { useTranslate } from '../i18n/i18n';
-import SimpleTeamPaper from '../components/SimpleTeamPaper';
+import { useTranslate } from '../../i18n/i18n';
+import SimpleTeamPaper from '../../components/SimpleTeamPaper';
 import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../lib/PageHelpers/teamsHelper';
+import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../../lib/PageHelpers/teamsHelper';
 
 const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const t = useTranslate();

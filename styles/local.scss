@@ -105,19 +105,97 @@ a:hover:not(.MuiButtonBase-root) {
 
 .badge-success {
   color: #fff;
-  background-color: #28a745
+  background-color: #28a745;
 }
 
 .badge-info {
   color: #fff;
-  background-color: #17a2b8
+  background-color: #17a2b8;
 }
 
 .badge-warning {
   color: #212529;
-  background-color: #ffc107
+  background-color: #ffc107;
 }
 
 .match-table-cell {
   padding: 17px;
+}
+
+.stream {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  outline: #ffffff solid 1px;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.stream-info {
+  height: 36px;
+  align-self: flex-end;
+  background: #2f2e2e;
+  width: 100%;
+  color: #fff !important;
+}
+
+.stream-info button,
+.stream-info a,
+.stream-info a:hover {
+  color: #fff !important;
+  background: #2f2e2e !important;
+  min-width: 24px;
+  text-decoration: none !important;
+}
+
+.stream-info h2 {
+  padding: 0 0 0 20px;
+  margin: 0;
+  max-width: 75%;
+  align-self: center !important;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.stream-iframe {
+  height: calc(100% - 36px) !important;
+}
+
+/* ==========================================================================
+   Tooltip
+   ========================================================================== */
+
+.toa-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.toa-tooltip .tooltiptext {
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgb(60, 64, 67);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.3px;
+  line-height: 16px;
+  padding: 6px 12px;
+  white-space: nowrap;
+  z-index: 9999;
+  position: absolute;
+  display: block;
+  bottom: 125%;
+  //left: -80%;
+}
+
+.toa-tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }

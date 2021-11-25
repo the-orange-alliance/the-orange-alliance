@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -15,6 +15,8 @@ import { useTranslate } from '../i18n/i18n';
 import routes, { IAppRoute } from '../constants/routes';
 import NextMuiLink from './NextMuiLink';
 import ListItemLink from './ListItemLink';
+import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mui/material';
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -22,9 +24,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex'
   },
   drawer: {
-    [theme.breakpoints.up('md')]: {
-      width: drawerWidth
-    },
     flexShrink: 0
   },
   drawerContainer: {
@@ -38,10 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     // },
   },
   menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
+    marginRight: theme.spacing(2)
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -57,6 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingRight: theme.spacing(2),
     background: '#f5f6f7',
     minHeight: '100vh'
+  },
+  streams: {
+    background: '#000 !important',
+    paddingLeft: '0 !important',
+    paddingRight: '0 !important'
   }
 }));
 
@@ -70,12 +71,28 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
   const { title, container, content } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const router = useRouter();
   const t = useTranslate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const largeScreen = useMediaQuery(theme.breakpoints.up('md'));
+
+  const menuButtonSx =
+    router.route === '/streams' ? { display: 'block' } : { display: { sm: 'block', md: 'none' } };
+
+  const drawerSx =
+    router.route === '/streams' ? { width: 0 } : { width: { sm: 0, md: drawerWidth } };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  useEffect(() => {
+    if (largeScreen && !mobileOpen && router.route !== '/streams') {
+      setMobileOpen(true);
+    } else if (!largeScreen && mobileOpen) {
+      setMobileOpen(false);
+    }
+  }, [largeScreen]);
 
   const routeGroups: Map<number, IAppRoute[]> = new Map();
   for (const route of routes) {
@@ -96,7 +113,7 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
           href={route.to}
           icon={route.icon}
           primary={route.translationKey ? t(route.translationKey) : route.name}
-          onClick={mobileOpen ? handleDrawerToggle : undefined}
+          onClick={handleDrawerToggle}
         />
       );
     });
@@ -116,7 +133,6 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar elevation={0} position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -124,7 +140,7 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            sx={menuButtonSx}
             size="large"
           >
             <MenuIcon />
@@ -134,39 +150,23 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="application inks">
+      <nav className={classes.drawer} aria-label="application links">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Hidden mdUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            ModalProps={{
-              keepMounted: true // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
-        <Hidden mdDown implementation="css">
-          <Drawer
-            classes={{
-              paper: classes.drawerPaper
-            }}
-            variant="permanent"
-            open
-          >
-            <Toolbar />
-            {drawer}
-          </Drawer>
-        </Hidden>
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          variant={largeScreen && router.route !== '/streams' ? 'permanent' : 'temporary'}
+          open={mobileOpen}
+          onClose={() => !largeScreen && handleDrawerToggle()}
+          sx={drawerSx}
+          hideBackdrop
+        >
+          <Toolbar />
+          {drawer}
+        </Drawer>
       </nav>
-      <main className={classes.content}>
+      <main className={classes.content + ` ${router.route === '/streams' ? classes.streams : ''}`}>
         <div className={classes.toolbar} />
         {content}
       </main>
