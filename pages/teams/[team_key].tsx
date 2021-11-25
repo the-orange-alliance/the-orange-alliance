@@ -342,8 +342,10 @@ const TeamPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerS
                             {award.award.awardDescription}
                           </Typography>
                         ))}
-                        {event.matches.length > 0 && <MatchesTab event={event} />}
-                        {event.matches.length < 1 && <Typography variant={'body1'}></Typography>}
+                        {event.matches.length > 0 && (
+                          <MatchesTab event={event} forceSmall disableSingleTeamTeam />
+                        )}
+                        {event.matches.length < 1 && <Typography variant={'body1'} />}
                       </Box>
                     </CardContent>
                   </Card>
