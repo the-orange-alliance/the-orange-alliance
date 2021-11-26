@@ -49,9 +49,8 @@ const EightVertial = ({ streams, showChat }: { streams: EventLiveStream[]; showC
             className={'h-100 w-100'}
             frameBorder="0"
             scrolling="no"
-            src="https://www.twitch.tv/embed/theorangealliance/chat?darkpopout&parent=theorangealliance.org"
-            // src="https://www.twitch.tv/embed/theorangealliance/chat?darkpopout&parent=localhost"
-          ></iframe>
+            src="https://www.twitch.tv/embed/theorangealliance/chat?darkpopout&parent=theorangealliance.org&parent=localhost"
+          />
         </Grid>
       )}
     </Grid>
