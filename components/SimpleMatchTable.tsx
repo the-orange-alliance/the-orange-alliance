@@ -2,7 +2,7 @@ import * as React from 'react';
 import { MatchParticipant, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
 import {
-  Button,
+  Box,
   Paper,
   Table,
   TableBody,
@@ -28,19 +28,19 @@ const SimpleMatchTable = (props: IProps) => {
     const redView = redAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Button fullWidth color={'secondary'}>
+          <Box className={`match-table-cell ${match.redScore > match.blueScore ? 'fw-bold' : ''}`}>
             {p.teamKey}
-          </Button>
+          </Box>
         </TableCell>
       );
     });
     return (
       <TableRow className={'red-bg'}>
         {redView}
-        <TableCell>
-          <Button fullWidth color={'secondary'}>
+        <TableCell align="center">
+          <Box className={`match-table-cell ${match.redScore > match.blueScore ? 'fw-bold' : ''}`}>
             {match.redScore}
-          </Button>
+          </Box>
         </TableCell>
       </TableRow>
     );
@@ -54,19 +54,19 @@ const SimpleMatchTable = (props: IProps) => {
     const blueView = blueAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Button fullWidth color={'secondary'}>
+          <Box className={`match-table-cell ${match.blueScore > match.redScore ? 'fw-bold' : ''}`}>
             {p.teamKey}
-          </Button>
+          </Box>
         </TableCell>
       );
     });
     return (
       <TableRow className={'blue-bg'}>
         {blueView}
-        <TableCell>
-          <Button fullWidth color={'secondary'}>
+        <TableCell align="center">
+          <Box className={`match-table-cell ${match.blueScore > match.redScore ? 'fw-bold' : ''}`}>
             {match.blueScore}
-          </Button>
+          </Box>
         </TableCell>
       </TableRow>
     );

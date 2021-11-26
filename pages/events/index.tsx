@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
-import { Region, Season, Week, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import {
   getEventsData,

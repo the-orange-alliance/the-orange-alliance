@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import NextLink from 'next/link';
 import NextImage from 'next/image';
 import {
   Typography,
@@ -39,7 +38,7 @@ import { getTeamData, IRawTeamProps, parseTeamProps } from '../../lib/PageHelper
 import { getSeasonString, readableDate } from '../../util/common-utils';
 import { CURRENT_SEASON } from '../../constants';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
-import { MatchesTab } from '../../components/EventTabs';
+import MatchesTable from '../../components/MatchTable/MatchTable';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const t = useTranslate();
@@ -297,17 +296,15 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   >
                     <CardContent>
                       <Box>
-                        <NextLink href={`/events/${event.eventKey}/rankings`}>
-                          <a>
-                            <Typography variant={'h5'}>
-                              <b>
-                                {event.divisionName
-                                  ? event.eventName + ' - ' + event.divisionName + ' Division'
-                                  : event.eventName}
-                              </b>
-                            </Typography>
-                          </a>
-                        </NextLink>
+                        <a className={'text-black'} href={`/events/${event.eventKey}/rankings`}>
+                          <Typography variant={'h5'}>
+                            <b>
+                              {event.divisionName
+                                ? event.eventName + ' - ' + event.divisionName + ' Division'
+                                : event.eventName}
+                            </b>
+                          </Typography>
+                        </a>
                         <Typography variant={'subtitle2'}>
                           {event.city}, {event.stateProv ? event.stateProv + ', ' : ''}
                           {event.country} on {readableDate(event.startDate)}
@@ -339,7 +336,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           </Typography>
                         ))}
                         {event.matches.length > 0 && (
-                          <MatchesTab
+                          <MatchesTable
                             event={event}
                             forceSmall
                             disableSingleTeamTeam

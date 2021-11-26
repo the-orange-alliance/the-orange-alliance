@@ -66,8 +66,9 @@ const getEventData = async (eventKey: string): Promise<IRawEventProps> => {
   const newInsights = [];
   for (const i of insights) {
     if (i) {
+      const highScoreMatch = i.highScoreMatch;
       const insight = undefinedToNull(i.toJSON()) as any;
-      insight.high_score_match = undefinedToNull(insight.high_score_match);
+      if (highScoreMatch) insight.high_score_match = undefinedToNull(highScoreMatch.toJSON());
       newInsights.push(insight);
     } else {
       newInsights.push(null);
