@@ -16,7 +16,7 @@ const StatisticCard = ({ title, subtitle, icon, sx, ...props }: StatisticCardPro
   return (
     <Box
       sx={{
-        bgcolor: 'white',
+        bgcolor: theme.palette.background.paper,
         p: 2,
         display: 'flex',
         flexDirection: 'row',

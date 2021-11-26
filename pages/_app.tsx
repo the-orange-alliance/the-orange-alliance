@@ -1,14 +1,11 @@
-import '../styles/globals.css';
+import { useEffect } from 'react';
+import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import 'bootstrap/dist/css/bootstrap.css';
-import '../styles/local.scss';
+import DrawerLayout from '../components/navigation/drawer-layout';
 import theme from '../lib/theme';
-import { useEffect } from 'react';
 import { UserLanguageProvider } from '../i18n/i18n';
-import App from 'next/app';
-import AppDrawer from '../components/AppDrawer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -28,7 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <AppDrawer title={'The Orange Alliance'} content={<Component {...pageProps} />} />
+          <DrawerLayout title="The Orange Alliance">
+            <Component {...pageProps} />
+          </DrawerLayout>
         </ThemeProvider>
       </UserLanguageProvider>
     </>
