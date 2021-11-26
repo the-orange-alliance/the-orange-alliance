@@ -30,10 +30,7 @@ const LiveStreamPanel = ({ streams }: { streams: EventLiveStream[] }) => {
 
   return (
     <>
-      <Box
-        className={'stream embed-responsive embed-responsive-16by9 h-100'}
-        style={{ width: '100vw' }}
-      >
+      <Box className={'stream embed-responsive embed-responsive-16by9'}>
         {!selectedStream && (
           <Button variant={'contained'} color={'primary'} onClick={() => setModalOpen(true)}>
             {t('pages.streams.select_stream')}
