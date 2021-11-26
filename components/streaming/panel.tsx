@@ -6,14 +6,11 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  FormControlLabel,
   IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Radio,
-  RadioGroup,
   Tooltip,
   Typography
 } from '@mui/material';

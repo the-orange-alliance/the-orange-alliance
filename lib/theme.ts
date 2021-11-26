@@ -1,13 +1,16 @@
 // Create a theme instance.
-import { createTheme, PaletteMode } from '@mui/material';
+import { createTheme, PaletteMode, Theme } from '@mui/material';
 import { orange } from '@mui/material/colors';
 
 const mode: PaletteMode = 'light';
 
-const getDesignTokens = (mode: PaletteMode) => ({
+const getDesignTokens = (mode: PaletteMode): Theme => ({
   palette: {
+    // TODO: Fix types
+    // @ts-ignore
     primary: orange,
     mode,
+    // @ts-ignore
     secondary: {
       main: '#0f0f0f'
     },
@@ -25,7 +28,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
         root: {
           backgroundImage: 'none',
           boxShadow: 'none',
-          borderRadius: 16
+          borderRadius: '1rem'
         }
       }
     },
@@ -34,6 +37,13 @@ const getDesignTokens = (mode: PaletteMode) => ({
         button: {
           borderRadius: '0.625rem',
           overflow: 'hidden'
+        }
+      }
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: '1rem'
         }
       }
     }

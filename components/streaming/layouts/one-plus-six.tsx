@@ -17,14 +17,14 @@ const OnePlusSixView: React.FC<OnePlusSixViewProps> = ({ streams, showChat }) =>
             <LiveStreamPanel streams={streams} />
           </Grid>
 
-          <Grid container item xs={4}>
-            <Grid item xs={12}>
+          <Grid item container xs={4} direction="column" wrap="nowrap">
+            <Grid item xs={4}>
               <LiveStreamPanel streams={streams} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={4}>
               <LiveStreamPanel streams={streams} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={4}>
               <LiveStreamPanel streams={streams} />
             </Grid>
           </Grid>

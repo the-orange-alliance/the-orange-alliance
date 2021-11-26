@@ -1,23 +1,3 @@
-import React from 'react';
-import { Close, Equalizer } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  Radio,
-  RadioGroup,
-  Typography
-} from '@mui/material';
-import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../i18n/i18n';
-
 interface StreamingChatProps {
   channel?: string;
 }

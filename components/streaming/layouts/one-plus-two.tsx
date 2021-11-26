@@ -14,11 +14,11 @@ const OnePlusTwoView: React.FC<OnePlusTwoViewProps> = ({ streams, showChat }) =>
       <Grid item xs={showChat ? 6 : 8}>
         <LiveStreamPanel streams={streams} />
       </Grid>
-      <Grid item container xs={showChat ? 3 : 4}>
-        <Grid item xs={12}>
+      <Grid item container xs={showChat ? 3 : 4} direction="column">
+        <Grid item xs={6}>
           <LiveStreamPanel streams={streams} />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <LiveStreamPanel streams={streams} />
         </Grid>
       </Grid>

@@ -11,8 +11,8 @@ interface EightHorizontalViewProps {
 const EightHorizontalView: React.FC<EightHorizontalViewProps> = ({ streams, showChat }) => {
   return (
     <Grid container sx={{ height: '100%' }}>
-      <Grid item container xs={showChat ? 9 : 12}>
-        <Grid item container xs={12}>
+      <Grid item container xs={showChat ? 9 : 12} direction="column">
+        <Grid item container xs={6}>
           <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
           </Grid>
@@ -26,7 +26,7 @@ const EightHorizontalView: React.FC<EightHorizontalViewProps> = ({ streams, show
             <LiveStreamPanel streams={streams} />
           </Grid>
         </Grid>
-        <Grid item container xs={12}>
+        <Grid item container xs={6}>
           <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
           </Grid>
