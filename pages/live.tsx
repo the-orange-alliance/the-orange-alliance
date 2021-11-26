@@ -1,11 +1,5 @@
-import type { GetServerSideProps, NextPage } from 'next';
-import { useTranslate } from '../i18n/i18n';
 import React, { useState } from 'react';
-import {
-  getStreamsData,
-  IRawStreamsProps,
-  parseStreamsProps
-} from '../lib/PageHelpers/streamsHelper';
+import type { GetServerSideProps, NextPage } from 'next';
 import {
   Container,
   Dialog,
@@ -20,6 +14,12 @@ import {
   FormControlLabel,
   Grid
 } from '@mui/material';
+import { useTranslate } from '../i18n/i18n';
+import {
+  getStreamsData,
+  IRawStreamsProps,
+  parseStreamsProps
+} from '../lib/PageHelpers/streamsHelper';
 import {
   SingleView,
   DualVertical,
@@ -39,7 +39,7 @@ interface StreamView {
   svgPath: string;
   name: string;
   layoutKey: number;
-  container: JSX.Element;
+  container: React.ReactElement;
 }
 
 const Streams: NextPage<IRawStreamsProps> = props => {
