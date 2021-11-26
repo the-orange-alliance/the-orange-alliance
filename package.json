@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "@mui/styles": "^5.1.0",
-    "@the-orange-alliance/api": "^0.1.6-crossfetch",
+    "@the-orange-alliance/api": "file:../the-orange-alliance-nodejs",
     "bootstrap": "^5.1.3",
     "next": "12.0.3",
     "next-seo": "^4.28.1",
