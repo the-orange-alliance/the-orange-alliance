@@ -52,15 +52,16 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
       </Box>
 
       <Box
-        component="main"
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
           flexGrow: 1,
           minHeight: '100vh',
-          bgcolor: theme.palette.background.default
+          bgcolor: 'background.default'
         }}
       >
         <Toolbar />
-        {children}
+        <Box sx={{ flex: 1 }}>{children}</Box>
       </Box>
     </Box>
   );

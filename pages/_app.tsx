@@ -30,6 +30,21 @@ function MyApp({ Component, pageProps }: AppProps) {
           </DrawerLayout>
         </ThemeProvider>
       </UserLanguageProvider>
+      <style jsx global>{`
+        :root {
+          --toa-navbar-height: 56px;
+        }
+        @media (min-width: 0px) and (orientation: landscape) {
+          :root {
+            --toa-navbar-height: 48px;
+          }
+        }
+        @media (min-width: 600px) {
+          :root {
+            --toa-navbar-height: 64px;
+          }
+        }
+      `}</style>
     </>
   );
 }

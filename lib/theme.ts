@@ -28,6 +28,14 @@ const getDesignTokens = (mode: PaletteMode) => ({
           borderRadius: 16
         }
       }
+    },
+    MuiListItem: {
+      styleOverrides: {
+        button: {
+          borderRadius: '0.625rem',
+          overflow: 'hidden'
+        }
+      }
     }
   }
 });

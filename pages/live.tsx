@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   Container,
@@ -12,7 +12,8 @@ import {
   ListItemText,
   Checkbox,
   FormControlLabel,
-  Grid
+  Box,
+  Typography
 } from '@mui/material';
 import { useTranslate } from '../i18n/i18n';
 import {
@@ -20,26 +21,12 @@ import {
   IRawStreamsProps,
   parseStreamsProps
 } from '../lib/PageHelpers/streamsHelper';
-import {
-  SingleView,
-  DualVertical,
-  DualHorizontal,
-  OnePlusTwo,
-  OnePlusFour,
-  Quad,
-  OnePlusThree,
-  Hex,
-  OnePlusSix,
-  EightHorizontal,
-  Nine
-} from '../components/StreamLayouts';
-import EightVertial from '../components/StreamLayouts/EightVertical';
+import * as Layouts from '../components/streaming/layouts';
 
 interface StreamView {
+  id: string;
   svgPath: string;
-  name: string;
-  layoutKey: number;
-  container: React.ReactElement;
+  container: React.ElementType;
 }
 
 const Streams: NextPage<IRawStreamsProps> = props => {
@@ -52,122 +39,143 @@ const Streams: NextPage<IRawStreamsProps> = props => {
 
   const views: StreamView[] = [
     {
+      id: 'single_view',
       svgPath: 'M0 0h23v15h-23v-15z',
-      name: t('pages.streams.layouts.single_view'),
-      layoutKey: 0,
-      container: <SingleView streams={streams} showChat={showChat} />
+      container: Layouts.SingleView
     },
     {
+      id: 'vertical_split_view',
       svgPath: 'M0 0h11v15h-11v-15zM12 0h11v15h-11v-15z',
-      name: t('pages.streams.layouts.vertical_split_view'),
-      layoutKey: 1,
-      container: <DualVertical streams={streams} showChat={showChat} />
+      container: Layouts.DualVerticalView
     },
     {
+      id: 'horizontal_split_view',
       svgPath: 'M0 0h23v7h-23v-7z M0 8h23v7h-23v-7z',
-      name: t('pages.streams.layouts.horizontal_split_view'),
-      layoutKey: 2,
-      container: <DualHorizontal streams={streams} showChat={showChat} />
+      container: Layouts.DualHorizontalView
     },
     {
+      id: '1_2_view',
       svgPath: 'M0 0h14v15h-14v-15zM15 0h8v7h-8v-7zM15 8h8v7h-8v-7z',
-      name: t('pages.streams.layouts.1_2_view'),
-      layoutKey: 3,
-      container: <OnePlusTwo streams={streams} showChat={showChat} />
+      container: Layouts.OnePlusTwoView
     },
     {
+      id: '1_3_view',
       svgPath: 'm0 0h15v14h-15zm16 0h7v4h-7v-4m0 10v4h7v-4h-7m7-1v-4 4h-7v-4h7',
-      name: t('pages.streams.layouts.1_3_view'),
-      layoutKey: 6,
-      container: <OnePlusThree streams={streams} showChat={showChat} />
+      container: Layouts.OnePlusThreeView
     },
     {
+      id: '1_4_view',
       svgPath:
         'M0 0h15v15h-15v-15z M16 0h7v3h-7v-3z M16 4h7v3h-7v3z M16 8h7v3h-7v-3z M16 12h7v3h-7v-3z',
-      name: t('pages.streams.layouts.1_4_view'),
-      layoutKey: 4,
-      container: <OnePlusFour streams={streams} showChat={showChat} />
+      container: Layouts.OnePlusFourView
     },
     {
+      id: '1_6_view',
       svgPath:
         'm0 0h15v11h-15v-15zm16 0h7v3h-7v-3zm0 4h7v3h-7v3zm0 4h7v3h-7v-3zm0 4h7v3h-7v-3zm-16 0h7v3h-7v-3m8 0h7v3h-7v-3',
-      name: t('pages.streams.layouts.1_6_view'),
-      layoutKey: 8,
-      container: <OnePlusSix streams={streams} showChat={showChat} />
+      container: Layouts.OnePlusSixView
     },
     {
+      id: 'quad_view',
       svgPath: 'M0 0h11v7h-11v-7z M0 8h11v7h-11v-7z M12 0h11v7h-11v-7z M12 8h11v7h-11v-7z',
-      name: t('pages.streams.layouts.quad_view'),
-      layoutKey: 5,
-      container: <Quad streams={streams} showChat={showChat} />
+      container: Layouts.QuadView
     },
     {
+      id: '6_view',
       svgPath: 'm0 0v6h7v-6zm0 9h7v6h-7zm8-3v-6h7v6h-7m8 0h7v-6h-7v6m-8 3h7v6h-7v-6m8 0h7v6h-7v-6',
-      name: t('pages.streams.layouts.6_view'),
-      layoutKey: 7,
-      container: <Hex streams={streams} showChat={showChat} />
+      container: Layouts.HexView
     },
     {
+      id: '8_view_horiz',
       svgPath:
         'm0 0h5v7h-5zm6 0h5v7h-5v-7m6 0h5v7h-5v-7m-12 8h5v7h-5v-7m18-1h5v-7h-5v7m-12 8v-7h5v7h-5m6-7v7h5v-7h-5m6 0h5v7h-5v-7',
-      name: t('pages.streams.layouts.8_view_horiz'),
-      layoutKey: 9,
-      container: <EightHorizontal streams={streams} showChat={showChat} />
+      container: Layouts.EightHorizontalView
     },
     {
+      id: '8_view_vert',
       svgPath:
         'm0 0h11v3h-11zm16 0h7v3h-11v-3zm7 4v3h-11v-3zm-7 4h7v3h-11v-3zm0 4h7v3h-11v-3zm-16-8h11v3h-11v-3m0 4h11v3h-11v-3m0 4h11v3h-11v-3',
-      name: t('pages.streams.layouts.8_view_vert'),
-      layoutKey: 10,
-      container: <EightVertial streams={streams} showChat={showChat} />
+      container: Layouts.EightVerticalView
     },
     {
+      id: '3_3_view',
       svgPath:
         'm0 0h7v4h-7zm8 0h7v4h-7v-4m8 0h7v4h-7v-4m-16 10h7v4h-7v-4m8 4v-4h7v4h-7m8-4v4h7v-4h-7m7-1v-4 4h-7v-4h7m-23 0h7v4h-7v-4m8 0h7v4h-7v-4',
-      name: t('pages.streams.layouts.3_3_view'),
-      layoutKey: 11,
-      container: <Nine streams={streams} showChat={showChat} />
+      container: Layouts.NineView
     }
   ];
 
-  const selectLayout = (layout: StreamView) => {
-    setSelectedLayout(layout);
-    setModalOpen(false);
-  };
+  const LayoutContainer = useMemo(() => selectedLayout?.container, [selectedLayout]);
 
   return (
-    <Container className={'m-0 p-0'} style={{ height: '92.8vh', width: '100vw !important' }}>
-      {selectedLayout && selectedLayout.container}
-
-      {/* View Selector */}
-      <Dialog open={modalOpen}>
-        <DialogTitle>{t('pages.streams.layouts.title')}</DialogTitle>
-        <DialogContent>
-          <List>
-            {views.map(v => (
-              <ListItem key={v.layoutKey} disablePadding>
-                <ListItemButton onClick={() => selectLayout(v)}>
+    <Box
+      component={Box}
+      sx={{
+        height: 'calc(100vh - var(--toa-navbar-height))',
+        bgcolor: '#121212',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
+      {LayoutContainer ? (
+        <LayoutContainer streams={streams} showChat={showChat} />
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              bgcolor: 'background.paper',
+              mx: 4,
+              my: 'auto',
+              width: 400,
+              maxWidth: '100%',
+              borderRadius: 4,
+              maxHeight: '90%',
+              overflow: 'hidden'
+            }}
+          >
+            <Typography variant="h6" sx={{ p: 2 }}>
+              {t('pages.streams.layouts.title')}
+            </Typography>
+            <List
+              sx={{
+                overflowY: 'auto',
+                borderTop: 1,
+                borderBottom: 1,
+                borderColor: 'divider',
+                px: 2
+              }}
+            >
+              {views.map(v => (
+                <ListItem
+                  button
+                  key={v.id}
+                  dense
+                  sx={{ my: 0.5, py: 1 }}
+                  onClick={() => setSelectedLayout(v)}
+                >
                   <ListItemIcon>
-                    <svg style={{ width: '25px', height: '20px' }}>
+                    <svg style={{ width: '25px', height: '20px' }} viewBox="0 0 23 15">
                       <path d={v.svgPath} />
                     </svg>
                   </ListItemIcon>
-                  <ListItemText>{v.name}</ListItemText>
-                </ListItemButton>
-              </ListItem>
-            ))}
-            <ListItem>
-              <FormControlLabel
-                control={
-                  <Checkbox checked={showChat} onChange={e => setShowChat(e.target.checked)} />
-                }
-                label={t('pages.streams.show_chat')}
-              />
-            </ListItem>
-          </List>
-        </DialogContent>
-      </Dialog>
-    </Container>
+                  <ListItemText>{t('pages.streams.layouts.' + v.id)}</ListItemText>
+                </ListItem>
+              ))}
+            </List>
+            <FormControlLabel
+              control={
+                <Checkbox checked={showChat} onChange={e => setShowChat(e.target.checked)} />
+              }
+              label={t('pages.streams.show_chat')}
+              sx={{ px: 2, py: 1 }}
+            />
+          </Box>
+        </>
+      )}
+    </Box>
   );
 };
 
