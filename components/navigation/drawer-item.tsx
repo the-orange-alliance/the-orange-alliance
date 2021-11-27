@@ -11,7 +11,10 @@ interface DrawerItemProps {
   onClick?: () => void;
 }
 
-const LinkWrapper = ({ href, ...props }) => (
+const LinkWrapper = ({
+  href,
+  ...props
+}: { href: string } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
   <NextLink href={href}>
     <a {...props} />
   </NextLink>

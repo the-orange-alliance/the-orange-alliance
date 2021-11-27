@@ -44,7 +44,7 @@ const SimpleEventPaper = (props: IProps) => {
   }
 
   return (
-    <ListItem button onClick={onClick} s>
+    <ListItem button onClick={onClick}>
       {event.teamCount > 0 && <div className={classes.dataIndicator}></div>}
       <ListItemText primary={event.fullEventName} secondary={secondaryTxt} />
     </ListItem>
