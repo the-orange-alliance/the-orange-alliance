@@ -6,7 +6,7 @@ import {
   getInsightsData,
   IRawInsightsProps,
   parseInsightsProps
-} from '../../lib/PageHelpers/insightsHelper';
+} from '../../lib/page-helpers/insightsHelper';
 import InsightsTab from '../../components/SeasonInsights/InsightsTab';
 import FilterCard from '../../components/FilterCard';
 import { useEffect, useRef, useState } from 'react';

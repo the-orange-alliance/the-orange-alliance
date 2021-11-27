@@ -10,7 +10,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { getWeekShort } from '../../util/common-utils';
+import { getWeekShort } from '../../lib/utils/common';
 import SeasonInsights2122 from './SeasonInsights2122';
 import SeasonInsights2021 from './SeasonInsights2021';
 import SeasonInsights1920 from './SeasonInsights1920';

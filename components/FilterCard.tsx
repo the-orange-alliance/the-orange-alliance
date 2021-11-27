@@ -14,7 +14,7 @@ import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
 import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 import { useRouter } from 'next/router';
-import { getSeasonString } from '../util/common-utils';
+import { getSeasonString } from '../lib/utils/common';
 import { useTranslate } from '../i18n/i18n';
 import { CURRENT_SEASON } from '../constants';
 
