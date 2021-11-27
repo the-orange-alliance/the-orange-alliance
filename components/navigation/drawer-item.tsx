@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import NextLink from 'next/link';
 import { Box, ButtonBase } from '@mui/material';
 import { useTheme, alpha } from '@mui/material/styles';
@@ -11,12 +12,12 @@ interface DrawerItemProps {
   onClick?: () => void;
 }
 
-const LinkWrapper = ({
-  href,
-  ...props
-}: { href: string } & React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+const LinkWrapper: React.ForwardRefRenderFunction<
+  HTMLAnchorElement,
+  { href: string } & React.AnchorHTMLAttributes<HTMLAnchorElement>
+> = ({ href, ...props }, ref) => (
   <NextLink href={href}>
-    <a {...props} />
+    <a ref={ref} {...props} />
   </NextLink>
 );
 
@@ -27,7 +28,7 @@ const DrawerItem = ({ title, href, icon, isExternal, isActive }: DrawerItemProps
     <ButtonBase
       href={href}
       target={isExternal ? '_blank' : undefined}
-      component={isExternal ? 'a' : LinkWrapper}
+      component={isExternal ? 'a' : forwardRef(LinkWrapper)}
       sx={{
         display: 'flex',
         justifyContent: 'flex-start',
