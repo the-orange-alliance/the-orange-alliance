@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Drawer, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useTranslate } from '../../i18n/i18n';
 import Navbar from './navbar';
 import DrawerContent from './drawer-content';
 
