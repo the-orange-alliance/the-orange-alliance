@@ -1,5 +1,6 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import Image from 'next/image';
 import {
   Autocomplete,
   Box,
@@ -77,13 +78,13 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       })
     );
     setSelectedSeason(tempSeason);
-  }, []);
+  }, [regions, router.query, seasons, weeks]);
 
   useEffect(() => {
     // Select first week if the currently selected week doesn't exist
     if (weeks.length > 0 && !weeks.find(w => w.weekKey === selectedTab))
       setSelectedTab(weeks[0].weekKey);
-  }, [weeks]);
+  }, [selectedTab, weeks]);
 
   function getRegionString(region: Region) {
     if (region.regionKey === 'all') return region.description;
@@ -249,10 +250,10 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
       {/* No Event Data */}
       {!fetching && events.length === 0 && (
-        <CardContent className={'text-center'}>
-          <img src="/imgs/empty-icon.svg" height="110" className="mb-3" />
-          <Typography variant={'h6'}>{t('no_data.events_filter')}</Typography>
-          <Typography variant={'body1'}>{t('no_data.events_filter_long')}</Typography>
+        <CardContent>
+          <Image src="/imgs/empty-icon.svg" height={110} width={110} alt="Empty Illustration" />
+          <Typography variant="h6">{t('no_data.events_filter')}</Typography>
+          <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
         </CardContent>
       )}
     </div>

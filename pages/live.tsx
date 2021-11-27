@@ -9,7 +9,8 @@ import {
   FormControlLabel,
   Box,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import { useTranslate } from '../i18n/i18n';
 import {
@@ -18,7 +19,6 @@ import {
   parseStreamsProps
 } from '../lib/PageHelpers/streamsHelper';
 import * as Layouts from '../components/streaming/layouts';
-import { useTheme } from '@emotion/react';
 
 interface StreamView {
   id: string;
