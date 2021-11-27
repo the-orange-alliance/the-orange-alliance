@@ -1,4 +1,4 @@
-import type { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Container, Grid, Typography } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
@@ -70,7 +70,8 @@ const Home: NextPage<IRawHomeProps> = props => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  res.setHeader('Cache-Control', `public, s-maxage=60, stale-while-revalidate=${5 * 60}`);
   return { props: await getHomeData() };
 };
 
