@@ -1,5 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import {
   Autocomplete,
@@ -260,10 +260,8 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  return { props: await getEventsData(context.query.season_key, context.query.region_key) };
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  return { props: await getEventsData(query.season_key, query.region_key) };
 };
 
 export default EventsPage;

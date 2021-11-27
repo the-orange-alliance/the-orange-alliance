@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import { Typography, Paper } from '@mui/material';
 import { CalendarToday, LocationOn, Public, VerifiedUser, Videocam } from '@mui/icons-material';
@@ -81,19 +81,12 @@ const EventPage: NextPage<IRawEventProps> = props => {
 
 export default EventPage;
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let eventData = {};
   try {
-    eventData = await getEventData(context.params?.event_key + '');
+    eventData = await getEventData(String(params?.event_key));
     return { props: eventData };
   } catch (err) {
-    return {
-      redirect: {
-        destination: '/', // TODO: Redirect to 404 page
-        permanent: false
-      }
-    };
+    return { notFound: true };
   }
 };

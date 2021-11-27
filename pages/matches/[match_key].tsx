@@ -1,9 +1,4 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-  InferGetServerSidePropsType
-} from 'next';
+import type { GetServerSideProps, NextPage, InferGetServerSidePropsType } from 'next';
 import { useTranslate } from '../../i18n/i18n';
 import {
   getMatchesData,
@@ -67,18 +62,11 @@ const MatchPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
-    return { props: await getMatchesData(context.query.match_key + '') };
+    return { props: await getMatchesData(String(query.match_key)) };
   } catch (err) {
-    return {
-      redirect: {
-        destination: '/', // TODO: Redirect to 404 page
-        permanent: false
-      }
-    };
+    return { notFound: true };
   }
 };
 

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { ChangeEvent, useState, useCallback, useRef, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import {
@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../../lib/PageHelpers/teamsHelper';
 
 const TEAMS_PER_PAGE = 20;
@@ -103,9 +103,7 @@ const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return { props: await getTeamsData() };
 };
 

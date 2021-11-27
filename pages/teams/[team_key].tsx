@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import NextImage from 'next/image';
 import {
@@ -440,21 +440,12 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
 export default TeamPage;
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, query }) => {
   try {
-    const seasonKey =
-      context.query.season_key && typeof context.query.season_key === 'string'
-        ? context.query.season_key
-        : CURRENT_SEASON;
-    return { props: await getTeamData(context.params?.team_key + '', seasonKey) };
+    const teamKey = String(params?.team_key);
+    const seasonKey = query.season_key ? String(query.season_key) : CURRENT_SEASON;
+    return { props: await getTeamData(teamKey, seasonKey) };
   } catch (err) {
-    return {
-      redirect: {
-        destination: '/', // TODO: Redirect to 404 page
-        permanent: false
-      }
-    };
+    return { notFound: true };
   }
 };
