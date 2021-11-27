@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import theme from '../lib/theme';
 import { ServerStyleSheets } from '@mui/styles';

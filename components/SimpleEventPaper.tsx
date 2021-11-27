@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/material/styles';
-import { readableDate } from '../util/common-utils';
+import { readableDate } from '../lib/utils/common';
 import { useRouter } from 'next/router';
 
 interface IProps {

@@ -1,6 +1,3 @@
-/**
- * Created by Kyle Flynn on 5/28/2017.
- */
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 
 export class MatchType {
@@ -99,8 +96,7 @@ export class MatchParser {
 }
 
 export class MatchSorter {
-  constructor() {
-  }
+  constructor() {}
 
   public sort(items: Match[], left: number, right: number) {
     let pivot, partitionIndex;

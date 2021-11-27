@@ -6,14 +6,13 @@ import { NextSeo } from 'next-seo';
 import StatisticCard from '../components/statistic-card';
 import AnnouncementCard from '../components/AnnouncementCard';
 import { useTranslate } from '../i18n/i18n';
-import { getHomeData, IRawHomeProps, parseHomeProps } from '../lib/PageHelpers/homeHelper';
+import { fetchHomeData, IRawHomeProps, useHomeData } from '../lib/page-helpers/home-helper';
 import LeaderboardsModule from '../components/LeaderboardsModule';
 
 const Home: NextPage<IRawHomeProps> = props => {
-  const t = useTranslate();
-
   const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore } =
-    parseHomeProps(props);
+    useHomeData(props);
+  const t = useTranslate();
 
   return (
     <>
@@ -72,7 +71,7 @@ const Home: NextPage<IRawHomeProps> = props => {
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader('Cache-Control', `public, s-maxage=60, stale-while-revalidate=${5 * 60}`);
-  return { props: await getHomeData() };
+  return { props: await fetchHomeData() };
 };
 
 export default Home;

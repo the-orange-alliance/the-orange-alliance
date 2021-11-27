@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, useCallback, useRef, useMemo } from 'react';
+import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import {
@@ -14,14 +15,13 @@ import {
 } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../../lib/PageHelpers/teamsHelper';
+import { fetchTeamsData, IRawTeamsProps, useTeamsData } from '../../lib/page-helpers/teams-helper';
 
 const TEAMS_PER_PAGE = 20;
 
-const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const TeamsPage: NextPage<IRawTeamsProps> = props => {
+  const { teams } = useTeamsData(props);
   const t = useTranslate();
-  const { teams } = parseTeamsProps(props as IRawTeamsProps);
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
   const [page, setPage] = useState<number>(1);
   const typingTimerRef = useRef<NodeJS.Timeout>();
@@ -101,7 +101,7 @@ const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  return { props: await getTeamsData() };
+  return { props: await fetchTeamsData() };
 };
 
 export default TeamsPage;

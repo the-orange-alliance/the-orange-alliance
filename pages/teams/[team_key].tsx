@@ -34,18 +34,17 @@ import {
   YouTube
 } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
-import { getTeamData, IRawTeamProps, parseTeamProps } from '../../lib/PageHelpers/teamHelper';
-import { getSeasonString, readableDate } from '../../util/common-utils';
+import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helpers/team-helper';
+import { getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchesTable from '../../components/MatchTable/MatchTable';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
+  const { team, wlt, topOpr, seasons, cad, github, images, notebook, reveal, matches } =
+    useTeamData(props);
   const t = useTranslate();
   const router = useRouter();
-
-  const { team, wlt, topOpr, seasons, cad, github, images, notebook, reveal, matches } =
-    parseTeamProps(props);
   const querySeason =
     router.query.season_key && !Array.isArray(router.query.season_key)
       ? seasons.find(s => s.seasonKey === router.query.season_key) ?? seasons[0]
@@ -444,7 +443,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
   try {
     const teamKey = String(params?.team_key);
     const seasonKey = query.season_key ? String(query.season_key) : CURRENT_SEASON;
-    return { props: await getTeamData(teamKey, seasonKey) };
+    return { props: await fetchTeamData(teamKey, seasonKey) };
   } catch (err) {
     return { notFound: true };
   }

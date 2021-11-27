@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import * as en from './en/translation.json';
 import * as es from './es/translation.json';
 import * as he from './he/translation.json';
@@ -10,35 +10,39 @@ function getPath(obj: any, path: string) {
   return path.split('.').reduce((acc, item) => (acc && acc[item] ? acc[item] : null), obj);
 }
 
-const UserLanguageContext = React.createContext({
+interface UserLanguageContextInterface {
+  userLanguage: string;
+  setUserLanguage: () => void;
+}
+
+const UserLanguageContext = createContext<UserLanguageContextInterface>({
   userLanguage: '',
   setUserLanguage: () => {}
 });
-if (process.env.NODE_ENV !== 'production') {
-  UserLanguageContext.displayName = 'UserLanguage';
-}
 
-export function UserLanguageProvider(props: { children: any; defaultUserLanguage: string }) {
-  const { children, defaultUserLanguage } = props;
-
-  const [userLanguage, setUserLanguage] = React.useState(defaultUserLanguage);
-
-  const contextValue = React.useMemo(() => {
-    return { userLanguage, setUserLanguage };
+export function UserLanguageProvider({
+  children,
+  defaultUserLanguage
+}: {
+  children: any;
+  defaultUserLanguage: string;
+}) {
+  const [userLanguage, setUserLanguage] = useState(defaultUserLanguage);
+  const contextValue = useMemo(() => {
+    return { userLanguage, setUserLanguage } as UserLanguageContextInterface;
   }, [userLanguage]);
 
   return (
-    // @ts-ignore
     <UserLanguageContext.Provider value={contextValue}>{children}</UserLanguageContext.Provider>
   );
 }
 
 export function useUserLanguage() {
-  return React.useContext(UserLanguageContext).userLanguage;
+  return useContext(UserLanguageContext).userLanguage;
 }
 
 export function useSetUserLanguage() {
-  return React.useContext(UserLanguageContext).setUserLanguage;
+  return useContext(UserLanguageContext).setUserLanguage;
 }
 
 const warnedOnce: { [key: string]: boolean } = {};
@@ -46,7 +50,7 @@ const warnedOnce: { [key: string]: boolean } = {};
 export function useTranslate() {
   const userLanguage = useUserLanguage();
 
-  return React.useMemo(
+  return useMemo(
     () =>
       function translate(key: string, options: any = {}) {
         const { ignoreWarning = false } = options;

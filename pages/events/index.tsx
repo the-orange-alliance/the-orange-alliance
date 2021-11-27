@@ -19,19 +19,19 @@ import {
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import {
-  getEventsData,
+  fetchEventsData,
   IRawEventsProps,
   organizeEventsByWeek,
-  useEventsProps
-} from '../../lib/PageHelpers/eventsHelper';
+  useEventsData
+} from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
-import { getRegionString, getSeasonString, getWeekName } from '../../util/common-utils';
+import { getRegionString, getSeasonString, getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
+  const { events: initialEvents, regions, seasons } = useEventsData(props);
   const t = useTranslate();
-  const { events: initialEvents, regions, seasons } = useEventsProps(props);
   const [selectedSeason, setSelectedSeason] = useState<Season>(
     () => seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0]
   );
@@ -182,7 +182,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  return { props: await getEventsData() };
+  return { props: await fetchEventsData() };
 };
 
 export default EventsPage;

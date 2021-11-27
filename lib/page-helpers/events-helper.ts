@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Event, Season, Region, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
 import { CURRENT_SEASON } from '../../constants';
-import { undefinedToNull } from '../../util/common-utils';
+import { undefinedToNull } from '../utils/common';
 
 export interface IRawEventsProps {
   events: any;
@@ -20,15 +20,14 @@ export const parseEventsProps = (props: IRawEventsProps): IEventsProps => {
   return {
     events: props.events.map((e: any) => new Event().fromJSON(e)),
     seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
-    regions: props.regions.map((r: any) => new Region().fromJSON(r)),
-    weeks: props.weeks
+    regions: props.regions.map((r: any) => new Region().fromJSON(r))
   };
 };
 
-export const useEventsProps = (props: IRawEventsProps): IEventsProps =>
+export const useEventsData = (props: IRawEventsProps): IEventsProps =>
   useMemo(() => parseEventsProps(props), [props]);
 
-export const getEventsData = async (): Promise<IRawEventsProps> => {
+export const fetchEventsData = async (): Promise<IRawEventsProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getRegions(),
     TOAProvider.getAPI().getSeasons(),

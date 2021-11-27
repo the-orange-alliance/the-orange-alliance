@@ -1,5 +1,4 @@
-import TOAProvider from '../../providers/TOAProvider';
-import { undefinedToNull } from '../../util/common-utils';
+import { useMemo } from 'react';
 import {
   AwardRecipient,
   Event,
@@ -10,12 +9,14 @@ import {
   Season,
   Team
 } from '@the-orange-alliance/api/lib/cjs/models';
-import { MatchSorter } from '../../util/match-utils';
-import { EventSorter } from '../../util/event-utils';
-import { sort } from '../../util/award-utils';
+import TOAProvider from '../../providers/TOAProvider';
+import { MatchSorter } from '../utils/match';
+import { EventSorter } from '../utils/event';
+import { sort } from '../utils/award';
 import { MediaTypeTeam } from '@the-orange-alliance/api/lib/cjs/models/types/MediaType';
+import { undefinedToNull } from '../utils/common';
 
-interface IRawTeamProps {
+export interface IRawTeamProps {
   team: any;
   topOpr: any;
   wlt: { wins: number; losses: number; ties: number };
@@ -27,7 +28,7 @@ interface IRawTeamProps {
   seasons: any[];
 }
 
-interface ITeamProps {
+export interface ITeamProps {
   team: Team;
   topOpr: Ranking | null;
   matches: any;
@@ -40,7 +41,7 @@ interface ITeamProps {
   images: Media[];
 }
 
-const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
+export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
   const team = new Team().fromJSON(props.team);
   team.rankings = props.rankings.map((r: any) => new Ranking().fromJSON(r));
   team.events = props.events.map((e: any) => new Event().fromJSON(e));
@@ -109,7 +110,10 @@ const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
   };
 };
 
-const getTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeamProps> => {
+export const useTeamData = (props: IRawTeamProps): ITeamProps =>
+  useMemo(() => parseTeamProps(props), [props]);
+
+export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeamProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getTeam(teamKey),
     TOAProvider.getAPI().getSeasons(),
@@ -206,6 +210,3 @@ const sortAndFind = (teamKey: string, matches: Match[]): Match[] => {
   teamMatches = sorter.sort(teamMatches, 0, teamMatches.length - 1);
   return teamMatches;
 };
-
-export { parseTeamProps, getTeamData };
-export type { IRawTeamProps, ITeamProps };

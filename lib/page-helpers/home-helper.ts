@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
 import { CURRENT_SEASON } from '../../constants';
-import { undefinedToNull } from '../../util/common-utils';
+import { undefinedToNull } from '../utils/common';
 
-interface IRawHomeProps {
+export interface IRawHomeProps {
   teamSize: number;
   matchSize: number;
   overallHighScoreMatch: any;
@@ -17,7 +18,7 @@ interface IRawHomeProps {
   elimsHighScoreEvent: any;
 }
 
-interface IHomeProps {
+export interface IHomeProps {
   teamSize: number;
   matchSize: number;
   overallHighScore: Match;
@@ -25,7 +26,9 @@ interface IHomeProps {
   elimsHighScore: Match;
 }
 
-const getHighScoreMatch = (type: 'all' | 'elims' | 'quals' | 'single_team'): Promise<Match> => {
+export const getHighScoreMatch = (
+  type: 'all' | 'elims' | 'quals' | 'single_team'
+): Promise<Match> => {
   return new Promise<Match>(async (resolve, reject) => {
     try {
       const match: Match = await TOAProvider.getAPI().getHighScoreMatch(type, {
@@ -44,7 +47,7 @@ const getHighScoreMatch = (type: 'all' | 'elims' | 'quals' | 'single_team'): Pro
   });
 };
 
-const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
+export const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
   const overall = new Match().fromJSON(props.overallHighScoreMatch);
   overall.event = new Event().fromJSON(props.overallHighScoreEvent);
   overall.participants = props.overallHighScoreParticipants.map((p: any) =>
@@ -72,7 +75,10 @@ const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
   };
 };
 
-const getHomeData = async (): Promise<IRawHomeProps> => {
+export const useHomeData = (props: IRawHomeProps): IHomeProps =>
+  useMemo(() => parseHomeProps(props), [props]);
+
+export const fetchHomeData = async (): Promise<IRawHomeProps> => {
   const homePageResults = await Promise.all([
     TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
     TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
@@ -101,6 +107,3 @@ const getHomeData = async (): Promise<IRawHomeProps> => {
     )
   };
 };
-
-export {getHighScoreMatch, parseHomeProps, getHomeData};
-export type {IHomeProps, IRawHomeProps};

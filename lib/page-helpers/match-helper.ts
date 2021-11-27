@@ -1,25 +1,21 @@
-import {
-  Match,
-  Event,
-  MatchParticipant,
-  MatchDetails
-} from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/TOAProvider';
-import { undefinedToNull } from '../../util/common-utils';
+import { useMemo } from 'react';
+import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { getMatchDetails } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/GameData';
+import TOAProvider from '../../providers/TOAProvider';
+import { undefinedToNull } from '../utils/common';
 
-interface IRawMatchesProps {
+export interface IRawMatchProps {
   match: any;
   matchDetails: any;
   matchParticipants: any[];
   event: any;
 }
 
-interface IMatchesProps {
+export interface IMatchProps {
   match: Match;
 }
 
-const parseMatchesProps = (props: IRawMatchesProps): IMatchesProps => {
+export const parseMatchProps = (props: IRawMatchProps): IMatchProps => {
   const match = new Match().fromJSON(props.match);
   match.event = new Event().fromJSON(props.event);
   match.details = getMatchDetails(match.event.seasonKey).fromJSON(props.matchDetails);
@@ -29,7 +25,10 @@ const parseMatchesProps = (props: IRawMatchesProps): IMatchesProps => {
   };
 };
 
-const getMatchesData = async (matchKey: string): Promise<IRawMatchesProps> => {
+export const useMatchData = (props: IRawMatchProps): IMatchProps =>
+  useMemo(() => parseMatchProps(props), [props]);
+
+export const fetchMatchData = async (matchKey: string): Promise<IRawMatchProps> => {
   const split = matchKey.split('-');
   const data = await Promise.all([
     TOAProvider.getAPI().getMatch(matchKey),
@@ -45,6 +44,3 @@ const getMatchesData = async (matchKey: string): Promise<IRawMatchesProps> => {
     event: undefinedToNull(data[3].toJSON())
   };
 };
-
-export { parseMatchesProps, getMatchesData };
-export type { IMatchesProps, IRawMatchesProps };

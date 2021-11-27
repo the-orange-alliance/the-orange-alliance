@@ -14,10 +14,10 @@ import {
 } from '@mui/material';
 import { useTranslate } from '../i18n/i18n';
 import {
-  getStreamsData,
+  fetchStreamsData,
   IRawStreamsProps,
-  parseStreamsProps
-} from '../lib/PageHelpers/streamsHelper';
+  useStreamsData
+} from '../lib/page-helpers/streams-helper';
 import * as Layouts from '../components/streaming/layouts';
 
 interface StreamView {
@@ -98,9 +98,8 @@ const views: StreamView[] = [
 ];
 
 const Streams: NextPage<IRawStreamsProps> = props => {
-  const { streams } = parseStreamsProps(props);
+  const { streams } = useStreamsData(props);
   const t = useTranslate();
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
   const [showChat, setShowChat] = useState<boolean>(true);
   const [selectedLayout, setSelectedLayout] = useState<StreamView | null>(null);
   const theme = useTheme();
@@ -178,7 +177,7 @@ const Streams: NextPage<IRawStreamsProps> = props => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  return { props: await getStreamsData() };
+  return { props: await fetchStreamsData() };
 };
 
 export default Streams;

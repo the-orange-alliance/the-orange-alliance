@@ -1,5 +1,4 @@
-import TOAProvider from '../../providers/TOAProvider';
-import { undefinedToNull } from '../../util/common-utils';
+import { useMemo } from 'react';
 import {
   Event,
   Ranking,
@@ -10,8 +9,10 @@ import {
   EventParticipant,
   EventLiveStream
 } from '@the-orange-alliance/api/lib/cjs/models';
+import TOAProvider from '../../providers/TOAProvider';
+import { undefinedToNull } from '../utils/common';
 
-interface IRawEventProps {
+export interface IRawEventProps {
   event: any;
   teams: any;
   rankings: any;
@@ -22,12 +23,12 @@ interface IRawEventProps {
   streams: any;
 }
 
-interface IEventProps {
+export interface IEventProps {
   event: Event;
   streams: EventLiveStream[];
 }
 
-const parseEventProps = (props: IRawEventProps): IEventProps => {
+export const parseEventProps = (props: IRawEventProps): IEventProps => {
   const event = new Event().fromJSON(props.event);
   event.teams = props.teams.map((t: any) => new EventParticipant().fromJSON(t));
   event.rankings = props.rankings.map((r: any) => new Ranking().fromJSON(r));
@@ -35,13 +36,14 @@ const parseEventProps = (props: IRawEventProps): IEventProps => {
   event.alliances = props.alliances.map((a: any) => new Alliance().fromJSON(a));
   event.awards = props.awards.map((a: any) => new AwardRecipient().fromJSON(a));
   event.insights = props.insights.map((i: any) => (i ? new Insights().fromJSON(i) : null));
-
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
-
   return { event, streams };
 };
 
-const getEventData = async (eventKey: string): Promise<IRawEventProps> => {
+export const useEventData = (props: IRawEventProps): IEventProps =>
+  useMemo(() => parseEventProps(props), [props]);
+
+export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getEvent(eventKey),
     TOAProvider.getAPI().getEventTeams(eventKey),
@@ -86,6 +88,3 @@ const getEventData = async (eventKey: string): Promise<IRawEventProps> => {
     streams: streams.map(s => undefinedToNull(s.toJSON()))
   };
 };
-
-export { parseEventProps, getEventData };
-export type { IRawEventProps, IEventProps };
