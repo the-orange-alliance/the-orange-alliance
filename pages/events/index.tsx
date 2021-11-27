@@ -1,5 +1,7 @@
-import { useEffect, SyntheticEvent, useState } from 'react';
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import {
   Autocomplete,
   Box,
@@ -14,154 +16,78 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { Theme } from '@mui/material/styles';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import {
-  getEventsData,
+  fetchEventsData,
   IRawEventsProps,
-  parseEventsProps
-} from '../../lib/PageHelpers/eventsHelper';
+  organizeEventsByWeek,
+  useEventsData
+} from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
-import { useRouter } from 'next/router';
 import { CURRENT_SEASON } from '../../constants';
-import { getSeasonString } from '../../util/common-utils';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  filterSelect: {
-    width: '30px'
-  }
-}));
-
-interface AutoComplete<T> {
-  label: string;
-  parent: T;
-}
+import { getRegionString, getSeasonString, getWeekName } from '../../lib/utils/common';
+import TOAProvider from '../../providers/TOAProvider';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
-  const classes = useStyles();
-  const router = useRouter();
+  const { events: initialEvents, regions, seasons } = useEventsData(props);
   const t = useTranslate();
-  const { events, regions, seasons, weeks } = parseEventsProps(props);
+  const [selectedSeason, setSelectedSeason] = useState<Season>(
+    () => seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0]
+  );
+  const [selectedRegion, setSelectedRegion] = useState<Region>(() => regions[0]);
+  const [isFetching, setFetching] = useState<boolean>(false);
+  const [seasonEvents, setSeasonEvents] = useState(initialEvents);
+  const [filteredEvents, setFilteredEvents] = useState(seasonEvents);
+  const [weeks, setWeeks] = useState(organizeEventsByWeek(filteredEvents));
+  const [selectedWeek, setSelectedWeek] = useState<string>(weeks[0]?.weekKey);
 
-  const [localRegions, setLocalRegions] = useState<AutoComplete<Region>[]>([]);
-  const [localSeasons, setLocalSeasons] = useState<AutoComplete<Season>[]>([]);
-  const [selectedRegion, setSelectedRegion] = useState<AutoComplete<Region>>();
-  const [selectedSeason, setSelectedSeason] = useState<AutoComplete<Season>>();
-  const [selectedTab, setSelectedTab] = useState<string>('');
-  const [fetching, setFetching] = useState<boolean>(false);
+  const handleSeasonSelect = useCallback(
+    (e: any, season: Season | null) => {
+      if (!season) return;
+      setSelectedSeason(season);
+      if (season.seasonKey === CURRENT_SEASON) {
+        setSeasonEvents(initialEvents);
+      } else {
+        setFetching(true);
+        TOAProvider.getAPI()
+          .getEvents({ season_key: season.seasonKey })
+          .then(setSeasonEvents)
+          .finally(() => setFetching(false));
+      }
+    },
+    [initialEvents]
+  );
 
-  useEffect(() => {
-    // Set current week
-    if (weeks.length > 0) setSelectedTab(weeks[0].weekKey);
-
-    // Set Region and create region dropdown options
-    let tempRegion = { label: regions[0].description, parent: regions[0] };
-    setLocalRegions(
-      regions.map((r: Region) => {
-        const temp = { label: getRegionString(r), parent: r };
-        if (r.regionKey === router.query.region_key) tempRegion = temp;
-        return temp;
-      })
-    );
-    setSelectedRegion(tempRegion);
-
-    // Set Season and create season dropdown options
-    let tempSeason = { label: getSeasonString(seasons[0]), parent: seasons[0] };
-    setLocalSeasons(
-      seasons.map((s: Season) => {
-        const temp = { label: getSeasonString(s), parent: s };
-        if (s.seasonKey === router.query.season_key) tempSeason = temp;
-        return temp;
-      })
-    );
-    setSelectedSeason(tempSeason);
+  const handleRegionSelect = useCallback((e: any, region: Region | null) => {
+    if (!region) return;
+    setSelectedRegion(region);
   }, []);
 
+  const selectTab = useCallback((e: SyntheticEvent, val: string) => {
+    setSelectedWeek(val);
+  }, []);
+
+  const clearFilters = useCallback(() => {
+    const season = seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0];
+    setSelectedRegion(regions[0]);
+    handleSeasonSelect(null, season);
+  }, [handleSeasonSelect, regions, seasons]);
+
   useEffect(() => {
-    // Select first week if the currently selected week doesn't exist
-    if (weeks.length > 0 && !weeks.find(w => w.weekKey === selectedTab))
-      setSelectedTab(weeks[0].weekKey);
-  }, [weeks]);
-
-  function getRegionString(region: Region) {
-    if (region.regionKey === 'all') return region.description;
-    return `${region.regionKey.toUpperCase()} - ${region.description}`;
-  }
-
-  function onSelectSeason(event: any, val: AutoComplete<Season> | null) {
-    if (!val) return;
-    if (selectedSeason && val.parent.seasonKey === selectedSeason.parent.seasonKey) return;
-    pushNewFilter(val.parent, selectedRegion?.parent);
-  }
-
-  function onSelectRegion(event: any, val: AutoComplete<Region> | null) {
-    if (!val) return;
-    if (selectedRegion && val.parent.regionKey === selectedRegion.parent.regionKey) return;
-    pushNewFilter(selectedSeason?.parent, val.parent);
-  }
-
-  function pushNewFilter(season?: Season, region?: Region) {
-    setFetching(true);
-    const query = {} as any;
-    if (season && season.seasonKey !== CURRENT_SEASON) query.season_key = season.seasonKey;
-    if (region && region.regionKey !== 'all') query.region_key = region.regionKey;
-    router.push({ pathname: '/events', query: query }).then(() => {
-      setFetching(false);
-      setSelectedSeason(
-        query.season_key
-          ? localSeasons.find(s => s.parent.seasonKey === query.season_key)
-          : localSeasons[0]
-      );
-      setSelectedRegion(
-        query.region_key
-          ? localRegions.find(r => r.parent.regionKey === query.region_key)
-          : localRegions[0]
-      );
-    });
-  }
-
-  function selectTab(e: SyntheticEvent, val: string) {
-    setSelectedTab(val);
-  }
-
-  function clearFilters() {
-    pushNewFilter();
-  }
-
-  function getWeekName(week: string) {
-    switch (week) {
-      case 'CMP':
-        return 'FIRST Championship';
-      case 'CMPHOU':
-        return 'FIRST Championship - Houston';
-      case 'CMPSTL':
-        return 'FIRST Championship - St. Louis';
-      case 'CMPDET':
-        return 'FIRST Championship - Detroit';
-      case 'ESR':
-        return 'East Super Regional Championship';
-      case 'NSR':
-        return 'North Super Regional Championship';
-      case 'SSR':
-        return 'South Super Regional Championship';
-      case 'WSR':
-        return 'West Super Regional Championship';
-      case 'SPR':
-        return 'Super Regionals';
-      case 'FOC':
-        return 'Festival of Champions';
-      default:
-        if (week.match('-?\\d+(\\.\\d+)?')) {
-          // match a number with optional '-' and decimal.
-          return 'Week ' + week;
-        } else {
-          return week;
-        }
+    const filteredEvents =
+      selectedRegion.regionKey === 'all'
+        ? seasonEvents
+        : seasonEvents.filter(event => event.regionKey === selectedRegion.regionKey);
+    setFilteredEvents(filteredEvents);
+    const weeks = organizeEventsByWeek(filteredEvents);
+    setWeeks(weeks);
+    if (!weeks.some(w => w.weekKey === selectedWeek)) {
+      setSelectedWeek(weeks[0]?.weekKey);
     }
-  }
+  }, [seasonEvents, selectedRegion.regionKey, selectedWeek]);
 
+  console.log('r');
   return (
     <div>
       <Typography variant="h4" gutterBottom>
@@ -169,7 +95,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       </Typography>
 
       <Card>
-        {fetching && <LinearProgress />}
+        {isFetching && <LinearProgress />}
         <CardContent>
           <Typography variant="h6" gutterBottom>
             {t('pages.events.filter')}
@@ -178,14 +104,12 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
           <Grid container>
             <Grid item xs={4} p={2}>
               <Autocomplete
-                key={selectedSeason?.label}
                 disablePortal
-                id="seasons-filter"
-                options={localSeasons}
+                options={seasons}
                 value={selectedSeason}
-                isOptionEqualToValue={(a, b) => a.parent.seasonKey === b.parent.seasonKey}
-                defaultValue={selectedSeason}
-                onChange={onSelectSeason}
+                onChange={handleSeasonSelect}
+                isOptionEqualToValue={(a, b) => a.seasonKey === b.seasonKey}
+                getOptionLabel={(season: Season) => getSeasonString(season)}
                 renderInput={params => (
                   <TextField
                     {...params}
@@ -197,14 +121,12 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
             </Grid>
             <Grid item xs={4} p={2}>
               <Autocomplete
-                key={selectedRegion?.label}
                 disablePortal
-                id="regions-filter"
-                options={localRegions}
+                options={regions}
                 value={selectedRegion}
-                isOptionEqualToValue={(a, b) => a.parent.regionKey === b.parent.regionKey}
-                defaultValue={selectedRegion}
-                onChange={onSelectRegion}
+                onChange={handleRegionSelect}
+                isOptionEqualToValue={(a, b) => a.regionKey === b.regionKey}
+                getOptionLabel={(region: Region) => getRegionString(region)}
                 renderInput={params => (
                   <TextField
                     {...params}
@@ -223,22 +145,22 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       </Card>
 
       <Card className={'mt-5'}>
-        {!fetching && events.length > 0 && (
+        {!isFetching && filteredEvents.length > 0 && (
           <CardContent>
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={selectedTab} onChange={selectTab} variant={'fullWidth'}>
+                <Tabs value={selectedWeek} onChange={selectTab} variant={'fullWidth'}>
                   {weeks.map((week: Week) => (
                     <Tab
                       key={week.weekKey}
-                      label={getWeekName(week.weekKey)}
                       value={week.weekKey}
+                      label={getWeekName(week.weekKey)}
                     />
                   ))}
                 </Tabs>
               </Box>
-              {events.map(event => {
-                if (event.weekKey === selectedTab) {
+              {filteredEvents.map(event => {
+                if (event.weekKey === selectedWeek) {
                   return <SimpleEventPaper key={event.eventKey} event={event} />;
                 }
               })}
@@ -248,21 +170,19 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       </Card>
 
       {/* No Event Data */}
-      {!fetching && events.length === 0 && (
-        <CardContent className={'text-center'}>
-          <img src="/imgs/empty-icon.svg" height="110" className="mb-3" />
-          <Typography variant={'h6'}>{t('no_data.events_filter')}</Typography>
-          <Typography variant={'body1'}>{t('no_data.events_filter_long')}</Typography>
+      {!isFetching && filteredEvents.length === 0 && (
+        <CardContent>
+          <Image src="/imgs/empty-icon.svg" height={110} width={110} alt="Empty Illustration" />
+          <Typography variant="h6">{t('no_data.events_filter')}</Typography>
+          <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
         </CardContent>
       )}
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  return { props: await getEventsData(context.query.season_key, context.query.region_key) };
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  return { props: await fetchEventsData() };
 };
 
 export default EventsPage;

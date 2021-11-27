@@ -29,6 +29,7 @@
     "home": "בית",
     "teams": "קבוצות",
     "events": "אירועים",
+    "insights": "תובנות",
     "streaming": "שידוריים חיים",
     "android_app": "אפליקציית Android",
     "ios_app": "אפליקציית iOS",
@@ -176,7 +177,7 @@
 
     "home": {
       "title": "בית",
-      "short_info": "The Orange Alliance הוא ספק התוצאות, האירועים והקבוצות <b>הרשמי</b> של <i>FIRST</i> Tech Challenge.",
+      "short_info": "The Orange Alliance הוא ספק התוצאות, האירועים והקבוצות <b>הרשמי</b> של <em>FIRST</em> Tech Challenge.",
       "active_teams": "קבוצות פעילות",
       "matches_played": "מקצים ששוחקו",
       "todays_events": "אירועי היום",
@@ -221,7 +222,7 @@
           "wlt_record": "ניצחון-הפסד-תיקו",
           "qual_points": "נקודות Qualification",
           "ranking_points": "נקודות Ranking",
-          "tie_breaker_points": "נקודות שובר שיוויון",
+          "tie_reaker_points": "נקודות שובר שיוויון",
           "highest_score": "הניקוד הכי גבוה",
           "matches_played": "מקצים ששוחקו",
           "what_is_opr": "Offensive Power Rating, הידוע גם כ־OPR, הוא סטטיסטיקה המשומשת לעיתים קרובות בקהילת FIRST בכדי להשוות את הביצועים של קבוצות על המגרש. OPR זה דרך מעניינת לפרוס את הנתונים עבור קבוצות באירועים מסוימים, אבל זה לא תמיד המערכת הכי טובה להערכת הביצועים של קבוצה."

@@ -1,26 +1,15 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-  InferGetServerSidePropsType
-} from 'next';
-import { useTranslate } from '../../i18n/i18n';
-import {
-  getMatchesData,
-  IRawMatchesProps,
-  parseMatchesProps
-} from '../../lib/PageHelpers/matchesHelper';
+import type { GetServerSideProps, NextPage } from 'next';
 import { Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
-import { readableDate } from '../../util/common-utils';
+import { useTranslate } from '../../i18n/i18n';
+import { fetchMatchData, IRawMatchProps, useMatchData } from '../../lib/page-helpers/match-helper';
+import { readableDate } from '../../lib/utils/common';
 import SimpleMatchTable from '../../components/SimpleMatchTable';
-import * as React from 'react';
 import MatchDetailsCard from '../../components/MatchDetails/MatchDetailsCard';
 
-const MatchPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const MatchPage: NextPage<IRawMatchProps> = props => {
+  const { match } = useMatchData(props);
   const t = useTranslate();
-
-  const { match } = parseMatchesProps(props as IRawMatchesProps);
 
   return (
     <>
@@ -67,18 +56,11 @@ const MatchPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
-    return { props: await getMatchesData(context.query.match_key + '') };
+    return { props: await fetchMatchData(String(query.match_key)) };
   } catch (err) {
-    return {
-      redirect: {
-        destination: '/', // TODO: Redirect to 404 page
-        permanent: false
-      }
-    };
+    return { notFound: true };
   }
 };
 
