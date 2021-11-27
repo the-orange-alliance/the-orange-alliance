@@ -1,26 +1,21 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import { Typography, Paper } from '@mui/material';
 import { CalendarToday, LocationOn, Public, VerifiedUser, Videocam } from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
 import { useTranslate } from '../../../i18n/i18n';
 import {
-  getEventData,
+  fetchEventData,
   IRawEventProps,
-  parseEventProps
-} from '../../../lib/PageHelpers/eventHelper';
+  useEventData
+} from '../../../lib/page-helpers/event-helper';
 import EventTabs from '../../../components/EventTabs/EventTabs';
 
 const EventPage: NextPage<IRawEventProps> = props => {
+  const { event: eventData, streams } = useEventData(props);
   const t = useTranslate();
 
-  const { event: eventData, streams } = parseEventProps(props);
-
-  function strToDate(dateString: string) {
-    return new Date(Date.parse(dateString));
-  }
-
-  const startDate = strToDate(eventData.startDate);
+  const startDate = new Date(eventData.startDate); // TODO: Use moment.js
 
   return (
     <>
@@ -29,7 +24,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
       </Typography>
       <Typography className={'m-1'} variant={'body2'}>
         <CalendarToday fontSize="inherit" className={'me-2'} />
-        {t('month.' + startDate.getMonth())} {startDate.getDay()}, {startDate.getFullYear()}
+        {startDate}
       </Typography>
       <Typography className={'m-1'} variant={'body2'}>
         <LocationOn fontSize="inherit" className={'me-2'} />
@@ -81,19 +76,12 @@ const EventPage: NextPage<IRawEventProps> = props => {
 
 export default EventPage;
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   let eventData = {};
   try {
-    eventData = await getEventData(context.params?.event_key + '');
+    eventData = await fetchEventData(String(params?.event_key));
     return { props: eventData };
   } catch (err) {
-    return {
-      redirect: {
-        destination: '/', // TODO: Redirect to 404 page
-        permanent: false
-      }
-    };
+    return { notFound: true };
   }
 };

@@ -6,7 +6,7 @@ import IconTwo from '@mui/icons-material/LooksTwoOutlined';
 import IconThree from '@mui/icons-material/Looks3Outlined';
 import IconTrophy from '@mui/icons-material/EmojiEventsOutlined';
 import { useTranslate } from '../../i18n/i18n';
-import { sort } from '../../util/award-utils';
+import { sort } from '../../lib/utils/award';
 
 const translation = 'pages.event.subpages.awards.';
 
