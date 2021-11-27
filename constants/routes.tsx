@@ -8,6 +8,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import PublishIcon from '@mui/icons-material/Publish';
 import TranslateIcon from '@mui/icons-material/Translate';
 import VideoCamIcon from '@mui/icons-material/Videocam';
+import { DataSaverOff } from '@mui/icons-material';
 
 // import { changeLanguage } from "./i18n";
 
@@ -38,24 +39,18 @@ const routes: IAppRoute[] = [
     visible: true
   },
   {
-    name: 'Event',
-    icon: <EventIcon />,
-    to: '/events/:eventCode',
-    group: 0,
-    visible: false
-  },
-  {
-    name: 'Event',
-    icon: <EventIcon />,
-    to: '/events/:eventCode/:tab',
-    group: 0,
-    visible: false
-  },
-  {
     name: 'Events',
     translationKey: 'drawer.events',
     icon: <EventIcon />,
     to: '/events',
+    group: 0,
+    visible: true
+  },
+  {
+    name: 'Insights',
+    translationKey: 'drawer.insights',
+    icon: <DataSaverOff />,
+    to: '/insights',
     group: 0,
     visible: true
   },

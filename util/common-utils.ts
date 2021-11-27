@@ -35,6 +35,53 @@ function getShortMonth(month: number) {
   }
 }
 
+function getWeekShort(week: any) {
+  const parsed = parseInt(week);
+  if (!isNaN(parsed)) {
+    return `Wk ${week}`;
+  }
+  switch (week) {
+    case 'January':
+      return 'Jan';
+    case 'February':
+      return 'Feb';
+    case 'March':
+      return 'Mar';
+    case 'April':
+      return 'Apr';
+    case 'May':
+      return 'May';
+    case 'June':
+      return 'Jun';
+    case 'July':
+      return 'Jul';
+    case 'August':
+      return 'Aug';
+    case 'September':
+      return 'Sep';
+    case 'October':
+      return 'Oct';
+    case 'November':
+      return 'Nov';
+    case 'December':
+      return 'Dec';
+    case 'CMPDET':
+      return 'Det. CMP';
+    case 'CMPHOU':
+      return 'Hou. CMP';
+    case 'NSR':
+      return 'North Sup. Reg.';
+    case 'WSR':
+      return 'West Sup. Reg.';
+    case 'SPRING':
+      return 'Spring';
+    case 'FOC':
+      return 'Fest. of Cmps.';
+    default:
+      return week;
+  }
+}
+
 const undefinedToNull = (o: any): object | null => {
   if (typeof o === 'undefined' || o === null) return null;
   for (const key of Object.keys(o)) {
@@ -52,4 +99,4 @@ const getSeasonString = (season: Season) => {
   return '20' + codeOne + '/' + codeTwo + ' - ' + season.description;
 };
 
-export { readableDate, undefinedToNull, getSeasonString };
+export { readableDate, undefinedToNull, getSeasonString, getWeekShort };

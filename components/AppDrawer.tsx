@@ -151,16 +151,14 @@ const AppDrawer = (props: ResponsiveDrawerProps) => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="application links">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           classes={{
             paper: classes.drawerPaper
           }}
           variant={largeScreen && router.route !== '/streams' ? 'permanent' : 'temporary'}
           open={mobileOpen}
-          onClose={() => !largeScreen && handleDrawerToggle()}
+          onClose={() => handleDrawerToggle()}
           sx={drawerSx}
-          hideBackdrop
         >
           <Toolbar />
           {drawer}

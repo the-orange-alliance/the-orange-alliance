@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tabs, Tab } from '@mui/material';
+import { Tabs, Tab, Typography } from '@mui/material';
 import { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab } from './index';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
@@ -109,14 +109,16 @@ const EventTabs = ({ event }: IProps) => {
   }
 
   function tabHandler(e: SyntheticEvent | null, value: number, newTabs?: ITabProps[]) {
-    if (!newTabs) newTabs = tabs;
-    router.push(
-      {
-        pathname: `/events/${event.eventKey}/${newTabs[value].tabRoute}`
-      },
-      undefined,
-      { shallow: true }
-    );
+    if (!newTabs) {
+      newTabs = tabs;
+      router.push(
+        {
+          pathname: `/events/${event.eventKey}/${newTabs[value].tabRoute}`
+        },
+        undefined,
+        { shallow: true }
+      );
+    }
   }
 
   function getSelectedTab(): React.ReactElement {
@@ -144,7 +146,9 @@ const EventTabs = ({ event }: IProps) => {
       )}
       {!tabs ||
         (tabs && tabs.length < 1 && (
-          <div className={'event-tabs text-center'}>{t('no_data.event_long')}</div>
+          <Typography variant={'h6'} className={'event-tabs text-center p-3'}>
+            {t('no_data.event_long')}
+          </Typography>
         ))}
     </>
   );

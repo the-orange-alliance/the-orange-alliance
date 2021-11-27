@@ -1,9 +1,4 @@
-import {
-  Match,
-  Event,
-  MatchParticipant,
-  MatchDetails
-} from '@the-orange-alliance/api/lib/cjs/models';
+import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
 import { undefinedToNull } from '../../util/common-utils';
 import { getMatchDetails } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/GameData';
