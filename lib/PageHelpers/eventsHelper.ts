@@ -1,23 +1,22 @@
+import { useMemo } from 'react';
+import { Event, Season, Region, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
 import { CURRENT_SEASON } from '../../constants';
 import { undefinedToNull } from '../../util/common-utils';
-import { Event, Season, Region, Week } from '@the-orange-alliance/api/lib/cjs/models';
 
-interface IRawEventsProps {
+export interface IRawEventsProps {
   events: any;
   seasons: any;
   regions: any;
-  weeks: Week[];
 }
 
-interface IEventsProps {
+export interface IEventsProps {
   events: Event[];
   seasons: Season[];
   regions: Region[];
-  weeks: Week[];
 }
 
-const parseEventsProps = (props: IRawEventsProps): IEventsProps => {
+export const parseEventsProps = (props: IRawEventsProps): IEventsProps => {
   return {
     events: props.events.map((e: any) => new Event().fromJSON(e)),
     seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
@@ -26,19 +25,14 @@ const parseEventsProps = (props: IRawEventsProps): IEventsProps => {
   };
 };
 
-const getEventsData = async (
-  seasonKey: string | string[] | undefined,
-  regionKey: string | string[] | undefined
-): Promise<IRawEventsProps> => {
-  if (!seasonKey) seasonKey = CURRENT_SEASON;
-  if (seasonKey && Array.isArray(seasonKey)) seasonKey = seasonKey[0];
-  if (!regionKey || regionKey === 'all') regionKey = undefined;
-  if (regionKey && Array.isArray(regionKey)) regionKey = regionKey[0];
+export const useEventsProps = (props: IRawEventsProps): IEventsProps =>
+  useMemo(() => parseEventsProps(props), [props]);
 
+export const getEventsData = async (): Promise<IRawEventsProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getRegions(),
     TOAProvider.getAPI().getSeasons(),
-    TOAProvider.getAPI().getEvents({ season_key: seasonKey, region_key: regionKey })
+    TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON })
   ]);
 
   // Add "All Regions"
@@ -53,18 +47,14 @@ const getEventsData = async (
     return date1 > date2 ? 1 : date2 > date1 ? -1 : 0;
   });
 
-  // Weeks
-  const weeks = organizeEventsByWeek(data[2]);
-
   return {
     events: data[2].map(e => undefinedToNull(e.toJSON())),
     seasons: data[1].map(s => undefinedToNull(s.toJSON())),
-    regions: data[0].map(r => undefinedToNull(r.toJSON())),
-    weeks: weeks
+    regions: data[0].map(r => undefinedToNull(r.toJSON()))
   };
 };
 
-const organizeEventsByWeek = (events: Event[]): Week[] => {
+export const organizeEventsByWeek = (events: Event[]): Week[] => {
   const tempWeek = {} as { [key: string]: Week };
   for (const event of events) {
     if (tempWeek[event.weekKey] === undefined) {
@@ -79,6 +69,3 @@ const organizeEventsByWeek = (events: Event[]): Week[] => {
   }
   return Object.values(tempWeek);
 };
-
-export { parseEventsProps, getEventsData };
-export type {IRawEventsProps, IEventsProps};

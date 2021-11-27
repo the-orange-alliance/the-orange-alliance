@@ -1,4 +1,4 @@
-import { Season } from '@the-orange-alliance/api/lib/cjs/models';
+import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 
 function readableDate(date: Date | string): string {
   if (typeof date === 'string') date = new Date(date);
@@ -52,4 +52,41 @@ const getSeasonString = (season: Season) => {
   return '20' + codeOne + '/' + codeTwo + ' - ' + season.description;
 };
 
-export { readableDate, undefinedToNull, getSeasonString };
+function getRegionString(region: Region) {
+  if (region.regionKey === 'all') return region.description;
+  return `${region.description} (${region.regionKey.toUpperCase()})`;
+}
+
+function getWeekName(week: string) {
+  switch (week) {
+    case 'CMP':
+      return 'FIRST Championship';
+    case 'CMPHOU':
+      return 'FIRST Championship - Houston';
+    case 'CMPSTL':
+      return 'FIRST Championship - St. Louis';
+    case 'CMPDET':
+      return 'FIRST Championship - Detroit';
+    case 'ESR':
+      return 'East Super Regional Championship';
+    case 'NSR':
+      return 'North Super Regional Championship';
+    case 'SSR':
+      return 'South Super Regional Championship';
+    case 'WSR':
+      return 'West Super Regional Championship';
+    case 'SPR':
+      return 'Super Regionals';
+    case 'FOC':
+      return 'Festival of Champions';
+    default:
+      if (week.match('-?\\d+(\\.\\d+)?')) {
+        // match a number with optional '-' and decimal.
+        return 'Week ' + week;
+      } else {
+        return week;
+      }
+  }
+}
+
+export { readableDate, undefinedToNull, getSeasonString, getRegionString, getWeekName };
