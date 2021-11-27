@@ -56,12 +56,9 @@ const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServer
 
   const currentTeams = useMemo(() => {
     const startLocation = (page - 1) * TEAMS_PER_PAGE;
-    const teams = filteredTeams.slice(startLocation, startLocation + TEAMS_PER_PAGE);
-    console.log(startLocation, startLocation + TEAMS_PER_PAGE, teams.length);
-    return teams;
+    return filteredTeams.slice(startLocation, startLocation + TEAMS_PER_PAGE);
   }, [filteredTeams, page]);
 
-  // console.log(currentTeams, currentTeams.splice(0, 10), currentTeams.splice(10, 20));
   return (
     <div>
       <Typography variant="h4" gutterBottom>
