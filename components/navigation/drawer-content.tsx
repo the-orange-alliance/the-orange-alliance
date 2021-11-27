@@ -71,7 +71,7 @@ const DrawerContent = () => {
       <Divider light />
       <DrawerItem
         title={t('drawer.about')}
-        href="/legal"
+        href="/about"
         icon={<AboutIcon />}
         isActive={router.route === '/about'}
       />
