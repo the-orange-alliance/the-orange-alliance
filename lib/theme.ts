@@ -30,6 +30,9 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
           boxShadow: 'none',
           borderRadius: '1rem'
         }
+      },
+      defaultProps: {
+        elevation: 0
       }
     },
     MuiListItem: {

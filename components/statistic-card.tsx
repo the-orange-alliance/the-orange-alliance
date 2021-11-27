@@ -1,5 +1,5 @@
 import Avatar from '@mui/material/Avatar';
-import { Box, BoxProps, Typography } from '@mui/material';
+import { Card, CardProps, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 interface Props {
@@ -7,24 +7,14 @@ interface Props {
   subtitle: string;
   icon: React.ReactElement;
 }
-type NativeAttrs = Omit<BoxProps, keyof Props>;
+type NativeAttrs = Omit<CardProps, keyof Props>;
 export type StatisticCardProps = Props & NativeAttrs;
 
 const StatisticCard = ({ title, subtitle, icon, sx, ...props }: StatisticCardProps) => {
   const theme = useTheme();
 
   return (
-    <Box
-      sx={{
-        bgcolor: theme.palette.background.paper,
-        p: 2,
-        display: 'flex',
-        flexDirection: 'row',
-        borderRadius: 4,
-        ...sx
-      }}
-      {...props}
-    >
+    <Card sx={{ p: 2, display: 'flex', flexDirection: 'row', ...sx }} {...props}>
       <Avatar
         sx={{
           bgcolor: theme.palette.primary.main,
@@ -34,15 +24,15 @@ const StatisticCard = ({ title, subtitle, icon, sx, ...props }: StatisticCardPro
       >
         {icon}
       </Avatar>
-      <Box>
+      <div>
         <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
         <Typography
           sx={{ color: theme.palette.grey[600], lineHeight: 'normal', fontSize: '0.875rem' }}
         >
           {subtitle}
         </Typography>
-      </Box>
-    </Box>
+      </div>
+    </Card>
   );
 };
 

@@ -3,7 +3,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
 import { NextSeo } from 'next-seo';
-import StatisticCard from '../components/StatisticCard';
+import StatisticCard from '../components/statistic-card';
 import AnnouncementCard from '../components/AnnouncementCard';
 import { useTranslate } from '../i18n/i18n';
 import { getHomeData, IRawHomeProps, parseHomeProps } from '../lib/PageHelpers/homeHelper';
