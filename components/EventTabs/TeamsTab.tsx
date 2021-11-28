@@ -10,7 +10,7 @@ const TeamsTab = (props: IProps) => {
   const { teams } = props.event;
 
   return (
-    <List>
+    <List sx={{ marginLeft: 2, marginRight: 2 }}>
       {teams.map((team: EventParticipant) => (
         <ListItem key={team.teamKey} component="a" button href={`/teams/${team.teamKey}`}>
           <ListItemAvatar>

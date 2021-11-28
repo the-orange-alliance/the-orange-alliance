@@ -1,23 +1,10 @@
-import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  LinearProgress,
-  Tab,
-  Tabs,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
+import FilterCard from '../../components/FilterCard';
 import {
   fetchEventsData,
   IRawEventsProps,
@@ -26,15 +13,12 @@ import {
 } from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
-import { getRegionString, getSeasonString, getWeekName } from '../../lib/utils/common';
+import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { events: initialEvents, regions, seasons } = useEventsData(props);
   const t = useTranslate();
-  const [selectedSeason, setSelectedSeason] = useState<Season>(
-    () => seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0]
-  );
   const [selectedRegion, setSelectedRegion] = useState<Region>(() => regions[0]);
   const [isFetching, setFetching] = useState<boolean>(false);
   const [seasonEvents, setSeasonEvents] = useState(initialEvents);
@@ -43,9 +27,8 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   const [selectedWeek, setSelectedWeek] = useState<string>(weeks[0]?.weekKey);
 
   const handleSeasonSelect = useCallback(
-    (e: any, season: Season | null) => {
+    (season: Season) => {
       if (!season) return;
-      setSelectedSeason(season);
       if (season.seasonKey === CURRENT_SEASON) {
         setSeasonEvents(initialEvents);
       } else {
@@ -59,7 +42,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
     [initialEvents]
   );
 
-  const handleRegionSelect = useCallback((e: any, region: Region | null) => {
+  const handleRegionSelect = useCallback((region: Region) => {
     if (!region) return;
     setSelectedRegion(region);
   }, []);
@@ -71,7 +54,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   const clearFilters = useCallback(() => {
     const season = seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0];
     setSelectedRegion(regions[0]);
-    handleSeasonSelect(null, season);
+    handleSeasonSelect(season);
   }, [handleSeasonSelect, regions, seasons]);
 
   useEffect(() => {
@@ -87,78 +70,34 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
     }
   }, [seasonEvents, selectedRegion.regionKey, selectedWeek]);
 
-  console.log('r');
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
+      <Typography sx={{ margin: 2 }} variant="h4">
         {t('general.events')}
       </Typography>
 
-      <Card>
-        {isFetching && <LinearProgress />}
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            {t('pages.events.filter')}
-          </Typography>
-          <Divider />
-          <Grid container>
-            <Grid item xs={4} p={2}>
-              <Autocomplete
-                disablePortal
-                options={seasons}
-                value={selectedSeason}
-                onChange={handleSeasonSelect}
-                isOptionEqualToValue={(a, b) => a.seasonKey === b.seasonKey}
-                getOptionLabel={(season: Season) => getSeasonString(season)}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    variant={'standard'}
-                    label={t('pages.events.filter_season')}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={4} p={2}>
-              <Autocomplete
-                disablePortal
-                options={regions}
-                value={selectedRegion}
-                onChange={handleRegionSelect}
-                isOptionEqualToValue={(a, b) => a.regionKey === b.regionKey}
-                getOptionLabel={(region: Region) => getRegionString(region)}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    variant={'standard'}
-                    label={t('pages.events.filter_region')}
-                  />
-                )}
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-          <Button fullWidth onClick={clearFilters}>
-            {t('pages.events.clear_filter')}
-          </Button>
-        </CardContent>
-      </Card>
+      <FilterCard
+        regions={regions}
+        seasons={seasons}
+        route={'/events'}
+        forceReload={false}
+        onRegionComplete={handleRegionSelect}
+        onSeasonComplete={handleSeasonSelect}
+        onClearFiltersComplete={clearFilters}
+        fetchingOverride={isFetching}
+      />
 
-      <Card className={'mt-5'}>
+      <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={selectedWeek} onChange={selectTab} variant={'fullWidth'}>
+            {weeks.map((week: Week) => (
+              <Tab key={week.weekKey} value={week.weekKey} label={getWeekName(week.weekKey)} />
+            ))}
+          </Tabs>
+        </Box>
         {!isFetching && filteredEvents.length > 0 && (
           <CardContent>
             <Box sx={{ width: '100%' }}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={selectedWeek} onChange={selectTab} variant={'fullWidth'}>
-                  {weeks.map((week: Week) => (
-                    <Tab
-                      key={week.weekKey}
-                      value={week.weekKey}
-                      label={getWeekName(week.weekKey)}
-                    />
-                  ))}
-                </Tabs>
-              </Box>
               {filteredEvents.map(event => {
                 if (event.weekKey === selectedWeek) {
                   return <SimpleEventPaper key={event.eventKey} event={event} />;
@@ -171,7 +110,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
       {/* No Event Data */}
       {!isFetching && filteredEvents.length === 0 && (
-        <CardContent>
+        <CardContent sx={{ textAlign: 'center' }}>
           <Image src="/imgs/empty-icon.svg" height={110} width={110} alt="Empty Illustration" />
           <Typography variant="h6">{t('no_data.events_filter')}</Typography>
           <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>

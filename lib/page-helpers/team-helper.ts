@@ -75,7 +75,6 @@ export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
   let reveal = null;
   if (team.media) {
     for (const media of team.media) {
-      console.log(media);
       switch (media.mediaType) {
         case MediaTypeTeam.Github:
           github = media;

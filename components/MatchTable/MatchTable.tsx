@@ -371,9 +371,9 @@ const MatchesTable = (props: IProps) => {
               key={'header'}
               container
               direction={'row'}
-              className={'w-100 text-center grey-bg'}
+              sx={{ textAlign: 'center', backgroundColor: 'rgba(224, 224, 224, 1)' }}
             >
-              <Grid item xs={11} className={'mt-1'}>
+              <Grid item xs={11} sx={{ marginTop: 0.5 }}>
                 <Typography variant={'h6'}>{selectedMatch.matchName}</Typography>
               </Grid>
               <Grid item xs={1}>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import SimpleMatchTable from '../components/SimpleMatchTable';
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import { useTranslate } from '../i18n/i18n';
-import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
 
 interface IProps {
   quals: Match;
@@ -12,6 +12,7 @@ interface IProps {
 
 const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
   const t = useTranslate();
+  const theme = useTheme();
 
   function renderMatch(title: string, subtitle: string, match: Match) {
     return (
@@ -21,10 +22,15 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
           {subtitle}
         </Typography>
         <Typography variant={'subtitle1'}>
-          <a href={`/events/${match.event?.eventKey}/rankings`}>{match.event?.eventName}</a>
+          <a
+            style={{ color: theme.palette.text.primary }}
+            href={`/events/${match.event?.eventKey}/rankings`}
+          >
+            {match.event?.eventName}
+          </a>
         </Typography>
         <Typography variant={'body2'}>
-          <a className={'mb-2 text-black'} href={`/matches/${match.matchKey}`}>
+          <a style={{ color: theme.palette.text.primary }} href={`/matches/${match.matchKey}`}>
             {match.matchName}
           </a>
         </Typography>

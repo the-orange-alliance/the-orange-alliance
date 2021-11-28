@@ -16,6 +16,7 @@ import {
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
 import { fetchTeamsData, IRawTeamsProps, useTeamsData } from '../../lib/page-helpers/teams-helper';
+import { Box } from '@mui/system';
 
 const TEAMS_PER_PAGE = 20;
 
@@ -61,10 +62,10 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
+      <Typography sx={{ margin: 2 }} variant="h4">
         {t('pages.teams.title')}
       </Typography>
-      <Card>
+      <Card sx={{ margin: 2 }}>
         <CardContent>
           <FormControl fullWidth>
             <InputLabel htmlFor="teams-search">{t('pages.teams.filter')}</InputLabel>
@@ -86,14 +87,14 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
               </List>
             </Grid>
           </Grid>
-          <div className={'w-100 d-flex justify-content-center'}>
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Pagination
               count={Math.ceil(filteredTeams.length / TEAMS_PER_PAGE)}
               color="primary"
               page={page}
               onChange={handlePageChange}
             />
-          </div>
+          </Box>
         </CardContent>
       </Card>
     </div>

@@ -6,6 +6,24 @@ function readableDate(date: Date | string): string {
   return `${shortMonth} ${date.getDay()}, ${date.getFullYear()}`;
 }
 
+function colorCalc(selected: boolean, color: string, win: boolean) {
+  if (selected) {
+    return '#fbcc81';
+  } else if (win) {
+    if (color === 'red') {
+      return '#ffe5e5';
+    } else {
+      return '#e5e5ff';
+    }
+  } else {
+    if (color === 'red') {
+      return 'rgba(255,82,82,.13)';
+    } else {
+      return 'rgba(68,138,255,.13)';
+    }
+  }
+}
+
 function getShortMonth(month: number) {
   switch (month) {
     case 0:
@@ -32,6 +50,53 @@ function getShortMonth(month: number) {
       return 'Nov';
     case 11:
       return 'Dec';
+  }
+}
+
+function getWeekShort(week: any) {
+  const parsed = parseInt(week);
+  if (!isNaN(parsed)) {
+    return `Wk ${week}`;
+  }
+  switch (week) {
+    case 'January':
+      return 'Jan';
+    case 'February':
+      return 'Feb';
+    case 'March':
+      return 'Mar';
+    case 'April':
+      return 'Apr';
+    case 'May':
+      return 'May';
+    case 'June':
+      return 'Jun';
+    case 'July':
+      return 'Jul';
+    case 'August':
+      return 'Aug';
+    case 'September':
+      return 'Sep';
+    case 'October':
+      return 'Oct';
+    case 'November':
+      return 'Nov';
+    case 'December':
+      return 'Dec';
+    case 'CMPDET':
+      return 'Det. CMP';
+    case 'CMPHOU':
+      return 'Hou. CMP';
+    case 'NSR':
+      return 'North Sup. Reg.';
+    case 'WSR':
+      return 'West Sup. Reg.';
+    case 'SPRING':
+      return 'Spring';
+    case 'FOC':
+      return 'Fest. of Cmps.';
+    default:
+      return week;
   }
 }
 
@@ -89,4 +154,12 @@ function getWeekName(week: string) {
   }
 }
 
-export { readableDate, undefinedToNull, getSeasonString, getRegionString, getWeekName };
+export {
+  readableDate,
+  undefinedToNull,
+  getSeasonString,
+  getRegionString,
+  getWeekName,
+  getWeekShort,
+  colorCalc
+};

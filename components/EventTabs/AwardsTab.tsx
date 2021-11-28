@@ -7,6 +7,7 @@ import IconThree from '@mui/icons-material/Looks3Outlined';
 import IconTrophy from '@mui/icons-material/EmojiEventsOutlined';
 import { useTranslate } from '../../i18n/i18n';
 import { sort } from '../../lib/utils/award';
+import { Box } from '@mui/system';
 
 const translation = 'pages.event.subpages.awards.';
 
@@ -60,7 +61,7 @@ const AwardsTab = (props: IProps) => {
   }
 
   return (
-    <div>
+    <Box sx={{ marginLeft: 2, marginRight: 2 }}>
       {sortedAwards.map((award, i) => {
         if (isNewList(i)) {
           return (
@@ -73,7 +74,7 @@ const AwardsTab = (props: IProps) => {
           return <AwardCell key={award.awardKey + '-' + award.teamKey} awardRecipient={award} />;
         }
       })}
-    </div>
+    </Box>
   );
 };
 const Icon = (index: number) => {
