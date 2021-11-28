@@ -6,6 +6,24 @@ function readableDate(date: Date | string): string {
   return `${shortMonth} ${date.getDay()}, ${date.getFullYear()}`;
 }
 
+function colorCalc(selected: boolean, color: string, win: boolean) {
+  if (selected) {
+    return '#fbcc81';
+  } else if (win) {
+    if (color === 'red') {
+      return '#ffe5e5';
+    } else {
+      return '#e5e5ff';
+    }
+  } else {
+    if (color === 'red') {
+      return 'rgba(255,82,82,.13)';
+    } else {
+      return 'rgba(68,138,255,.13)';
+    }
+  }
+}
+
 function getShortMonth(month: number) {
   switch (month) {
     case 0:
@@ -142,5 +160,6 @@ export {
   getSeasonString,
   getRegionString,
   getWeekName,
-  getWeekShort
+  getWeekShort,
+  colorCalc
 };

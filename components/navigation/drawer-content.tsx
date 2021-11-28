@@ -45,9 +45,9 @@ const DrawerContent = () => {
       />
       <DrawerItem
         title={t('drawer.insights')}
-        href="/insights"
+        href="/insights/quals"
         icon={<InsightsIcon />}
-        isActive={router.route === '/insights'}
+        isActive={router.route.startsWith('/insights')}
       />
       <DrawerItem
         title={t('drawer.streaming')}
@@ -58,9 +58,9 @@ const DrawerContent = () => {
       <Divider light />
       <DrawerItem
         title={t('drawer.api')}
-        href="/api-docs"
+        href="/apidocs"
         icon={<APIIcon />}
-        isActive={router.route === '/api-docs'}
+        isActive={router.route === '/apidocs'}
       />
       <DrawerItem
         title={t('drawer.add_data')}

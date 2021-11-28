@@ -37,7 +37,7 @@ const RankingTab = (props: IProps) => {
             <TableCell>{row.highestQualScore}</TableCell>
             <TableCell>{row.played}</TableCell>
             <TableCell>{row.opr}</TableCell>
-            <TableCell>0</TableCell>
+            <TableCell>{row.npOpr}</TableCell>
           </TableRow>
         ))}
       </TableBody>

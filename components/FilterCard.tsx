@@ -28,6 +28,11 @@ interface IProps {
   seasons: Season[];
   regions: Region[];
   route: string;
+  forceReload: boolean;
+  fetchingOverride?: boolean;
+  onRegionComplete?: (region: Region) => any;
+  onSeasonComplete?: (season: Season) => any;
+  onClearFiltersComplete?: () => any;
 }
 
 interface AutoComplete<T> {
@@ -36,11 +41,19 @@ interface AutoComplete<T> {
 }
 
 const FilterCard = (props: IProps) => {
-  const classes = useStyles();
   const router = useRouter();
   const t = useTranslate();
 
-  const { seasons, regions, route } = props;
+  const {
+    seasons,
+    regions,
+    route,
+    forceReload,
+    onSeasonComplete,
+    onRegionComplete,
+    onClearFiltersComplete,
+    fetchingOverride
+  } = props;
 
   const [localRegions, setLocalRegions] = useState<AutoComplete<Region>[]>([]);
   const [localSeasons, setLocalSeasons] = useState<AutoComplete<Season>[]>([]);
@@ -80,16 +93,20 @@ const FilterCard = (props: IProps) => {
   const onSelectSeason = (event: any, val: AutoComplete<Season> | null) => {
     if (!val) return;
     if (selectedSeason && val.parent.seasonKey === selectedSeason.parent.seasonKey) return;
-    pushNewFilter(val.parent, selectedRegion?.parent);
+    pushNewFilter(val.parent, selectedRegion?.parent).then(() => {
+      if (onSeasonComplete) onSeasonComplete(val.parent);
+    });
   };
 
   const onSelectRegion = (event: any, val: AutoComplete<Region> | null) => {
     if (!val) return;
     if (selectedRegion && val.parent.regionKey === selectedRegion.parent.regionKey) return;
-    pushNewFilter(selectedSeason?.parent, val.parent);
+    pushNewFilter(selectedSeason?.parent, val.parent).then(() => {
+      if (onRegionComplete) onRegionComplete(val.parent);
+    });
   };
 
-  const pushNewFilter = (season?: Season, region?: Region) => {
+  const pushNewFilter = (season?: Season, region?: Region): Promise<any> => {
     const query = {} as any;
     if (season && season.seasonKey !== CURRENT_SEASON) query.season_key = season.seasonKey;
     if (region && region.regionKey !== 'all') query.region_key = region.regionKey;
@@ -103,30 +120,36 @@ const FilterCard = (props: IProps) => {
       regionTestData !== selectedRegion?.parent.regionKey
     ) {
       setFetching(true);
-      router.push({ pathname: route, query: query }).then(() => {
-        setFetching(false);
-        setSelectedSeason(
-          query.season_key
-            ? localSeasons.find(s => s.parent.seasonKey === query.season_key)
-            : localSeasons[0]
-        );
-        setSelectedRegion(
-          query.region_key
-            ? localRegions.find(r => r.parent.regionKey === query.region_key)
-            : localRegions[0]
-        );
-      });
+      return router
+        .push({ pathname: route, query: query }, undefined, { shallow: !forceReload })
+        .then(() => {
+          setFetching(false);
+          setSelectedSeason(
+            query.season_key
+              ? localSeasons.find(s => s.parent.seasonKey === query.season_key)
+              : localSeasons[0]
+          );
+          setSelectedRegion(
+            query.region_key
+              ? localRegions.find(r => r.parent.regionKey === query.region_key)
+              : localRegions[0]
+          );
+        });
+    } else {
+      return new Promise<void>(resolve => resolve());
     }
   };
 
   const clearFilters = () => {
-    pushNewFilter();
+    pushNewFilter().then(() => {
+      if (onClearFiltersComplete) onClearFiltersComplete();
+    });
   };
 
   return (
-    <Card>
-      {fetching && <LinearProgress />}
-      <Typography className={'ms-3 mt-2 mb-1'} variant="h6" gutterBottom>
+    <Card sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
+      {(fetching || fetchingOverride) && <LinearProgress />}
+      <Typography sx={{ margin: 2, marginBottom: 1 }} variant="h6" gutterBottom>
         {t('pages.events.filter')}
       </Typography>
       <Divider />

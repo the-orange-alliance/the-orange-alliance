@@ -190,7 +190,7 @@
         "high_score_qual": "Highest Scoring Qualification Match",
         "high_score_elim": "Highest Scoring Elimination Match",
         "high_score_all": "Highest Scoring Match",
-        "with_enalties": "With Penalties",
+        "with_penalties": "With Penalties",
         "penalty_free": "Penalty Free"
       }
     },

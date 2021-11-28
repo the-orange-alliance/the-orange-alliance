@@ -1,6 +1,6 @@
 import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Tabs, Tab } from '@mui/material';
+import { Tabs, Tab, Box } from '@mui/material';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab } from './index';
 import { useTranslate } from '../../i18n/i18n';
@@ -89,24 +89,26 @@ const EventTabs = ({ event }: IProps) => {
     <>
       {tabs.length > 0 ? (
         <>
-          <Tabs
-            value={selectedTabId}
-            onChange={handleTabChange}
-            variant="fullWidth"
-            textColor="primary"
-            indicatorColor="primary"
-            scrollButtons="auto"
-          >
-            {tabs.map((tab: ITabProps, i: number) => {
-              return (
-                <Tab
-                  key={tab.id}
-                  value={tab.id}
-                  label={t(`pages.event.subpages.${tab.id}.title`)}
-                />
-              );
-            })}
-          </Tabs>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={selectedTabId}
+              onChange={handleTabChange}
+              variant="fullWidth"
+              textColor="primary"
+              indicatorColor="primary"
+              scrollButtons="auto"
+            >
+              {tabs.map((tab: ITabProps, i: number) => {
+                return (
+                  <Tab
+                    key={tab.id}
+                    value={tab.id}
+                    label={t(`pages.event.subpages.${tab.id}.title`)}
+                  />
+                );
+              })}
+            </Tabs>
+          </Box>
           {selectedTab?.component}
         </>
       ) : (

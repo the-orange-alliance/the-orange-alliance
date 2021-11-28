@@ -83,9 +83,9 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
         {t('drawer.insights')}
       </Typography>
 
-      <FilterCard regions={regions} seasons={seasons} route={'/insights'} />
+      <FilterCard regions={regions} seasons={seasons} route={'/insights'} forceReload={true} />
 
-      <Card sx={{ marginTop: 5 }}>
+      <Card sx={{ margin: 2, marginTop: 5 }}>
         <Tabs value={currentTab} onChange={tabHandler} variant={'fullWidth'}>
           <Tab label="Qualification" value={0} />
           <Tab label="Elimination" value={1} />
