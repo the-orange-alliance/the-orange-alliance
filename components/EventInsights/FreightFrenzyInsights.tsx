@@ -1,36 +1,7 @@
 import { Grid, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import FreightFrenzyInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/2122/FreightFrenzyInsights';
 import React from 'react';
-import { useTranslate } from '../../i18n/i18n';
-import CircularProgressWithLabel from './CircularProgressWithLabel';
-
-const InsightCell = function ({
-  value,
-  translationKey
-}: {
-  value: number;
-  translationKey: string;
-}) {
-  const lang = useTranslate();
-  return (
-    <Grid
-      item
-      container
-      xs={6}
-      md={4}
-      xl={3}
-      sx={{ alignContent: 'space-between', padding: '.5em' }}
-    >
-      <Typography sx={{ textAlign: 'center', textTransform: 'uppercase', fontSize: '.75em' }}>
-        {lang(`pages.event.subpages.insights.2122.${translationKey}`)}
-      </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'center', margin: 'auto' }}>
-        <CircularProgressWithLabel value={value}></CircularProgressWithLabel>
-      </Box>
-    </Grid>
-  );
-};
+import InsightCell from './InsightCell';
 
 const AutonBreakout = function ({ insight }: { insight: FreightFrenzyInsights }) {
   return (
@@ -41,38 +12,47 @@ const AutonBreakout = function ({ insight }: { insight: FreightFrenzyInsights })
       <InsightCell
         translationKey={'partially_in_storage'}
         value={insight.autoAveragePartialStorage}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'completely_in_storage'}
         value={insight.autoAverageCompleteStorage}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'partially_in_warehouse'}
         value={insight.autoAveragePartialWarehouse}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'completely_in_warehouse'}
         value={insight.autoAverageCompleteWarehouse}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_lvl_1_freight'}
         value={insight.autoAverageFreight1}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_lvl_2_freight'}
         value={insight.autoAverageFreight2}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_lvl_3_freight'}
         value={insight.autoAverageFreight3}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_storage_freight'}
         value={insight.autoAverageStorageFreight}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'percent_bonuses_earned'}
         value={insight.autoAverageBonus}
+        year="2122"
       ></InsightCell>
     </Grid>
   );
@@ -87,18 +67,22 @@ const TeleopBreakout = function ({ insight }: { insight: FreightFrenzyInsights }
       <InsightCell
         translationKey={'avg_lvl_1_freight'}
         value={insight.teleAverageFreight1}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_lvl_2_freight'}
         value={insight.teleAverageFreight2}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_lvl_3_freight'}
         value={insight.teleAverageFreight3}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'avg_storage_freight'}
         value={insight.teleAverageSharedFreight}
+        year="2122"
       ></InsightCell>
     </Grid>
   );
@@ -113,21 +97,33 @@ const EndgameBreakout = function ({ insight }: { insight: FreightFrenzyInsights 
       <InsightCell
         translationKey={'alliance_hubs_balanced'}
         value={insight.endAverageHubBalanced}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'shared_hubs_unbalanced'}
         value={insight.endAverageSharedHubUnbalanced}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'partially_in_warehouse'}
         value={insight.endParkedPartialWarehouse}
+        year="2122"
       ></InsightCell>
       <InsightCell
         translationKey={'completely_in_warehouse'}
+        year="2122"
         value={insight.endParkedCompleteWarehouse}
       ></InsightCell>
-      <InsightCell translationKey={'capped'} value={insight.averageCapped}></InsightCell>
-      <InsightCell translationKey={'carousels'} value={insight.averageCarousel}></InsightCell>
+      <InsightCell
+        translationKey={'capped'}
+        value={insight.averageCapped}
+        year="2122"
+      ></InsightCell>
+      <InsightCell
+        translationKey={'carousels'}
+        value={insight.averageCarousel}
+        year="2122"
+      ></InsightCell>
     </Grid>
   );
 };

@@ -1,7 +1,15 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 
-const CircularProgressWithLabel = function ({ value, label }: { value: number; label?: string }) {
+const CircularProgressWithLabel = function ({
+  value,
+  label,
+  percent = true
+}: {
+  value: number;
+  label?: string;
+  percent?: boolean;
+}) {
   // For progress bar, have percentages less than 3% display as 3%, just to show it a little better
   // as it's a very small percentage, so it barely shows up
   return (
@@ -49,7 +57,7 @@ const CircularProgressWithLabel = function ({ value, label }: { value: number; l
         }}
       >
         <Typography variant="caption" component="div" color="text.secondary">
-          {label || `${Math.round(value * 10) / 10}%`}
+          {label !== undefined ? label : percent ? `${Math.round(value * 10) / 10}%` : value}
         </Typography>
       </Box>
     </Box>
