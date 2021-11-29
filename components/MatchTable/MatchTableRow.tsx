@@ -3,6 +3,8 @@ import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models
 import { TableRow, TableCell, Grid, Typography, Box } from '@mui/material';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
 import { CURRENT_SEASON } from '../../constants';
+import { colorCalc } from '../../lib/utils/common';
+import { useTheme } from '@mui/material/styles';
 
 interface IProps {
   match: Match;
@@ -159,6 +161,7 @@ const MatchTeamDisplay = ({
   const teamCount = match.participants.length;
   const startPos = color === 'red' ? 0 : teamCount / 2;
   const teams = match.participants.slice(startPos, startPos + teamCount / 2);
+  const theme = useTheme();
 
   const selectTeam = (team: MatchParticipant) => {
     if (
@@ -188,13 +191,23 @@ const MatchTeamDisplay = ({
             key={team.teamKey}
             item
             xs={(24 / teamCount) as 3 | 4}
-            className={`${selectedTeam?.teamKey === team.teamKey ? 'selected' : color}-bg${
-              win ? ' win' : ''
-            }`}
+            style={{
+              backgroundColor: colorCalc(selectedTeam?.teamKey === team.teamKey, color, win),
+              textAlign: 'center'
+            }}
             onClick={() => selectTeam(team)}
           >
-            <Box className={'text-center'} style={{ padding: '17px' }} color={'inherit'}>
-              <a className={`match-table-text ${win ? 'win' : ''}`} href={getHref(team.teamKey)}>
+            <Box style={{ padding: '19px' }} color={'inherit'}>
+              <a
+                style={{
+                  ...theme.typography.body1,
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  fontWeight: win ? 'bolder' : 'normal',
+                  color: theme.palette.text.primary
+                }}
+                href={getHref(team.teamKey)}
+              >
                 {team.teamKey}
               </a>
             </Box>
@@ -204,6 +217,7 @@ const MatchTeamDisplay = ({
     </Grid>
   );
 };
+
 const MatchScoreDisplay = ({
   score,
   color,
@@ -213,15 +227,28 @@ const MatchScoreDisplay = ({
   color: string;
   win: boolean;
 }) => {
+  const theme = useTheme();
   return (
-    <Grid item xs={12} className={`${color}-bg${win ? ' win' : ''}`}>
-      <Box
+    <Grid
+      item
+      xs={12}
+      style={{
+        backgroundColor: colorCalc(false, color, win)
+      }}
+    >
+      <Typography
+        variant={'body1'}
         color={'inherit'}
-        style={{ padding: '17px' }}
-        className={`match-table-text text-center ${win ? 'win' : ''}`}
+        style={{
+          textAlign: 'center',
+          textDecoration: 'none',
+          fontWeight: win ? 'bolder' : 'normal',
+          color: theme.palette.text.primary,
+          padding: '19px'
+        }}
       >
         {score}
-      </Box>
+      </Typography>
     </Grid>
   );
 };

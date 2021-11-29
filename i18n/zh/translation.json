@@ -176,7 +176,7 @@
 
     "home": {
       "title": "主页",
-      "short_info": "The Orange Alliance是<i>FIRST</i>科技挑战赛的<b>官方</b>比赛、活动、队伍数据提供方。",
+      "short_info": "The Orange Alliance是<em>FIRST</em>科技挑战赛的<b>官方</b>比赛、活动、队伍数据提供方。",
       "active_teams": "活动队伍",
       "matches_played": "比赛总计",
       "todays_events": "今天的活动",
@@ -221,7 +221,7 @@
           "wlt_record": "赢-输-平",
           "qual_points": "资格点数",
           "ranking_points": "排名点数",
-          "tie_breaker_points": "决胜局点数",
+          "tie_reaker_points": "决胜局点数",
           "highest_score": "最高分",
           "matches_played": "赛数总计",
           "what_is_opr": "进攻能力评分，也称为OPR，是FIRST社区中经常使用的一项统计数据，用于比较团队的赛场表现。 OPR是一种在特定事件中为团队分割数据的方式，但它并不是评估团队绩效或贡献的理想系统。"

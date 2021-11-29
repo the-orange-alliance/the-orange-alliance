@@ -2,8 +2,8 @@ import * as React from 'react';
 import { MatchParticipant, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
 import {
-  Box,
   Paper,
+  Typography,
   Table,
   TableBody,
   TableCell,
@@ -11,6 +11,7 @@ import {
   TableHead,
   TableRow
 } from '@mui/material';
+import { colorCalc } from '../lib/utils/common';
 
 interface IProps {
   match: Match;
@@ -28,19 +29,29 @@ const SimpleMatchTable = (props: IProps) => {
     const redView = redAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Box className={`match-table-cell ${match.redScore > match.blueScore ? 'fw-bold' : ''}`}>
+          <Typography
+            variant={'body1'}
+            style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
+          >
             {p.teamKey}
-          </Box>
+          </Typography>
         </TableCell>
       );
     });
     return (
-      <TableRow className={'red-bg'}>
+      <TableRow
+        style={{
+          backgroundColor: colorCalc(false, 'red', match.redScore > match.blueScore)
+        }}
+      >
         {redView}
         <TableCell align="center">
-          <Box className={`match-table-cell ${match.redScore > match.blueScore ? 'fw-bold' : ''}`}>
+          <Typography
+            variant={'body1'}
+            style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
+          >
             {match.redScore}
-          </Box>
+          </Typography>
         </TableCell>
       </TableRow>
     );
@@ -54,19 +65,29 @@ const SimpleMatchTable = (props: IProps) => {
     const blueView = blueAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Box className={`match-table-cell ${match.blueScore > match.redScore ? 'fw-bold' : ''}`}>
+          <Typography
+            variant={'body1'}
+            style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
+          >
             {p.teamKey}
-          </Box>
+          </Typography>
         </TableCell>
       );
     });
     return (
-      <TableRow className={'blue-bg'}>
+      <TableRow
+        style={{
+          backgroundColor: colorCalc(false, 'blue', match.redScore < match.blueScore)
+        }}
+      >
         {blueView}
         <TableCell align="center">
-          <Box className={`match-table-cell ${match.blueScore > match.redScore ? 'fw-bold' : ''}`}>
+          <Typography
+            variant={'body1'}
+            style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
+          >
             {match.blueScore}
-          </Box>
+          </Typography>
         </TableCell>
       </TableRow>
     );
@@ -75,15 +96,15 @@ const SimpleMatchTable = (props: IProps) => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table className={'simple-match-table'}>
+        <Table>
           {header ? (
-            <TableHead className={'grey-bg'}>
+            <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
               <TableRow>
                 <TableCell align="center" colSpan={match.participants.length > 4 ? 3 : 2}>
-                  Teams
+                  <Typography variant={'subtitle1'}>Teams</Typography>
                 </TableCell>
                 <TableCell align="center" colSpan={1}>
-                  Score
+                  <Typography variant={'subtitle1'}>Scores</Typography>
                 </TableCell>
               </TableRow>
             </TableHead>

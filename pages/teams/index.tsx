@@ -1,4 +1,5 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useCallback, useRef, useMemo } from 'react';
+import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import {
@@ -14,91 +15,94 @@ import {
 } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import { GetServerSideProps, GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { getTeamsData, IRawTeamsProps, parseTeamsProps } from '../../lib/PageHelpers/teamsHelper';
+import { fetchTeamsData, IRawTeamsProps, useTeamsData } from '../../lib/page-helpers/teams-helper';
+import { Box } from '@mui/system';
 
-const TeamsPage: NextPage = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const TEAMS_PER_PAGE = 20;
+
+const TeamsPage: NextPage<IRawTeamsProps> = props => {
+  const { teams } = useTeamsData(props);
   const t = useTranslate();
+  const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
+  const [page, setPage] = useState<number>(1);
+  const typingTimerRef = useRef<NodeJS.Timeout>();
 
-  const { teams } = parseTeamsProps(props as IRawTeamsProps);
+  const handlePageChange = useCallback(
+    (e: React.ChangeEvent<unknown>, page: number) => {
+      setPage(page);
+    },
+    [setPage]
+  );
 
-  const [shownTeamsLeft, setShownTeamsLeft] = useState<JSX.Element[]>([]);
-  const [shownTeamsRight, setShownTeamsRight] = useState<JSX.Element[]>([]);
-  const [currentTeams, setCurrentTeams] = useState<Team[]>(teams);
-  const [numPages, setNumPages] = useState<number>(teams.length);
+  const handleQueryChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      if (typingTimerRef.current) {
+        clearTimeout(typingTimerRef.current);
+      }
+      typingTimerRef.current = setTimeout(() => {
+        const query = event.target.value.toLowerCase();
+        const newTeams = teams.filter(
+          team =>
+            String(team.teamNumber).includes(query) ||
+            (team.teamNameShort && team.teamNameShort.toLowerCase().includes(query)) ||
+            (team.city && team.city.toLowerCase().includes(query)) ||
+            (team.country && team.country.toLowerCase().includes(query))
+        );
+        setFilteredTeams(newTeams);
+        setPage(1);
+      }, 500);
+    },
+    [teams]
+  );
 
-  const doneTypingInt = 500;
-  let typingTimer: NodeJS.Timeout;
-
-  useEffect(() => {
-    setPage(1, teams);
-  }, []);
-
-  function onPageChange(e: React.ChangeEvent<unknown>, page: number) {
-    setPage(page);
-  }
-
-  // Pages ALWAYS START AT 1
-  function setPage(page: number, custTeams?: Team[]) {
-    if (!custTeams) custTeams = currentTeams;
-    setNumPages(Math.ceil(custTeams.length / 20));
-    const startLocation = (page - 1) * 20;
-    const left = custTeams.slice(startLocation, startLocation + 10);
-    const right = custTeams.slice(startLocation + 10, startLocation + 20);
-    setShownTeamsLeft(left.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />));
-    setShownTeamsRight(
-      right.map((team: Team) => <SimpleTeamPaper key={team.teamKey} team={team} />)
-    );
-  }
-
-  function teamSearchOnChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-    clearTimeout(typingTimer);
-    typingTimer = setTimeout(() => {
-      const query = event.target.value.toLowerCase();
-      const newTeams = teams.filter(
-        team =>
-          String(team.teamNumber).includes(query) ||
-          (team.teamNameShort && team.teamNameShort.toLowerCase().includes(query)) ||
-          (team.city && team.city.toLowerCase().includes(query)) ||
-          (team.country && team.country.toLowerCase().includes(query))
-      );
-      setCurrentTeams(newTeams);
-      setPage(1, newTeams);
-    }, doneTypingInt);
-  }
+  const currentTeams = useMemo(() => {
+    const startLocation = (page - 1) * TEAMS_PER_PAGE;
+    return filteredTeams.slice(startLocation, startLocation + TEAMS_PER_PAGE);
+  }, [filteredTeams, page]);
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>
+      <Typography sx={{ margin: 2 }} variant="h4">
         {t('pages.teams.title')}
       </Typography>
-      <Card>
+      <Card sx={{ margin: 2 }}>
         <CardContent>
           <FormControl fullWidth>
             <InputLabel htmlFor="teams-search">{t('pages.teams.filter')}</InputLabel>
-            <Input id="teams-search" onChange={teamSearchOnChange} />
+            <Input id="teams-search" onChange={handleQueryChange} />
           </FormControl>
           <Grid container>
             <Grid item xs={12} sm={12} md={6}>
-              <List>{shownTeamsLeft}</List>
+              <List>
+                {[...currentTeams].splice(0, 10).map(team => (
+                  <SimpleTeamPaper key={team.teamKey} team={team} />
+                ))}
+              </List>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-              <List>{shownTeamsRight}</List>
+              <List>
+                {[...currentTeams].splice(10, 20).map(team => (
+                  <SimpleTeamPaper key={team.teamKey} team={team} />
+                ))}
+              </List>
             </Grid>
           </Grid>
-          <div className={'w-100 d-flex justify-content-center'}>
-            <Pagination count={numPages} color="primary" onChange={onPageChange} />
-          </div>
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <Pagination
+              count={Math.ceil(filteredTeams.length / TEAMS_PER_PAGE)}
+              color="primary"
+              page={page}
+              onChange={handlePageChange}
+            />
+          </Box>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  return { props: await getTeamsData() };
+export const getServerSideProps: GetServerSideProps = async () => {
+  return { props: await fetchTeamsData() };
 };
 
 export default TeamsPage;
