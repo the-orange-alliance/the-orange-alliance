@@ -3,7 +3,7 @@ import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 function readableDate(date: Date | string): string {
   if (typeof date === 'string') date = new Date(date);
   const shortMonth = getShortMonth(date.getMonth());
-  return `${shortMonth} ${date.getDay()}, ${date.getFullYear()}`;
+  return `${shortMonth} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
 function colorCalc(selected: boolean, color: string, win: boolean) {

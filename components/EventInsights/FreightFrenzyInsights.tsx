@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import FreightFrenzyInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/2122/FreightFrenzyInsights';
+import type FreightFrenzyInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/2122/FreightFrenzyInsights';
 import React from 'react';
 import InsightCell from './InsightCell';
 

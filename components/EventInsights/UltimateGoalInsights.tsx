@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import UltimateGoalInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/2021/UltimateGoalInsights';
+import type UltimateGoalInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/2021/UltimateGoalInsights';
 import React from 'react';
 import InsightCell from './InsightCell';
 

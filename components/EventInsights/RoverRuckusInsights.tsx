@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import RoverRuckusInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/1819/RoverRuckusInsights';
+import type RoverRuckusInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/1819/RoverRuckusInsights';
 import React from 'react';
 import InsightCell from './InsightCell';
 

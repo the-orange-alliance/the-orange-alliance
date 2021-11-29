@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import SkystoneInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/1920/SkystoneInsights';
+import type SkystoneInsights from '@the-orange-alliance/api/lib/esm/models/game-specifics/1920/SkystoneInsights';
 import React from 'react';
 import InsightCell from './InsightCell';
 

@@ -11,8 +11,6 @@ import {
   Typography
 } from '@mui/material';
 import { Insights, Event } from '@the-orange-alliance/api/lib/cjs/models';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useTranslate } from '../../i18n/i18n';
 import seasonInsights from '../EventInsights';
 
 interface IProps {
@@ -24,7 +22,6 @@ const InsightsTab = (props: IProps) => {
 
   const qualInsights = insights.length > 0 ? insights[0] : new Insights();
   const elimInsights = insights.length > 1 ? insights[1] : new Insights();
-  console.log(insights);
 
   return (
     <Grid container spacing={8}>

@@ -9,7 +9,7 @@ import {
   EventParticipant,
   EventLiveStream
 } from '@the-orange-alliance/api/lib/cjs/models';
-import { getInsightsType } from '@the-orange-alliance/api/lib/esm/models/game-specifics/InsightsData';
+import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/InsightsData';
 import TOAProvider from '../../providers/TOAProvider';
 import { undefinedToNull } from '../utils/common';
 
