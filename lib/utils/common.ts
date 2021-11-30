@@ -3,7 +3,16 @@ import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 function readableDate(date: Date | string): string {
   if (typeof date === 'string') date = new Date(date);
   const shortMonth = getShortMonth(date.getMonth());
-  return `${shortMonth} ${date.getDay()}, ${date.getFullYear()}`;
+  return `${shortMonth} ${date.getDate() + 1}, ${date.getFullYear()}`;
+}
+
+function readableTime(date: Date | string): string {
+  if (typeof date === 'string') date = new Date(date);
+  const hour = date.getHours() + 1;
+  const min = date.getMinutes();
+  const h = (hour < 10 ? '0' : '') + (hour > 12 ? hour - 12 : hour);
+  const m = (min < 10 ? '0' : '') + min;
+  return `${h}:${m} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
 function colorCalc(selected: boolean, color: string, win: boolean) {
@@ -156,6 +165,7 @@ function getWeekName(week: string) {
 
 export {
   readableDate,
+  readableTime,
   undefinedToNull,
   getSeasonString,
   getRegionString,
