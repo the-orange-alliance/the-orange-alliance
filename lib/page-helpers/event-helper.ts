@@ -9,6 +9,7 @@ import {
   EventParticipant,
   EventLiveStream
 } from '@the-orange-alliance/api/lib/cjs/models';
+import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/InsightsData';
 import TOAProvider from '../../providers/TOAProvider';
 import { undefinedToNull } from '../utils/common';
 
@@ -35,7 +36,10 @@ export const parseEventProps = (props: IRawEventProps): IEventProps => {
   event.matches = props.matches.map((m: any) => new Match().fromJSON(m));
   event.alliances = props.alliances.map((a: any) => new Alliance().fromJSON(a));
   event.awards = props.awards.map((a: any) => new AwardRecipient().fromJSON(a));
-  event.insights = props.insights.map((i: any) => (i ? new Insights().fromJSON(i) : null));
+  event.insights = props.insights.map((i: any) =>
+    i ? getInsightsType(event.seasonKey).fromJSON(i) : null
+  );
+
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
   return { event, streams };
 };

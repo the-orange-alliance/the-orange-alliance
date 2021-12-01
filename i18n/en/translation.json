@@ -259,7 +259,59 @@
           "prc_parking": "% of Parked Robots",
           "avg_golds": "Average # of Golds Minerals in Cargo Hold",
           "avg_silvers": "Average # of Silvers Minerals in Cargo Hold",
-          "avg_depot": "Average # of Minerals in Depot"
+          "avg_depot": "Average # of Minerals in Depot",
+          "2122": {
+            "partially_in_storage": "Percent Partially In Storage",
+            "completely_in_storage": "Percent Completely In Storage",
+            "partially_in_warehouse": "Percent Partially In Warehouse",
+            "completely_in_warehouse": "Percent Completely In Warehouse",
+            "avg_lvl_1_freight": "Average Level 1 Freight",
+            "avg_lvl_2_freight": "Average Level 2 Freight",
+            "avg_lvl_3_freight": "Average Level 3 Freight",
+            "avg_storage_freight": "Average Storage Freight",
+            "percent_bonuses_earned": "Percent Bonuses Earned",
+            "alliance_hubs_balanced": "Percent Alliance Hubs Balanced",
+            "shared_hubs_unbalanced": "Percent Shared Hubs Unbalanced",
+            "capped": "Percent Capped",
+            "carousels": "Percent Carousels"
+          },
+          "2021": {
+            "avg_high_rings": "Average High Rings",
+            "avg_middle_rings": "Average Middle Rings",
+            "avg_low_rings": "Average Low Rings",
+            "avg_powershots_hit": "Average Powershots Hit",
+            "wobble_goals_delivered": "Percent Wobble Goals Delivered",
+            "parked_on_line": "Percent Robots Parked On Line (Navigated)",
+            "avg_wobble_goal_rings": "Average Rings On Wobble Goals",
+            "wobble_goal_start": "Percent Wobble Goals on Start Line",
+            "wobble_goal_drop_zone": "Percent Wobble Goals in Drop Zone"
+          },
+          "1920": {
+            "avg_skystone_delivered": "Average Skystones Delivered",
+            "avg_stone_delivered": "Average Stones Delivered",
+            "avg_parked": "Average Parked",
+            "avg_placed": "Average Placed",
+            "foundations_repositioned": "Percent Foundations Repositioned",
+            "returned": "Average Returned",
+            "placed": "Average Placed",
+            "delivered": "Average Delivered",
+            "cap_level": "Average Cap Level",
+            "parked": "Percent Parked",
+            "foundation_moved": "Percent Foundation Moved",
+            "tower_bonus": "Average Tower Bonus",
+            "cap_bonus": "Average Cap Bonus",
+            "level_bonus": "Average Level Bonus"
+          },
+          "1819": {
+            "successful_samples": "% of Successful Samples",
+            "depots_claimed": "% of Depots Claimed",
+            "gold_cargo_hold": "Average # of Gold Minerals In Cargo Hold",
+            "silver_cargo_hold": "Average # of Silver Minerals In Cargo Hold",
+            "minerals_depot": "Average # of Minerals In Depot",
+            "parked_robots": "% of Parked Robots",
+            "landed_robots": "% of Landed Robots",
+            "latched_robots": "% of Latched Robots"
+          }
         },
         "for-participants": {
           "title": "For Participants",

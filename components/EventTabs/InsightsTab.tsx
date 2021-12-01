@@ -1,13 +1,24 @@
 import * as React from 'react';
-import { Grid, Card, CardHeader, CardContent, List, ListItem, ListItemText } from '@mui/material';
+import {
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Typography
+} from '@mui/material';
 import { Insights, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import seasonInsights from '../EventInsights';
 
 interface IProps {
   event: Event;
 }
 
 const InsightsTab = (props: IProps) => {
-  const { insights } = props.event;
+  const { insights, seasonKey } = props.event;
 
   const qualInsights = insights.length > 0 ? insights[0] : new Insights();
   const elimInsights = insights.length > 1 ? insights[1] : new Insights();
@@ -19,7 +30,7 @@ const InsightsTab = (props: IProps) => {
           <Card>
             <CardHeader title="Qualification"></CardHeader>
             <CardContent>
-              <CardContentList insight={qualInsights}></CardContentList>
+              <CardContentList season={seasonKey} insight={qualInsights}></CardContentList>
             </CardContent>
           </Card>
         </Grid>
@@ -29,7 +40,7 @@ const InsightsTab = (props: IProps) => {
           <Card>
             <CardHeader title="Playoff"></CardHeader>
             <CardContent>
-              <CardContentList insight={elimInsights}></CardContentList>
+              <CardContentList season={seasonKey} insight={elimInsights}></CardContentList>
             </CardContent>
           </Card>
         </Grid>
@@ -38,7 +49,7 @@ const InsightsTab = (props: IProps) => {
   );
 };
 
-const CardContentList = function ({ insight }: { insight: Insights }) {
+const CardContentList = function ({ insight, season }: { insight: Insights; season: string }) {
   return (
     <List>
       <ListItem
@@ -81,8 +92,14 @@ const CardContentList = function ({ insight }: { insight: Insights }) {
           secondary={insight.averageWinningMargin}
         ></ListItemText>
       </ListItem>
+      {insightSeasonBreakdown({ insight, season })}
     </List>
   );
+};
+
+const insightSeasonBreakdown = function ({ insight, season }: { insight: any; season: string }) {
+  const Insights = seasonInsights(season);
+  return <Insights insight={insight}></Insights>;
 };
 
 export default InsightsTab;
