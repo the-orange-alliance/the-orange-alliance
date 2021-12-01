@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Divider } from '@mui/material';
 import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
@@ -14,15 +14,22 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LegalIcon from '@mui/icons-material/DescriptionRounded';
 import { useTranslate } from '../../i18n/i18n';
 import DrawerItem from './drawer-item';
+import TOAUser from '../../lib/TOAUser';
 
-const DrawerContent = () => {
+const DrawerContent = ({ toaUser }: { toaUser: TOAUser | undefined }) => {
   const router = useRouter();
   const t = useTranslate();
 
   return (
     <Box sx={{ overflowY: 'auto' }}>
       <Box my={1}>
-        <DrawerItem title="myTOA" href="/account" icon={<AccountIcon />} />
+        <DrawerItem
+          title="myTOA"
+          href="/account"
+          icon={<AccountIcon />}
+          toaUser={toaUser}
+          isMyToa={true}
+        />
       </Box>
       <Divider light />
       <DrawerItem

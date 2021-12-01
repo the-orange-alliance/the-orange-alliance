@@ -16,7 +16,11 @@ import {
   Tabs,
   Fab,
   ImageList,
-  ImageListItem
+  ImageListItem,
+  Grid,
+  useTheme,
+  List,
+  ListItem
 } from '@mui/material';
 import {
   Book,
@@ -45,6 +49,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     useTeamData(props);
   const t = useTranslate();
   const router = useRouter();
+  const theme = useTheme();
   const querySeason =
     router.query.season_key && !Array.isArray(router.query.season_key)
       ? seasons.find(s => s.seasonKey === router.query.season_key) ?? seasons[0]
@@ -78,10 +83,22 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     });
   };
 
+  const scrollToEvent = (id: string) => {
+    if (!document) return;
+    const element = document.getElementById(id);
+    if (element) {
+      window.scroll({
+        behavior: 'smooth',
+        left: 0,
+        top: element.getBoundingClientRect().top - 85
+      });
+    }
+  };
+
   return (
     <>
-      <div className="row">
-        <h2 className="col-md-9 col-12">Team #{team.teamNumber}</h2>
+      <Box sx={{ margin: 2 }}>
+        <Typography variant="h4">Team #{team.teamNumber}</Typography>
         {/* // TODO: myTOA
           <div className="col-12 col-md-3">
           <button mdc-button primary (click)="toggleTeam()" className="align-self-end black" style="text-transform:initial; height: auto; padding: 7px">
@@ -91,17 +108,17 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           </button>
           </div>
         */}
-      </div>
+      </Box>
 
-      {/* Nav */}
-      <div className="row mt-3">
-        <div className="col-12 col-md-3 pb-5 pe-md-3 d-none d-md-block">
-          <Card className="">
-            <CardContent className="w-100 p-3">
+      <Grid container direction={'row'} spacing={2} sx={{ margin: 2, width: '95%' }}>
+        {/* Nav */}
+        <Grid item xs={12} md={3}>
+          <Card sx={{ position: 'sticky', top: '70px' }}>
+            <CardContent>
               {team.rookieYear && team.rookieYear > 0 && (
                 <Box>
                   <Select
-                    className={'w-100'}
+                    fullWidth
                     value={seasons.findIndex(s => s.seasonKey === selectedSeason.seasonKey)}
                     variant={'standard'}
                     onChange={(val: SelectChangeEvent<number>) =>
@@ -115,69 +132,72 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     ))}
                   </Select>
                   {team.events.length > 0 && (
-                    <ul className="nav flex-column mt-2" style={{ padding: '0 12px!important' }}>
-                      <li>
-                        <a className={'link'} rel={'noreferrer'} style={{ cursor: 'pointer' }}>
-                          {t('pages.team.team_info')}
-                        </a>
-                      </li>
-                      <li className="nav-item mt-1">
+                    <List>
+                      <ListItem button onClick={() => scrollToEvent('info')}>
+                        {t('pages.team.team_info')}
+                      </ListItem>
+                      <ListItem button onClick={() => scrollToEvent('event-results')}>
                         {t('pages.team.event_results')}
-                        <ul className="nav flex-column p-0">
-                          <li className="nav-item text-primary">
-                            {team.events.map(event => (
-                              <a
-                                key={event.eventKey}
-                                rel={'noreferrer'}
-                                className="nav-link"
-                                style={{ cursor: 'pointer' }}
-                              >
-                                {event.divisionName
-                                  ? event.eventName + ' - ' + event.divisionName + ' Division'
-                                  : event.eventName}
-                              </a>
-                            ))}
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
+                      </ListItem>
+                      <ListItem>
+                        <List>
+                          {team.events.map(event => (
+                            <ListItem
+                              button
+                              key={event.eventKey}
+                              sx={{ marginBottom: 1 }}
+                              onClick={() => scrollToEvent(event.eventKey)}
+                            >
+                              {event.divisionName
+                                ? event.eventName + ' - ' + event.divisionName + ' Division'
+                                : event.eventName}
+                            </ListItem>
+                          ))}
+                        </List>
+                      </ListItem>
+                    </List>
                   )}
                 </Box>
               )}
             </CardContent>
           </Card>
-        </div>
+        </Grid>
 
         {/* Team Information */}
-        <div className="col-12 col-md-9">
-          <Card>
+        <Grid item xs={12} md={9}>
+          <Card id={'info'} sx={{ marginBottom: 5 }}>
             {fetching && <LinearProgress />}
             <CardContent>
-              <div className="d-flex align-items-center mb-1">
+              <Box>
                 {/* team logo <div className="team-logo m-2"></div>*/}
-                <div>
+                <Box>
                   <Typography variant={'h5'}>
-                    #{team.teamNumber} - {team.teamNameShort}
+                    <b>
+                      #{team.teamNumber} - {team.teamNameShort}
+                    </b>
                   </Typography>
-                  <div className=" toa-card-subtitle pt-0">{team.teamNameLong}</div>
-                </div>
-              </div>
+                  <Typography sx={{ paddingTop: 1 }} variant={'subtitle2'}>
+                    {team.teamNameLong}
+                  </Typography>
+                </Box>
+              </Box>
 
               <Divider />
 
-              <Box className="pt-3">
-                <Box className={'mb-2'}>
-                  <Explore className={'me-1'} color={'primary'} />
+              <Box sx={{ paddingTop: 2 }}>
+                <Box sx={{ marginBottom: 1 }}>
+                  <Explore sx={{ marginRight: 1 }} color={'primary'} />
                   <Typography display={'inline'} variant={'body1'}>
                     {t('pages.team.part_of_region').replace('{{ regionKey }}', team.regionKey)}{' '}
                   </Typography>
                 </Box>
 
-                <Box className={'mb-2'}>
-                  <Room className={'me-1'} color={'primary'} />
+                <Box sx={{ marginBottom: 1 }}>
+                  <Room sx={{ marginRight: 1 }} color={'primary'} />
                   <Typography display={'inline'} style={{ textTransform: 'capitalize' }}>
                     <a
                       rel={'noreferrer'}
+                      style={{ color: theme.palette.text.primary }}
                       href={`
                     https://www.google.com/maps/search/?api=1&query=${(
                       team.city +
@@ -196,18 +216,20 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 </Box>
 
                 {team.website && getUrl().startsWith('facebook.com/') && (
-                  <Box className={'mb-2'}>
-                    <Facebook className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Facebook sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       Facebook:{' '}
-                      <a href={team.website}>{getUrl().replace('www.facebook.com/', '')}</a>
+                      <a style={{ color: theme.palette.text.primary }} href={team.website}>
+                        {getUrl().replace('www.facebook.com/', '')}
+                      </a>
                     </Typography>
                   </Box>
                 )}
 
                 {team.website && !getUrl().startsWith(' facebook.com/') && (
-                  <Box className={'mb-2'}>
-                    <Public className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Public sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.website')}: <a href={team.website}>{getUrl()}</a>
                     </Typography>
@@ -215,8 +237,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 )}
 
                 {team.rookieYear && team.rookieYear !== 0 && (
-                  <Box className={'mb-2'}>
-                    <Flare className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Flare sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.rookie_year')}: {team.rookieYear}
                     </Typography>
@@ -224,8 +246,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 )}
 
                 {wlt && false && (
-                  <Box className={'mb-2'}>
-                    <Flag className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Flag sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       <b>
                         {wlt.wins}-{wlt.losses}-{wlt.ties}
@@ -236,8 +258,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 )}
 
                 {topOpr && topOpr.opr && (
-                  <Box className={'mb-2'}>
-                    <FlashOn className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <FlashOn sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       <b>{topOpr.opr}</b> Top OPR
                     </Typography>{' '}
@@ -246,8 +268,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 )}
 
                 {lastActive && lastActive.seasonKey !== CURRENT_SEASON && (
-                  <Box className={'mb-2'}>
-                    <Hotel className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Hotel sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.last_active')}: {getSeasonString(lastActive)}
                     </Typography>
@@ -255,8 +277,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 )}
 
                 {team.awards && selectedSeason && selectedSeason.description && (
-                  <Box className={'mb-2'}>
-                    <Celebration className={'me-1'} color={'primary'} />
+                  <Box sx={{ marginBottom: 1 }}>
+                    <Celebration sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.awards_in_season')
                         .replace('{{ awards }}', team.awards.length)
@@ -269,7 +291,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           </Card>
 
           {/* Team Events/Robot */}
-          <Card className={'mt-md-5 mt-3 mb-1 pt-0'}>
+          <Card id={'event-results'}>
             {/* Nav Tabs */}
             <Tabs
               value={tab}
@@ -289,13 +311,17 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
               {tab === 0 &&
                 team.events.map(event => (
                   <Card
+                    id={event.eventKey}
                     key={event.eventKey}
-                    className={'mb-4'}
+                    sx={{ marginBottom: 3 }}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}
                   >
                     <CardContent>
                       <Box>
-                        <a className={'text-black'} href={`/events/${event.eventKey}/rankings`}>
+                        <a
+                          style={{ color: theme.palette.text.primary }}
+                          href={`/events/${event.eventKey}/rankings`}
+                        >
                           <Typography variant={'h5'}>
                             <b>
                               {event.divisionName
@@ -330,7 +356,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                             variant={'body2'}
                             key={award.awardKey}
                           >
-                            <Celebration className={'me-1'} fontSize={'inherit'} />
+                            <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
                             {award.award.awardDescription}
                           </Typography>
                         ))}
@@ -431,8 +457,8 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
               )}
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </>
   );
 };

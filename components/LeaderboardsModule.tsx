@@ -41,7 +41,7 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
 
   return (
     <Card>
-      <CardHeader title={t('pages.home.leaderboards.title')} subheader={'SKYSTONE 2019/20'} />
+      <CardHeader title={t('pages.home.leaderboards.title')} subheader={'FREIGHT FRENZY 2021/22'} />
       <Divider />
       <CardContent>
         {renderMatch(
