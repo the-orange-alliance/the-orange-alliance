@@ -1,6 +1,5 @@
 import { ISerializable } from '@the-orange-alliance/api/lib/cjs/models/ISerializable';
-import firebase from 'firebase/compat';
-import User = firebase.User;
+import type { User } from 'firebase/auth';
 import { Region } from '@the-orange-alliance/api/lib/cjs/models';
 
 export default class TOAUser implements ISerializable {
