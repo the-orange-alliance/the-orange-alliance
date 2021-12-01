@@ -103,9 +103,9 @@ const AccountPage: NextPage = () => {
       .catch(() => {}); // TODO: toast?
   };
 
-  const logoutUser = () => {
+  const doLogoutUser = () => {
     logout().then(() => {
-      return router.push({ pathname: '/account/login' });
+      router.push({ pathname: '/account/login' });
     });
   };
 
@@ -179,7 +179,7 @@ const AccountPage: NextPage = () => {
                   {regions && <Typography>{toaUser.summary(regions)}</Typography>}
                 </Grid>
                 <Grid item xs={1} sx={{ margin: 2 }}>
-                  <Button variant={'contained'} onClick={logout}>
+                  <Button variant={'contained'} onClick={doLogoutUser}>
                     {t('pages.account.logout')}
                   </Button>
                 </Grid>

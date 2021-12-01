@@ -9,8 +9,12 @@ import {
   browserLocalPersistence,
   linkWithPopup,
   unlink,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification
 } from 'firebase/auth';
+import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import TOAUser from '../lib/TOAUser';
 
 const baseUrl = 'https://functions.theorangealliance.org';
@@ -28,17 +32,19 @@ const firebaseConfig = {
 let app = firebase.initializeApp(firebaseConfig);
 
 let auth = getAuth(app);
+let db = getDatabase(app);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 export const getAuthInstance = () => {
   if (!app) app = firebase.initializeApp(firebaseConfig);
   if (!auth) auth = getAuth(app);
+  if (!db) db = getDatabase(app);
   return auth;
 };
 
 export const inStartupState = () => {
-  return !app || !auth;
+  return !app || !auth || !db;
 };
 
 export const logout = () => {
@@ -61,6 +67,23 @@ export const sendPasswordReset = () => {
   if (!auth.currentUser) return new Promise((resolve, reject) => reject());
   if (!auth.currentUser.email) return new Promise((resolve, reject) => reject('No email'));
   return sendPasswordResetEmail(auth, auth.currentUser.email);
+};
+
+export const signUp = (email: string, name: string, password: string, team: string) => {
+  return createUserWithEmailAndPassword(auth, email, password).then(user => {
+    updateProfile(user.user, { displayName: name, photoURL: null })
+      .then(() => {})
+      .catch(error => console.log(error));
+    const data = {} as any;
+    data['fullName'] = name;
+    if (team && team.trim().length > 0) {
+      data['team'] = team;
+    }
+    const dbRef = ref(db, `Users/${user.user.uid}`);
+    return dbSet(dbRef, data).then(value => {
+      return sendEmailVerification(user.user);
+    });
+  });
 };
 
 export const loginWithGoogle = async () => {
