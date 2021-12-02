@@ -29,6 +29,7 @@ interface IProps {
 interface ITabProps {
   id: string;
   component: React.ReactElement;
+  count?: number;
 }
 
 const EventTabs = ({ event, streams }: IProps) => {
@@ -60,31 +61,36 @@ const EventTabs = ({ event, streams }: IProps) => {
     if (event.rankings.length > 0) {
       tabs.push({
         id: 'rankings',
-        component: <RankingTab event={event} />
+        component: <RankingTab event={event} />,
+        count: event.rankings.length
       });
     }
     if (event.matches.length > 0) {
       tabs.push({
         id: 'matches',
-        component: <MatchesTab event={event} />
+        component: <MatchesTab event={event} />,
+        count: event.matches.length
       });
     }
     if (event.teams.length > 0) {
       tabs.push({
         id: 'teams',
-        component: <TeamsTab event={event} />
+        component: <TeamsTab event={event} />,
+        count: event.teams.length
       });
     }
     if (event.alliances.length > 0) {
       tabs.push({
         id: 'alliances',
-        component: <AlliancesTab event={event} />
+        component: <AlliancesTab event={event} />,
+        count: event.alliances.length
       });
     }
     if (event.awards.length) {
       tabs.push({
         id: 'awards',
-        component: <AwardsTab event={event} />
+        component: <AwardsTab event={event} />,
+        count: event.awards.length
       });
     }
     if (event.insights.length > 0 && (event.insights[0] || event.insights[1])) {
@@ -152,7 +158,39 @@ const EventTabs = ({ event, streams }: IProps) => {
                   <Tab
                     key={tab.id}
                     value={tab.id}
-                    label={t(`pages.event.subpages.${tab.id}.title`)}
+                    sx={{
+                      display: 'inline !important'
+                    }}
+                    label={
+                      <>
+                        <Box sx={{ display: 'inline-block' }}>
+                          {t(`pages.event.subpages.${tab.id}.title`)}
+                        </Box>
+                        {typeof tab.count === 'number' && (
+                          <Box
+                            sx={{
+                              mx: 0.5,
+                              color: 'text.primary',
+                              bgcolor: 'primary.main',
+                              display: 'inline-block',
+                              padding: '0.25em 0.4em',
+                              fontSize: '75%',
+                              fontWeight: '700',
+                              lineHeight: '1',
+                              textAlign: 'center',
+                              whiteSpace: 'nowrap',
+                              verticalAlign: 'baseline',
+                              pr: '0.6em',
+                              pl: '0.6em',
+                              borderRadius: '10rem'
+                            }}
+                            component={'span'}
+                          >
+                            {tab.count}
+                          </Box>
+                        )}
+                      </>
+                    }
                   />
                 );
               })}
