@@ -1,12 +1,29 @@
 import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Tabs, Tab, Box } from '@mui/material';
-import { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab } from './index';
+import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
+import {
+  RankingTab,
+  MatchesTab,
+  TeamsTab,
+  AlliancesTab,
+  AwardsTab,
+  InsightsTab,
+  AdminTab
+} from './index';
 import { useTranslate } from '../../i18n/i18n';
+import TOAUser from '../../lib/TOAUser';
+import { onAuthStateChanged } from 'firebase/auth';
+import {
+  getAuthInstance,
+  getUserData,
+  inStartupState,
+  isLoggedIn
+} from '../../providers/FirebaseProvider';
 
 interface IProps {
   event: Event;
+  streams: EventLiveStream[];
 }
 
 interface ITabProps {
@@ -14,9 +31,30 @@ interface ITabProps {
   component: React.ReactElement;
 }
 
-const EventTabs = ({ event }: IProps) => {
+const EventTabs = ({ event, streams }: IProps) => {
   const t = useTranslate();
   const router = useRouter();
+  const [user, setUser] = useState<TOAUser>();
+
+  useEffect(() => {
+    onAuthStateChanged(getAuthInstance(), user => {
+      if (user) {
+        getUser();
+      } else {
+        setUser(undefined);
+      }
+    });
+    if (!inStartupState() || isLoggedIn()) {
+      getUser();
+    }
+  }, []);
+
+  const getUser = () => {
+    getUserData().then(user => {
+      setUser(user);
+    });
+  };
+
   const tabs = useMemo((): ITabProps[] => {
     const tabs: ITabProps[] = [];
     if (event.rankings.length > 0) {
@@ -55,8 +93,19 @@ const EventTabs = ({ event }: IProps) => {
         component: <InsightsTab event={event} />
       });
     }
+    if (
+      user &&
+      (user.level === 6 ||
+        user.adminRegions.includes(event.regionKey) ||
+        user.adminEvents.includes(event.eventKey))
+    ) {
+      tabs.push({
+        id: 'admin',
+        component: <AdminTab event={event} user={user} streams={streams} />
+      });
+    }
     return tabs;
-  }, [event]);
+  }, [event, user]);
   const [selectedTabId, setSelectedTabId] = useState<string>(tabs[0]?.id);
 
   const selectedTab = useMemo(

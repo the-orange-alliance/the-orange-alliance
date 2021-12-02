@@ -16,6 +16,7 @@ import {
 } from 'firebase/auth';
 import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import TOAUser from '../lib/TOAUser';
+import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 
 const baseUrl = 'https://functions.theorangealliance.org';
 // const baseUrl = 'http://localhost:5000/the-orange-alliance/us-central1/requireValidations'; // Tests Only
@@ -346,19 +347,27 @@ const setVideos = (eventKey: string, videos: any[]): Promise<any> => {
   });
 };
 
-const updateEvent = (eventKey: string, eventData: any): Promise<any> => {
+export const updateEvent = (event: Event): Promise<any> => {
+  const json = event.toJSON() as any;
+  delete json.matches;
+  delete json.rankings;
+  delete json.awards;
+  delete json.teams;
+  delete json.alliances;
+  delete json.insights;
+  json.is_active = true;
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          data: eventKey
+          data: event.eventKey
         };
 
         fetch(baseUrl + '/updateEvent', {
           headers: headers,
           method: 'POST',
-          body: JSON.stringify([eventData])
+          body: JSON.stringify([json])
         })
           .then(data => data.json())
           .then(
@@ -376,7 +385,7 @@ const updateEvent = (eventKey: string, eventData: any): Promise<any> => {
   });
 };
 
-const addEventMedia = (mediaData: any): Promise<any> => {
+export const addEventMedia = (mediaData: any): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
@@ -547,7 +556,7 @@ const addSuggestion = (suggestionData: any): Promise<any> => {
   });
 };
 
-const addStream = (streamData: any): Promise<any> => {
+export const addStream = (stream: EventLiveStream): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
@@ -558,7 +567,7 @@ const addStream = (streamData: any): Promise<any> => {
         fetch(baseUrl + '/addStream', {
           headers: headers,
           method: 'POST',
-          body: JSON.stringify(streamData)
+          body: JSON.stringify([stream.toJSON()])
         })
           .then(data => data.json())
           .then(
@@ -576,7 +585,7 @@ const addStream = (streamData: any): Promise<any> => {
   });
 };
 
-const hideStream = (streamData: any): Promise<any> => {
+export const hideStream = (stream: EventLiveStream): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
@@ -587,7 +596,7 @@ const hideStream = (streamData: any): Promise<any> => {
         fetch(baseUrl + '/hideStream', {
           headers: headers,
           method: 'POST',
-          body: JSON.stringify(streamData)
+          body: JSON.stringify([stream.toJSON()])
         })
           .then(data => data.json())
           .then(

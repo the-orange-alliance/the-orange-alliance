@@ -111,8 +111,8 @@ const Legal: NextPage = props => {
       linkedIn: 'https://www.linkedin.com/in/ofekashery'
     },
     {
-      name: 'Noah Holoubek',
-      title: 'Developer & Security Engineer',
+      name: 'Dominic Hupp',
+      title: 'Developer',
       description:
         'Dominic is a developer for The Orange Alliance. He mainly works on TOA Text along with\n' +
         '            other projects. He is on\n' +
@@ -124,8 +124,8 @@ const Legal: NextPage = props => {
       linkedIn: 'https://www.linkedin.com/in/dominic-hupp-3b051716a'
     },
     {
-      name: 'Dominic Hupp',
-      title: 'Developer',
+      name: 'Noah Holoubek',
+      title: 'Developer & Security Engineer',
       description:
         'Noah is a developer and security engineer for The Orange Alliance. He is on\n' +
         '            <a href="https://theorangealliance.org/teams/13426" target="_blank"\n' +

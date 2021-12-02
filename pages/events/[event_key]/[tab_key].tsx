@@ -71,7 +71,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
       </Box>
 
       <Card sx={{ margin: 2 }}>
-        <EventTabs key={eventData.eventKey} event={eventData} />
+        <EventTabs key={eventData.eventKey} event={eventData} streams={streams} />
       </Card>
     </>
   );

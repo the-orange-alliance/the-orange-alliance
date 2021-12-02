@@ -4,4 +4,5 @@ import TeamsTab from './TeamsTab';
 import AlliancesTab from './AlliancesTab';
 import AwardsTab from './AwardsTab';
 import InsightsTab from './InsightsTab';
-export { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab };
+import AdminTab from './AdminTab';
+export { RankingTab, MatchesTab, TeamsTab, AlliancesTab, AwardsTab, InsightsTab, AdminTab };
