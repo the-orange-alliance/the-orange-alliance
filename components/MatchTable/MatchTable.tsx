@@ -242,22 +242,76 @@ const MatchesTable = (props: IProps) => {
         </Typography>
         <Grid container direction={'row'}>
           <Grid item>
-            <span className={'badge badge-success mt-1 me-1 p-2'}>
+            <Box
+              component={'span'}
+              sx={{
+                mx: 0.5,
+                color: '#fff',
+                bgcolor: '#17a2b8',
+                display: 'inline-block',
+                padding: '0.25em 0.4em',
+                fontSize: '75%',
+                fontWeight: '700',
+                lineHeight: '1',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                verticalAlign: 'baseline',
+                pr: '0.6em',
+                pl: '0.6em',
+                borderRadius: '10rem'
+              }}
+            >
               <b>
                 {rank.wins}-{rank.losses}-{rank.ties}
               </b>{' '}
               {t('match_table.wlt')}
-            </span>
+            </Box>
           </Grid>
           <Grid item>
-            <span className={'badge badge-info mt-1 ms-1 me-1 p-2'}>
+            <Box
+              component={'span'}
+              sx={{
+                mx: 0.5,
+                color: '#fff',
+                bgcolor: '#dc3545',
+                display: 'inline-block',
+                padding: '0.25em 0.4em',
+                fontSize: '75%',
+                fontWeight: '700',
+                lineHeight: '1',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                verticalAlign: 'baseline',
+                pr: '0.6em',
+                pl: '0.6em',
+                borderRadius: '10rem'
+              }}
+            >
               <b>{rank.rank}</b> {t('match_table.rank')}
-            </span>
+            </Box>
           </Grid>
           <Grid item>
-            <span className={'badge badge-warning mt-1 ms-1 me-1 p-2'}>
+            <Box
+              component={'span'}
+              sx={{
+                mx: 0.5,
+                color: '#343a40',
+                bgcolor: '#ffc107',
+                display: 'inline-block',
+                padding: '0.25em 0.4em',
+                fontSize: '75%',
+                fontWeight: '700',
+                lineHeight: '1',
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                verticalAlign: 'baseline',
+                pr: '0.6em',
+                pl: '0.6em',
+                borderRadius: '10rem'
+              }}
+            >
               <b>{rank.played}</b> {t('match_table.played')}
-            </span>
+            </Box>
           </Grid>
         </Grid>
       </>
