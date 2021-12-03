@@ -225,28 +225,13 @@ function stringToArrayBuffer(str: string): ArrayBuffer {
   return buf;
 }
 
-function eventToStrippedJson(event: Event) {
+function teamToStrippedJson(team: Team) {
   return {
-    event_key: event.eventKey,
-    season_key: event.seasonKey,
-    region_key: event.regionKey,
-    league_key: event.leagueKey,
-    event_code: event.eventCode,
-    event_type_key: event.eventTypeKey,
-    division_key: event.divisionKey,
-    division_name: event.divisionName,
-    first_event_code: event.firstEventCode,
-    event_name: event.eventName,
-    start_date: event.startDate,
-    end_date: event.endDate,
-    week_key: event.weekKey,
-    city: event.city,
-    state_prov: event.stateProv,
-    country: event.country,
-    venue: event.venue,
-    website: event.website,
-    time_zone: event.timeZone,
-    data_source: event.dataSource
+    team_key: team.teamKey,
+    region_key: team.regionKey,
+    league_key: team.leagueKey,
+    team_name_short: team.teamNameShort,
+    team_name_long: team.teamNameLong
   };
 }
 
@@ -261,5 +246,5 @@ export {
   colorCalc,
   base64ArrayBuffer,
   stringToArrayBuffer,
-  eventToStrippedJson
+  teamToStrippedJson
 };

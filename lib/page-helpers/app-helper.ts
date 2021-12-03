@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import TOAProvider from '../../providers/TOAProvider';
 import { CURRENT_SEASON } from '../../constants';
-import { eventToStrippedJson, undefinedToNull } from '../utils/common';
+import { teamToStrippedJson, undefinedToNull } from '../utils/common';
 import TOAAppContext from '../models/AppContext';
 import { Event, League, Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
+import { eventToStrippedJson } from '../utils/event';
 
 export interface IRawAppProps {
   events: any[];
@@ -52,7 +53,7 @@ export const fetchAppData = async (): Promise<IRawAppProps> => {
     events: data[2].map(e => undefinedToNull(eventToStrippedJson(e))),
     seasons: data[1].map(s => undefinedToNull(s.toJSON())),
     regions: data[0].map(r => undefinedToNull(r.toJSON())),
-    teams: data[3].map(t => undefinedToNull(t.toJSON())),
+    teams: data[3].map(t => undefinedToNull(teamToStrippedJson(t))),
     leagues: data[4].map(l => undefinedToNull(l.toJSON))
   };
 };

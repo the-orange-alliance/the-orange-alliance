@@ -68,6 +68,26 @@ export class EventFilter {
   }
 }
 
+export function eventToStrippedJson(event: Event) {
+  return {
+    event_key: event.eventKey,
+    season_key: event.seasonKey,
+    region_key: event.regionKey,
+    league_key: event.leagueKey,
+    event_code: event.eventCode,
+    event_type_key: event.eventTypeKey,
+    division_name: event.divisionName,
+    first_event_code: event.firstEventCode,
+    event_name: event.eventName,
+    start_date: event.startDate,
+    end_date: event.endDate,
+    week_key: event.weekKey,
+    city: event.city,
+    state_prov: event.stateProv,
+    country: event.country
+  };
+}
+
 // tslint:disable-next-line:max-classes-per-file
 export class EventSorter {
   public sort(items: Event[]) {
