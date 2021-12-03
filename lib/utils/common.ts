@@ -231,7 +231,10 @@ function teamToStrippedJson(team: Team) {
     region_key: team.regionKey,
     league_key: team.leagueKey,
     team_name_short: team.teamNameShort,
-    team_name_long: team.teamNameLong
+    team_name_long: team.teamNameLong,
+    city: team.city,
+    state_prov: team.stateProv,
+    country: team.country
   };
 }
 
