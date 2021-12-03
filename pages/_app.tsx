@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
@@ -6,8 +6,15 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import DrawerLayout from '../components/navigation/drawer-layout';
 import theme from '../lib/theme';
 import { UserLanguageProvider } from '../i18n/i18n';
+import TOAAppContext from '../lib/models/AppContext';
+import { fetchAppData, useAppData } from '../lib/page-helpers/app-helper';
+
+const Context = createContext<TOAAppContext>({} as TOAAppContext);
+export const useAppContext = () => useContext(Context);
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const initialState = useAppData(pageProps.initialState);
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -24,10 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <DrawerLayout title="The Orange Alliance">
-            <Component {...pageProps} />
-          </DrawerLayout>
+          <Context.Provider value={initialState}>
+            <CssBaseline />
+            <DrawerLayout title="The Orange Alliance">
+              <Component {...pageProps} />
+            </DrawerLayout>
+          </Context.Provider>
         </ThemeProvider>
       </UserLanguageProvider>
       <style jsx global>{`
@@ -51,11 +60,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
+  const toaAppProps = await fetchAppData();
 
   return {
     ...appProps,
     pageProps: {
-      userLanguage: appContext.ctx.query.userLanguage || 'en'
+      userLanguage: appContext.ctx.query.userLanguage || 'en',
+      initialState: toaAppProps
     }
   };
 };

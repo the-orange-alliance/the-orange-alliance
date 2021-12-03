@@ -1,4 +1,5 @@
-import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
+import { Region, Season, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 
 function readableDate(date: Date | string): string {
   if (typeof date === 'string') date = new Date(date);
@@ -224,6 +225,31 @@ function stringToArrayBuffer(str: string): ArrayBuffer {
   return buf;
 }
 
+function eventToStrippedJson(event: Event) {
+  return {
+    event_key: event.eventKey,
+    season_key: event.seasonKey,
+    region_key: event.regionKey,
+    league_key: event.leagueKey,
+    event_code: event.eventCode,
+    event_type_key: event.eventTypeKey,
+    division_key: event.divisionKey,
+    division_name: event.divisionName,
+    first_event_code: event.firstEventCode,
+    event_name: event.eventName,
+    start_date: event.startDate,
+    end_date: event.endDate,
+    week_key: event.weekKey,
+    city: event.city,
+    state_prov: event.stateProv,
+    country: event.country,
+    venue: event.venue,
+    website: event.website,
+    time_zone: event.timeZone,
+    data_source: event.dataSource
+  };
+}
+
 export {
   readableDate,
   readableTime,
@@ -234,5 +260,6 @@ export {
   getWeekShort,
   colorCalc,
   base64ArrayBuffer,
-  stringToArrayBuffer
+  stringToArrayBuffer,
+  eventToStrippedJson
 };

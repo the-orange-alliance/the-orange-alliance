@@ -1,5 +1,4 @@
 import { ChangeEvent, useState, useCallback, useRef, useMemo } from 'react';
-import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import {
@@ -15,13 +14,13 @@ import {
 } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import { fetchTeamsData, IRawTeamsProps, useTeamsData } from '../../lib/page-helpers/teams-helper';
 import { Box } from '@mui/system';
+import { useAppContext } from '../_app';
 
 const TEAMS_PER_PAGE = 20;
 
-const TeamsPage: NextPage<IRawTeamsProps> = props => {
-  const { teams } = useTeamsData(props);
+const TeamsPage: NextPage = () => {
+  const { teams } = useAppContext();
   const t = useTranslate();
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
   const [page, setPage] = useState<number>(1);
@@ -99,10 +98,6 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
       </Card>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return { props: await fetchTeamsData() };
 };
 
 export default TeamsPage;

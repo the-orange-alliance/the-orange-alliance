@@ -10,13 +10,15 @@ import {
 import InsightsTab from '../../components/SeasonInsights/InsightsTab';
 import FilterCard from '../../components/FilterCard';
 import { useEffect, useRef, useState } from 'react';
+import { useAppContext } from '../_app';
 
 const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const router = useRouter();
   const t = useTranslate();
+  const { regions, seasons } = useAppContext();
   const [currentTab, setCurrentTab] = useState<number>(0);
   const currentTabRef = useRef<number>(0);
-  const { elimsMultiTeam, combo, qualsMultiTeam, qualsSingleTeam, regions, seasons, seasonKey } =
+  const { elimsMultiTeam, combo, qualsMultiTeam, qualsSingleTeam, seasonKey } =
     parseInsightsProps(props);
   const tabs = ['quals', 'elims', 'stquals', 'combined'];
 

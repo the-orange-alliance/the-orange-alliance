@@ -1,4 +1,4 @@
-import { Insights, Season, Region } from '@the-orange-alliance/api/lib/cjs/models';
+import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../../providers/TOAProvider';
 import { undefinedToNull } from '../../lib/utils/common';
 import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/InsightsData';
@@ -9,8 +9,6 @@ interface IRawInsightsProps {
   qualsMultiTeam: { [key: string]: any };
   elimsMultiTeam: { [key: string]: any };
   combo: { [key: string]: any[] };
-  seasons: any[];
-  regions: any[];
   seasonKey: string;
 }
 
@@ -19,8 +17,6 @@ interface IInsightsProps {
   qualsMultiTeam: { [key: string]: Insights };
   elimsMultiTeam: { [key: string]: Insights };
   combo: { [key: string]: Insights };
-  seasons: Season[];
-  regions: Region[];
   seasonKey: string;
 }
 
@@ -51,8 +47,6 @@ const parseInsightsProps = (props: IRawInsightsProps): IInsightsProps => {
     qualsMultiTeam,
     elimsMultiTeam,
     combo,
-    seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
-    regions: props.regions.map((r: any) => new Region().fromJSON(r)),
     seasonKey: props.seasonKey
   };
 };
@@ -90,19 +84,8 @@ const getInsightsData = async (
         ...optionalProps,
         type: 'quals',
         single_team: 'excluded'
-      }),
-      TOAProvider.getAPI().getSeasons(),
-      TOAProvider.getAPI().getRegions()
+      })
     ]);
-
-    // Add new region
-    const newRegion = new Region();
-    newRegion.regionKey = 'all';
-    newRegion.description = 'All Regions';
-    data[5].splice(0, 0, newRegion);
-
-    // Reverse seasons
-    data[4].reverse();
 
     const qualsSingleTeam = {} as { [key: string]: any };
     const qualsMultiTeam = {} as { [key: string]: any };
@@ -134,9 +117,7 @@ const getInsightsData = async (
       qualsMultiTeam,
       elimsMultiTeam,
       combo,
-      seasonKey,
-      seasons: data[4].map(s => undefinedToNull(s.toJSON())),
-      regions: data[5].map(r => undefinedToNull(r.toJSON()))
+      seasonKey
     };
 
     /* Seasons where single-team matches are NOT a thing */
@@ -151,19 +132,8 @@ const getInsightsData = async (
         ...optionalProps,
         type: 'quals',
         single_team: 'excluded'
-      }),
-      TOAProvider.getAPI().getSeasons(),
-      TOAProvider.getAPI().getRegions()
+      })
     ]);
-
-    // Add new region
-    const newRegion = new Region();
-    newRegion.regionKey = 'all';
-    newRegion.description = 'All Regions';
-    data[3].splice(0, 0, newRegion);
-
-    // Reverse seasons
-    data[2].reverse();
 
     const qualsMultiTeam = {} as { [key: string]: any };
     const elimsMultiTeam = {} as { [key: string]: any };
@@ -183,9 +153,7 @@ const getInsightsData = async (
       qualsMultiTeam,
       elimsMultiTeam,
       combo: {},
-      seasonKey,
-      seasons: data[2].map(s => undefinedToNull(s.toJSON())),
-      regions: data[3].map(r => undefinedToNull(r.toJSON()))
+      seasonKey
     };
   }
 };

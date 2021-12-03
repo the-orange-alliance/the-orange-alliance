@@ -26,6 +26,7 @@ import {
 } from '../../providers/FirebaseProvider';
 import { uploadToImgur } from '../../providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
+import { useAppContext } from '../../pages/_app';
 
 interface IProps {
   event: Event;
@@ -46,10 +47,10 @@ type EditableEventProp =
 
 const AdminTab = ({ event, streams, user }: IProps) => {
   const t = useTranslate();
+  const { leagues } = useAppContext();
   const localStreams = streams.filter(s => s.isActive);
   const [editableEvent, setEditableEvent] = useState<Event>(new Event().fromJSON(event.toJSON()));
 
-  const [leagues, setLeagues] = useState<League[]>([]);
   const [schedulePhoto, setSchedulePhoto] = useState<File | null>(null);
   const [pitPhoto, setPitPhoto] = useState<File | null>(null);
   const [venuePhoto, setVenuePhoto] = useState<File | null>(null);
@@ -66,15 +67,6 @@ const AdminTab = ({ event, streams, user }: IProps) => {
         : 'Twitch'
       : 'Youtube'
   );
-
-  useEffect(() => {
-    TOAProvider.getAPI()
-      .getLeagues()
-      .then(l => setLeagues(l))
-      .catch(() => {
-        // TODO: Toast?
-      });
-  }, []);
 
   const cardSx = { border: 'rgba(1, 1, 1, .2) 1.5px solid', m: 1 };
 

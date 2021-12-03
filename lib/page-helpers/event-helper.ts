@@ -4,7 +4,6 @@ import {
   Ranking,
   Match,
   Alliance,
-  Insights,
   AwardRecipient,
   EventParticipant,
   EventLiveStream

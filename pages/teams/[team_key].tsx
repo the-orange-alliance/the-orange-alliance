@@ -43,10 +43,11 @@ import { getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchesTable from '../../components/MatchTable/MatchTable';
+import { useAppContext } from '../_app';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
-  const { team, wlt, topOpr, seasons, cad, github, images, notebook, reveal, matches } =
-    useTeamData(props);
+  const { seasons } = useAppContext();
+  const { team, wlt, topOpr, cad, github, images, notebook, reveal, matches } = useTeamData(props);
   const t = useTranslate();
   const router = useRouter();
   const theme = useTheme();

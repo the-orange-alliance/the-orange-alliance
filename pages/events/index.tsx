@@ -5,19 +5,15 @@ import { Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import FilterCard from '../../components/FilterCard';
-import {
-  fetchEventsData,
-  IRawEventsProps,
-  organizeEventsByWeek,
-  useEventsData
-} from '../../lib/page-helpers/events-helper';
+import { organizeEventsByWeek } from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
 import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
+import { useAppContext } from '../_app';
 
-const EventsPage: NextPage<IRawEventsProps> = props => {
-  const { events: initialEvents, regions, seasons } = useEventsData(props);
+const EventsPage: NextPage = () => {
+  const { events: initialEvents, regions, seasons } = useAppContext();
   const t = useTranslate();
   const [selectedRegion, setSelectedRegion] = useState<Region>(() => regions[0]);
   const [isFetching, setFetching] = useState<boolean>(false);
@@ -118,10 +114,6 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       )}
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  return { props: await fetchEventsData() };
 };
 
 export default EventsPage;

@@ -25,7 +25,6 @@ export interface IRawTeamProps {
   events: any[];
   awards: any[];
   matches: any;
-  seasons: any[];
 }
 
 export interface ITeamProps {
@@ -33,7 +32,6 @@ export interface ITeamProps {
   topOpr: Ranking | null;
   matches: any;
   wlt: { wins: number; losses: number; ties: number };
-  seasons: Season[];
   github: Media | null;
   cad: Media | null;
   notebook: Media | null;
@@ -100,7 +98,6 @@ export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
     topOpr: props.topOpr ? new Ranking().fromJSON(props.topOpr) : null,
     wlt: props.wlt,
     matches: props.matches,
-    seasons: props.seasons.map((s: any) => new Season().fromJSON(s)),
     github: github,
     cad: cad,
     reveal: reveal,
@@ -115,7 +112,6 @@ export const useTeamData = (props: IRawTeamProps): ITeamProps =>
 export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeamProps> => {
   const data = await Promise.all([
     TOAProvider.getAPI().getTeam(teamKey),
-    TOAProvider.getAPI().getSeasons(),
     TOAProvider.getAPI().getTeamEvents(teamKey, seasonKey),
     TOAProvider.getAPI().getTeamWLT(teamKey, { season_key: seasonKey }),
     TOAProvider.getAPI().getTeamMedia(teamKey, seasonKey),
@@ -123,13 +119,9 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
     TOAProvider.getAPI().getTeamRankings(teamKey, seasonKey)
   ]);
 
-  // Sort Seasons
-  data[1].reverse();
-  data[1] = getTeamSeasons(data[1], data[0]);
-
   // Get all team events for season
   let events = await Promise.all(
-    data[2].map((result: EventParticipant) => TOAProvider.getAPI().getEvent(result.eventKey))
+    data[1].map((result: EventParticipant) => TOAProvider.getAPI().getEvent(result.eventKey))
   );
 
   // Sort out empty events
@@ -144,12 +136,11 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
 
   return {
     team: undefinedToNull(data[0].toJSON()),
-    seasons: data[1].map(s => undefinedToNull(s.toJSON())),
     events: events.map(e => undefinedToNull(e.toJSON())),
-    wlt: data[3],
-    media: data[4].map(m => undefinedToNull(m.toJSON())),
-    awards: data[5].map(a => undefinedToNull(a.toJSON())),
-    rankings: data[6].map(r => undefinedToNull(r.toJSON())),
+    wlt: data[2],
+    media: data[3].map(m => undefinedToNull(m.toJSON())),
+    awards: data[4].map(a => undefinedToNull(a.toJSON())),
+    rankings: data[3].map(r => undefinedToNull(r.toJSON())),
     matches: matches,
     topOpr: combinedOpr ? undefinedToNull(combinedOpr.toJSON()) : null
   };
