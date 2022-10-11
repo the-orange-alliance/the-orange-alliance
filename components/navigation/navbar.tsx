@@ -12,9 +12,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { useTranslate } from '../../i18n/i18n';
 import { useAppContext } from '../../pages/_app';
-import { Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
-import { performSearch } from '../../lib/utils/search';
+import { Team, Event, SearchResult } from '@the-orange-alliance/api/lib/cjs/models';
 import { useRouter } from 'next/router';
+import TOAProvider from '../../providers/TOAProvider';
 
 interface NavbarProps {
   title: string;
@@ -26,15 +26,29 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
   const t = useTranslate();
   const data = useAppContext();
   const router = useRouter();
-  const [results, setResults] = useState<{ events: Event[]; teams: Team[] }>({
-    events: [],
-    teams: []
-  });
+  const [results, setResults] = useState<SearchResult>(new SearchResult());
   const [loading, setLoading] = useState<boolean>(false);
+  let searchTimeout: any = null;
 
   const onSearchChange = (e: any) => {
-    const query = e.target.value;
-    setResults(performSearch(query, data.teams, data.events, 5));
+    // Clear any set timeouts
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
+    // Start a new timeout to perform the search
+    searchTimeout = setTimeout(() => {
+      // setLoading(true);
+      TOAProvider.getAPI()
+        .search(e.target.value)
+        .then(res => {
+          setResults(res);
+          // setLoading(false);
+        });
+    }, 300);
+
+    // const query = e.target.value;
+    // setResults(performSearch(query, data.teams, data.events, 5));
   };
 
   const onSearchKeypress = (e: React.KeyboardEvent<HTMLDivElement>) => {
