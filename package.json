@@ -28,7 +28,7 @@
     "react-hot-toast": "^2.4.0",
     "recharts": "^2.1.15",
     "sass": "^1.43.4",
-    "swagger-ui-react": "^4.1.2"
+    "swagger-ui-react": "^4.14.3"
   },
   "devDependencies": {
     "@types/node": "16.11.7",
