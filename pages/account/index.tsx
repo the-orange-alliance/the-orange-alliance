@@ -36,6 +36,7 @@ import Link from 'next/link';
 import { GitHub, Google, Lock, LockClock, Password } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
 import { onAuthStateChanged } from 'firebase/auth';
+import { toast } from 'react-hot-toast';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
@@ -76,7 +77,7 @@ const AccountPage: NextPage = () => {
               setToaUser(newUser);
             })
             .catch(() => {
-              // TODO: toast?
+              toast.error(t('general.error_occurred'));
             });
         }
 
@@ -84,23 +85,27 @@ const AccountPage: NextPage = () => {
         const teamPromises = user.favoriteTeams.map(t => TOAProvider.getAPI().getTeam(t));
         Promise.all(teamPromises)
           .then(teams => setTeams(teams))
-          .catch(() => {}); // TODO: toast?
+          .catch(() => {});
 
         // Get Events
         const eventPromises = user.favoriteEvents.map(e => TOAProvider.getAPI().getEvent(e));
         Promise.all(eventPromises)
           .then(events => setEvents(events))
-          .catch(() => {}); // TODO: toast?
+          .catch(() => {
+            toast.error(t('general.error_occurred'));
+          });
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('general.error_occurred'));
       });
 
     // Get Regions
     TOAProvider.getAPI()
       .getRegions()
       .then(r => setRegions(r))
-      .catch(() => {}); // TODO: toast?
+      .catch(() => {
+        toast.error(t('general.error_occurred'));
+      });
   };
 
   const doLogoutUser = () => {
@@ -124,7 +129,7 @@ const AccountPage: NextPage = () => {
         setToaUser(newUser);
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error('general.error_occurred');
       });
   };
 
@@ -141,19 +146,20 @@ const AccountPage: NextPage = () => {
             break;
         }
         setToaUser(newUser);
+        toast.success(t('general.success').replace('{{ name }}', provider));
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('general.error_occurred'));
       });
   };
 
   const reset = () => {
     sendPasswordReset()
       .then(() => {
-        // TODO: Toast?
+        toast.success(t('pages.account.reset_password_email'));
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('general.error_occurred'));
       });
   };
 

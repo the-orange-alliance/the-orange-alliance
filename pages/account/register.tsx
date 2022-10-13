@@ -4,6 +4,7 @@ import { useTranslate } from '../../i18n/i18n';
 import { useState } from 'react';
 import { signUp } from '../../providers/FirebaseProvider';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 const LoginPage: NextPage = () => {
   const t = useTranslate();
@@ -22,11 +23,11 @@ const LoginPage: NextPage = () => {
     } else {
       signUp(email, fullName, password, team)
         .then(() => {
-          // TODO: toast success
+          toast.success(t('pages.account.subpages.register.success'));
           return router.push({ pathname: '/account' });
         })
         .catch(() => {
-          // TODO: toast failure
+          toast.success(t('general.error_occurred'));
         });
     }
   };

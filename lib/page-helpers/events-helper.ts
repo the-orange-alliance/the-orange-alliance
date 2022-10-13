@@ -23,7 +23,9 @@ export const useEventsData = (props: IRawEventsProps): IEventsProps =>
 
 export const fetchEventsData = async (): Promise<IRawEventsProps> => {
   const data = await TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON });
-
+  data.sort(
+    (a: Event, b: Event) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
   return {
     events: data.map(e => undefinedToNull(e.toJSON()))
   };

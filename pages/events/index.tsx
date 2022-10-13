@@ -1,7 +1,7 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Image from 'next/image';
-import { Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
+import { Badge, Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import FilterCard from '../../components/FilterCard';
@@ -72,6 +72,10 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
     }
   }, [seasonEvents, selectedRegion.regionKey, selectedWeek]);
 
+  const getEventsByWeek = (week: Week) => {
+    return filteredEvents.filter(event => event.weekKey === week.weekKey);
+  };
+
   return (
     <div>
       <Typography sx={{ margin: 2 }} variant="h4">
@@ -91,9 +95,23 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
       <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={selectedWeek} onChange={selectTab} variant={'fullWidth'}>
+          <Tabs
+            value={selectedWeek}
+            onChange={selectTab}
+            variant={'fullWidth'}
+            scrollButtons={'auto'}
+          >
             {weeks.map((week: Week) => (
-              <Tab key={week.weekKey} value={week.weekKey} label={getWeekName(week.weekKey)} />
+              <Tab
+                key={week.weekKey}
+                label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
+                value={week.weekKey}
+                iconPosition={'top'}
+                icon={
+                  <Badge badgeContent={getEventsByWeek(week).length} max={9999} color={'primary'} />
+                }
+                sx={{ px: 3 }}
+              />
             ))}
           </Tabs>
         </Box>

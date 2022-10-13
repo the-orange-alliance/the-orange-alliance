@@ -33,7 +33,7 @@ const LoginPage: NextPage = () => {
         postLoginSuccess();
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('pages.account.subpages.login.no_account_linked'));
       });
   };
 
@@ -43,7 +43,7 @@ const LoginPage: NextPage = () => {
         postLoginSuccess();
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('pages.account.subpages.login.no_account_linked'));
       });
   };
 

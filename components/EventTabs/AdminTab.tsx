@@ -27,6 +27,7 @@ import {
 import { uploadToImgur } from '../../providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
 import { useAppContext } from '../../pages/_app';
+import toast from 'react-hot-toast';
 
 interface IProps {
   event: Event;
@@ -148,7 +149,7 @@ const AdminTab = ({ event, streams, user }: IProps) => {
             return addEventMedia(mediaData);
           })
           .then(() => {
-            // TODO: Toast?
+            toast.success(t('pages.event.settings.saved'));
 
             // Clear Upload field
             if (!document) return;
@@ -158,7 +159,7 @@ const AdminTab = ({ event, streams, user }: IProps) => {
             }
           })
           .catch(() => {
-            // TODO: Toast?
+            toast.success(t('pages.event.settings.failed'));
           });
       };
       reader.readAsBinaryString(file);
@@ -207,10 +208,10 @@ const AdminTab = ({ event, streams, user }: IProps) => {
 
       addStream(stream)
         .then(() => {
-          // TODO: Toast?
+          toast.success(t('pages.event.settings.saved'));
         })
         .catch(() => {
-          // TODO: Toast?
+          toast.error(t('pages.event.settings.failed'));
         });
     }
   };
@@ -225,10 +226,10 @@ const AdminTab = ({ event, streams, user }: IProps) => {
       localStreams[0].isActive = false;
       hideStream(localStreams[0])
         .then(() => {
-          // TODO: Toast?
+          toast.success(t('pages.event.settings.saved'));
         })
         .catch(() => {
-          // TODO: Toast?
+          toast.error(t('pages.event.settings.failed'));
         });
     }
   };
@@ -236,10 +237,10 @@ const AdminTab = ({ event, streams, user }: IProps) => {
   const updateEventCloud = () => {
     updateEvent(editableEvent)
       .then(() => {
-        // TODO: Toast?
+        toast.success(t('pages.event.settings.saved'));
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('pages.event.settings.failed'));
       });
   };
 
