@@ -164,6 +164,7 @@
           "forgot_password": "Forgot password?",
           "login_google": "Login with Google",
           "login_github": "Login with Github",
+          "invalid_login": "Username/Password combination is invalid",
           "no_account_linked": "That account is not linked to any myTOA account. Please sign in to link it."
         },
         "register": {

@@ -9,6 +9,7 @@ import {
   loginWithGoogle
 } from '../../providers/FirebaseProvider';
 import { useRouter } from 'next/router';
+import { toast } from 'react-hot-toast';
 
 const LoginPage: NextPage = () => {
   const t = useTranslate();
@@ -22,7 +23,7 @@ const LoginPage: NextPage = () => {
         postLoginSuccess();
       })
       .catch(() => {
-        // TODO: Toast?
+        toast.error(t('pages.account.subpages.login.invalid_login'));
       });
   };
 
@@ -50,11 +51,17 @@ const LoginPage: NextPage = () => {
     router.push({ pathname: '/account' });
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      loginEmail();
+    }
+  };
+
   return (
     <>
       <Grid container direction={'column'} alignContent={'center'}>
         <Grid item sx={{ marginTop: 7 }}>
-          <Card>
+          <Card onKeyPress={handleKeyPress}>
             <CardContent>
               <Typography variant={'h4'}>{t('pages.account.subpages.login.title')}</Typography>
               <Grid container direction={'column'} sx={{ marginTop: 0, width: 400 }} spacing={2}>

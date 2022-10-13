@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
@@ -36,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <DrawerLayout title="The Orange Alliance">
               <Component {...pageProps} />
             </DrawerLayout>
+            <Toaster />
           </Context.Provider>
         </ThemeProvider>
       </UserLanguageProvider>

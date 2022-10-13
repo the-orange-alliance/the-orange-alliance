@@ -38,21 +38,21 @@ const Home: NextPage<IRawHomeProps> = props => {
                   icon={<TeamsIcon />}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <AnnouncementCard
-                  content={
-                    <Typography variant={'body1'}>
-                      Due to the COVID-19 (Coronavirus) pandemic, <em>FIRST</em> has suspended all
-                      events for the duration of the season including the <em>FIRST</em>{' '}
-                      Championships. Refer to{' '}
-                      <a href="https://www.firstinspires.org/covid-19">
-                        firstinspires.org/covid-19
-                      </a>{' '}
-                      for more information.
-                    </Typography>
-                  }
-                />
-              </Grid>
+              {/*<Grid item xs={12}>*/}
+              {/*  <AnnouncementCard*/}
+              {/*    content={*/}
+              {/*      <Typography variant={'body1'}>*/}
+              {/*        Due to the COVID-19 (Coronavirus) pandemic, <em>FIRST</em> has suspended all*/}
+              {/*        events for the duration of the season including the <em>FIRST</em>{' '}*/}
+              {/*        Championships. Refer to{' '}*/}
+              {/*        <a href="https://www.firstinspires.org/covid-19">*/}
+              {/*          firstinspires.org/covid-19*/}
+              {/*        </a>{' '}*/}
+              {/*        for more information.*/}
+              {/*      </Typography>*/}
+              {/*    }*/}
+              {/*  />*/}
+              {/*</Grid>*/}
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={6}>
