@@ -1,19 +1,25 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import Image from 'next/image';
 import { Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import FilterCard from '../../components/FilterCard';
-import { organizeEventsByWeek } from '../../lib/page-helpers/events-helper';
+import {
+  fetchEventsData,
+  IRawEventsProps,
+  organizeEventsByWeek,
+  parseEventsProps
+} from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
 import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
 import { useAppContext } from '../_app';
 
-const EventsPage: NextPage = () => {
-  const { events: initialEvents, regions, seasons } = useAppContext();
+const EventsPage: NextPage<IRawEventsProps> = props => {
+  const { regions, seasons } = useAppContext();
+  const { events: initialEvents } = parseEventsProps(props);
   const t = useTranslate();
   const [selectedRegion, setSelectedRegion] = useState<Region>(() => regions[0]);
   const [isFetching, setFetching] = useState<boolean>(false);
@@ -117,3 +123,7 @@ const EventsPage: NextPage = () => {
 };
 
 export default EventsPage;
+
+export async function getServerSideProps(context: any) {
+  return { props: await fetchEventsData() };
+}

@@ -15,12 +15,16 @@ import {
 import { useTranslate } from '../../i18n/i18n';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
 import { Box } from '@mui/system';
-import { useAppContext } from '../_app';
+import {
+  fetchTeamsData,
+  IRawTeamsProps,
+  parseTeamsProps
+} from '../../lib/page-helpers/teams-helper';
 
 const TEAMS_PER_PAGE = 20;
 
-const TeamsPage: NextPage = () => {
-  const { teams } = useAppContext();
+const TeamsPage: NextPage<IRawTeamsProps> = props => {
+  const { teams } = parseTeamsProps(props);
   const t = useTranslate();
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
   const [page, setPage] = useState<number>(1);
@@ -101,3 +105,7 @@ const TeamsPage: NextPage = () => {
 };
 
 export default TeamsPage;
+
+export async function getServerSideProps(context: any) {
+  return { props: await fetchTeamsData() };
+}

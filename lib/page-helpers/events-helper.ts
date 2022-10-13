@@ -22,10 +22,10 @@ export const useEventsData = (props: IRawEventsProps): IEventsProps =>
   useMemo(() => parseEventsProps(props), [props]);
 
 export const fetchEventsData = async (): Promise<IRawEventsProps> => {
-  const data = await Promise.all([TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON })]);
+  const data = await TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON });
 
   return {
-    events: data[0].map(e => undefinedToNull(e.toJSON()))
+    events: data.map(e => undefinedToNull(e.toJSON()))
   };
 };
 
