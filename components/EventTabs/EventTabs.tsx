@@ -36,6 +36,7 @@ const EventTabs = ({ event, streams }: IProps) => {
   const t = useTranslate();
   const router = useRouter();
   const [user, setUser] = useState<TOAUser>();
+  const [localStreams, setLocalStreams] = useState<EventLiveStream[]>(streams);
 
   useEffect(() => {
     onAuthStateChanged(getAuthInstance(), user => {
@@ -54,6 +55,15 @@ const EventTabs = ({ event, streams }: IProps) => {
     getUserData().then(user => {
       setUser(user);
     });
+  };
+
+  // If add is false, it's a delete
+  const handleStreamChange = (stream: EventLiveStream, add: boolean) => {
+    if (add) {
+      setLocalStreams([...localStreams, stream]);
+    } else {
+      setLocalStreams([...localStreams.filter(s => s.streamKey !== stream.streamKey)]);
+    }
   };
 
   const tabs = useMemo((): ITabProps[] => {
@@ -107,7 +117,14 @@ const EventTabs = ({ event, streams }: IProps) => {
     ) {
       tabs.push({
         id: 'admin',
-        component: <AdminTab event={event} user={user} streams={streams} />
+        component: (
+          <AdminTab
+            event={event}
+            user={user}
+            streams={localStreams}
+            handleStreamChange={handleStreamChange}
+          />
+        )
       });
     }
     return tabs;

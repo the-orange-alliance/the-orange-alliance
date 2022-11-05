@@ -556,8 +556,8 @@ const addSuggestion = (suggestionData: any): Promise<any> => {
   });
 };
 
-export const addStream = (stream: EventLiveStream): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
+export const addStream = (stream: EventLiveStream): Promise<boolean> => {
+  return new Promise<boolean>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
@@ -569,10 +569,10 @@ export const addStream = (stream: EventLiveStream): Promise<any> => {
           method: 'POST',
           body: JSON.stringify([stream.toJSON()])
         })
-          .then(data => data.json())
+          .then(data => data.text())
           .then(
-            (data: any) => {
-              resolve(data);
+            (data: string) => {
+              resolve(data === 'Success');
             },
             (err: any) => {
               reject(err);
@@ -585,8 +585,8 @@ export const addStream = (stream: EventLiveStream): Promise<any> => {
   });
 };
 
-export const hideStream = (stream: EventLiveStream): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
+export const hideStream = (stream: EventLiveStream): Promise<boolean> => {
+  return new Promise<boolean>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
@@ -598,10 +598,10 @@ export const hideStream = (stream: EventLiveStream): Promise<any> => {
           method: 'POST',
           body: JSON.stringify([stream.toJSON()])
         })
-          .then(data => data.json())
+          .then(data => data.text())
           .then(
-            (data: any) => {
-              resolve(data);
+            (data: string) => {
+              resolve(data === 'Success');
             },
             (err: any) => {
               reject(err);

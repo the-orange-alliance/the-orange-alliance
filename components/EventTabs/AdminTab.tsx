@@ -17,7 +17,6 @@ import { Event, EventLiveStream, League } from '@the-orange-alliance/api/lib/cjs
 import TOAUser from '../../lib/TOAUser';
 import { useTranslate } from '../../i18n/i18n';
 import { Autorenew, Link, LinkOff, Upload, YouTube } from '@mui/icons-material';
-import TOAProvider from '../../providers/TOAProvider';
 import {
   addEventMedia,
   addStream,
@@ -33,6 +32,7 @@ interface IProps {
   event: Event;
   user: TOAUser;
   streams: EventLiveStream[];
+  handleStreamChange: (stream: EventLiveStream, add: boolean) => void;
 }
 
 type EditableEventProp =
@@ -46,10 +46,12 @@ type EditableEventProp =
   | 'country'
   | 'league_key';
 
-const AdminTab = ({ event, streams, user }: IProps) => {
+const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
   const t = useTranslate();
   const { leagues } = useAppContext();
-  const localStreams = streams.filter(s => s.isActive);
+  const [localStreams, setLocalStreams] = useState<EventLiveStream[]>(
+    streams.filter(s => s.isActive)
+  );
   const [editableEvent, setEditableEvent] = useState<Event>(new Event().fromJSON(event.toJSON()));
 
   const [schedulePhoto, setSchedulePhoto] = useState<File | null>(null);
@@ -208,6 +210,8 @@ const AdminTab = ({ event, streams, user }: IProps) => {
 
       addStream(stream)
         .then(() => {
+          handleStreamChange(stream, true);
+          setLocalStreams([...localStreams, stream]);
           toast.success(t('pages.event.settings.saved'));
         })
         .catch(() => {
@@ -226,6 +230,8 @@ const AdminTab = ({ event, streams, user }: IProps) => {
       localStreams[0].isActive = false;
       hideStream(localStreams[0])
         .then(() => {
+          handleStreamChange(localStreams[0], false);
+          setLocalStreams([...localStreams.filter(s => s.streamKey !== localStreams[0].streamKey)]);
           toast.success(t('pages.event.settings.saved'));
         })
         .catch(() => {
