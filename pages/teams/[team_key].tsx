@@ -472,7 +472,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
     const seasonKey = query.season_key ? String(query.season_key) : CURRENT_SEASON;
     return { props: await fetchTeamData(teamKey, seasonKey) };
   } catch (err) {
-    console.log(err);
     return { notFound: true };
   }
 };

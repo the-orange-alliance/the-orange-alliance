@@ -12,7 +12,16 @@ const cfg = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]
   },
-  swcMinify: false
+  swcMinify: false,
+  async redirects() {
+    return [
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true
+      }
+    ];
+  }
 };
 
 module.exports = withTM(cfg);
