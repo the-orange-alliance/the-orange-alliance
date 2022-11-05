@@ -12,6 +12,7 @@ import {
   TableRow
 } from '@mui/material';
 import { colorCalc } from '../lib/utils/common';
+import Link from 'next/link';
 
 interface IProps {
   match: Match;
@@ -29,12 +30,14 @@ const SimpleMatchTable = (props: IProps) => {
     const redView = redAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Typography
-            variant={'body1'}
-            style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
-          >
-            {p.teamKey}
-          </Typography>
+          <Link href={`/teams/${p.teamKey}`}>
+            <Typography
+              variant={'body1'}
+              style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
+            >
+              {p.teamKey}
+            </Typography>
+          </Link>
         </TableCell>
       );
     });
@@ -65,12 +68,14 @@ const SimpleMatchTable = (props: IProps) => {
     const blueView = blueAlliance.map((p: MatchParticipant) => {
       return (
         <TableCell key={p.matchParticipantKey} align="center">
-          <Typography
-            variant={'body1'}
-            style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
-          >
-            {p.teamKey}
-          </Typography>
+          <Link href={`/teams/${p.teamKey}`}>
+            <Typography
+              variant={'body1'}
+              style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
+            >
+              {p.teamKey}
+            </Typography>
+          </Link>
         </TableCell>
       );
     });

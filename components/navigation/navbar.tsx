@@ -6,15 +6,18 @@ import {
   InputAdornment,
   TextField,
   Toolbar,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { useTranslate } from '../../i18n/i18n';
 import { useAppContext } from '../../pages/_app';
 import { Team, Event, SearchResult } from '@the-orange-alliance/api/lib/cjs/models';
 import { useRouter } from 'next/router';
 import TOAProvider from '../../providers/TOAProvider';
+import { useTheme } from '@mui/material/styles';
+import { Search } from '@mui/icons-material';
 
 interface NavbarProps {
   title: string;
@@ -25,10 +28,24 @@ interface NavbarProps {
 const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
   const t = useTranslate();
   const data = useAppContext();
+  const theme = useTheme();
   const router = useRouter();
   const [results, setResults] = useState<SearchResult>(new SearchResult());
   const [loading, setLoading] = useState<boolean>(false);
+  const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [hideSearchMobile, setHideSearchMobile] = useState<boolean>(smallScreen);
+  const searchTextRef = useRef<any>();
+
   let searchTimeout: any = null;
+
+  useEffect(() => {
+    if (!hideSearchMobile) searchTextRef.current.focus();
+  }, [hideSearchMobile]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    // if small screen changes, hide search
+    if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
+  }, [smallScreen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSearchChange = (e: any) => {
     // Clear any set timeouts
@@ -38,17 +55,12 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
 
     // Start a new timeout to perform the search
     searchTimeout = setTimeout(() => {
-      // setLoading(true);
       TOAProvider.getAPI()
         .search(e.target.value)
         .then(res => {
           setResults(res);
-          // setLoading(false);
         });
     }, 300);
-
-    // const query = e.target.value;
-    // setResults(performSearch(query, data.teams, data.events, 5));
   };
 
   const onSearchKeypress = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -85,13 +97,23 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
       setLoading(true);
       router.push({ pathname: `/teams/${val.team_key}` }).then(() => {
         setLoading(false);
+        if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
       });
     } else if (val.event_key) {
       if (router.query.event_key && router.query.event_key === val.event_key) return;
       setLoading(true);
       router.push({ pathname: `/events/${val.event_key}/rankings` }).then(() => {
         setLoading(false);
+        if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
       });
+    }
+  };
+
+  const handleShowSearch = (e: any) => {
+    if (smallScreen) {
+      setHideSearchMobile(!hideSearchMobile);
+    } else if (!smallScreen && hideSearchMobile) {
+      setHideSearchMobile(false);
     }
   };
 
@@ -116,61 +138,78 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-          {title}
-        </Typography>
-        <Autocomplete
-          freeSolo
-          disabled={loading}
-          sx={{ width: '350px' }}
-          getOptionLabel={l => {
-            return typeof l === 'string' ? l : l.name ?? '';
-          }}
-          filterOptions={l => l}
-          getOptionDisabled={l => l.divider}
-          options={
-            [
-              { name: 'Teams', divider: true },
-              ...results.teams.map((t: Team) => ({
-                name: calcName(t),
-                divider: false,
-                team_key: t.teamKey,
-                event_key: null
-              })),
-              { name: 'Events', divider: true, event_key: null, team_key: null },
-              ...results.events.map((e: Event) => ({
-                name: `${e.eventName}`,
-                divider: false,
-                event_key: e.eventKey,
-                team_key: null
-              }))
-            ] as {
-              name: string;
-              divider: boolean;
-              event_key: string | null;
-              team_key: string | null;
-            }[]
-          }
-          onKeyPress={onSearchKeypress}
-          onChange={onSearchSelect}
-          renderInput={params => (
-            <TextField
-              {...params}
-              onChange={onSearchChange}
-              InputProps={{
-                ...params.InputProps,
-                placeholder: t('general.search_text_long'),
-                endAdornment: loading ? (
-                  <InputAdornment position={'end'}>
-                    <CircularProgress color={'secondary'} size={25} />
-                  </InputAdornment>
-                ) : (
-                  params.InputProps.endAdornment
-                )
-              }}
-            />
-          )}
-        />
+        {(hideSearchMobile || !smallScreen) && (
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
+            {title}
+          </Typography>
+        )}
+        {hideSearchMobile && smallScreen && (
+          <IconButton
+            color="inherit"
+            aria-label={'Show Search'}
+            edge="start"
+            onClick={handleShowSearch}
+            size="large"
+          >
+            <Search />
+          </IconButton>
+        )}
+        {(!smallScreen || !hideSearchMobile) && (
+          <Autocomplete
+            freeSolo
+            disabled={loading}
+            sx={{ width: '350px' }}
+            getOptionLabel={l => {
+              return typeof l === 'string' ? l : l.name ?? '';
+            }}
+            filterOptions={l => l}
+            getOptionDisabled={l => l.divider}
+            options={
+              [
+                { name: 'Teams', divider: true },
+                ...results.teams.map((t: Team) => ({
+                  name: calcName(t),
+                  divider: false,
+                  team_key: t.teamKey,
+                  event_key: null
+                })),
+                { name: 'Events', divider: true, event_key: null, team_key: null },
+                ...results.events.map((e: Event) => ({
+                  name: `${e.eventName}`,
+                  divider: false,
+                  event_key: e.eventKey,
+                  team_key: null
+                }))
+              ] as {
+                name: string;
+                divider: boolean;
+                event_key: string | null;
+                team_key: string | null;
+              }[]
+            }
+            onKeyPress={onSearchKeypress}
+            onChange={onSearchSelect}
+            renderInput={params => (
+              <TextField
+                {...params}
+                inputRef={searchTextRef}
+                onChange={onSearchChange}
+                onBlur={handleShowSearch}
+                InputProps={{
+                  ...params.InputProps,
+                  placeholder: t('general.search_text_long'),
+                  endAdornment: loading ? (
+                    <InputAdornment position={'end'}>
+                      <CircularProgress color={'secondary'} size={25} />
+                    </InputAdornment>
+                  ) : (
+                    params.InputProps.endAdornment
+                  )
+                }}
+              />
+            )}
+          />
+        )}
       </Toolbar>
     </AppBar>
   );
