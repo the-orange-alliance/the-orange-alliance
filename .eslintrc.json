@@ -1,5 +1,15 @@
 {
   "extends": "next/core-web-vitals",
   "ignorePatterns": ["public/**/*"],
-  "rules": { "react/no-unescaped-entities": 0 }
+  "rules": {
+    "react/no-unescaped-entities": 0,
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": [
+          "jsx", "global"
+        ]
+      }
+    ]
+  }
 }

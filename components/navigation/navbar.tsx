@@ -124,7 +124,7 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
           disabled={loading}
           sx={{ width: '350px' }}
           getOptionLabel={l => {
-            return l.name ?? '';
+            return typeof l === 'string' ? l : l.name ?? '';
           }}
           filterOptions={l => l}
           getOptionDisabled={l => l.divider}

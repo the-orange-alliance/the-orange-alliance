@@ -13,7 +13,10 @@ import { fetchAppData, useAppData } from '../lib/page-helpers/app-helper';
 const Context = createContext<TOAAppContext>({} as TOAAppContext);
 export const useAppContext = () => useContext(Context);
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({
+  Component,
+  pageProps
+}: AppProps<{ initialState: TOAAppContext; userLanguage: string }>) {
   const initialState = useAppData(pageProps.initialState);
 
   useEffect(() => {
