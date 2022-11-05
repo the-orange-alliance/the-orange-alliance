@@ -59,13 +59,16 @@ const EventPage: NextPage<IRawEventProps> = props => {
         {eventData.dataSource !== DataSource.Unknown && (
           <Typography sx={{ margin: 1 }} variant={'body2'}>
             <VerifiedUser fontSize="inherit" sx={{ marginRight: 1 }} />
-            {eventData.dataSource === DataSource.DataSync
-              ? t('pages.event.data_source.data_sync')
-              : eventData.dataSource === DataSource.EventArchive
-              ? t('pages.event.data_source.affiliate')
-              : eventData.dataSource === DataSource.FIRST
-              ? t('pages.event.data_source.first')
-              : ''}
+            {t('pages.event.data_source.data_provided') + ' '}
+            {eventData.dataSource === DataSource.DataSync ? (
+              t('pages.event.data_source.data_sync')
+            ) : eventData.dataSource === DataSource.EventArchive ? (
+              t('pages.event.data_source.affiliate')
+            ) : eventData.dataSource === DataSource.FIRST ? (
+              <i> {t('pages.event.data_source.first')} </i>
+            ) : (
+              ''
+            )}
           </Typography>
         )}
       </Box>

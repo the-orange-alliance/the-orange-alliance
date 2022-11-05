@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { TableRow, TableCell, Grid, Typography, Box } from '@mui/material';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
-import { CURRENT_SEASON } from '../../constants';
-import { colorCalc } from '../../lib/utils/common';
+import { colorCalc, isSameDay } from '../../lib/utils/common';
 import { useTheme } from '@mui/material/styles';
+import { useUserLanguage } from '../../i18n/i18n';
 
 interface IProps {
   match: Match;
@@ -27,6 +27,7 @@ const MatchTableRow = ({
   const stackedSx = forceSmall
     ? { display: 'table-row' }
     : { display: { xs: 'table-row', md: 'none' } };
+  const scheduleTime = new Date(match.scheduledTime);
 
   return (
     <>
@@ -35,7 +36,7 @@ const MatchTableRow = ({
         <TableCell
           className={'p-0'}
           padding={'none'}
-          onClick={() => setSelectedMatch && setSelectedMatch(match)}
+          onClick={() => match.redScore > -1 && setSelectedMatch && setSelectedMatch(match)}
           style={{ cursor: 'pointer' }}
         >
           <Typography align="center">{match.matchName}</Typography>
@@ -71,24 +72,35 @@ const MatchTableRow = ({
             />
           </Grid>
         </TableCell>
-        <TableCell padding={'none'}>
-          <Grid container>
-            <MatchScoreDisplay
-              score={match.redScore}
-              color="red"
-              win={match.redScore > match.blueScore}
-            />
-          </Grid>
-        </TableCell>
-        <TableCell padding={'none'}>
-          <Grid container>
-            <MatchScoreDisplay
-              score={match.blueScore}
-              color="blue"
-              win={match.redScore < match.blueScore}
-            />
-          </Grid>
-        </TableCell>
+        {(match.redScore > -1 || isNaN(scheduleTime.getTime())) && (
+          <>
+            <TableCell padding={'none'}>
+              <Grid container>
+                <MatchScoreDisplay
+                  score={match.redScore}
+                  color="red"
+                  win={match.redScore > match.blueScore}
+                />
+              </Grid>
+            </TableCell>
+            <TableCell padding={'none'}>
+              <Grid container>
+                <MatchScoreDisplay
+                  score={match.blueScore}
+                  color="blue"
+                  win={match.redScore < match.blueScore}
+                />
+              </Grid>
+            </TableCell>
+          </>
+        )}
+        {match.redScore === -1 && !isNaN(scheduleTime.getTime()) && (
+          <TableCell colSpan={2} padding={'none'}>
+            <Grid container>
+              <ScheduledTimeDisplay time={scheduleTime} />
+            </Grid>
+          </TableCell>
+        )}
       </TableRow>
 
       {/* STACKED ALLIANCES */}
@@ -174,15 +186,6 @@ const MatchTeamDisplay = ({
     }
   };
 
-  const getHref = (teamKey: string) => {
-    const seasonKey = match.matchKey.split('-')[0];
-    if (seasonKey !== CURRENT_SEASON) {
-      return `/teams/${teamKey}?season_key=${seasonKey}`;
-    } else {
-      return `/teams/${teamKey}`;
-    }
-  };
-
   return (
     <Grid item xs={12}>
       <Grid container>
@@ -206,7 +209,6 @@ const MatchTeamDisplay = ({
                   fontWeight: win ? 'bolder' : 'normal',
                   color: theme.palette.text.primary
                 }}
-                href={getHref(team.teamKey)}
               >
                 {team.teamKey}
               </a>
@@ -247,7 +249,46 @@ const MatchScoreDisplay = ({
           padding: '19px'
         }}
       >
-        {score}
+        {score > -1 ? score : '?'}
+      </Typography>
+    </Grid>
+  );
+};
+
+const ScheduledTimeDisplay = ({ time }: { time: Date }) => {
+  const theme = useTheme();
+  const lang = useUserLanguage();
+  const isToday = isSameDay(time, new Date());
+  const displayString = !isToday
+    ? time.toLocaleDateString(`en-${lang}`, { weekday: 'short' }) +
+      ' ' +
+      time.toLocaleTimeString(`en-${lang}`, {
+        hour: 'numeric',
+        minute: 'numeric'
+      })
+    : time.toLocaleTimeString(`en-${lang}`, { hour: 'numeric', minute: 'numeric' });
+  return (
+    <Grid
+      item
+      xs={12}
+      style={
+        {
+          // backgroundColor: colorCalc(false, color, win)
+        }
+      }
+    >
+      <Typography
+        variant={'body1'}
+        color={'inherit'}
+        style={{
+          textAlign: 'center',
+          textDecoration: 'none',
+          fontStyle: 'italic',
+          color: theme.palette.text.primary,
+          padding: '19px'
+        }}
+      >
+        {displayString}
       </Typography>
     </Grid>
   );

@@ -5,6 +5,7 @@ import MatchBreakdown1819 from './MatchBreakdowns/MatchBreakdown1819';
 import MatchBreakdown1920 from './MatchBreakdowns/MatchBreakdown1920';
 import MatchBreakdown2021 from './MatchBreakdowns/MatchBreakdown2021';
 import MatchBreakdown2122 from './MatchBreakdowns/MatchBreakdown2122';
+import MatchBreakdown2223 from './MatchBreakdowns/MatchBreakdown2223';
 import { MatchBreakdownRow, MatchBreakdownTitle } from './MatchBreakdownRow';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import { colorCalc } from '../../lib/utils/common';
@@ -36,6 +37,9 @@ const MatchDetailsCard = (props: IProps) => {
         break;
       case 2122:
         rows = new MatchBreakdown2122().getRows(match);
+        break;
+      case 2223:
+        rows = new MatchBreakdown2223().getRows(match);
         break;
       default:
         rows = [

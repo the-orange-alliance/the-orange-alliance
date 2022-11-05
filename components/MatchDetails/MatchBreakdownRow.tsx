@@ -17,6 +17,7 @@ export class MatchBreakdownRow {
   ultimateGoalWobble: boolean;
   freightFrenzyParking: boolean;
   freightFrenzyBarcodeElement: boolean;
+  powerPlayParking: boolean;
 
   redIcon: JSX.Element | null;
   blueIcon: JSX.Element | null;
@@ -32,7 +33,8 @@ export class MatchBreakdownRow {
     velocityVortexCapBall: boolean,
     ultimateGoalWobble: boolean = false,
     freightFrenzyParking: boolean = false,
-    freightFrenzyBarcodeElement: boolean = false
+    freightFrenzyBarcodeElement: boolean = false,
+    powerPlayParking: boolean = false
   ) {
     this.isTitle = isTitle;
     this.name = name;
@@ -45,6 +47,7 @@ export class MatchBreakdownRow {
     this.ultimateGoalWobble = ultimateGoalWobble;
     this.freightFrenzyParking = freightFrenzyParking;
     this.freightFrenzyBarcodeElement = freightFrenzyBarcodeElement;
+    this.powerPlayParking = powerPlayParking;
 
     const constants = new MatchBreakdownConstants();
     this.redIcon =
@@ -88,6 +91,8 @@ export class MatchBreakdownRow {
       return this.getFreightFrenzyParking(s);
     } else if (this.freightFrenzyBarcodeElement && typeof s === 'string') {
       return this.getFreightFrenzyBarcodeElement(s);
+    } else if (this.powerPlayParking && typeof s === 'string') {
+      return this.getPowerPlayParking(s);
     } else {
       const constants = new MatchBreakdownConstants();
       const isTrue = s === constants.trueValue;
@@ -170,6 +175,18 @@ export class MatchBreakdownRow {
     }
     return 'Not Scored';
   }
+
+  getPowerPlayParking(key: string) {
+    switch (key) {
+      case 'NONE':
+        return 'None';
+      case 'SUBSTATION_TERMINAL':
+        return 'Substation Terminal (+2)';
+      case 'SIGNAL_ZONE':
+        return 'Signal Zone (+2)';
+    }
+    return 'Not Scored';
+  }
 }
 
 export function MatchBreakdownTitle(name: string, redScore: number, blueScore: number) {
@@ -178,6 +195,23 @@ export function MatchBreakdownTitle(name: string, redScore: number, blueScore: n
 
 export function MatchBreakdownField(name: string, red: number, blue: number, points: number) {
   return new MatchBreakdownRow(false, name, red, blue, points, points, false, false);
+}
+
+export function MatchBreakdownPowerPlayParking(name: string, red: string, blue: string) {
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true
+  );
 }
 
 export function MatchBreakdownFreightFrenzyParkingLocation(

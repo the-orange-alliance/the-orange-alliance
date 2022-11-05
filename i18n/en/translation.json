@@ -219,6 +219,12 @@
         "saved": "Your event settings have been saved successfully!",
         "failed": "Saving event settings failed. Please try again later"
       },
+      "data_source": {
+        "data_provided": "Data Provided By",
+        "first": "FIRST",
+        "data_sync": "Official TOA Datasync",
+        "affiliate": "Affiliate Source or Event Archive"
+      },
       "subpages": {
         "rankings": {
           "title": "Rankings",

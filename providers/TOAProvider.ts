@@ -14,6 +14,7 @@ class TOAProvider {
 
   private constructor() {
     this.api = new API('', 'TOA-WebApp-1920');
+    this.api.setCustomUrl('http://localhost:8008/api');
   }
 
   public getAPI(): API {

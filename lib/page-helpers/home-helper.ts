@@ -28,19 +28,18 @@ export interface IHomeProps {
 
 export const getHighScoreMatch = (
   type: 'all' | 'elims' | 'quals' | 'single_team'
-): Promise<Match> => {
-  return new Promise<Match>(async (resolve, reject) => {
+): Promise<Match | undefined> => {
+  return new Promise<Match | undefined>(async (resolve, reject) => {
     try {
       const match: Match = await TOAProvider.getAPI().getHighScoreMatch(type, {
-        seasonKey: CURRENT_SEASON
+        season_key: CURRENT_SEASON
       });
-      const res = await Promise.all([
-        TOAProvider.getAPI().getEvent(match.eventKey),
-        TOAProvider.getAPI().getMatchParticipants(match.matchKey)
-      ]);
-      match.event = res[0];
-      match.participants = res[1];
-      resolve(match);
+      if (match) {
+        match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
+        resolve(match);
+      } else {
+        resolve(undefined);
+      }
     } catch (e) {
       reject(e);
     }
@@ -48,20 +47,20 @@ export const getHighScoreMatch = (
 };
 
 export const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
-  const overall = new Match().fromJSON(props.overallHighScoreMatch);
-  overall.event = new Event().fromJSON(props.overallHighScoreEvent);
+  const overall = new Match().fromJSON(props.overallHighScoreMatch ?? {});
+  overall.event = new Event().fromJSON(props.overallHighScoreEvent ?? {});
   overall.participants = props.overallHighScoreParticipants.map((p: any) =>
     new MatchParticipant().fromJSON(p)
   );
 
-  const quals = new Match().fromJSON(props.qualsHighScoreMatch);
-  quals.event = new Event().fromJSON(props.qualsHighScoreEvent);
+  const quals = new Match().fromJSON(props.qualsHighScoreMatch ?? {});
+  quals.event = new Event().fromJSON(props.qualsHighScoreEvent ?? {});
   quals.participants = props.qualsHighScoreParticipants.map((p: any) =>
     new MatchParticipant().fromJSON(p)
   );
 
-  const elims = new Match().fromJSON(props.elimsHighScoreMatch);
-  elims.event = new Event().fromJSON(props.elimsHighScoreEvent);
+  const elims = new Match().fromJSON(props.elimsHighScoreMatch ?? {});
+  elims.event = new Event().fromJSON(props.elimsHighScoreEvent ?? {});
   elims.participants = props.elimsHighScoreParticipants.map((p: any) =>
     new MatchParticipant().fromJSON(p)
   );
@@ -86,24 +85,20 @@ export const fetchHomeData = async (): Promise<IRawHomeProps> => {
     getHighScoreMatch('quals'),
     getHighScoreMatch('elims')
   ]);
-
   return {
     teamSize: homePageResults[0],
     matchSize: homePageResults[1],
-    overallHighScoreMatch: undefinedToNull(homePageResults[2].toJSON()),
-    qualsHighScoreMatch: undefinedToNull(homePageResults[3].toJSON()),
-    elimsHighScoreMatch: undefinedToNull(homePageResults[4].toJSON()),
-    overallHighScoreEvent: undefinedToNull(homePageResults[2].event.toJSON()),
-    qualsHighScoreEvent: undefinedToNull(homePageResults[3].event.toJSON()),
-    elimsHighScoreEvent: undefinedToNull(homePageResults[4].event.toJSON()),
-    overallHighScoreParticipants: homePageResults[2].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    ),
-    qualsHighScoreParticipants: homePageResults[3].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    ),
-    elimsHighScoreParticipants: homePageResults[4].participants.map(p =>
-      undefinedToNull(p.toJSON())
-    )
+    overallHighScoreMatch: undefinedToNull(homePageResults[2]?.toJSON()),
+    qualsHighScoreMatch: undefinedToNull(homePageResults[3]?.toJSON()),
+    elimsHighScoreMatch: undefinedToNull(homePageResults[4]?.toJSON()),
+    overallHighScoreEvent: undefinedToNull(homePageResults[2]?.event.toJSON()),
+    qualsHighScoreEvent: undefinedToNull(homePageResults[3]?.event.toJSON()),
+    elimsHighScoreEvent: undefinedToNull(homePageResults[4]?.event.toJSON()),
+    overallHighScoreParticipants:
+      homePageResults[2]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    qualsHighScoreParticipants:
+      homePageResults[3]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    elimsHighScoreParticipants:
+      homePageResults[4]?.participants.map(p => undefinedToNull(p.toJSON())) ?? []
   };
 };

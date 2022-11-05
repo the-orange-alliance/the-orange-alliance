@@ -17,9 +17,9 @@ const LoginPage: NextPage = () => {
 
   const doSignUp = () => {
     if (!fullName || fullName.trim().length < 4) {
-      // snackbar.open('You forgot to type your FULL NAME.');
+      toast.error('You forgot to type your FULL NAME.');
     } else if (password !== confirmPassword) {
-      // snackbar.open(`Those passwords didn't match. Try again.`);
+      toast.error(`Those passwords didn't match. Try again.`);
     } else {
       signUp(email, fullName, password, team)
         .then(() => {

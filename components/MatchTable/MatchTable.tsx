@@ -49,10 +49,11 @@ const MatchesTable = (props: IProps) => {
 
   useEffect(() => {
     if (selectedMatch) setDrawerOpen(true);
-    if (selectedMatch && selectedMatch.details.matchKey === '') {
+    if (selectedMatch && selectedMatch.details.matchDetailKey === '') {
       TOAProvider.getAPI()
         .getMatchDetails(selectedMatch.matchKey)
         .then(dtls => {
+          console.log(dtls);
           const copy = new Match().fromJSON(selectedMatch.toJSON());
           copy.details = dtls;
           // Set these details because this technically should reference to the original data we got from the server
@@ -60,7 +61,7 @@ const MatchesTable = (props: IProps) => {
           selectedMatch.details = dtls;
           setSelectedMatch(copy);
         })
-        .catch(() => {
+        .catch(err => {
           setDrawerOpen(false);
         });
     }
