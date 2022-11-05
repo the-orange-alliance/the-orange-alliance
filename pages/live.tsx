@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   List,
@@ -19,6 +19,7 @@ import {
   useStreamsData
 } from '../lib/page-helpers/streams-helper';
 import * as Layouts from '../components/streaming/layouts';
+import { useRouter } from 'next/router';
 
 interface StreamView {
   id: string;
@@ -103,10 +104,18 @@ const Streams: NextPage<IRawStreamsProps> = props => {
   const [showChat, setShowChat] = useState<boolean>(true);
   const [selectedLayout, setSelectedLayout] = useState<StreamView | null>(null);
   const theme = useTheme();
+  const router = useRouter();
   const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const LayoutContainer = useMemo(() => selectedLayout?.container, [selectedLayout]);
+
+  useEffect(() => {
+    // If query param is set, use the basic layout
+    if (router.query.e) {
+      setSelectedLayout(views[0]);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Box

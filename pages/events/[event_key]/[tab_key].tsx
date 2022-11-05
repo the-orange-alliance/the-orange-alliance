@@ -51,9 +51,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
         {streams && Array.isArray(streams) && streams.length > 0 && streams[0].isActive && (
           <Typography sx={{ margin: 1 }} variant={'body2'}>
             <Videocam fontSize="inherit" sx={{ marginRight: 1 }} />
-            <Link href={`/stream?e=${eventData.eventKey}`}>
-              {t('pages.event.stream_available')}
-            </Link>
+            <Link href={`/live?e=${eventData.eventKey}`}>{t('pages.event.stream_available')}</Link>
           </Typography>
         )}
         {eventData.dataSource !== DataSource.Unknown && (

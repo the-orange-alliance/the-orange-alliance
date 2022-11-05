@@ -17,11 +17,21 @@ import {
 import StreamIcon from '@mui/icons-material/VideocamRounded';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
+import { useRouter } from 'next/router';
 
-const LiveStreamPanel = ({ streams }: { streams: EventLiveStream[] }) => {
+const LiveStreamPanel = ({
+  streams,
+  readFromQuery
+}: {
+  streams: EventLiveStream[];
+  readFromQuery: boolean;
+}) => {
   const t = useTranslate();
+  const router = useRouter();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedStream, setSelectedStream] = useState<EventLiveStream | null>(null);
+  const [selectedStream, setSelectedStream] = useState<EventLiveStream | null>(
+    readFromQuery ? streams.find(stream => stream.eventKey === router.query.e) ?? null : null
+  );
 
   const selectStream = (stream: EventLiveStream) => {
     setSelectedStream(stream);
