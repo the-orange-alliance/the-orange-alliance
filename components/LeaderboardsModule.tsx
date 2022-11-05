@@ -3,6 +3,8 @@ import SimpleMatchTable from '../components/SimpleMatchTable';
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import { useTranslate } from '../i18n/i18n';
 import { Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
+import { useAppContext } from '../pages/_app';
+import { CURRENT_SEASON } from '../constants';
 
 interface IProps {
   quals: Match;
@@ -13,6 +15,11 @@ interface IProps {
 const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
   const t = useTranslate();
   const theme = useTheme();
+  const context = useAppContext();
+  const currentSeason = context.seasons.find(s => s.seasonKey === CURRENT_SEASON);
+  const header =
+    (currentSeason ? `${currentSeason.description}` : '') +
+    ` 20${CURRENT_SEASON.substr(0, 2)}/${CURRENT_SEASON.substr(2, 2)}`;
 
   function renderMatch(title: string, subtitle: string, match: Match) {
     return (
@@ -41,7 +48,7 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
 
   return (
     <Card>
-      <CardHeader title={t('pages.home.leaderboards.title')} subheader={'FREIGHT FRENZY 2021/22'} />
+      <CardHeader title={t('pages.home.leaderboards.title')} subheader={header} />
       <Divider />
       <CardContent>
         {renderMatch(
