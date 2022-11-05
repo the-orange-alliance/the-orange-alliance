@@ -40,6 +40,11 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
     }
   }, []);
 
+  // Close sidebar on route change
+  useEffect(() => {
+    if (mobileOpen) setMobileOpen(false);
+  }, [router.route]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const getUser = () => {
     getUserData().then(user => {
       setUser(user);
