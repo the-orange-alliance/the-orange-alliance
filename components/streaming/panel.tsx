@@ -24,7 +24,7 @@ const LiveStreamPanel = ({
   readFromQuery
 }: {
   streams: EventLiveStream[];
-  readFromQuery: boolean;
+  readFromQuery?: boolean;
 }) => {
   const t = useTranslate();
   const router = useRouter();
