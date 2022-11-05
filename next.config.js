@@ -9,10 +9,7 @@ const withTM = require('next-transpile-modules')([
 
 const cfg = {
   reactStrictMode: true,
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')]
-  },
-  swcMinify: false,
+  swcMinify: true,
   async redirects() {
     return [
       {
