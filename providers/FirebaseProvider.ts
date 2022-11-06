@@ -12,7 +12,8 @@ import {
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
   updateProfile,
-  sendEmailVerification
+  sendEmailVerification,
+  updateEmail
 } from 'firebase/auth';
 import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import TOAUser from '../lib/TOAUser';
@@ -85,6 +86,33 @@ export const signUp = (email: string, name: string, password: string, team: stri
       return sendEmailVerification(user.user);
     });
   });
+};
+
+export const changeDisplayName = (name: string) => {
+  if (auth.currentUser != null) {
+    updateProfile(auth.currentUser, { displayName: name })
+      .then(() => {})
+      .catch(error => console.log(error));
+  }
+};
+
+export const changeEmail = (email: string) => {
+  if (auth.currentUser != null) {
+    let successful = true;
+    updateEmail(auth.currentUser, email)
+      .catch(() => {
+        successful = false;
+      })
+      .then(() => {
+        if (auth.currentUser != null) {
+          sendEmailVerification(auth?.currentUser);
+        }
+      });
+
+    return successful;
+  }
+
+  return false;
 };
 
 export const loginWithGoogle = async () => {
