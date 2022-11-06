@@ -124,7 +124,7 @@ export const isLoggedIn = () => {
   return auth.currentUser !== null;
 };
 
-export const getUserData = (type?: string): Promise<TOAUser> => {
+export const fetchUserData = (type?: string): Promise<TOAUser> => {
   return new Promise<TOAUser>((resolve, reject) => {
     getToken()
       .then(token => {

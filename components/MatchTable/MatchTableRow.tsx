@@ -1,6 +1,7 @@
 import * as React from 'react';
+import NextLink from 'next/link';
 import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import { TableRow, TableCell, Grid, Typography, Box } from '@mui/material';
+import { TableRow, TableCell, Grid, Typography, Box, Link } from '@mui/material';
 import IconPlay from '@mui/icons-material/PlayCircleOutline';
 import { colorCalc, isSameDay } from '../../lib/utils/common';
 import { useTheme } from '@mui/material/styles';
@@ -41,7 +42,13 @@ const MatchTableRow = ({
         >
           <Typography align="center">{match.matchName}</Typography>
         </TableCell>
-        <TableCell>
+        <TableCell
+          padding="none"
+          sx={{
+            textAlign: 'center',
+            verticalAlign: 'middle'
+          }}
+        >
           {match.videoURL ? (
             <a href={match.videoURL} target={'_blank'} rel={'noreferrer'}>
               <IconPlay />
@@ -200,19 +207,21 @@ const MatchTeamDisplay = ({
             }}
             onClick={() => selectTeam(team)}
           >
-            <Box style={{ padding: '19px' }} color={'inherit'}>
-              <a
-                style={{
+            <NextLink href={`/teams/${team.teamKey}`} passHref>
+              <Link
+                underline="none"
+                sx={{
                   ...theme.typography.body1,
                   textAlign: 'center',
-                  textDecoration: 'none',
-                  fontWeight: win ? 'bolder' : 'normal',
-                  color: theme.palette.text.primary
+                  fontWeight: win ? 700 : undefined,
+                  color: theme.palette.text.primary,
+                  padding: '0.5rem',
+                  display: 'block'
                 }}
               >
                 {team.teamKey}
-              </a>
-            </Box>
+              </Link>
+            </NextLink>
           </Grid>
         ))}
       </Grid>
@@ -242,11 +251,12 @@ const MatchScoreDisplay = ({
         variant={'body1'}
         color={'inherit'}
         style={{
+          ...theme.typography.body1,
           textAlign: 'center',
-          textDecoration: 'none',
-          fontWeight: win ? 'bolder' : 'normal',
+          fontWeight: win ? 700 : undefined,
           color: theme.palette.text.primary,
-          padding: '19px'
+          padding: '0.5rem',
+          display: 'block'
         }}
       >
         {score > -1 ? score : '?'}
@@ -285,7 +295,7 @@ const ScheduledTimeDisplay = ({ time }: { time: Date }) => {
           textDecoration: 'none',
           fontStyle: 'italic',
           color: theme.palette.text.primary,
-          padding: '19px'
+          padding: '0.5rem'
         }}
       >
         {displayString}

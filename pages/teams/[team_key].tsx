@@ -134,19 +134,27 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   </Select>
                   {team.events.length > 0 && (
                     <List>
-                      <ListItem button onClick={() => scrollToEvent('info')}>
+                      <ListItem
+                        button
+                        onClick={() => scrollToEvent('info')}
+                        sx={{ fontWeight: 500 }}
+                      >
                         {t('pages.team.team_info')}
                       </ListItem>
-                      <ListItem button onClick={() => scrollToEvent('event-results')}>
+                      <ListItem
+                        button
+                        onClick={() => scrollToEvent('event-results')}
+                        sx={{ fontWeight: 500 }}
+                      >
                         {t('pages.team.event_results')}
                       </ListItem>
-                      <ListItem>
+                      <ListItem sx={{ pt: 0, pr: 0 }}>
                         <List>
                           {team.events.map(event => (
                             <ListItem
                               button
                               key={event.eventKey}
-                              sx={{ marginBottom: 1 }}
+                              sx={{ fontSize: '0.875rem', px: 1.5 }}
                               onClick={() => scrollToEvent(event.eventKey)}
                             >
                               {event.divisionName

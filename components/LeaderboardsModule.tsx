@@ -1,8 +1,9 @@
 import * as React from 'react';
+import NextLink from 'next/link';
 import SimpleMatchTable from '../components/SimpleMatchTable';
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import { useTranslate } from '../i18n/i18n';
-import { Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
+import { Card, CardContent, CardHeader, Divider, Link, Typography, useTheme } from '@mui/material';
 import { useAppContext } from '../pages/_app';
 import { CURRENT_SEASON } from '../constants';
 
@@ -17,9 +18,9 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
   const theme = useTheme();
   const context = useAppContext();
   const currentSeason = context.seasons.find(s => s.seasonKey === CURRENT_SEASON);
-  const header =
-    (currentSeason ? `${currentSeason.description}` : '') +
-    ` 20${CURRENT_SEASON.substr(0, 2)}/${CURRENT_SEASON.substr(2, 2)}`;
+  const header = ` 20${CURRENT_SEASON.substring(0, 2)}/${CURRENT_SEASON.substring(2, 4)} ${
+    currentSeason?.description || ''
+  }`;
 
   function renderMatch(title: string, subtitle: string, match: Match) {
     return (
@@ -28,19 +29,21 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
         <Typography variant={'subtitle1'} gutterBottom>
           {subtitle}
         </Typography>
-        <Typography variant={'subtitle1'}>
-          <a
-            style={{ color: theme.palette.text.primary }}
-            href={`/events/${match.event?.eventKey}/rankings`}
+        <NextLink href={`/events/${match.event?.eventKey}/rankings`} passHref>
+          <Link
+            underline="none"
+            fontSize="0.875rem"
+            color={theme.palette.secondary.light}
+            display="block"
           >
             {match.event?.eventName}
-          </a>
-        </Typography>
-        <Typography variant={'body2'}>
-          <a style={{ color: theme.palette.text.primary }} href={`/matches/${match.matchKey}`}>
+          </Link>
+        </NextLink>
+        <NextLink href={`/matches/${match.matchKey}`} passHref>
+          <Link underline="none" fontWeight={500} display="block" mb={1}>
             {match.matchName}
-          </a>
-        </Typography>
+          </Link>
+        </NextLink>
         <SimpleMatchTable match={match} />
       </div>
     );

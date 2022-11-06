@@ -16,7 +16,7 @@ import TOAUser from '../../lib/TOAUser';
 import { onAuthStateChanged } from 'firebase/auth';
 import {
   getAuthInstance,
-  getUserData,
+  fetchUserData,
   inStartupState,
   isLoggedIn
 } from '../../providers/FirebaseProvider';
@@ -52,7 +52,7 @@ const EventTabs = ({ event, streams }: IProps) => {
   }, []);
 
   const getUser = () => {
-    getUserData().then(user => {
+    fetchUserData().then(user => {
       setUser(user);
     });
   };
@@ -176,7 +176,8 @@ const EventTabs = ({ event, streams }: IProps) => {
                     key={tab.id}
                     value={tab.id}
                     sx={{
-                      display: 'inline !important'
+                      display: 'inline !important',
+                      py: 2.5
                     }}
                     label={
                       <>

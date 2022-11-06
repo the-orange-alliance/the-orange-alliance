@@ -15,7 +15,6 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import {
-  getUserData,
   isLoggedIn,
   generateApiKey,
   getAuthInstance,
@@ -23,7 +22,8 @@ import {
   inStartupState,
   linkProvider,
   unlinkProvider,
-  sendPasswordReset
+  sendPasswordReset,
+  fetchUserData
 } from '../../providers/FirebaseProvider';
 import { useEffect, useState } from 'react';
 import TOAUser from '../../lib/TOAUser';
@@ -63,7 +63,7 @@ const AccountPage: NextPage = () => {
 
   const initPage = () => {
     // Get Data from Firebase
-    getUserData()
+    fetchUserData()
       .then(user => {
         // Set User Data
         setToaUser(user);

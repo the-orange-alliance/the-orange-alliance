@@ -1,5 +1,5 @@
 // Create a theme instance.
-import { createTheme, PaletteMode, Theme } from '@mui/material';
+import { createTheme, PaletteMode, Shadows, Theme } from '@mui/material';
 import { orange } from '@mui/material/colors';
 
 const mode: PaletteMode = 'light';
@@ -20,9 +20,24 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     }
   },
   shape: {
-    borderRadius: 4
+    borderRadius: 8
   },
+  shadows: [
+    'none',
+    '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+    '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+    '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+    ...(Array(25 - 6).fill('none') as string[])
+  ] as Shadows,
   components: {
+    MuiLink: {
+      defaultProps: {
+        underline: 'hover',
+        color: 'inherit'
+      }
+    },
     MuiCard: {
       styleOverrides: {
         root: {
@@ -33,6 +48,17 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
       },
       defaultProps: {
         elevation: 0
+      }
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        title: {
+          fontSize: '1.125rem',
+          fontWeight: 500
+        },
+        subheader: {
+          fontSize: '0.875rem'
+        }
       }
     },
     MuiListItem: {

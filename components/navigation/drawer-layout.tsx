@@ -4,14 +4,6 @@ import { Box, Drawer, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Navbar from './navbar';
 import DrawerContent from './drawer-content';
-import TOAUser from '../../lib/TOAUser';
-import {
-  getAuthInstance,
-  getUserData,
-  inStartupState,
-  isLoggedIn
-} from '../../providers/FirebaseProvider';
-import { onAuthStateChanged } from 'firebase/auth';
 
 const DRAWER_WIDTH = 240;
 
@@ -23,33 +15,13 @@ interface DrawerLayoutProps {
 const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
   const router = useRouter();
   const theme = useTheme();
-  const [user, setUser] = useState<TOAUser>();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  useEffect(() => {
-    onAuthStateChanged(getAuthInstance(), user => {
-      if (user) {
-        getUser();
-      } else {
-        setUser(undefined);
-      }
-    });
-    if (!inStartupState() || isLoggedIn()) {
-      getUser();
-    }
-  }, []);
 
   // Close sidebar on route change
   useEffect(() => {
     if (mobileOpen) setMobileOpen(false);
   }, [router.route]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getUser = () => {
-    getUserData().then(user => {
-      setUser(user);
-    });
-  };
 
   const temporaryDrawer = useMemo(
     () => smallScreen || ['/live'].includes(router.route),
@@ -79,7 +51,7 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
           }}
         >
           <Toolbar />
-          <DrawerContent toaUser={user} />
+          <DrawerContent />
         </Drawer>
       </Box>
 

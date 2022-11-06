@@ -15,21 +15,16 @@ import LegalIcon from '@mui/icons-material/DescriptionRounded';
 import { useTranslate } from '../../i18n/i18n';
 import DrawerItem from './drawer-item';
 import TOAUser from '../../lib/TOAUser';
+import AccountItem from './account-item';
 
-const DrawerContent = ({ toaUser }: { toaUser: TOAUser | undefined }) => {
+const DrawerContent = () => {
   const router = useRouter();
   const t = useTranslate();
 
   return (
     <Box sx={{ overflowY: 'auto' }}>
       <Box my={1}>
-        <DrawerItem
-          title="myTOA"
-          href="/account"
-          icon={<AccountIcon />}
-          toaUser={toaUser}
-          isMyToa={true}
-        />
+        <AccountItem />
       </Box>
       <Divider light />
       <DrawerItem

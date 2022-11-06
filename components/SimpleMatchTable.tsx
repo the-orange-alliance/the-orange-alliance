@@ -9,10 +9,11 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
+  TableRow,
+  Link
 } from '@mui/material';
 import { colorCalc } from '../lib/utils/common';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 interface IProps {
   match: Match;
@@ -27,32 +28,26 @@ const SimpleMatchTable = (props: IProps) => {
     const redAlliance: MatchParticipant[] = participants.filter(
       (p: MatchParticipant) => p.station < MatchStations.Blue1
     );
-    const redView = redAlliance.map((p: MatchParticipant) => {
-      return (
-        <TableCell key={p.matchParticipantKey} align="center">
-          <Link href={`/teams/${p.teamKey}`}>
-            <Typography
-              variant={'body1'}
-              style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
-            >
-              {p.teamKey}
-            </Typography>
-          </Link>
-        </TableCell>
-      );
-    });
     return (
       <TableRow
         style={{
           backgroundColor: colorCalc(false, 'red', match.redScore > match.blueScore)
         }}
       >
-        {redView}
+        {redAlliance.map((p: MatchParticipant) => (
+          <TableCell key={p.matchParticipantKey} align="center">
+            <NextLink href={`/teams/${p.teamKey}`} passHref>
+              <Link
+                fontWeight={match.blueScore < match.redScore ? 700 : undefined}
+                underline="none"
+              >
+                {p.teamKey}
+              </Link>
+            </NextLink>
+          </TableCell>
+        ))}
         <TableCell align="center">
-          <Typography
-            variant={'body1'}
-            style={{ fontWeight: match.blueScore < match.redScore ? 'bolder' : 'normal' }}
-          >
+          <Typography fontWeight={match.blueScore < match.redScore ? 700 : undefined}>
             {match.redScore}
           </Typography>
         </TableCell>
@@ -65,32 +60,28 @@ const SimpleMatchTable = (props: IProps) => {
     const blueAlliance: MatchParticipant[] = participants.filter(
       (p: MatchParticipant) => p.station >= MatchStations.Blue1
     );
-    const blueView = blueAlliance.map((p: MatchParticipant) => {
-      return (
-        <TableCell key={p.matchParticipantKey} align="center">
-          <Link href={`/teams/${p.teamKey}`}>
-            <Typography
-              variant={'body1'}
-              style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
-            >
-              {p.teamKey}
-            </Typography>
-          </Link>
-        </TableCell>
-      );
-    });
     return (
       <TableRow
         style={{
           backgroundColor: colorCalc(false, 'blue', match.redScore < match.blueScore)
         }}
       >
-        {blueView}
+        {blueAlliance.map((p: MatchParticipant) => {
+          return (
+            <TableCell key={p.matchParticipantKey} align="center">
+              <NextLink href={`/teams/${p.teamKey}`} passHref>
+                <Link
+                  fontWeight={match.blueScore > match.redScore ? 700 : undefined}
+                  underline="none"
+                >
+                  {p.teamKey}
+                </Link>
+              </NextLink>
+            </TableCell>
+          );
+        })}
         <TableCell align="center">
-          <Typography
-            variant={'body1'}
-            style={{ fontWeight: match.blueScore > match.redScore ? 'bolder' : 'normal' }}
-          >
+          <Typography fontWeight={match.blueScore > match.redScore ? 700 : undefined}>
             {match.blueScore}
           </Typography>
         </TableCell>
@@ -101,15 +92,24 @@ const SimpleMatchTable = (props: IProps) => {
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table>
+        <Table
+          sx={{
+            '& .MuiTableCell-root': {
+              padding: '0.675rem'
+            },
+            '& .MuiTableRow-root:last-child .MuiTableCell-root': {
+              borderBottom: 'none'
+            }
+          }}
+        >
           {header ? (
             <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
               <TableRow>
                 <TableCell align="center" colSpan={match.participants.length > 4 ? 3 : 2}>
-                  <Typography variant={'subtitle1'}>Teams</Typography>
+                  <Typography>Teams</Typography>
                 </TableCell>
                 <TableCell align="center" colSpan={1}>
-                  <Typography variant={'subtitle1'}>Scores</Typography>
+                  <Typography>Scores</Typography>
                 </TableCell>
               </TableRow>
             </TableHead>

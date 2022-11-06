@@ -32,20 +32,16 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
   const router = useRouter();
   const [results, setResults] = useState<SearchResult>(new SearchResult());
   const [loading, setLoading] = useState<boolean>(false);
-  const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const [hideSearchMobile, setHideSearchMobile] = useState<boolean>(smallScreen);
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [hideSearchMobile, setHideSearchMobile] = useState<boolean>(isSmallScreen);
   const searchTextRef = useRef<any>();
 
   let searchTimeout: any = null;
 
   useEffect(() => {
-    if (!hideSearchMobile) searchTextRef.current.focus();
-  }, [hideSearchMobile]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
     // if small screen changes, hide search
-    if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
-  }, [smallScreen]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (isSmallScreen && !hideSearchMobile) setHideSearchMobile(true);
+  }, [isSmallScreen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSearchChange = (e: any) => {
     // Clear any set timeouts
@@ -97,22 +93,22 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
       setLoading(true);
       router.push({ pathname: `/teams/${val.team_key}` }).then(() => {
         setLoading(false);
-        if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
+        if (isSmallScreen && !hideSearchMobile) setHideSearchMobile(true);
       });
     } else if (val.event_key) {
       if (router.query.event_key && router.query.event_key === val.event_key) return;
       setLoading(true);
       router.push({ pathname: `/events/${val.event_key}/rankings` }).then(() => {
         setLoading(false);
-        if (smallScreen && !hideSearchMobile) setHideSearchMobile(true);
+        if (isSmallScreen && !hideSearchMobile) setHideSearchMobile(true);
       });
     }
   };
 
   const handleShowSearch = (e: any) => {
-    if (smallScreen) {
+    if (isSmallScreen) {
       setHideSearchMobile(!hideSearchMobile);
-    } else if (!smallScreen && hideSearchMobile) {
+    } else if (!isSmallScreen && hideSearchMobile) {
       setHideSearchMobile(false);
     }
   };
@@ -138,12 +134,12 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
         >
           <MenuIcon />
         </IconButton>
-        {(hideSearchMobile || !smallScreen) && (
+        {(hideSearchMobile || !isSmallScreen) && (
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
         )}
-        {hideSearchMobile && smallScreen && (
+        {hideSearchMobile && isSmallScreen && (
           <IconButton
             color="inherit"
             aria-label={'Show Search'}
@@ -154,7 +150,7 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
             <Search />
           </IconButton>
         )}
-        {(!smallScreen || !hideSearchMobile) && (
+        {(!isSmallScreen || !hideSearchMobile) && (
           <Autocomplete
             freeSolo
             disabled={loading}

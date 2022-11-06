@@ -205,7 +205,7 @@ const MatchesTable = (props: IProps) => {
                 <TableCell className={`p-0 ${bg}-bg`} padding={'none'}>
                   <Typography
                     className={'match-table-text win'}
-                    style={{ padding: '17px' }}
+                    sx={{ padding: '0.25rem' }}
                     align="center"
                     onClick={() => setSelectedMatch(m)}
                   >
