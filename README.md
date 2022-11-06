@@ -1,4 +1,4 @@
-# The Oragne Alliance
+# The Orange Alliance
 
 ## Setup
 
