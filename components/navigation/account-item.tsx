@@ -9,7 +9,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 import {
   fetchUserData,
   getAuthInstance,
-  getUserData,
   inStartupState,
   isLoggedIn
 } from '../../providers/FirebaseProvider';
