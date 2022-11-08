@@ -68,6 +68,11 @@
       "short_info": "Looks like you've followed a broken link or entered a team/event/match that doesn't exist."
     },
 
+    "500": {
+      "title": "Internal Server Error",
+      "short_info": "Something within TOA is very sad. Please try again later. If the issue persists, please reach out on our Discord."
+    },
+
     "about": {
       "title": "About Us"
     },
