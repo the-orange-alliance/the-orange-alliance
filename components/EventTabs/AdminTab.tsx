@@ -254,17 +254,17 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
     <Grid container direction={'row'}>
       {/* Left Column */}
       <Grid item xs={12} md={6}>
-        <Card sx={cardSx}>
-          <CardContent>
-            <Typography sx={{ mb: 4 }} variant={'h6'}>
-              {t('pages.account.datasync_card.title')}
-            </Typography>
-            <Button variant={'contained'}>
-              <Autorenew />
-              Start Datasync
-            </Button>
-          </CardContent>
-        </Card>
+        {/*<Card sx={cardSx}>*/}
+        {/*  <CardContent>*/}
+        {/*    <Typography sx={{ mb: 4 }} variant={'h6'}>*/}
+        {/*      {t('pages.account.datasync_card.title')}*/}
+        {/*    </Typography>*/}
+        {/*    <Button variant={'contained'}>*/}
+        {/*      <Autorenew />*/}
+        {/*      Start Datasync*/}
+        {/*    </Button>*/}
+        {/*  </CardContent>*/}
+        {/*</Card>*/}
         <Card sx={cardSx}>
           <CardContent>
             <Typography sx={{ mb: 4 }} variant={'h6'}>
