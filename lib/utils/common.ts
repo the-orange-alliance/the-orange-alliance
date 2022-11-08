@@ -2,12 +2,14 @@ import { Region, Season, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 
 function readableDate(date: Date | string): string {
+  if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
   const shortMonth = getShortMonth(date.getMonth());
   return `${shortMonth} ${date.getDate() + 1}, ${date.getFullYear()}`;
 }
 
 function readableTime(date: Date | string): string {
+  if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
   const hour = date.getHours() + 1;
   const min = date.getMinutes();
@@ -155,7 +157,7 @@ function getWeekName(week: string) {
     case 'FOC':
       return 'Festival of Champions';
     default:
-      if (week.match('-?\\d+(\\.\\d+)?')) {
+      if (week && week.match('-?\\d+(\\.\\d+)?')) {
         // match a number with optional '-' and decimal.
         return 'Week ' + week;
       } else {

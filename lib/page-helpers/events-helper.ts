@@ -34,6 +34,7 @@ export const fetchEventsData = async (): Promise<IRawEventsProps> => {
 export const organizeEventsByWeek = (events: Event[]): Week[] => {
   const tempWeek = {} as { [key: string]: Week };
   for (const event of events) {
+    if (!event.weekKey) continue; // Skip events without a week key
     if (tempWeek[event.weekKey] === undefined) {
       tempWeek[event.weekKey] = {
         weekKey: event.weekKey,
