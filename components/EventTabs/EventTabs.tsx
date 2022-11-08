@@ -113,7 +113,8 @@ const EventTabs = ({ event, streams }: IProps) => {
       user &&
       (user.level === 6 ||
         user.adminRegions.includes(event.regionKey) ||
-        user.adminEvents.includes(event.eventKey))
+        user.adminEvents.includes(event.eventKey) ||
+        (event.leagueKey && user.adminLeagues.includes(event.leagueKey)))
     ) {
       tabs.push({
         id: 'admin',
