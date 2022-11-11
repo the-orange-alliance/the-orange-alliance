@@ -179,7 +179,9 @@ const MatchTeamDisplay = ({
 }) => {
   const teamCount = match.participants.length;
   const startPos = color === 'red' ? 0 : teamCount / 2;
-  const teams = match.participants.slice(startPos, startPos + teamCount / 2);
+  const teams = match.participants
+    .sort((a, b) => a.station - b.station)
+    .slice(startPos, startPos + teamCount / 2);
   const theme = useTheme();
 
   const selectTeam = (team: MatchParticipant) => {

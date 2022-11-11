@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "@mui/system": "^5.10.13",
-    "@the-orange-alliance/api": "^0.1.17-crossfetch",
+    "@the-orange-alliance/api": "^0.1.19-crossfetch",
     "bootstrap": "^5.1.3",
     "firebase": "^9.5.0",
     "next": "^12.3.1",
