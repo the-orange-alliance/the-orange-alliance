@@ -23,7 +23,9 @@ import {
   linkProvider,
   unlinkProvider,
   sendPasswordReset,
-  fetchUserData
+  fetchUserData,
+  changeDisplayName,
+  changeEmail
 } from '../../providers/FirebaseProvider';
 import { useEffect, useState } from 'react';
 import TOAUser from '../../lib/TOAUser';
@@ -161,6 +163,40 @@ const AccountPage: NextPage = () => {
       .catch(() => {
         toast.error(t('general.error_occurred'));
       });
+  };
+
+  const changeName = () => {
+    const name = prompt('Please Enter a New Name:');
+
+    if (name == null) {
+      toast.error(t('general.error_occurred'));
+      return;
+    }
+
+    changeDisplayName(name);
+    const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+    newUser.displayName = name;
+    setToaUser(newUser);
+    toast.success(t('account.updated_name'));
+  };
+
+  const changeEmailAddress = () => {
+    const email = prompt('Please Enter a New Email:');
+
+    if (email == null) {
+      toast.error(t('general.error_occurred'));
+      return;
+    }
+    const success = changeEmail(email);
+
+    if (success) {
+      const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+      newUser.email = email;
+      setToaUser(newUser);
+      toast.success(t('account.updated_email'));
+    } else {
+      toast.error(t('account.fail_update_email'));
+    }
   };
 
   return (
@@ -344,6 +380,22 @@ const AccountPage: NextPage = () => {
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Github')}
                     </ListItemText>
+                  </ListItem>
+
+                  {/* Change Name */}
+                  <ListItem button onClick={changeName}>
+                    <ListItemIcon>
+                      <Lock />
+                    </ListItemIcon>
+                    <ListItemText>{t('pages.account.change_name')}</ListItemText>
+                  </ListItem>
+
+                  {/* Change Email Address */}
+                  <ListItem button onClick={changeEmailAddress}>
+                    <ListItemIcon>
+                      <Lock />
+                    </ListItemIcon>
+                    <ListItemText>{t('pages.account.change_email_address')}</ListItemText>
                   </ListItem>
 
                   {/* Login Info */}
