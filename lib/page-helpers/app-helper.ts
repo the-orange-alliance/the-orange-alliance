@@ -29,6 +29,7 @@ export const useAppData = (props: IRawAppProps): TOAAppContext =>
   useMemo(() => parseAppProps(props), [props]);
 
 export const fetchAppData = async (): Promise<IRawAppProps> => {
+  console.log('Fetching app data...');
   const data = await Promise.all([
     TOAProvider.getAPI().getRegions(),
     TOAProvider.getAPI().getSeasons(),

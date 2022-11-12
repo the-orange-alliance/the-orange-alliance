@@ -490,6 +490,12 @@
     "rank": "Rank",
     "wlt": "WLT",
     "played": "Played",
+    "levels": {
+      "finals": "Finals",
+      "semifinals": "Semifinals",
+      "quarterfinals": "Quarterfinals",
+      "qualifications": "Qualifications"
+    },
     "help": {
       "bold": "<b>Bold</b> is Winning Alliance</small>",
       "bold_and_black": "<b>Bold and Black</b> is Selected Team</small>",

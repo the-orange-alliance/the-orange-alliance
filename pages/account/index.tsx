@@ -34,7 +34,7 @@ import { Region, Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { GitHub, Google, Lock, LockClock, Password } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -323,7 +323,10 @@ const AccountPage: NextPage = () => {
                     )}
                     <Typography sx={{ marginTop: 2 }} variant={'subtitle1'}>
                       {t('pages.account.api_card.docs') + ' '}
-                      <Link href="/apidocs">{t('general.here')}</Link>.
+                      <NextLink href="/apidocs">
+                        <a>{t('general.here')}</a>
+                      </NextLink>
+                      .
                     </Typography>
                   </Grid>
                   <Grid item xs={3}>

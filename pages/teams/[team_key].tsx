@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 import NextImage from 'next/image';
 import {
   Typography,
@@ -20,7 +21,9 @@ import {
   Grid,
   useTheme,
   List,
-  ListItem
+  ListItem,
+  CardHeader,
+  Link
 } from '@mui/material';
 import {
   Book,
@@ -43,7 +46,7 @@ import { getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchesTable from '../../components/MatchTable/MatchTable';
-import { useAppContext } from '../_app';
+import { useAppContext } from '../../lib/toa-context';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();
@@ -325,60 +328,47 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     sx={{ marginBottom: 3 }}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}
                   >
-                    <CardContent>
-                      <Box>
-                        <a
-                          style={{ color: theme.palette.text.primary }}
-                          href={`/events/${event.eventKey}/rankings`}
-                        >
-                          <Typography variant={'h5'}>
-                            <b>
-                              {event.divisionName
-                                ? event.eventName + ' - ' + event.divisionName + ' Division'
-                                : event.eventName}
-                            </b>
-                          </Typography>
-                        </a>
-                        <Typography variant={'subtitle2'}>
-                          {event.city}, {event.stateProv ? event.stateProv + ', ' : ''}
-                          {event.country} on {readableDate(event.startDate)}
+                    <CardHeader
+                      title={
+                        <NextLink href={`/events/${event.eventKey}/rankings`} passHref>
+                          <Link fontSize="1.25rem">{event.fullEventName}</Link>
+                        </NextLink>
+                      }
+                      subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
+                      ${event.country} on ${readableDate(event.startDate)}`}
+                    />
+                    <CardContent sx={{ pt: 0 }}>
+                      {event.rankings[0] && (
+                        <Typography variant={'body2'} className={'mb-1 mt-1'}>
+                          <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
+                          <b>
+                            {event.rankings[0].wins}-{event.rankings[0].losses}-
+                            {event.rankings[0].ties}
+                          </b>
+                          {event.rankings[0] && (
+                            <a>
+                              {' '}
+                              and an OPR of <b>{event.rankings[0].opr}</b>
+                            </a>
+                          )}
                         </Typography>
-                        <Divider className={'mb-4'} />
-                        {event.rankings[0] && (
-                          <Typography variant={'body2'} className={'mb-1 mt-1'}>
-                            <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
-                            <b>
-                              {event.rankings[0].wins}-{event.rankings[0].losses}-
-                              {event.rankings[0].ties}
-                            </b>
-                            {event.rankings[0] && (
-                              <a>
-                                {' '}
-                                and an OPR of <b>{event.rankings[0].opr}</b>
-                              </a>
-                            )}
-                          </Typography>
-                        )}
-                        {event.awards.map(award => (
-                          <Typography
-                            className={'mt-1 mb-1'}
-                            variant={'body2'}
-                            key={award.awardKey}
-                          >
-                            <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
-                            {award.award.awardDescription}
-                          </Typography>
-                        ))}
-                        {event.matches.length > 0 && (
-                          <MatchesTable
-                            event={event}
-                            forceSmall
-                            disableSingleTeamTeam
-                            disableSelection
-                          />
-                        )}
-                        {event.matches.length < 1 && <Typography variant={'body1'} />}
-                      </Box>
+                      )}
+                      {event.awards.map(award => (
+                        <Typography className={'mt-1 mb-1'} variant={'body2'} key={award.awardKey}>
+                          <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
+                          {award.award.awardDescription}
+                        </Typography>
+                      ))}
+                      {event.matches.length > 0 && (
+                        <MatchesTable
+                          event={event}
+                          forceSmall
+                          disableSingleTeamTeam
+                          disableSelection
+                          hideHeader
+                        />
+                      )}
+                      {event.matches.length < 1 && <Typography variant={'body1'} />}
                     </CardContent>
                   </Card>
                 ))}

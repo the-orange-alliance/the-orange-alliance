@@ -40,7 +40,9 @@ const MatchTableRow = ({
           onClick={() => match.redScore > -1 && setSelectedMatch && setSelectedMatch(match)}
           style={{ cursor: 'pointer' }}
         >
-          <Typography align="center">{match.matchName}</Typography>
+          <Typography align="center" fontSize="0.875rem">
+            {match.matchName}
+          </Typography>
         </TableCell>
         <TableCell
           padding="none"
@@ -116,7 +118,9 @@ const MatchTableRow = ({
           onClick={() => setSelectedMatch && setSelectedMatch(match)}
           style={{ cursor: 'pointer' }}
         >
-          <Typography align="center">{match.matchName}</Typography>
+          <Typography align="center" fontSize="0.875rem">
+            {match.matchName}
+          </Typography>
         </TableCell>
         <TableCell>
           {match.videoURL ? (

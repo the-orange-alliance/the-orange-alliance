@@ -15,7 +15,7 @@ import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
 import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
-import { useAppContext } from '../_app';
+import { useAppContext } from '../../lib/toa-context';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();

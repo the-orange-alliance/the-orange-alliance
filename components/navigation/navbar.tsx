@@ -12,7 +12,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { useTranslate } from '../../i18n/i18n';
-import { useAppContext } from '../../pages/_app';
+import { useAppContext } from '../../lib/toa-context';
 import { Team, Event, SearchResult } from '@the-orange-alliance/api/lib/cjs/models';
 import { useRouter } from 'next/router';
 import TOAProvider from '../../providers/TOAProvider';

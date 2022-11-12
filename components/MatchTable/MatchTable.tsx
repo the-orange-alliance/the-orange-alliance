@@ -30,6 +30,7 @@ interface IProps {
   forceSmall?: boolean;
   disableSingleTeamTeam?: boolean;
   disableSelection?: boolean;
+  hideHeader?: boolean;
 }
 
 const MatchesTable = (props: IProps) => {
@@ -112,18 +113,9 @@ const MatchesTable = (props: IProps) => {
       return (
         <>
           {/* SIDE-BY-SIDE MATCHES LEVEL HEADER */}
-          <TableRow sx={sideBySideSx}>
-            <TableCell colSpan={6}>
-              <Typography variant="h6" align="center">
-                {t(translationKey)}
-              </Typography>
-            </TableCell>
-          </TableRow>
-
-          {/* STACKED MATCHES LEVEL HEADER */}
-          <TableRow sx={stackedSx}>
-            <TableCell colSpan={4}>
-              <Typography variant="h6" align="center">
+          <TableRow>
+            <TableCell colSpan={6} sx={{ p: 1 }}>
+              <Typography fontWeight={500} align="center">
                 {t(translationKey)}
               </Typography>
             </TableCell>
@@ -158,7 +150,7 @@ const MatchesTable = (props: IProps) => {
   const renderSingleTeams = () => {
     if (singleTeamEvent && Object.keys(singleTeamSort).length > 0) {
       return Object.keys(singleTeamSort).map((key, index) => {
-        const matches = singleTeamSort[key];
+        const matches: Match[] = singleTeamSort[key];
         const bg = index % 2 === 0 ? 'red' : 'blue';
         const rank = props.event.rankings.find(r => r.teamKey === key);
         return (
@@ -208,6 +200,7 @@ const MatchesTable = (props: IProps) => {
                     sx={{ padding: '0.25rem' }}
                     align="center"
                     onClick={() => setSelectedMatch(m)}
+                    fontSize="0.875rem"
                   >
                     {m.matchName}
                   </Typography>
@@ -323,63 +316,64 @@ const MatchesTable = (props: IProps) => {
     <>
       {/* MATCH TABLE */}
       <Table className="event-match-table">
-        <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
-          {!singleTeamEvent && (
-            <>
-              {/* SIDE-BY-SIDE MATCH TABLE HEADER */}
-              <TableRow sx={sideBySideSx}>
+        {!props.hideHeader && (
+          <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
+            {singleTeamEvent ? (
+              <TableRow>
+                {!disableSingleTeamTeam && (
+                  <TableCell>
+                    <Typography align="center">Team</Typography>
+                  </TableCell>
+                )}
+                <TableCell />
                 <TableCell>
                   <Typography align="center">{t('match_table.match')}</Typography>
                 </TableCell>
-                <TableCell />
                 <TableCell>
-                  <Typography align="center">{t('match_table.red_alliance')}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography align="center">{t('match_table.blue_alliance')}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography align="center">{t('match_table.red_score')}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography align="center">{t('match_table.blue_score')}</Typography>
+                  <Typography align="center">{t('match_table.scores')}</Typography>
                 </TableCell>
               </TableRow>
+            ) : (
+              <>
+                {/* SIDE-BY-SIDE MATCH TABLE HEADER */}
+                <TableRow sx={sideBySideSx}>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.match')}</Typography>
+                  </TableCell>
+                  <TableCell />
+                  <TableCell>
+                    <Typography align="center">{t('match_table.red_alliance')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.blue_alliance')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.red_score')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.blue_score')}</Typography>
+                  </TableCell>
+                </TableRow>
 
-              {/* STACKED MATCH TABLE HEADER */}
-              <TableRow sx={stackedSx}>
-                <TableCell>
-                  <Typography align="center">{t('match_table.match')}</Typography>
-                </TableCell>
-                <TableCell />
-                <TableCell>
-                  <Typography align="center">{t('match_table.red_alliance')}</Typography>
-                  <Typography align="center">{t('match_table.blue_alliance')}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography align="center">{t('match_table.red_score')}</Typography>
-                  <Typography align="center">{t('match_table.blue_score')}</Typography>
-                </TableCell>
-              </TableRow>
-            </>
-          )}
-          {singleTeamEvent && (
-            <TableRow>
-              {!disableSingleTeamTeam && (
-                <TableCell>
-                  <Typography align="center">Team</Typography>
-                </TableCell>
-              )}
-              <TableCell />
-              <TableCell>
-                <Typography align="center">{t('match_table.match')}</Typography>
-              </TableCell>
-              <TableCell>
-                <Typography align="center">{t('match_table.scores')}</Typography>
-              </TableCell>
-            </TableRow>
-          )}
-        </TableHead>
+                {/* STACKED MATCH TABLE HEADER */}
+                <TableRow sx={stackedSx}>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.match')}</Typography>
+                  </TableCell>
+                  <TableCell />
+                  <TableCell>
+                    <Typography align="center">{t('match_table.red_alliance')}</Typography>
+                    <Typography align="center">{t('match_table.blue_alliance')}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography align="center">{t('match_table.red_score')}</Typography>
+                    <Typography align="center">{t('match_table.blue_score')}</Typography>
+                  </TableCell>
+                </TableRow>
+              </>
+            )}
+          </TableHead>
+        )}
 
         <TableBody>
           {!singleTeamEvent && (
