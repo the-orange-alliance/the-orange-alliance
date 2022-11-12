@@ -75,6 +75,13 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
           borderRadius: '1rem'
         }
       }
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        listbox: {
+          paddingTop: 0
+        }
+      }
     }
   }
 });
