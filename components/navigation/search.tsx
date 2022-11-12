@@ -141,7 +141,10 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
               p: '0 !important',
               position: 'relative',
               '& input': {
-                fontSize: '0.875rem',
+                fontSize: {
+                  base: '1rem',
+                  sm: '0.875rem'
+                },
                 padding: '0.5rem 0.75rem !important',
                 background: 'rgba(0, 0, 0, 0.04)',
                 borderRadius: '0.5rem',
@@ -163,15 +166,15 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
                     md: 'block'
                   },
                   position: 'absolute',
-                  right: '0.75rem',
+                  right: '0.75em',
                   py: 0.5
                 }}
               >
                 <Box
                   sx={{
                     px: 0.875,
-                    borderRadius: '0.25rem',
-                    fontSize: '0.875rem',
+                    borderRadius: '0.25em',
+                    fontSize: '0.875em',
                     fontWeight: 500,
                     border: '1px solid',
                     borderColor: 'rgba(0, 0, 0, 0.2)'
@@ -202,10 +205,10 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
             sx={{
               top: 0,
               position: 'sticky',
-              padding: '0.5rem 0.75rem',
+              padding: '0.675em 0.875em',
               bgcolor: '#f9fafb',
               color: 'text.disabled',
-              fontSize: '0.75rem',
+              fontSize: '0.875rem',
               fontWeight: 500
             }}
           >
@@ -222,9 +225,12 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
             component="li"
             {...props}
             sx={{
-              px: 1.5,
-              py: 0.5,
-              fontSize: '0.875rem',
+              px: '0.75em',
+              py: '0.375em',
+              fontSize: {
+                base: '1rem',
+                sm: '0.875rem'
+              },
               borderRadius: '0.375rem',
               cursor: 'pointer',
               listStyle: 'none',
