@@ -51,6 +51,7 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
     (e: React.SyntheticEvent, item: Option | string | null, reason: AutocompleteChangeReason) => {
       setIsLoading(false);
       (e.target as HTMLInputElement).blur();
+      onBlur?.();
 
       if (!item || typeof item === 'string') return;
 
@@ -60,7 +61,7 @@ const Search: React.FC<SearchProps> = ({ onBlur, ...props }) => {
         router.push(`/events/${item.key}/rankings`);
       }
     },
-    []
+    [onBlur]
   );
 
   const options = useMemo(
