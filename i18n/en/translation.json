@@ -19,8 +19,9 @@
     "close": "Close",
     "save": "Save",
     "error_occurred": "An error occurred, Please try again later",
-    "search_text_long": "Search teams and events",
+    "search_text_long": "Search teams and events...",
     "search_text_short": "Team # or Event",
+    "search_no_results": "No results found.",
     "add_to_mytoa": "Add to myTOA",
     "remove_from_mytoa": "Remove from myTOA",
     "loading": "Loading..."
