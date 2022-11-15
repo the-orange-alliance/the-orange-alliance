@@ -35,8 +35,24 @@ export default class MatchBreakdown2223 {
     // TODO: Replace team 1 and 2 with actual team numbers?
     return [
       MatchBreakdownTitle('Autonomous', match.redAutoScore, match.blueAutoScore),
-      MatchBreakdownPowerPlayParking('Robot 1 Navigated', red.autoRobot1, blue.autoRobot1),
-      MatchBreakdownPowerPlayParking('Robot 2 Navigated', red.autoRobot2, blue.autoRobot2),
+      MatchBreakdownPowerPlayParking(
+        'Robot 1 Navigated',
+        red.initSignalSleeve1 && red.autoRobot1 === 'SIGNAL_ZONE'
+          ? 'CUSTOM_SIGNAL_ZONE'
+          : red.autoRobot1,
+        blue.initSignalSleeve1 && blue.autoRobot2 === 'SIGNAL_ZONE'
+          ? 'CUSTOM_SIGNAL_ZONE'
+          : blue.autoRobot2
+      ),
+      MatchBreakdownPowerPlayParking(
+        'Robot 2 Navigated',
+        red.initSignalSleve2 && red.autoRobot2 === 'SIGNAL_ZONE'
+          ? 'CUSTOM_SIGNAL_ZONE'
+          : red.autoRobot2,
+        blue.initSignalSleve2 && blue.autoRobot2 === 'SIGNAL_ZONE'
+          ? 'CUSTOM_SIGNAL_ZONE'
+          : blue.autoRobot2
+      ),
       MatchBreakdownField('Cones Placed in a Terminal', red.autoTerminal, blue.autoTerminal, 1),
       MatchBreakdownField(
         'Cones Secured Ground Junctions',
@@ -62,18 +78,6 @@ export default class MatchBreakdown2223 {
         blue.autoJunctionCones[3],
         5
       ),
-      MatchBreakdownBoolField(
-        'Parked Correct Signal Zone',
-        red.initSignalSleeve1,
-        blue.initSignalSleeve1,
-        10
-      ),
-      MatchBreakdownBoolField(
-        'Parked Correct 2 Tiles',
-        red.initSignalSleve2,
-        blue.initSignalSleve2,
-        20
-      ),
 
       MatchBreakdownTitle('Driver-Controlled', red.telePoints, blue.telePoints),
 
@@ -81,14 +85,14 @@ export default class MatchBreakdown2223 {
         'Cones Placed in Near Terminal',
         red.teleTerminalNear,
         blue.teleTerminalNear,
-        2
+        1
       ),
 
       MatchBreakdownField(
         'Cones Placed in Far Terminal',
         red.teleTerminalFar,
         blue.teleTerminalFar,
-        2
+        1
       ),
 
       MatchBreakdownField(
@@ -129,13 +133,18 @@ export default class MatchBreakdown2223 {
         blue.endNavigated2,
         2
       ),
-      MatchBreakdownField('Junctions Owned by Cones', red.ownedJunctions, blue.ownedJunctions, 3),
+      MatchBreakdownField(
+        'Junctions Owned by Cones',
+        red.ownedJunctions - red.beacons,
+        blue.ownedJunctions - blue.beacons,
+        3
+      ),
       MatchBreakdownField('Junctions Owned by Beacons', red.beacons, blue.beacons, 10),
       MatchBreakdownBoolField('Completed Circuit', red.circuitExists, blue.circuitExists, 20),
 
-      MatchBreakdownTitle('Penalty', match.redPenalty, match.bluePenalty),
-      MatchBreakdownField('Minor Penalty', details.redMinPen, details.blueMinPen, -5),
-      MatchBreakdownField('Major Penalty', details.redMajPen, details.blueMajPen, -20),
+      MatchBreakdownTitle('Penalty', blue.penaltyPointsComitted, red.penaltyPointsComitted),
+      MatchBreakdownField('Minor Penalty', details.blueMinPen, details.redMinPen, 10),
+      MatchBreakdownField('Major Penalty', details.blueMajPen, details.redMajPen, 30),
 
       MatchBreakdownTitle('Final', match.redScore, match.blueScore)
     ];

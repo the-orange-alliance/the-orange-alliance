@@ -3,6 +3,13 @@ import { Check, Close } from '@mui/icons-material';
 export class MatchBreakdownConstants {
   trueValue = -1000;
   falseValue = -2000;
+  null = -1;
+  velocityVortexParking = 1;
+  velocityVortexCapBall = 2;
+  ultimateGoalWobble = 3;
+  freightFrenzyParking = 4;
+  freightFrenzyBarcodeElement = 5;
+  powerPlayParking = 6;
 }
 
 export class MatchBreakdownRow {
@@ -12,12 +19,7 @@ export class MatchBreakdownRow {
   blue: number | string;
   redPoints: number;
   bluePoints: number;
-  isVelocityVortexParking: boolean;
-  isVelocityVortexCapBall: boolean;
-  ultimateGoalWobble: boolean;
-  freightFrenzyParking: boolean;
-  freightFrenzyBarcodeElement: boolean;
-  powerPlayParking: boolean;
+  gameType: number;
 
   redIcon: JSX.Element | null;
   blueIcon: JSX.Element | null;
@@ -29,12 +31,7 @@ export class MatchBreakdownRow {
     blue: number | string,
     redPoints: number,
     bluePoints: number,
-    velocityVortexParking: boolean,
-    velocityVortexCapBall: boolean,
-    ultimateGoalWobble: boolean = false,
-    freightFrenzyParking: boolean = false,
-    freightFrenzyBarcodeElement: boolean = false,
-    powerPlayParking: boolean = false
+    gameType: number = -1
   ) {
     this.isTitle = isTitle;
     this.name = name;
@@ -42,12 +39,7 @@ export class MatchBreakdownRow {
     this.blue = blue;
     this.redPoints = redPoints;
     this.bluePoints = bluePoints;
-    this.isVelocityVortexParking = velocityVortexParking;
-    this.isVelocityVortexCapBall = velocityVortexCapBall;
-    this.ultimateGoalWobble = ultimateGoalWobble;
-    this.freightFrenzyParking = freightFrenzyParking;
-    this.freightFrenzyBarcodeElement = freightFrenzyBarcodeElement;
-    this.powerPlayParking = powerPlayParking;
+    this.gameType = gameType;
 
     const constants = new MatchBreakdownConstants();
     this.redIcon =
@@ -81,20 +73,20 @@ export class MatchBreakdownRow {
   }
 
   getString(s: number | string, alliance: 'red' | 'blue'): string {
-    if (this.isVelocityVortexParking && typeof s === 'number') {
+    const constants = new MatchBreakdownConstants();
+    if (this.gameType === constants.velocityVortexParking && typeof s === 'number') {
       return this.getVelocityVortexParkingString(s);
-    } else if (this.isVelocityVortexCapBall && typeof s === 'number') {
+    } else if (this.gameType === constants.velocityVortexCapBall && typeof s === 'number') {
       return this.getVelocityVortexCapBallString(s);
-    } else if (this.ultimateGoalWobble && typeof s === 'number') {
+    } else if (this.gameType === constants.ultimateGoalWobble && typeof s === 'number') {
       return this.getUltimateGoalWobbleString(s);
-    } else if (this.freightFrenzyParking && typeof s === 'string') {
+    } else if (this.gameType === constants.freightFrenzyParking && typeof s === 'string') {
       return this.getFreightFrenzyParking(s);
-    } else if (this.freightFrenzyBarcodeElement && typeof s === 'string') {
+    } else if (this.gameType === constants.freightFrenzyBarcodeElement && typeof s === 'string') {
       return this.getFreightFrenzyBarcodeElement(s);
-    } else if (this.powerPlayParking && typeof s === 'string') {
+    } else if (this.gameType === constants.powerPlayParking && typeof s === 'string') {
       return this.getPowerPlayParking(s);
     } else {
-      const constants = new MatchBreakdownConstants();
       const isTrue = s === constants.trueValue;
       const isFalse = s === constants.falseValue;
       const isTrueFalse = isTrue || isFalse;
@@ -183,18 +175,20 @@ export class MatchBreakdownRow {
       case 'SUBSTATION_TERMINAL':
         return 'Substation Terminal (+2)';
       case 'SIGNAL_ZONE':
-        return 'Signal Zone (+2)';
+        return 'Signal Zone (+10)';
+      case 'CUSTOM_SIGNAL_ZONE':
+        return 'Custom Sleeve Signal Zone (+20)';
     }
     return 'Not Scored';
   }
 }
 
 export function MatchBreakdownTitle(name: string, redScore: number, blueScore: number) {
-  return new MatchBreakdownRow(true, name, redScore, blueScore, -1, -1, false, false);
+  return new MatchBreakdownRow(true, name, redScore, blueScore, -1, -1);
 }
 
 export function MatchBreakdownField(name: string, red: number, blue: number, points: number) {
-  return new MatchBreakdownRow(false, name, red, blue, points, points, false, false);
+  return new MatchBreakdownRow(false, name, red, blue, points, points);
 }
 
 export function MatchBreakdownPowerPlayParking(name: string, red: string, blue: string) {
@@ -205,12 +199,7 @@ export function MatchBreakdownPowerPlayParking(name: string, red: string, blue: 
     blue,
     -1,
     -1,
-    false,
-    false,
-    false,
-    false,
-    false,
-    true
+    new MatchBreakdownConstants().powerPlayParking
   );
 }
 
@@ -219,23 +208,63 @@ export function MatchBreakdownFreightFrenzyParkingLocation(
   red: string,
   blue: string
 ) {
-  return new MatchBreakdownRow(false, name, red, blue, -1, -1, false, false, false, true);
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().freightFrenzyParking
+  );
 }
 
 export function MatchBreakdownFreightFrenzyBarcodeElement(name: string, red: string, blue: string) {
-  return new MatchBreakdownRow(false, name, red, blue, -1, -1, false, false, false, false, true);
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().freightFrenzyBarcodeElement
+  );
 }
 
 export function MatchBreakdownUltimateGoalWobbleField(name: string, red: number, blue: number) {
-  return new MatchBreakdownRow(false, name, red, blue, -1, -1, false, false, true);
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().ultimateGoalWobble
+  );
 }
 
 export function MatchBreakdownVelocityVortexParkingField(name: string, red: number, blue: number) {
-  return new MatchBreakdownRow(false, name, red, blue, -1, -1, true, false);
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().velocityVortexParking
+  );
 }
 
 export function MatchBreakdownVelocityVortexCapBallField(name: string, red: number, blue: number) {
-  return new MatchBreakdownRow(false, name, red, blue, -1, -1, false, true);
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().velocityVortexCapBall
+  );
 }
 
 export function MatchBreakdownBoolField(name: string, red: boolean, blue: boolean, points: number) {
@@ -246,9 +275,7 @@ export function MatchBreakdownBoolField(name: string, red: boolean, blue: boolea
     red ? constants.trueValue : constants.falseValue,
     blue ? constants.trueValue : constants.falseValue,
     points,
-    points,
-    false,
-    false
+    points
   );
 }
 
@@ -266,8 +293,6 @@ export function MatchBreakdownBoolFieldVariable(
     red ? constants.trueValue : constants.falseValue,
     blue ? constants.trueValue : constants.falseValue,
     redPoint,
-    bluePoint,
-    false,
-    false
+    bluePoint
   );
 }
