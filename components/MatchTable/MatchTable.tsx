@@ -110,6 +110,9 @@ const MatchesTable = (props: IProps) => {
 
   const renderTournamentLevel = (matches: Match[], translationKey: string) => {
     if (matches.length > 0 && !singleTeamEvent) {
+      matches.sort((a: Match, b: Match) => {
+        return a.matchKey > b.matchKey ? 1 : -1;
+      });
       return (
         <>
           {/* SIDE-BY-SIDE MATCHES LEVEL HEADER */}
