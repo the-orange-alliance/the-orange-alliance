@@ -1,7 +1,8 @@
 import { Region, Season, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
+import { DateTime } from 'luxon';
 
-function readableDate(date: Date | string): string {
+export function readableDate(date: Date | string): string {
   if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
   if (typeof date.getMonth !== 'function') return '';
@@ -9,7 +10,7 @@ function readableDate(date: Date | string): string {
   return `${shortMonth} ${date.getDate() + 1}, ${date.getFullYear()}`;
 }
 
-function readableTime(date: Date | string): string {
+export function readableTime(date: Date | string): string {
   if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
   if (typeof date.getHours !== 'function') return '';
@@ -20,7 +21,7 @@ function readableTime(date: Date | string): string {
   return `${h}:${m} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
-function colorCalc(selected: boolean, color: string, win: boolean) {
+export function colorCalc(selected: boolean, color: string, win: boolean) {
   if (selected) {
     return '#fbcc81';
   } else if (win) {
@@ -38,7 +39,7 @@ function colorCalc(selected: boolean, color: string, win: boolean) {
   }
 }
 
-function getShortMonth(month: number) {
+export function getShortMonth(month: number) {
   switch (month) {
     case 0:
       return 'Jan';
@@ -67,7 +68,7 @@ function getShortMonth(month: number) {
   }
 }
 
-function getWeekShort(week: any) {
+export function getWeekShort(week: any) {
   const parsed = parseInt(week);
   if (!isNaN(parsed)) {
     return `Wk ${week}`;
@@ -114,7 +115,7 @@ function getWeekShort(week: any) {
   }
 }
 
-const undefinedToNull = (o: any): object | null => {
+export const undefinedToNull = (o: any): object | null => {
   if (typeof o === 'undefined' || o === null) return null;
   for (const key of Object.keys(o)) {
     if (typeof o[key] === 'undefined') o[key] = null;
@@ -125,18 +126,18 @@ const undefinedToNull = (o: any): object | null => {
   return o;
 };
 
-const getSeasonString = (season: Season) => {
+export const getSeasonString = (season: Season) => {
   const codeOne = season.seasonKey.toString().substring(0, 2);
   const codeTwo = season.seasonKey.toString().substring(2, 4);
   return '20' + codeOne + '/' + codeTwo + ' - ' + season.description;
 };
 
-function getRegionString(region: Region) {
+export function getRegionString(region: Region) {
   if (region.regionKey === 'all') return region.description;
   return `${region.description} (${region.regionKey.toUpperCase()})`;
 }
 
-function getWeekName(week: string) {
+export function getWeekName(week: string) {
   switch (week) {
     case 'CMP':
       return 'FIRST Championship';
@@ -168,68 +169,7 @@ function getWeekName(week: string) {
   }
 }
 
-function base64ArrayBuffer(arrayBuffer: ArrayBuffer) {
-  let base64 = '';
-  const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-
-  const bytes = new Uint8Array(arrayBuffer);
-  const byteLength = bytes.byteLength;
-  const byteRemainder = byteLength % 3;
-  const mainLength = byteLength - byteRemainder;
-
-  let a, b, c, d;
-  let chunk;
-
-  // Main loop deals with bytes in chunks of 3
-  for (let i = 0; i < mainLength; i = i + 3) {
-    // Combine the three bytes into a single integer
-    chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
-
-    // Use bitmasks to extract 6-bit segments from the triplet
-    a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
-    b = (chunk & 258048) >> 12; // 258048   = (2^6 - 1) << 12
-    c = (chunk & 4032) >> 6; // 4032     = (2^6 - 1) << 6
-    d = chunk & 63; // 63       = 2^6 - 1
-
-    // Convert the raw binary segments to the appropriate ASCII encoding
-    base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
-  }
-
-  // Deal with the remaining bytes and padding
-  if (byteRemainder == 1) {
-    chunk = bytes[mainLength];
-
-    a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
-
-    // Set the 4 least significant bits to zero
-    b = (chunk & 3) << 4; // 3   = 2^2 - 1
-
-    base64 += encodings[a] + encodings[b] + '==';
-  } else if (byteRemainder == 2) {
-    chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
-
-    a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
-    b = (chunk & 1008) >> 4; // 1008  = (2^6 - 1) << 4
-
-    // Set the 2 least significant bits to zero
-    c = (chunk & 15) << 2; // 15    = 2^4 - 1
-
-    base64 += encodings[a] + encodings[b] + encodings[c] + '=';
-  }
-
-  return base64;
-}
-
-function stringToArrayBuffer(str: string): ArrayBuffer {
-  const buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-  const bufView = new Uint16Array(buf);
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return buf;
-}
-
-function teamToStrippedJson(team: Team) {
+export function teamToStrippedJson(team: Team) {
   return {
     team_key: team.teamKey,
     region_key: team.regionKey,
@@ -242,7 +182,23 @@ function teamToStrippedJson(team: Team) {
   };
 }
 
-function isSameDay(d1: Date, d2: Date) {
+export function getEventDescription(event: Event) {
+  const location = `${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''} ${
+    event.country
+  }`;
+  const startDate = DateTime.fromISO(event.startDate);
+  const endDate = DateTime.fromISO(event.endDate);
+
+  if (startDate.hasSame(endDate, 'day')) {
+    return `${location} on ${startDate.toLocaleString(DateTime.DATE_MED)}`;
+  } else {
+    return `${location} from ${startDate.toFormat('MMM LL')} to ${endDate.toLocaleString(
+      DateTime.DATE_MED
+    )}`;
+  }
+}
+
+export function isSameDay(d1: Date, d2: Date) {
   if (typeof d1.getDate !== 'function' || typeof d2.getDate !== 'function') return false;
   return (
     d1.getFullYear() === d2.getFullYear() &&
@@ -250,18 +206,3 @@ function isSameDay(d1: Date, d2: Date) {
     d1.getDate() === d2.getDate()
   );
 }
-
-export {
-  readableDate,
-  readableTime,
-  undefinedToNull,
-  getSeasonString,
-  getRegionString,
-  getWeekName,
-  getWeekShort,
-  colorCalc,
-  base64ArrayBuffer,
-  stringToArrayBuffer,
-  teamToStrippedJson,
-  isSameDay
-};

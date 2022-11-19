@@ -1,6 +1,7 @@
 import {
   AppBar,
   Autocomplete,
+  Backdrop,
   CircularProgress,
   IconButton,
   InputAdornment,
@@ -18,7 +19,7 @@ import { useRouter } from 'next/router';
 import TOAProvider from '../../providers/TOAProvider';
 import { useTheme } from '@mui/material/styles';
 import { Search as SearchIcon } from '@mui/icons-material';
-import Search from './search';
+import Search from '../search';
 
 interface NavbarProps {
   title: string;
@@ -30,6 +31,7 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
   const t = useTranslate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -46,43 +48,61 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
   }, [isMobileSearchOpen]);
 
   return (
-    <AppBar elevation={0} position="fixed" sx={{ zIndex: 1201 }}>
-      <Toolbar>
-        {!isMobileSearchOpen && (
-          <>
+    <>
+      <AppBar elevation={0} position="fixed" sx={{ zIndex: 1304 }}>
+        <Toolbar>
+          {!isMobileSearchOpen && (
+            <>
+              <IconButton
+                color="inherit"
+                aria-label={isDrawerOpen ? 'Close drawer' : 'Open drawer'}
+                edge="start"
+                onClick={handleDrawerToggle || undefined}
+                sx={{ display: handleDrawerToggle ? 'flex' : 'none', mr: 2 }}
+                size="large"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: 1 }}>
+                {title}
+              </Typography>
+            </>
+          )}
+          {isSmallScreen && !isMobileSearchOpen ? (
             <IconButton
               color="inherit"
-              aria-label={isDrawerOpen ? 'Close drawer' : 'Open drawer'}
+              aria-label={'Show Search'}
               edge="start"
-              onClick={handleDrawerToggle || undefined}
-              sx={{ display: handleDrawerToggle ? 'flex' : 'none', mr: 2 }}
+              onClick={() => setIsMobileSearchOpen(true)}
               size="large"
             >
-              <MenuIcon />
+              <SearchIcon />
             </IconButton>
-            <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: 1 }}>
-              {title}
-            </Typography>
-          </>
-        )}
-        {isSmallScreen && !isMobileSearchOpen ? (
-          <IconButton
-            color="inherit"
-            aria-label={'Show Search'}
-            edge="start"
-            onClick={() => setIsMobileSearchOpen(true)}
-            size="large"
-          >
-            <SearchIcon />
-          </IconButton>
-        ) : (
-          <Search
-            sx={isSmallScreen ? { flexGrow: 1 } : { width: '18rem' }}
-            onBlur={() => setIsMobileSearchOpen(false)}
-          />
-        )}
-      </Toolbar>
-    </AppBar>
+          ) : (
+            <Search
+              sx={isSmallScreen ? { flexGrow: 1 } : { width: '18rem' }}
+              variant="navbar"
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => {
+                setIsSearchFocused(false);
+                setIsMobileSearchOpen(false);
+              }}
+              showIcon
+              showDescription
+              maxResults={6}
+              watchGlobalCommand
+            />
+          )}
+        </Toolbar>
+      </AppBar>
+      <Backdrop
+        open={isSearchFocused}
+        sx={{
+          zIndex: 1302,
+          backgroundColor: 'rgba(0, 0, 0, 0.36)'
+        }}
+      />
+    </>
   );
 };
 
