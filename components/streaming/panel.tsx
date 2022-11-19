@@ -45,7 +45,7 @@ const LiveStreamPanel = ({
         {selectedStream ? (
           <>
             <iframe
-              src={`${selectedStream.streamURL}${selectedStream.streamURL.indexOf("twitch") > -1 ? '&parent=theorangealliance.org&parent=localhost}' : ''`}
+              src={`${selectedStream.streamURL}${selectedStream.streamURL.indexOf("twitch") > -1 ? '&parent=theorangealliance.org&parent=localhost' : ''}`}
               frameBorder="0"
               scrolling="no"
               allowFullScreen
