@@ -142,6 +142,10 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
 export default EventsPage;
 
-export async function getServerSideProps(context: any) {
-  return { props: await fetchEventsData() };
+export async function getStaticProps() {
+  return {
+    props: await fetchEventsData(),
+    // Re-generate the events page at most once per 15 minute
+    revalidate: 15 * 60
+  };
 }
