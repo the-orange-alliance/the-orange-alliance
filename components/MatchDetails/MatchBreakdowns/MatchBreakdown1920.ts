@@ -5,8 +5,8 @@ import {
   MatchBreakdownRow,
   MatchBreakdownTitle
 } from '../MatchBreakdownRow';
-import SkystoneMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/SkystoneMatchDetails';
-import SkystoneAllianceDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/SkystoneAllianceDetails';
+import SkystoneMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1920/SkystoneMatchDetails';
+import SkystoneAllianceDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1920/SkystoneAllianceDetails';
 
 export default class MatchBreakdown1920 {
   getRows(match: Match): MatchBreakdownRow[] {

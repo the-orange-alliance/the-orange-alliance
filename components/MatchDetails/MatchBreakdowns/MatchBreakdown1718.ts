@@ -1,5 +1,5 @@
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
-import RelicRecoveryMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/RelicRecoveryMatchDetails';
+import RelicRecoveryMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1718/RelicRecoveryMatchDetails';
 import { MatchBreakdownField, MatchBreakdownRow, MatchBreakdownTitle } from '../MatchBreakdownRow';
 
 export default class MatchBreakdown1718 {
