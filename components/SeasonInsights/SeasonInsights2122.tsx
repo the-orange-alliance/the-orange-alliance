@@ -12,7 +12,6 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
-import { ChartData } from '../Chart';
 import Chart from '../Chart';
 
 interface IProps {
@@ -90,7 +89,7 @@ const SeasonInsights2122 = (props: IProps) => {
     });
   }
   const labels = Object.keys(insights).map(key => getWeekShort(key));
-  const autoFreightNew: ChartData = {
+  const autoFreightNew = {
     labels,
     datasets: [
       { data: autoFreight.map(d => d.y1), label: 'Level 1 Freight' },

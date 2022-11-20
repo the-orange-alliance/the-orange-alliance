@@ -10,6 +10,8 @@ import {
   ChartData as _ChartData
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import type Insight from '@the-orange-alliance/api/lib/cjs/models/Insights';
+import useChartData from '../lib/utils/useChartData';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend);
 const defaultOptions: ChartOptions<'line'> = {
@@ -22,40 +24,41 @@ const defaultOptions: ChartOptions<'line'> = {
   }
 };
 
-const Chart: React.FC<ChartProps> = ({ data, title, options = defaultOptions, tension = 0.4 }) => {
-  const colors = ['#6200EE', '#03DAC6', '#F44336', '#29b6f6'];
-  const newData: _ChartData<'line', number[], string> = {
-    ...data,
-    datasets: data.datasets.map((dataset, index) => ({
-      ...dataset,
-      tension,
-      borderColor: colors[index],
-      backgroundColor: colors[index],
-      pointBorderColor: colors[index],
-      borderWidth: 1,
-      pointBackgroundColor: '#FFFFFF'
-    }))
-  };
+function Chart<
+  P extends Insight,
+  T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
+>({
+  options = defaultOptions,
+  insights,
+  keys,
+  labels,
+  title,
+  additionalChartData,
+  tension = 0.4
+}: ChartProps<P, T>) {
+  const chartData = useChartData<P, T>(insights, keys, labels, tension, additionalChartData);
 
   return (
     <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
       <Typography variant={'h6'} align={'center'}>
         {title}
       </Typography>
-      <Line data={newData} options={{ ...options }} />
+      <Line data={chartData} options={{ ...options }} />
     </Grid>
   );
-};
-
-export interface ChartProps {
-  data: Omit<_ChartData<'line', number[], string>, 'datasets'> & {
-    datasets: { label: string; data: number[] }[];
-  };
-  options?: Partial<ChartOptions<'line'>>;
-  title: string;
-  tension?: number;
 }
 
-export type ChartData = ChartProps['data'];
+export interface ChartProps<
+  P extends Insight,
+  T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
+> {
+  insights: P[];
+  keys: T;
+  labels: Record<T[number], string>;
+  options?: Partial<ChartOptions<'line'>>;
+  title: string;
+  additionalChartData?: Omit<_ChartData<'line', number[], string>, 'datasets'>;
+  tension?: number;
+}
 
 export default Chart;

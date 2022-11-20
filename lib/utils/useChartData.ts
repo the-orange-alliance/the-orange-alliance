@@ -1,6 +1,5 @@
-import FreightFrenzyInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2122/FreightFrenzyInsights';
-import { ChartData } from '../../components/Chart';
 import type Insight from '@the-orange-alliance/api/lib/cjs/models/Insights';
+import type { ChartData } from 'chart.js';
 import { useMemo } from 'react';
 
 /**
@@ -17,7 +16,7 @@ function getChartDatasets<
     return {
       data: insights.map(insight =>
         // not sure why i have to "as number" it, but it shouldn't throw errors in runtime bc I made sure it's a number
-        typeof insight[key] === 'number' ? insight[key] : -1
+        typeof insight[key] === 'number' ? (insight[key] as number) : -1
       ),
       label: typeof labels[key] === 'string' ? (labels[key] as string) : String(key)
     };
@@ -27,8 +26,28 @@ function getChartDatasets<
 function useChartData<
   P extends Insight,
   T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
->(insights: P[], keys: T, labels: Record<T[number], string>) {
-  return useMemo(() => getChartDatasets<P, T>(insights, keys, labels), [insights, keys, labels]);
+>(
+  insights: P[],
+  keys: T,
+  labels: Record<T[number], string>,
+  tension: number,
+  additionalChartData?: Omit<ChartData<'line', number[], string>, 'datasets'>
+) {
+  return useMemo<ChartData<'line', number[], string>>(() => {
+    const colors = ['#6200EE', '#03DAC6', '#F44336', '#29b6f6'];
+    return {
+      datasets: getChartDatasets<P, T>(insights, keys, labels).map((dataset, index) => ({
+        ...dataset,
+        tension,
+        borderColor: colors[index],
+        backgroundColor: colors[index],
+        pointBorderColor: colors[index],
+        borderWidth: 1,
+        pointBackgroundColor: '#FFFFFF'
+      })),
+      ...additionalChartData
+    };
+  }, [insights, keys, labels, additionalChartData, tension]);
 }
 
 export { getChartDatasets };
