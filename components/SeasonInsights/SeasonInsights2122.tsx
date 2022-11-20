@@ -12,23 +12,28 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import { ChartData } from '../Chart';
+import Chart from '../Chart';
 
 interface IProps {
   insights: { [key: string]: Insights };
 }
+type InsightsData<T extends string> = ({
+  name: string;
+} & Record<T, number>)[];
 
 const SeasonInsights2122 = (props: IProps) => {
   const { insights } = props;
 
-  const autoFreight = [];
-  const autoParking = [];
-  const autoBonuses = [];
-  const teleFreight = [];
-  const endDelivered = [];
-  const endBalanced = [];
-  const endCapped = [];
-  const endCarousel = [];
-  const endParking = [];
+  const autoFreight: InsightsData<'y1' | 'y2' | 'y3' | 'y4'> = [];
+  const autoParking: InsightsData<'y1' | 'y2' | 'y3' | 'y4'> = [];
+  const autoBonuses: InsightsData<'y1'> = [];
+  const teleFreight: InsightsData<'y1' | 'y2' | 'y3' | 'y4'> = [];
+  const endDelivered: InsightsData<'y1'> = [];
+  const endBalanced: InsightsData<'y1' | 'y2'> = [];
+  const endCapped: InsightsData<'y1'> = [];
+  const endCarousel: InsightsData<'y1'> = [];
+  const endParking: InsightsData<'y1' | 'y2'> = [];
 
   for (const key in insights) {
     if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
@@ -84,6 +89,16 @@ const SeasonInsights2122 = (props: IProps) => {
       y2: insight.endParkedCompleteWarehouse
     });
   }
+  const labels = Object.keys(insights).map(key => getWeekShort(key));
+  const autoFreightNew: ChartData = {
+    labels,
+    datasets: [
+      { data: autoFreight.map(d => d.y1), label: 'Level 1 Freight' },
+      { data: autoFreight.map(d => d.y2), label: 'Level 2 Freight' },
+      { data: autoFreight.map(d => d.y3), label: 'Level 3 Freight' },
+      { data: autoFreight.map(d => d.y4), label: 'Storage Freight' }
+    ]
+  };
 
   return (
     <>
@@ -116,7 +131,11 @@ const SeasonInsights2122 = (props: IProps) => {
               <Line type="monotone" dataKey="y4" stroke="#29b6f6" name="Avg Storage Freight" />
             </LineChart>
           </ResponsiveContainer>
+          {/* {JSON.stringify(autoFreight)} */}
         </Grid>
+
+        {/* Auto Freight new*/}
+        <Chart data={autoFreightNew} title="Autonomous Freight new" />
 
         {/* Auto Parking */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>

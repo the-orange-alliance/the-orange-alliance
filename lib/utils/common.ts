@@ -68,7 +68,7 @@ export function getShortMonth(month: number) {
   }
 }
 
-export function getWeekShort(week: any) {
+export function getWeekShort(week: any): string {
   const parsed = parseInt(week);
   if (!isNaN(parsed)) {
     return `Wk ${week}`;
