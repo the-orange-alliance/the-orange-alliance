@@ -16,7 +16,7 @@ function getChartDatasets<
     return {
       data: insights.map(insight =>
         // not sure why i have to "as number" it, but it shouldn't throw errors in runtime bc I made sure it's a number
-        typeof insight[key] === 'number' ? (insight[key] as number) : -1
+        typeof insight[key] === 'number' ? (insight[key] as unknown as number) : -1
       ),
       label: typeof labels[key] === 'string' ? (labels[key] as string) : String(key)
     };
