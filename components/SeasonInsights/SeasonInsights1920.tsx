@@ -1,15 +1,5 @@
 import SkystoneInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1920/SkystoneInsights';
 import { Grid, Typography } from '@mui/material';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import Chart from '../Chart';
@@ -21,57 +11,6 @@ interface IProps {
 const SeasonInsights1920 = (props: IProps) => {
   const insights = Object.values(props.insights) as SkystoneInsights[];
   const labels = Object.keys(props.insights).map(getWeekShort);
-  const autoStones = [];
-  const robotAuton = [];
-  const foundation = [];
-  const teleStones = [];
-  const averageCapLevel = [];
-  const bonuses = [];
-  const percentParked = [];
-
-  for (const key in props.insights) {
-    if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
-
-    const insight: SkystoneInsights = props.insights[key] as SkystoneInsights;
-
-    const short = getWeekShort(key);
-    autoStones.push({
-      name: short,
-      y1: insight.autoAverageSkystonesDelivered,
-      y2: insight.autoAverageStonesDelivered,
-      y3: insight.autoAveragePlaced
-    });
-    robotAuton.push({
-      name: short,
-      y1: insight.autoPercentParked,
-      y2: insight.autoPercentNaved
-    });
-    foundation.push({
-      name: short,
-      y1: insight.percentFoundationMoved,
-      y2: insight.percentFoundationRepositioned
-    });
-    teleStones.push({
-      name: short,
-      y1: insight.teleAverageReturned,
-      y2: insight.teleAverageDelivered,
-      y3: insight.teleAveragePlaced
-    });
-    averageCapLevel.push({
-      name: short,
-      y1: insight.endAverageCapLevel
-    });
-    bonuses.push({
-      name: short,
-      y1: insight.endAverageTowerBonus,
-      y2: insight.endAverageCapBonus,
-      y3: insight.endAverageLevelBonus
-    });
-    percentParked.push({
-      name: short,
-      y1: insight.endPercentParked
-    });
-  }
 
   return (
     <>
