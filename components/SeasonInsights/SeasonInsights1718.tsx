@@ -1,5 +1,5 @@
 import RelicRecoveryInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1718/RelicRecoveryInsights';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import Chart from '../Chart';
