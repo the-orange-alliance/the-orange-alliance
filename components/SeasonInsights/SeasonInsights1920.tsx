@@ -12,14 +12,15 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import Chart from '../Chart';
 
 interface IProps {
   insights: { [key: string]: Insights };
 }
 
 const SeasonInsights1920 = (props: IProps) => {
-  const { insights } = props;
-
+  const insights = Object.values(props.insights) as SkystoneInsights[];
+  const labels = Object.keys(props.insights).map(getWeekShort);
   const autoStones = [];
   const robotAuton = [];
   const foundation = [];
@@ -28,10 +29,10 @@ const SeasonInsights1920 = (props: IProps) => {
   const bonuses = [];
   const percentParked = [];
 
-  for (const key in insights) {
+  for (const key in props.insights) {
     if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
 
-    const insight: SkystoneInsights = insights[key] as SkystoneInsights;
+    const insight: SkystoneInsights = props.insights[key] as SkystoneInsights;
 
     const short = getWeekShort(key);
     autoStones.push({
@@ -76,211 +77,107 @@ const SeasonInsights1920 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Stones */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Stones
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={autoStones}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Skystones Delivered" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Stones Delivered" />
-              <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Stones Placed" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: [
+              'autoAverageSkystonesDelivered',
+              'autoAverageStonesDelivered',
+              'autoAveragePlaced'
+            ],
+            dataLabels: {
+              autoAverageSkystonesDelivered: 'Avg Skystones Delivered',
+              autoAverageStonesDelivered: 'Avg Stones Delivered',
+              autoAveragePlaced: 'Avg Stones Placed'
+            },
+            title: 'Autonomous Stones'
+          }}
+        />
 
         {/* Robot Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Movement
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={robotAuton}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Robots Parked" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent Robots Navigated" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['autoPercentParked', 'autoPercentNaved'],
+            dataLabels: {
+              autoPercentParked: 'Percent Robots Parked',
+              autoPercentNaved: 'Percent Robots Navigated'
+            },
+            title: 'Autonomous Movement'
+          }}
+        />
 
         {/* Foundation */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Foundation
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={foundation}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="y1"
-                stroke="#6200EE"
-                name="Percent Foundations Moved"
-              />
-              <Line
-                type="monotone"
-                dataKey="y2"
-                stroke="#03DAC6"
-                name="Percent Foundations Repositioned"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['percentFoundationMoved', 'percentFoundationRepositioned'],
+            dataLabels: {
+              percentFoundationMoved: 'Percent Foundation Moved',
+              percentFoundationRepositioned: 'Percent Foundation Repositioned'
+            },
+            title: 'Foundation'
+          }}
+        />
 
         {/* Tele Stones */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            TeleOp Stones
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={teleStones}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Returned" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Delivered" />
-              <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Placed" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['teleAverageReturned', 'teleAverageDelivered', 'teleAveragePlaced'],
+            dataLabels: {
+              teleAverageReturned: 'Avg Returned',
+              teleAverageDelivered: 'Avg Delivered',
+              teleAveragePlaced: 'Avg Placed'
+            },
+            title: 'Teleop Stones'
+          }}
+        />
 
         {/* End Capping */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            End Game Capping
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={averageCapLevel}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Cap Level" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['endAverageCapLevel'],
+            dataLabels: {
+              endAverageCapLevel: 'Avg Cap Level'
+            },
+            title: 'End Game Capping'
+          }}
+        />
 
         {/* End Balanced */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            End Game Bonus
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={bonuses}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Tower Bonus" />
-              <Line type="monotone" dataKey="y1" stroke="#03DAC6" name="Avg Cap Bonus" />
-              <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Level Bonus" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['endAverageTowerBonus', 'endAverageCapBonus', 'endAverageLevelBonus'],
+            dataLabels: {
+              endAverageTowerBonus: 'Avg Tower Bonus',
+              endAverageCapBonus: 'Avg Cap Bonus',
+              endAverageLevelBonus: 'Avg Level Bonus'
+            },
+            title: 'End Game Bonus'
+          }}
+        />
 
         {/* End Parked */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            End Game Parking
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={percentParked}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Parked" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            labels,
+            insights,
+            keys: ['endPercentParked'],
+            dataLabels: {
+              endPercentParked: 'Percent Parked'
+            },
+            title: 'End Game Parking'
+          }}
+        />
       </Grid>
     </>
   );
