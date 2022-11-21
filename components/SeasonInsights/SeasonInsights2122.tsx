@@ -7,9 +7,6 @@ import Chart from '../Chart';
 interface IProps {
   insights: { [key: string]: Insights };
 }
-type InsightsData<T extends string> = ({
-  name: string;
-} & Record<T, number>)[];
 
 const SeasonInsights2122 = (props: IProps) => {
   const insights = Object.values(props.insights) as FreightFrenzyInsights[];
