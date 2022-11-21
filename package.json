@@ -26,7 +26,6 @@
     "react-chartjs-2": "^5.0.1",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
-    "recharts": "^2.1.16",
     "swagger-ui-react": "^4.15.2"
   },
   "devDependencies": {
