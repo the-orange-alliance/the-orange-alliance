@@ -10,6 +10,7 @@ import { useMemo } from 'react';
  */
 function getChartDatasets<
   P extends Insight,
+  // TODO: make T = Array<keyof P> where P is a number
   T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
 >(insights: P[], keys: T, labels: Record<T[number], string>) {
   const data = keys.map(key => {

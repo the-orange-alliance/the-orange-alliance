@@ -37,7 +37,6 @@ function Chart<
   tension = 0.4
 }: ChartProps<P, T>) {
   const chartData = useChartData<P, T>(insights, keys, dataLabels, tension, additionalChartData);
-  console.log(chartData);
 
   return (
     <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
