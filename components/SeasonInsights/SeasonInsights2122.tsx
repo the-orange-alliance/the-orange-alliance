@@ -23,6 +23,7 @@ type InsightsData<T extends string> = ({
 
 const SeasonInsights2122 = (props: IProps) => {
   const { insights } = props;
+  const insightsNew = Object.values(insights) as FreightFrenzyInsights[];
 
   const autoFreight: InsightsData<'y1' | 'y2' | 'y3' | 'y4'> = [];
   const autoParking: InsightsData<'y1' | 'y2' | 'y3' | 'y4'> = [];
@@ -33,6 +34,8 @@ const SeasonInsights2122 = (props: IProps) => {
   const endCapped: InsightsData<'y1'> = [];
   const endCarousel: InsightsData<'y1'> = [];
   const endParking: InsightsData<'y1' | 'y2'> = [];
+
+  const labels = Object.keys(insights).map(getWeekShort);
 
   for (const key in insights) {
     if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
@@ -88,53 +91,28 @@ const SeasonInsights2122 = (props: IProps) => {
       y2: insight.endParkedCompleteWarehouse
     });
   }
-  const labels = Object.keys(insights).map(key => getWeekShort(key));
-  const autoFreightNew = {
-    labels,
-    datasets: [
-      { data: autoFreight.map(d => d.y1), label: 'Level 1 Freight' },
-      { data: autoFreight.map(d => d.y2), label: 'Level 2 Freight' },
-      { data: autoFreight.map(d => d.y3), label: 'Level 3 Freight' },
-      { data: autoFreight.map(d => d.y4), label: 'Storage Freight' }
-    ]
-  };
 
   return (
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Freight */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Freight
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={autoFreight}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Lvl 1 Freight" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Lvl 2 Freight" />
-              <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Lvl 3 Freight" />
-              <Line type="monotone" dataKey="y4" stroke="#29b6f6" name="Avg Storage Freight" />
-            </LineChart>
-          </ResponsiveContainer>
-          {/* {JSON.stringify(autoFreight)} */}
-        </Grid>
-
-        {/* Auto Freight new*/}
-        <Chart data={autoFreightNew} title="Autonomous Freight new" />
+        <Chart
+          insights={insightsNew}
+          keys={[
+            'autoAverageFreight1',
+            'autoAverageFreight2',
+            'autoAverageFreight3',
+            'autoAverageStorageFreight'
+          ]}
+          dataLabels={{
+            autoAverageFreight1: 'Avg Lvl 1 Freight',
+            autoAverageFreight2: 'Avg Lvl 2 Freight',
+            autoAverageFreight3: 'Avg Lvl 3 Freight',
+            autoAverageStorageFreight: 'Avg Storage Freight'
+          }}
+          title="Autonomous Freight"
+          labels={labels}
+        />
 
         {/* Auto Parking */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>

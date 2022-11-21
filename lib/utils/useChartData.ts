@@ -12,7 +12,7 @@ function getChartDatasets<
   P extends Insight,
   T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
 >(insights: P[], keys: T, labels: Record<T[number], string>) {
-  return keys.map(key => {
+  const data = keys.map(key => {
     return {
       data: insights.map(insight =>
         // not sure why i have to "as number" it, but it shouldn't throw errors in runtime bc I made sure it's a number
@@ -21,6 +21,8 @@ function getChartDatasets<
       label: typeof labels[key] === 'string' ? (labels[key] as string) : String(key)
     };
   });
+  // console.log(data);
+  return data;
 }
 
 function useChartData<
@@ -37,7 +39,8 @@ function useChartData<
     const colors = ['#6200EE', '#03DAC6', '#F44336', '#29b6f6'];
     return {
       datasets: getChartDatasets<P, T>(insights, keys, labels).map((dataset, index) => ({
-        ...dataset,
+        data: dataset.data,
+        label: dataset.label,
         tension,
         borderColor: colors[index],
         backgroundColor: colors[index],
