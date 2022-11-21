@@ -14,29 +14,6 @@ interface IProps {
 
 const InsightsTab = (props: IProps) => {
   const { seasonKey } = props;
-
-  // const matchScoresData = [];
-  // const winMarginData = [];
-  // const avgPenaltiesData = [];
-
-  // for (const key in insights) {
-  //   if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
-  //   const short = getWeekShort(key);
-  //   matchScoresData.push({
-  //     name: short,
-  //     y1: insights[key].averageMatchScore,
-  //     y2: insights[key].averageWinningScore
-  //   });
-  //   winMarginData.push({
-  //     name: short,
-  //     y1: insights[key].averageWinningMargin
-  //   });
-  //   avgPenaltiesData.push({
-  //     name: short,
-  //     y1: insights[key].averageMajorPenalties,
-  //     y2: insights[key].averageMinorPenalties
-  //   });
-  // }
   const insights = Object.values(props.insights);
   const labels = Object.keys(props.insights).map(getWeekShort);
 
