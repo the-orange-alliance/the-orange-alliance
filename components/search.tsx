@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import EventIcon from '@mui/icons-material/EventOutlined';
 import TeamIcon from '@mui/icons-material/PeopleOutlineOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import { SearchResult } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '../providers/TOAProvider';
 import { useTranslate } from '../i18n/i18n';
@@ -189,29 +190,18 @@ const Search: React.FC<SearchProps> = ({
           }
         }}
         PopperComponent={props => (
-          <Popper {...props} placement="bottom" />
-          // isMobile && variant === 'navbar' ? (
-          //   <Box
-          //     sx={{
-          //       position: 'fixed',
-          //       top: theme => theme.mixins.toolbar.minHeight,
-          //       left: 0,
-          //       right: 0,
-          //       bottom: 0,
-          //       zIndex: 1308,
-          //       '& .MuiPaper-root': {
-          //         height: '100%',
-          //         borderRadius: 0
-          //       },
-          //       '& .MuiAutocomplete-listbox': {
-          //         maxHeight: '100%'
-          //       }
-          //     }}
-          //   >
-          //     {props.children}
-          //   </Box>
-          // ) : (
-          // )
+          <Popper
+            {...props}
+            placement="bottom"
+            popperOptions={{
+              modifiers: [
+                {
+                  name: 'flip',
+                  enabled: false
+                }
+              ]
+            }}
+          />
         )}
         renderInput={params => (
           <TextField
@@ -232,6 +222,7 @@ const Search: React.FC<SearchProps> = ({
                   },
                   padding:
                     variant === 'navbar' ? '0.5em 0.875em !important' : '0.75em 1.25em !important',
+                  paddingLeft: variant === 'navbar' || isFocused ? undefined : '2.75em !important',
                   background: variant === 'navbar' ? 'rgba(0, 0, 0, 0.04)' : '#fff',
                   boxShadow:
                     variant === 'navbar'
@@ -248,7 +239,7 @@ const Search: React.FC<SearchProps> = ({
                       ? '0.5rem'
                       : '1rem',
                   my: variant === 'navbar' ? 0.5 : undefined,
-                  transition: 'all 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+                  transition: 'all 0.2s ease-in-out',
                   '&:focus': {
                     background: variant === 'navbar' ? 'transparent' : undefined,
                     boxShadow: {
@@ -259,6 +250,22 @@ const Search: React.FC<SearchProps> = ({
               },
               disableUnderline: true,
               placeholder: t('general.search_text_long'),
+              startAdornment:
+                variant !== 'navbar' ? (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      position: 'absolute',
+                      left: '1em',
+                      py: 0.5,
+                      opacity: isFocused ? 0 : 1,
+                      transition: 'opacity 0.2s ease-in-out'
+                    }}
+                  >
+                    <SearchIcon sx={{ color: 'text.disabled', fontSize: '1.25em' }} />
+                  </Box>
+                ) : null,
               endAdornment:
                 !isFocused && watchGlobalCommand ? (
                   <Box
