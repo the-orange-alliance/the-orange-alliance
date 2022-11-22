@@ -60,8 +60,7 @@ const AccountItem = () => {
             borderRadius: 2,
             fontSize: '0.875rem',
             fontWeight: 500,
-            lineHeight: 1,
-            color: theme.palette.text.secondary
+            lineHeight: 1
           }}
         >
           {/* <Box sx={{ mr: 3 }}>{icon}</Box> */}

@@ -30,12 +30,7 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
           {subtitle}
         </Typography>
         <NextLink href={`/events/${match.event?.eventKey}/rankings`} passHref>
-          <Link
-            underline="none"
-            fontSize="0.875rem"
-            color={theme.palette.secondary.light}
-            display="block"
-          >
+          <Link underline="none" fontSize="0.875rem" color="text.secondary" display="block">
             {match.event?.eventName}
           </Link>
         </NextLink>

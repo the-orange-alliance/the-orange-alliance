@@ -12,15 +12,35 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     mode,
     // @ts-ignore
     secondary: {
-      main: '#0f0f0f'
+      main: '#06c'
     },
     background: {
       default: mode === 'dark' ? '#121212' : '#f5f6f7',
       paper: mode === 'dark' ? '#1a1a1a' : '#ffffff'
+    },
+    info: {
+      contrastText: '#fff',
+      dark: '#06c',
+      light: '#06c',
+      main: '#06c'
     }
   },
   shape: {
     borderRadius: 8
+  },
+  // @ts-ignore
+  typography: {
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 700,
+      '@media (min-width:600px)': {
+        fontSize: '2.25rem'
+      }
+    },
+    h4: {
+      fontSize: '1.5rem',
+      fontWeight: 500
+    }
   },
   shadows: [
     'none',
@@ -34,7 +54,7 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
   components: {
     MuiLink: {
       defaultProps: {
-        underline: 'hover',
+        underline: 'always',
         color: 'inherit'
       }
     },

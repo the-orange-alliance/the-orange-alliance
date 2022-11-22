@@ -295,7 +295,7 @@ const Search: React.FC<SearchProps> = ({
                       py: 0.5
                     }}
                   >
-                    <CircularProgress color={'secondary'} size={16} />
+                    <CircularProgress color="inherit" size={16} />
                   </Box>
                 ) : null
             }}
