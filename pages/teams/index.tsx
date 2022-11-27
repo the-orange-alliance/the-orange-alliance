@@ -20,6 +20,7 @@ import {
   IRawTeamsProps,
   parseTeamsProps
 } from '../../lib/page-helpers/teams-helper';
+import SEO from '../../components/seo';
 
 const TEAMS_PER_PAGE = 20;
 
@@ -65,6 +66,7 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
 
   return (
     <div>
+      <SEO title="Teams" description="List of FIRST Tech Challenge teams." url="/teams" />
       <Typography sx={{ margin: 2 }} variant="h4">
         {t('pages.teams.title')}
       </Typography>

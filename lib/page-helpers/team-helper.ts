@@ -25,6 +25,7 @@ export interface IRawTeamProps {
   events: any[];
   awards: any[];
   matches: any;
+  ogImage?: string;
 }
 
 export interface ITeamProps {
@@ -37,6 +38,7 @@ export interface ITeamProps {
   notebook: Media | null;
   reveal: Media | null;
   images: Media[];
+  ogImage: string;
 }
 
 export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
@@ -102,7 +104,8 @@ export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
     cad: cad,
     reveal: reveal,
     images: images,
-    notebook: notebook
+    notebook: notebook,
+    ogImage: props.ogImage as string
   };
 };
 

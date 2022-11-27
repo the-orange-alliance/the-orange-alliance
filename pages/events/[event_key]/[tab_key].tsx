@@ -10,8 +10,11 @@ import {
   useEventData
 } from '../../../lib/page-helpers/event-helper';
 import EventTabs from '../../../components/EventTabs/EventTabs';
-import { readableDate } from '../../../lib/utils/common';
+import { getEventDescription, readableDate } from '../../../lib/utils/common';
 import { Box } from '@mui/system';
+import SEO from '../../../components/seo';
+import { createOpengraphImageUrl } from '../../../lib/opengraph';
+import { Event } from '@the-orange-alliance/api/lib/cjs/models';
 
 const EventPage: NextPage<IRawEventProps> = props => {
   const { event: eventData, streams } = useEventData(props);
@@ -21,6 +24,13 @@ const EventPage: NextPage<IRawEventProps> = props => {
 
   return (
     <>
+      <SEO
+        title={`${startDate.getFullYear()} ${eventData.fullEventName}`}
+        description={`Match results and rankings for the ${startDate.getFullYear()} ${
+          eventData.fullEventName
+        } in ${getEventDescription(eventData)}.`}
+        url={`/events/${eventData.eventKey}`}
+      />
       <Box sx={{ margin: 2 }}>
         <Typography variant="h4">
           {startDate.getFullYear()} {eventData.fullEventName}
@@ -83,10 +93,17 @@ const EventPage: NextPage<IRawEventProps> = props => {
 export default EventPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  let eventData = {};
   try {
-    eventData = await fetchEventData(String(params?.event_key));
-    return { props: eventData };
+    const props = await fetchEventData(String(params?.event_key));
+
+    const event = new Event().fromJSON(props.event);
+    props.ogImage = createOpengraphImageUrl({
+      title: event.fullEventName,
+      description1: event.getLocation(true),
+      description2: event.getDateString()
+    });
+
+    return { props };
   } catch (err) {
     return { notFound: true };
   }

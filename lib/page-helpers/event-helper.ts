@@ -21,11 +21,13 @@ export interface IRawEventProps {
   awards: any;
   insights: any;
   streams: any;
+  ogImage?: string;
 }
 
 export interface IEventProps {
   event: Event;
   streams: EventLiveStream[];
+  ogImage?: string;
 }
 
 export const parseEventProps = (props: IRawEventProps): IEventProps => {
@@ -40,7 +42,7 @@ export const parseEventProps = (props: IRawEventProps): IEventProps => {
   );
 
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
-  return { event, streams };
+  return { event, streams, ogImage: props.ogImage };
 };
 
 export const useEventData = (props: IRawEventProps): IEventProps =>
