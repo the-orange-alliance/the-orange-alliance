@@ -39,7 +39,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <>
-      <SEO title="Sign up" url="/account/login" />
+      <SEO title="Sign up" url="/account/register" />
 
       <Grid container direction={'column'} alignContent={'center'}>
         <Grid item sx={{ marginTop: 7 }}>
