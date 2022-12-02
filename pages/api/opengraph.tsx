@@ -5,9 +5,9 @@ export const config = {
   runtime: 'experimental-edge'
 };
 
-const font = fetch(new URL('../../public/assets/fonts/Roboto-Bold.ttf', import.meta.url)).then(
-  res => res.arrayBuffer()
-);
+const font = fetch(
+  new URL('../../public/assets/fonts/Roboto-Bold.ttf', import.meta.url).toString()
+).then(res => res.arrayBuffer());
 
 const key = crypto.subtle.importKey(
   'raw',
