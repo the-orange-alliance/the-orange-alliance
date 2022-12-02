@@ -4,16 +4,28 @@ import { Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
 import { fetchMatchData, IRawMatchProps, useMatchData } from '../../lib/page-helpers/match-helper';
-import { readableDate } from '../../lib/utils/common';
+import { getEventDescription, readableDate } from '../../lib/utils/common';
 import SimpleMatchTable from '../../components/SimpleMatchTable';
 import MatchDetailsCard from '../../components/MatchDetails/MatchDetailsCard';
+import SEO from '../../components/seo';
+import { Event, Match } from '@the-orange-alliance/api/lib/cjs/models';
+import { createOpengraphImageUrl } from '../../lib/opengraph';
 
 const MatchPage: NextPage<IRawMatchProps> = props => {
-  const { match } = useMatchData(props);
+  const { match, ogImage } = useMatchData(props);
   const t = useTranslate();
 
   return (
     <>
+      <SEO
+        title={`${match.matchName} - ${match.event.fullEventName}`}
+        description={`Match results for ${match.matchName} at the ${new Date(
+          match.event.startDate
+        ).getFullYear()} ${match.event.fullEventName} in ${getEventDescription(match.event)}.`}
+        ogImage={ogImage}
+        url={`/matches/${match.matchKey}`}
+      />
+
       <Typography variant={'h4'}>{match.matchName}</Typography>
       <Typography variant={'subtitle1'}>
         <NextLink href={`/events/${match.event.eventKey}/rankings`}>
@@ -61,7 +73,17 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
-    return { props: await fetchMatchData(String(query.match_key)) };
+    const props = await fetchMatchData(String(query.match_key));
+
+    const match = new Match().fromJSON(props.match);
+    const event = new Event().fromJSON(props.event);
+    props.ogImage = createOpengraphImageUrl({
+      title: match.matchName,
+      description1: event.fullEventName,
+      description2: getEventDescription(event)
+    });
+
+    return { props };
   } catch (err) {
     return { notFound: true };
   }

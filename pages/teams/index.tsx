@@ -65,8 +65,9 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
   }, [filteredTeams, page]);
 
   return (
-    <div>
+    <>
       <SEO title="Teams" description="List of FIRST Tech Challenge teams." url="/teams" />
+
       <Typography sx={{ margin: 2 }} variant="h4">
         {t('pages.teams.title')}
       </Typography>
@@ -102,7 +103,7 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
           </Box>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 };
 

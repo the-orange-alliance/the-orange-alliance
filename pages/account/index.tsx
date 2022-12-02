@@ -39,6 +39,7 @@ import { GitHub, Google, Lock, LockClock, Password } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
 import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
+import SEO from '../../components/seo';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
@@ -201,6 +202,8 @@ const AccountPage: NextPage = () => {
 
   return (
     <>
+      <SEO title="Account Overview" description="Overview of your TOA account." url="/account" />
+
       <Card sx={{ margin: 2 }}>
         {!toaUser && <LinearProgress />}
         {toaUser && (

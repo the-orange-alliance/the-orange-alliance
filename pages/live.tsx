@@ -20,6 +20,7 @@ import {
 } from '../lib/page-helpers/streams-helper';
 import * as Layouts from '../components/streaming/layouts';
 import { useRouter } from 'next/router';
+import SEO from '../components/seo';
 
 interface StreamView {
   id: string;
@@ -118,70 +119,74 @@ const Streams: NextPage<IRawStreamsProps> = props => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Box
-      component={Box}
-      sx={{
-        height: 'calc(100vh - var(--toa-navbar-height))',
-        bgcolor: '#121212',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
-      }}
-    >
-      {LayoutContainer ? (
-        <LayoutContainer streams={streams} showChat={showChat && !smallScreen} />
-      ) : (
-        <>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              bgcolor: 'background.paper',
-              mx: 4,
-              my: 'auto',
-              width: 400,
-              maxWidth: '100%',
-              borderRadius: 4,
-              maxHeight: '90%',
-              overflow: 'hidden'
-            }}
-          >
-            <Typography variant="h6" sx={{ p: 2 }}>
-              {t('pages.streams.layouts.title')}
-            </Typography>
-            <List sx={{ overflowY: 'auto', borderTop: 1, borderColor: 'divider', px: 2 }}>
-              {views
-                .filter(v => (isMobile ? v.mobile : true))
-                .map(v => (
-                  <ListItem
-                    button
-                    key={v.id}
-                    dense
-                    sx={{ my: 0.5, py: 1 }}
-                    onClick={() => setSelectedLayout(v)}
-                  >
-                    <ListItemIcon>
-                      <svg style={{ width: '25px', height: '20px' }} viewBox="0 0 23 15">
-                        <path d={v.svgPath} />
-                      </svg>
-                    </ListItemIcon>
-                    <ListItemText>{t('pages.streams.layouts.' + v.id)}</ListItemText>
-                  </ListItem>
-                ))}
-            </List>
-            {!smallScreen && (
-              <FormControlLabel
-                control={
-                  <Checkbox checked={showChat} onChange={e => setShowChat(e.target.checked)} />
-                }
-                label={t('pages.streams.show_chat')}
-                sx={{ px: 2, py: 1, borderTop: 1, borderColor: 'divider' }}
-              />
-            )}
-          </Box>
-        </>
-      )}
-    </Box>
+    <>
+      <SEO title="Watch" description="Watch live FIRST Tech Challenge events." />
+
+      <Box
+        component={Box}
+        sx={{
+          height: 'calc(100vh - var(--toa-navbar-height))',
+          bgcolor: '#121212',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        {LayoutContainer ? (
+          <LayoutContainer streams={streams} showChat={showChat && !smallScreen} />
+        ) : (
+          <>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                bgcolor: 'background.paper',
+                mx: 4,
+                my: 'auto',
+                width: 400,
+                maxWidth: '100%',
+                borderRadius: 4,
+                maxHeight: '90%',
+                overflow: 'hidden'
+              }}
+            >
+              <Typography variant="h6" sx={{ p: 2 }}>
+                {t('pages.streams.layouts.title')}
+              </Typography>
+              <List sx={{ overflowY: 'auto', borderTop: 1, borderColor: 'divider', px: 2 }}>
+                {views
+                  .filter(v => (isMobile ? v.mobile : true))
+                  .map(v => (
+                    <ListItem
+                      button
+                      key={v.id}
+                      dense
+                      sx={{ my: 0.5, py: 1 }}
+                      onClick={() => setSelectedLayout(v)}
+                    >
+                      <ListItemIcon>
+                        <svg style={{ width: '25px', height: '20px' }} viewBox="0 0 23 15">
+                          <path d={v.svgPath} />
+                        </svg>
+                      </ListItemIcon>
+                      <ListItemText>{t('pages.streams.layouts.' + v.id)}</ListItemText>
+                    </ListItem>
+                  ))}
+              </List>
+              {!smallScreen && (
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={showChat} onChange={e => setShowChat(e.target.checked)} />
+                  }
+                  label={t('pages.streams.show_chat')}
+                  sx={{ px: 2, py: 1, borderTop: 1, borderColor: 'divider' }}
+                />
+              )}
+            </Box>
+          </>
+        )}
+      </Box>
+    </>
   );
 };
 

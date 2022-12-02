@@ -34,7 +34,7 @@ const SEO: React.FC<Props> = ({ title, isFullTitle = false, description, url, og
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta name="twitter:card" content="summary_large_image" />
-      <link rel="shortcut icon" href="/assets/logo.png" />
+      {/* <link rel="shortcut icon" href="/assets/logo.png" /> */}
       <meta
         name="keywords"
         content="FIRST, FIRST Tech Challenge, FTC, STEM, robotics, scores, results, team, match, video, watch"

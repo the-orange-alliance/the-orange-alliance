@@ -7,9 +7,9 @@ export const createOpengraphImageUrl = (data: {
   description2?: string;
 }) => {
   const dataRaw = JSON.stringify(data);
-  const hmac = createHmac('sha256', 'my_secret');
+  const hmac = createHmac('sha256', process.env.OG_SECRET);
   hmac.update(dataRaw);
   const token = hmac.digest('hex');
 
-  return `/api/opengraph/?token=${token}&data=${encodeURIComponent(dataRaw)}`;
+  return `/_opengraph?token=${token}&data=${encodeURIComponent(dataRaw)}`;
 };

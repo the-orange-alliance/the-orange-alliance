@@ -1,5 +1,4 @@
 import { ImageResponse } from '@vercel/og';
-import { NextApiRequest } from 'next';
 import { NextRequest } from 'next/server';
 
 export const config = {
@@ -12,7 +11,7 @@ const font = fetch(new URL('../../public/assets/fonts/Roboto-Bold.ttf', import.m
 
 const key = crypto.subtle.importKey(
   'raw',
-  new TextEncoder().encode('my_secret'),
+  new TextEncoder().encode(process.env.OG_SECRET),
   { name: 'HMAC', hash: { name: 'SHA-256' } },
   false,
   ['sign']

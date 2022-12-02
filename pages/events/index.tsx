@@ -16,6 +16,7 @@ import { CURRENT_SEASON } from '../../constants';
 import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
 import { useAppContext } from '../../lib/toa-context';
+import SEO from '../../components/seo';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();
@@ -77,7 +78,9 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   };
 
   return (
-    <div>
+    <>
+      <SEO title="Events" description="List of FIRST Tech Challenge events." url="/events" />
+
       <Typography sx={{ margin: 2 }} variant="h4">
         {t('general.events')}
       </Typography>
@@ -136,7 +139,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
           <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
         </CardContent>
       )}
-    </div>
+    </>
   );
 };
 

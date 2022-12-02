@@ -42,3 +42,4 @@ yarn-error.log*
 
 public/library.dll.js
 public/library.json
+.env

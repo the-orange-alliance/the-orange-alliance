@@ -17,7 +17,7 @@ import { createOpengraphImageUrl } from '../../../lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
 
 const EventPage: NextPage<IRawEventProps> = props => {
-  const { event: eventData, streams } = useEventData(props);
+  const { event: eventData, streams, ogImage } = useEventData(props);
   const t = useTranslate();
 
   const startDate = new Date(eventData.startDate); // TODO: Use moment.js
@@ -29,6 +29,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
         description={`Match results and rankings for the ${startDate.getFullYear()} ${
           eventData.fullEventName
         } in ${getEventDescription(eventData)}.`}
+        ogImage={ogImage}
         url={`/events/${eventData.eventKey}`}
       />
       <Box sx={{ margin: 2 }}>
