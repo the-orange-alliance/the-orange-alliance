@@ -1,7 +1,14 @@
 import { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
-import { Typography, Card } from '@mui/material';
-import { CalendarToday, LocationOn, Public, VerifiedUser, Videocam } from '@mui/icons-material';
+import { Typography, Card, Select, MenuItem, TextField } from '@mui/material';
+import {
+  CalendarToday,
+  Link,
+  LocationOn,
+  Public,
+  VerifiedUser,
+  Videocam
+} from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
 import { useTranslate } from '../../../i18n/i18n';
 import {
@@ -12,12 +19,20 @@ import {
 import EventTabs from '../../../components/EventTabs/EventTabs';
 import { readableDate } from '../../../lib/utils/common';
 import { Box } from '@mui/system';
+import { ChangeEvent } from 'react';
+import { useRouter } from 'next/router';
 
 const EventPage: NextPage<IRawEventProps> = props => {
-  const { event: eventData, streams } = useEventData(props);
+  const { event: eventData, streams, otherDivisions: divs } = useEventData(props);
   const t = useTranslate();
+  const router = useRouter();
 
   const startDate = new Date(eventData.startDate); // TODO: Use moment.js
+
+  const handleDivisionJump = (event: ChangeEvent<any>) => {
+    const toGo = `/events/${event.target.value}/rankings`;
+    router.push(toGo);
+  };
 
   return (
     <>
@@ -70,6 +85,28 @@ const EventPage: NextPage<IRawEventProps> = props => {
               ''
             )}
           </Typography>
+        )}
+        {divs.length > 0 && (
+          <Box>
+            <Typography sx={{ margin: 1, display: 'inline' }} variant={'body2'}>
+              <Link fontSize="inherit" sx={{ marginRight: 1, marginTop: 1.5 }} />
+            </Typography>
+
+            <TextField
+              select
+              size={'small'}
+              label={'Jump to Division'}
+              sx={{ width: '250px' }}
+              variant={'outlined'}
+              onChange={handleDivisionJump}
+            >
+              {divs.map((div, index) => (
+                <MenuItem key={div.eventKey} value={div.eventKey}>
+                  {div.divisionName + ' '} Division
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         )}
       </Box>
 
