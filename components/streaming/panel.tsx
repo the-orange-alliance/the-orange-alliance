@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NextLink from 'next/link';
 import EventResultsIcon from '@mui/icons-material/EqualizerRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import {
@@ -44,7 +45,7 @@ const LiveStreamPanel = ({
         {selectedStream ? (
           <>
             <iframe
-              src={`${selectedStream.streamURL}&parent=theorangealliance.org&parent=localhost`}
+              src={`${selectedStream.streamURL}${selectedStream.streamURL.indexOf("twitch") > -1 ? '&parent=theorangealliance.org&parent=localhost' : ''}`}
               frameBorder="0"
               scrolling="no"
               allowFullScreen
@@ -55,14 +56,11 @@ const LiveStreamPanel = ({
               </Typography>
               <div className="stream-info__icons">
                 <Tooltip title={t('pages.streams.event_results')}>
-                  <IconButton
-                    component="a"
-                    sx={{ color: '#fff' }}
-                    href={`/events/${selectedStream.eventKey}`}
-                    target="_blank"
-                  >
-                    <EventResultsIcon />
-                  </IconButton>
+                  <NextLink href={`/events/${selectedStream.eventKey}`} passHref target="_blank">
+                    <IconButton component="a" sx={{ color: '#fff' }}>
+                      <EventResultsIcon />
+                    </IconButton>
+                  </NextLink>
                 </Tooltip>
                 <Tooltip title={t('pages.streams.close_stream')}>
                   <IconButton

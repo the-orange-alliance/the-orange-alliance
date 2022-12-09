@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
-import Link from 'next/link';
-import { Typography, Paper, Card } from '@mui/material';
+import NextLink from 'next/link';
+import { Typography, Card } from '@mui/material';
 import { CalendarToday, LocationOn, Public, VerifiedUser, Videocam } from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
 import { useTranslate } from '../../../i18n/i18n';
@@ -51,7 +51,9 @@ const EventPage: NextPage<IRawEventProps> = props => {
         {streams && Array.isArray(streams) && streams.length > 0 && streams[0].isActive && (
           <Typography sx={{ margin: 1 }} variant={'body2'}>
             <Videocam fontSize="inherit" sx={{ marginRight: 1 }} />
-            <Link href={`/live?e=${eventData.eventKey}`}>{t('pages.event.stream_available')}</Link>
+            <NextLink href={`/live?e=${eventData.eventKey}`}>
+              <a>{t('pages.event.stream_available')}</a>
+            </NextLink>
           </Typography>
         )}
         {eventData.dataSource !== DataSource.Unknown && (

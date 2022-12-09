@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next';
+import NextLink from 'next/link';
 import { Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
@@ -15,11 +16,13 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
     <>
       <Typography variant={'h4'}>{match.matchName}</Typography>
       <Typography variant={'subtitle1'}>
-        <a className={'text-black'} href={`/events/${match.event.eventKey}/rankings`}>
-          {match.event.divisionName
-            ? match.event.eventName + ' - ' + match.event.divisionName
-            : match.event.eventName}
-        </a>
+        <NextLink href={`/events/${match.event.eventKey}/rankings`}>
+          <a className="text-black">
+            {match.event.divisionName
+              ? match.event.eventName + ' - ' + match.event.divisionName
+              : match.event.eventName}
+          </a>
+        </NextLink>
       </Typography>
       <Grid container direction={'row'} spacing={2}>
         <Grid item xs={4}>

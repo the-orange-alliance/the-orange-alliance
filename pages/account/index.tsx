@@ -23,7 +23,9 @@ import {
   linkProvider,
   unlinkProvider,
   sendPasswordReset,
-  fetchUserData
+  fetchUserData,
+  changeDisplayName,
+  changeEmail
 } from '../../providers/FirebaseProvider';
 import { useEffect, useState } from 'react';
 import TOAUser from '../../lib/TOAUser';
@@ -32,7 +34,7 @@ import { Region, Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import SimpleEventPaper from '../../components/SimpleEventPaper';
 import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { GitHub, Google, Lock, LockClock, Password } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -163,6 +165,40 @@ const AccountPage: NextPage = () => {
       });
   };
 
+  const changeName = () => {
+    const name = prompt('Please Enter a New Name:');
+
+    if (name == null) {
+      toast.error(t('general.error_occurred'));
+      return;
+    }
+
+    changeDisplayName(name);
+    const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+    newUser.displayName = name;
+    setToaUser(newUser);
+    toast.success(t('account.updated_name'));
+  };
+
+  const changeEmailAddress = () => {
+    const email = prompt('Please Enter a New Email:');
+
+    if (email == null) {
+      toast.error(t('general.error_occurred'));
+      return;
+    }
+    const success = changeEmail(email);
+
+    if (success) {
+      const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+      newUser.email = email;
+      setToaUser(newUser);
+      toast.success(t('account.updated_email'));
+    } else {
+      toast.error(t('account.fail_update_email'));
+    }
+  };
+
   return (
     <>
       <Card sx={{ margin: 2 }}>
@@ -287,7 +323,10 @@ const AccountPage: NextPage = () => {
                     )}
                     <Typography sx={{ marginTop: 2 }} variant={'subtitle1'}>
                       {t('pages.account.api_card.docs') + ' '}
-                      <Link href="/apidocs">{t('general.here')}</Link>.
+                      <NextLink href="/apidocs">
+                        <a>{t('general.here')}</a>
+                      </NextLink>
+                      .
                     </Typography>
                   </Grid>
                   <Grid item xs={3}>
@@ -344,6 +383,22 @@ const AccountPage: NextPage = () => {
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Github')}
                     </ListItemText>
+                  </ListItem>
+
+                  {/* Change Name */}
+                  <ListItem button onClick={changeName}>
+                    <ListItemIcon>
+                      <Lock />
+                    </ListItemIcon>
+                    <ListItemText>{t('pages.account.change_name')}</ListItemText>
+                  </ListItem>
+
+                  {/* Change Email Address */}
+                  <ListItem button onClick={changeEmailAddress}>
+                    <ListItemIcon>
+                      <Lock />
+                    </ListItemIcon>
+                    <ListItemText>{t('pages.account.change_email_address')}</ListItemText>
                   </ListItem>
 
                   {/* Login Info */}

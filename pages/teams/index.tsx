@@ -106,6 +106,10 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
 
 export default TeamsPage;
 
-export async function getServerSideProps(context: any) {
-  return { props: await fetchTeamsData() };
+export async function getStaticProps() {
+  return {
+    props: await fetchTeamsData(),
+    // Re-generate the teams page at most once per 1 hour
+    revalidate: 60 * 60
+  };
 }

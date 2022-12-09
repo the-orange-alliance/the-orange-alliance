@@ -19,8 +19,9 @@
     "close": "Close",
     "save": "Save",
     "error_occurred": "An error occurred, Please try again later",
-    "search_text_long": "Search teams and events",
+    "search_text_long": "Search teams and events...",
     "search_text_short": "Team # or Event",
+    "search_no_results": "No results found.",
     "add_to_mytoa": "Add to myTOA",
     "remove_from_mytoa": "Remove from myTOA",
     "loading": "Loading..."
@@ -122,6 +123,11 @@
       "unlink_phone": "Unlink phone number",
       "success_link": "Successfully linked {{ name }} account",
       "success_unlink": "Successfully unlinked {{ name }} account",
+      "change_name": "Change Name",
+      "updated_name": "Successfully updated name. Please refresh to see changes.",
+      "change_email_address": "Change Email Address",
+      "updated_email": "Successfully updated email. Please check your email for a verification email",
+      "update_email_fail": "Failed to update email. Please logout/login and try again",
       "last_signin": "Last Sign In",
       "league_creation_success": "Successfully created league!",
       "league_deletion_success": "Successfully deleted league!",
@@ -485,6 +491,12 @@
     "rank": "Rank",
     "wlt": "WLT",
     "played": "Played",
+    "levels": {
+      "finals": "Finals",
+      "semifinals": "Semifinals",
+      "quarterfinals": "Quarterfinals",
+      "qualifications": "Qualifications"
+    },
     "help": {
       "bold": "<b>Bold</b> is Winning Alliance</small>",
       "bold_and_black": "<b>Bold and Black</b> is Selected Team</small>",

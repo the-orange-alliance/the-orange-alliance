@@ -13,7 +13,7 @@ const SimpleTeamPaper = ({ team }: IProps) => {
 
   return (
     <Link href={`/teams/${team.teamKey}`} passHref>
-      <ListItem button>
+      <ListItem button component="a">
         <ListItemAvatar sx={{ fontWeight: 700, textAlign: 'center', mr: 2 }}>
           {team.teamKey}
         </ListItemAvatar>

@@ -4,7 +4,7 @@ import SimpleMatchTable from '../components/SimpleMatchTable';
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import { useTranslate } from '../i18n/i18n';
 import { Card, CardContent, CardHeader, Divider, Link, Typography, useTheme } from '@mui/material';
-import { useAppContext } from '../pages/_app';
+import { useAppContext } from '../lib/toa-context';
 import { CURRENT_SEASON } from '../constants';
 
 interface IProps {
@@ -30,12 +30,7 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
           {subtitle}
         </Typography>
         <NextLink href={`/events/${match.event?.eventKey}/rankings`} passHref>
-          <Link
-            underline="none"
-            fontSize="0.875rem"
-            color={theme.palette.secondary.light}
-            display="block"
-          >
+          <Link underline="none" fontSize="0.875rem" color="text.secondary" display="block">
             {match.event?.eventName}
           </Link>
         </NextLink>

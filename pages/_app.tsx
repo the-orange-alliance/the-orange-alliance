@@ -8,10 +8,10 @@ import DrawerLayout from '../components/navigation/drawer-layout';
 import theme from '../lib/theme';
 import { UserLanguageProvider } from '../i18n/i18n';
 import TOAAppContext from '../lib/models/AppContext';
-import { fetchAppData, useAppData } from '../lib/page-helpers/app-helper';
+import { fetchAppData, IRawAppProps, useAppData } from '../lib/page-helpers/app-helper';
+import TOAAppContextProvider from '../lib/toa-context';
 
-const Context = createContext<TOAAppContext>({} as TOAAppContext);
-export const useAppContext = () => useContext(Context);
+let toaGlobalData: IRawAppProps | null = null;
 
 function MyApp({
   Component,
@@ -35,13 +35,13 @@ function MyApp({
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
         <ThemeProvider theme={theme}>
-          <Context.Provider value={initialState}>
+          <TOAAppContextProvider value={initialState}>
             <CssBaseline />
             <DrawerLayout title="The Orange Alliance">
               <Component {...pageProps} />
             </DrawerLayout>
             <Toaster />
-          </Context.Provider>
+          </TOAAppContextProvider>
         </ThemeProvider>
       </UserLanguageProvider>
       <style jsx global>{`
@@ -65,13 +65,15 @@ function MyApp({
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext);
-  const toaAppProps = await fetchAppData();
+  if (!toaGlobalData) {
+    toaGlobalData = await fetchAppData();
+  }
 
   return {
     ...appProps,
     pageProps: {
       userLanguage: appContext.ctx.query.userLanguage || 'en',
-      initialState: toaAppProps
+      initialState: toaGlobalData
     }
   };
 };

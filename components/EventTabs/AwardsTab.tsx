@@ -1,10 +1,11 @@
 import * as React from 'react';
+import NextLink from 'next/link';
 import { ListItem, ListItemText, ListItemIcon } from '@mui/material';
-import { AwardRecipient, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import IconOne from '@mui/icons-material/LooksOneOutlined';
 import IconTwo from '@mui/icons-material/LooksTwoOutlined';
 import IconThree from '@mui/icons-material/Looks3Outlined';
 import IconTrophy from '@mui/icons-material/EmojiEventsOutlined';
+import { AwardRecipient, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import { sort } from '../../lib/utils/award';
 import { Box } from '@mui/system';
@@ -92,14 +93,16 @@ const AwardCell = ({ awardRecipient }: { awardRecipient: AwardRecipient }) => {
   const t = useTranslate();
   const level = parseInt(awardRecipient.awardKey.replace(/\D/g, ''));
   return (
-    <ListItem component="a" button href={`/teams/${awardRecipient.teamKey}`}>
-      <ListItemIcon>{Icon(level)}</ListItemIcon>
-      <ListItemText
-        primary={`${t('general.team')} #${awardRecipient.teamKey} - ${
-          awardRecipient.team.teamNameShort
-        }`}
-      />
-    </ListItem>
+    <NextLink href={`/teams/${awardRecipient.teamKey}`} passHref>
+      <ListItem component="a" button>
+        <ListItemIcon>{Icon(level)}</ListItemIcon>
+        <ListItemText
+          primary={`${t('general.team')} #${awardRecipient.teamKey} - ${
+            awardRecipient.team.teamNameShort
+          }`}
+        />
+      </ListItem>
+    </NextLink>
   );
 };
 

@@ -25,7 +25,7 @@ import {
 } from '../../providers/FirebaseProvider';
 import { uploadToImgur } from '../../providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
-import { useAppContext } from '../../pages/_app';
+import { useAppContext } from '../../lib/toa-context';
 import toast from 'react-hot-toast';
 
 interface IProps {

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Box, Card, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
@@ -9,8 +10,7 @@ import {
 } from '../../lib/page-helpers/insightsHelper';
 import InsightsTab from '../../components/SeasonInsights/InsightsTab';
 import FilterCard from '../../components/FilterCard';
-import { useEffect, useRef, useState } from 'react';
-import { useAppContext } from '../_app';
+import { useAppContext } from '../../lib/toa-context';
 
 const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const router = useRouter();

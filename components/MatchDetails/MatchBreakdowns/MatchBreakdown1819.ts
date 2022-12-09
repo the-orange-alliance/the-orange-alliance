@@ -1,5 +1,5 @@
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
-import RoverRuckusMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/RoverRuckusMatchDetails';
+import RoverRuckusMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1819/RoverRuckusMatchDetails';
 import { MatchBreakdownField, MatchBreakdownRow, MatchBreakdownTitle } from '../MatchBreakdownRow';
 
 export default class MatchBreakdown1819 {

@@ -15,7 +15,7 @@ import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
 import { getWeekName } from '../../lib/utils/common';
 import TOAProvider from '../../providers/TOAProvider';
-import { useAppContext } from '../_app';
+import { useAppContext } from '../../lib/toa-context';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();
@@ -142,6 +142,10 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
 export default EventsPage;
 
-export async function getServerSideProps(context: any) {
-  return { props: await fetchEventsData() };
+export async function getStaticProps() {
+  return {
+    props: await fetchEventsData(),
+    // Re-generate the events page at most once per 15 minute
+    revalidate: 15 * 60
+  };
 }

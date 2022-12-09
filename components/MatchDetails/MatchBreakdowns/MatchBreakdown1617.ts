@@ -1,5 +1,5 @@
 import { Match } from '@the-orange-alliance/api/lib/cjs/models';
-import VelocityVortexMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/VelocityVortexMatchDetails';
+import VelocityVortexMatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1617/VelocityVortexMatchDetails';
 import {
   MatchBreakdownBoolField,
   MatchBreakdownField,
