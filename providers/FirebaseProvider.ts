@@ -17,6 +17,7 @@ import {
 import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import TOAUser from '../lib/TOAUser';
 import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
+import toast from 'react-hot-toast';
 
 const baseUrl = 'https://functions.theorangealliance.org';
 // const baseUrl = 'http://localhost:5000/the-orange-alliance/us-central1/requireValidations'; // Tests Only
@@ -72,9 +73,9 @@ export const sendPasswordReset = () => {
 
 export const signUp = (email: string, name: string, password: string, team: string) => {
   return createUserWithEmailAndPassword(auth, email, password).then(user => {
-    updateProfile(user.user, { displayName: name, photoURL: null })
-      .then(() => {})
-      .catch(error => console.log(error));
+    updateProfile(user.user, { displayName: name, photoURL: null }).catch(error =>
+      console.log(error)
+    );
     const data = {} as any;
     data['fullName'] = name;
     if (team && team.trim().length > 0) {
@@ -134,10 +135,20 @@ export const fetchUserData = (type?: string): Promise<TOAUser> => {
         };
 
         fetch(baseUrl + '/user', { headers: headers })
-          .then(data => data.json())
+          .then(data => {
+            if (data.status === 428) {
+              toast.error('Please verify your email to continue!');
+            } else {
+              return data.json();
+            }
+          })
           .then(
             (data: any) => {
-              resolve(new TOAUser().fromJSON(data));
+              if (data) {
+                resolve(new TOAUser().fromJSON(data));
+              } else {
+                reject();
+              }
             },
             (err: any) => {
               reject(err);
@@ -270,7 +281,7 @@ const generateEventApiKey = (eventKey: string): Promise<any> => {
           .then(data => data.json())
           .then(
             (data: any) => {
-              resolve(data);
+              resolve(data.key);
             },
             (err: any) => {
               reject(err);

@@ -24,10 +24,11 @@ const LoginPage: NextPage = () => {
       signUp(email, fullName, password, team)
         .then(() => {
           toast.success(t('pages.account.subpages.register.success'));
-          return router.push({ pathname: '/account' });
+          router.push({ pathname: '/account/login' });
         })
-        .catch(() => {
-          toast.success(t('general.error_occurred'));
+        .catch(err => {
+          console.log(err);
+          toast.error(t('general.error_occurred'));
         });
     }
   };
