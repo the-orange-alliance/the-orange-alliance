@@ -36,7 +36,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       } else {
         setFetching(true);
         TOAProvider.getAPI()
-          .getEvents({ season_key: season.seasonKey })
+          .getEvents({ season_key: season.seasonKey, includeTeamCount: true })
           .then(setSeasonEvents)
           .finally(() => setFetching(false));
       }
