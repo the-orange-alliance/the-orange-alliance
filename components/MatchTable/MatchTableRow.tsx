@@ -6,6 +6,7 @@ import IconPlay from '@mui/icons-material/PlayCircleOutline';
 import { colorCalc, isSameDay } from '../../lib/utils/common';
 import { useTheme } from '@mui/material/styles';
 import { useUserLanguage } from '../../i18n/i18n';
+import { ReactNode } from 'react';
 
 interface IProps {
   match: Match;
@@ -199,6 +200,15 @@ const MatchTeamDisplay = ({
     }
   };
 
+  const GetLinkElement = ({ team, children }: { team: MatchParticipant; children: ReactNode }) =>
+    typeof setSelectedTeam !== 'function' ? (
+      <NextLink id={'/team/sdasdasdas'} href={`/team/${team.teamKey}`} passHref>
+        {children}
+      </NextLink>
+    ) : (
+      <React.Fragment>{children}</React.Fragment>
+    );
+
   return (
     <Grid item xs={12}>
       <Grid container>
@@ -213,7 +223,7 @@ const MatchTeamDisplay = ({
             }}
             onClick={() => selectTeam(team)}
           >
-            <NextLink href={`/teams/${team.teamKey}`} passHref>
+            <GetLinkElement team={team}>
               <Link
                 underline="none"
                 sx={{
@@ -227,7 +237,7 @@ const MatchTeamDisplay = ({
               >
                 {team.teamKey}
               </Link>
-            </NextLink>
+            </GetLinkElement>
           </Grid>
         ))}
       </Grid>

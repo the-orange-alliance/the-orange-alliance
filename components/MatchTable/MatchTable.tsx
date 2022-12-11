@@ -129,7 +129,7 @@ const MatchesTable = (props: IProps) => {
               key={match.matchKey}
               match={match}
               forceSmall={forceSmall}
-              setSelectedTeam={disableSelection ? () => {} : setSelectedTeam}
+              setSelectedTeam={disableSelection ? undefined : setSelectedTeam}
               selectedTeam={disableSelection ? null : selectedTeam}
               setSelectedMatch={setSelectedMatch}
             />
