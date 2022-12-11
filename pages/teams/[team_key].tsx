@@ -89,7 +89,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
   const scrollToEvent = (id: string) => {
     if (!document) return;
-    const element = document.getElementById(id);
+    const element = document.getElementById(id.toLowerCase());
     if (element) {
       window.scroll({
         behavior: 'smooth',
@@ -269,13 +269,17 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   </Box>
                 )}
 
-                {topOpr && topOpr.opr && (
+                {topOpr && topOpr.opr && topOpr.eventKey && (
                   <Box sx={{ marginBottom: 1 }}>
                     <FlashOn sx={{ marginRight: 1 }} color={'primary'} />
                     <Typography display={'inline'}>
-                      <b>{topOpr.opr}</b> Top OPR
-                    </Typography>{' '}
-                    <p className="nav-item text-primary clickable"> (Jump)</p>
+                      <b>{topOpr.opr}</b>
+                      {' Top OPR ('}
+                      <a href={''} onClick={() => scrollToEvent(topOpr.eventKey)}>
+                        Jump
+                      </a>
+                      {')'}
+                    </Typography>
                   </Box>
                 )}
 
@@ -323,7 +327,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
               {tab === 0 &&
                 team.events.map(event => (
                   <Card
-                    id={event.eventKey}
+                    id={event.eventKey.toLowerCase()}
                     key={event.eventKey}
                     sx={{ marginBottom: 3 }}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}

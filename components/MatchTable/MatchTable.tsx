@@ -54,7 +54,6 @@ const MatchesTable = (props: IProps) => {
       TOAProvider.getAPI()
         .getMatchDetails(selectedMatch.matchKey)
         .then(dtls => {
-          console.log(dtls);
           const copy = new Match().fromJSON(selectedMatch.toJSON());
           copy.details = dtls;
           // Set these details because this technically should reference to the original data we got from the server
