@@ -22,12 +22,19 @@ export const useEventsData = (props: IRawEventsProps): IEventsProps =>
   useMemo(() => parseEventsProps(props), [props]);
 
 export const fetchEventsData = async (): Promise<IRawEventsProps> => {
-  const data = await TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON });
+  const data = await TOAProvider.getAPI().getEvents({
+    season_key: CURRENT_SEASON,
+    includeTeamCount: true
+  });
   data.sort(
     (a: Event, b: Event) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   );
   return {
-    events: data.map(e => undefinedToNull(e.toJSON()))
+    events: data.map(e => ({
+      ...undefinedToNull(e.toJSON()),
+      team_count: e.teamCount,
+      match_count: e.matchCount
+    }))
   };
 };
 

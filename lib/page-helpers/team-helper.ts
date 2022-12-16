@@ -15,6 +15,7 @@ import { EventSorter } from '../utils/event';
 import { sort } from '../utils/award';
 import { MediaTypeTeam } from '@the-orange-alliance/api/lib/cjs/models/types/MediaType';
 import { undefinedToNull } from '../utils/common';
+import rankingTab from '../../components/EventTabs/RankingTab';
 
 export interface IRawTeamProps {
   team: any;
@@ -123,29 +124,38 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
   ]);
 
   // Get all team events for season
-  let events = await Promise.all(
-    data[1].map((result: EventParticipant) => TOAProvider.getAPI().getEvent(result.eventKey))
+  const events = await Promise.all(
+    data[1].map((result: EventParticipant) => {
+      // Some teams are a part of orphaned events (I.E. The event key is invalid)
+      // Catch those errors and return null
+      return TOAProvider.getAPI()
+        .getEvent(result.eventKey)
+        .catch(() => null);
+    })
   );
 
   // Sort out empty events
-  events = events.filter(result => result !== null);
+  const filtered = events.filter(
+    result => typeof result !== 'undefined' && result !== null
+  ) as Event[];
 
   // Fill events with data
-  const matches = await getEventMatches(events, teamKey);
+  const matches = await getEventMatches(filtered, teamKey);
 
   // Calculate top OPR
-  const combinedRanks = data[0].rankings.reduce((a: Ranking[], b: Ranking) => a.concat(b), []);
-  const combinedOpr = getTopOpr(combinedRanks);
+  const topOpr = data[5].reduce((prev: Ranking, current: Ranking) => {
+    return prev.opr > current.opr ? prev : current;
+  });
 
   return {
     team: undefinedToNull(data[0].toJSON()),
-    events: events.map(e => undefinedToNull(e.toJSON())),
+    events: filtered.map(e => undefinedToNull(e.toJSON())),
     wlt: data[2],
     media: data[3].map(m => undefinedToNull(m.toJSON())),
     awards: data[4].map(a => undefinedToNull(a.toJSON())),
-    rankings: data[3].map(r => undefinedToNull(r.toJSON())),
+    rankings: data[5].map(r => undefinedToNull(r.toJSON())),
     matches: matches,
-    topOpr: combinedOpr ? undefinedToNull(combinedOpr.toJSON()) : null
+    topOpr: topOpr ? undefinedToNull(topOpr.toJSON()) : null
   };
 };
 

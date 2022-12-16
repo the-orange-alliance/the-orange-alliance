@@ -16,6 +16,7 @@ export interface IRawHomeProps {
   overallHighScoreEvent: any;
   qualsHighScoreEvent: any;
   elimsHighScoreEvent: any;
+  todaysEvents: any[];
 }
 
 export interface IHomeProps {
@@ -24,6 +25,7 @@ export interface IHomeProps {
   overallHighScore: Match;
   qualsHighScore: Match;
   elimsHighScore: Match;
+  todaysEvents: Event[];
 }
 
 export const getHighScoreMatch = (
@@ -66,13 +68,13 @@ export const parseHomeProps = (props: IRawHomeProps): IHomeProps => {
   elims.participants = props.elimsHighScoreParticipants.map((p: any) =>
     new MatchParticipant().fromJSON(p)
   );
-
   return {
     matchSize: props.matchSize,
     teamSize: props.teamSize,
     overallHighScore: overall,
     qualsHighScore: quals,
-    elimsHighScore: elims
+    elimsHighScore: elims,
+    todaysEvents: props.todaysEvents.map((e: any) => new Event().fromJSON(e))
   };
 };
 
@@ -80,12 +82,19 @@ export const useHomeData = (props: IRawHomeProps): IHomeProps =>
   useMemo(() => parseHomeProps(props), [props]);
 
 export const fetchHomeData = async (): Promise<IRawHomeProps> => {
+  const now = new Date();
+  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
   const homePageResults = await Promise.all([
     TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
     TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
     getHighScoreMatch('all', true),
     getHighScoreMatch('quals', false),
-    getHighScoreMatch('elims', false)
+    getHighScoreMatch('elims', false),
+    TOAProvider.getAPI().getEvents({
+      season_key: CURRENT_SEASON,
+      on: today,
+      includeTeamCount: true
+    })
   ]);
   return {
     teamSize: homePageResults[0],
@@ -101,6 +110,12 @@ export const fetchHomeData = async (): Promise<IRawHomeProps> => {
     qualsHighScoreParticipants:
       homePageResults[3]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
     elimsHighScoreParticipants:
-      homePageResults[4]?.participants.map(p => undefinedToNull(p.toJSON())) ?? []
+      homePageResults[4]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    todaysEvents:
+      homePageResults[5]?.map(e => ({
+        ...undefinedToNull(e.toJSON()),
+        match_count: e.matchCount,
+        team_count: e.teamCount
+      })) ?? []
   };
 };

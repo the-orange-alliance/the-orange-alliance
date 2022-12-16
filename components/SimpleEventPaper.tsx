@@ -31,15 +31,19 @@ const SimpleEventPaper = (props: IProps) => {
 
   return (
     <ListItem button onClick={onClick}>
-      {event.teamCount > 0 && <Box sx={{
-        background: "primary.main",
-        top: '4px',
-        left: '4px',
-        width: '4px',
-        bottom: '4px',
-        position: 'absolute',
-        borderRadius: '4px'
-      }}></Box>}
+      {event.teamCount > 0 && (
+        <Box
+          sx={{
+            bgcolor: 'primary.main',
+            top: '4px',
+            left: '4px',
+            width: '4px',
+            bottom: '4px',
+            position: 'absolute',
+            borderRadius: '4px'
+          }}
+        ></Box>
+      )}
       <ListItemText primary={event.fullEventName} secondary={secondaryTxt} />
     </ListItem>
   );

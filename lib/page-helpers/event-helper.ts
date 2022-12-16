@@ -20,6 +20,7 @@ export interface IRawEventProps {
   alliances: any;
   awards: any;
   insights: any;
+  otherDivisions: any[];
   streams: any;
   ogImage?: string;
 }
@@ -28,6 +29,7 @@ export interface IEventProps {
   event: Event;
   streams: EventLiveStream[];
   ogImage?: string;
+  otherDivisions: Event[];
 }
 
 export const parseEventProps = (props: IRawEventProps): IEventProps => {
@@ -41,8 +43,10 @@ export const parseEventProps = (props: IRawEventProps): IEventProps => {
     i ? getInsightsType(event.seasonKey).fromJSON(i) : null
   );
 
+  const otherDivisions = props.otherDivisions.map((e: any) => new Event().fromJSON(e));
+
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
-  return { event, streams, ogImage: props.ogImage };
+  return { event, streams, otherDivisions, ogImage: props.ogImage };
 };
 
 export const useEventData = (props: IRawEventProps): IEventProps =>
@@ -70,6 +74,15 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
   const insights = [data[6][0], data[7][0]];
   const streams = data[8];
 
+  const currDiv = parseInt(eventKey.slice(-1));
+  let otherDivisions: Event[] = [];
+  if (!isNaN(currDiv) && event.divisionName !== null && currDiv === event.divisionKey) {
+    const toFetch = currDiv === 0 ? [1, 2] : currDiv === 1 ? [0, 2] : [0, 1];
+    otherDivisions = await Promise.all(
+      toFetch.map(div => TOAProvider.getAPI().getEvent(eventKey.slice(0, -1) + div))
+    ).catch(() => []);
+  }
+
   const newInsights = [];
   for (const i of insights) {
     if (i) {
@@ -89,6 +102,7 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
     matches: matches.map(m => undefinedToNull(m.toJSON())),
     alliances: alliances.map(a => undefinedToNull(a.toJSON())),
     awards: awards.map(a => undefinedToNull(a.toJSON())),
+    otherDivisions: otherDivisions.map(d => undefinedToNull(d.toJSON())),
     insights: newInsights,
     streams: streams.map(s => undefinedToNull(s.toJSON()))
   };

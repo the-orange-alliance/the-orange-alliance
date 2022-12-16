@@ -1,5 +1,15 @@
+import * as React from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Divider,
+  Grid,
+  Typography
+} from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
 import StatisticCard from '../components/statistic-card';
@@ -7,11 +17,12 @@ import AnnouncementCard from '../components/AnnouncementCard';
 import { useTranslate } from '../i18n/i18n';
 import { fetchHomeData, IRawHomeProps, useHomeData } from '../lib/page-helpers/home-helper';
 import LeaderboardsModule from '../components/LeaderboardsModule';
+import SimpleEventPaper from '../components/SimpleEventPaper';
 import Search from '../components/search';
 import SEO from '../components/seo';
 
 const Home: NextPage<IRawHomeProps> = props => {
-  const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore } =
+  const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore, todaysEvents } =
     useHomeData(props);
   const t = useTranslate();
 
@@ -60,6 +71,21 @@ const Home: NextPage<IRawHomeProps> = props => {
                   />
                 </Grid>
               </Grid>
+
+              <Card sx={{ mt: 2 }}>
+                <CardHeader title={t('pages.home.todays_events')} />
+                <Divider />
+                <CardContent>
+                  {todaysEvents.length === 0 && (
+                    <Typography variant={'h6'} sx={{ marginTop: 1 }}>
+                      {t('pages.home.no_events_today')}
+                    </Typography>
+                  )}
+                  {todaysEvents.map(event => (
+                    <SimpleEventPaper key={event.eventKey} event={event} />
+                  ))}
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               {/* This is temporary. ReactDOMServer does not support Suspense, yet. */}
