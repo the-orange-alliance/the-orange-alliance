@@ -1,204 +1,88 @@
 import RoverRuckusInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/1819/RoverRuckusInsights';
-import { Grid, Typography } from '@mui/material';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
+import { Grid } from '@mui/material';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import Chart from '../Chart';
 
 interface IProps {
   insights: { [key: string]: Insights };
 }
 
 const SeasonInsights1819 = (props: IProps) => {
-  const { insights } = props;
-
-  const landing = [];
-  const sampleClaim = [];
-  const parking = [];
-  const teleAvg = [];
-  const endNav = [];
-
-  for (const key in insights) {
-    if (typeof key === 'string' && key.toLowerCase() === 'test') continue;
-
-    const insight: RoverRuckusInsights = insights[key] as RoverRuckusInsights;
-
-    const short = getWeekShort(key);
-    landing.push({
-      name: short,
-      y1: insight.autoPercentLanding
-    });
-    sampleClaim.push({
-      name: short,
-      y1: insight.autoPercentSampling,
-      y2: insight.autoPercentClaiming
-    });
-    parking.push({
-      name: short,
-      y1: insight.autoPercentParking
-    });
-    teleAvg.push({
-      name: short,
-      y1: insight.teleAvgGolds,
-      y2: insight.teleAvgSilvers,
-      y3: insight.teleAvgDepotMinerals
-    });
-    endNav.push({
-      name: short,
-      y1: insight.endPercentLatched,
-      y2: insight.endPercentParked
-    });
-  }
+  const insights = Object.values(props.insights) as RoverRuckusInsights[];
+  const labels = Object.keys(props.insights).map(getWeekShort);
 
   return (
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Landing */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Landing
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={landing}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Landed" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            insights,
+            labels,
+            keys: ['autoPercentLanding'],
+            title: 'Autonomous Landing',
+            dataLabels: {
+              autoPercentLanding: 'Percent Landed'
+            }
+          }}
+        />
 
         {/* Sample/Claiming */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Sample/Claiming
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={sampleClaim}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Sampled" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent Claimed" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            insights,
+            labels,
+            keys: ['autoPercentSampling', 'autoPercentClaiming'],
+            title: 'Autonomous Sampling/Claiming',
+            dataLabels: {
+              autoPercentSampling: 'Percent Sampled',
+              autoPercentClaiming: 'Percent Claimed'
+            }
+          }}
+        />
 
         {/* Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            Autonomous Parking
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={parking}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Parked" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            insights,
+            labels,
+            keys: ['autoPercentParking'],
+            title: 'Autonomous Parking',
+            dataLabels: {
+              autoPercentParking: 'Percent Parked'
+            }
+          }}
+        />
 
         {/* Tele Scoring */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            TeleOp Gold, Silver, and Depot
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={teleAvg}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Gold" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Silver" />
-              <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Depot Minerals" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            insights,
+            labels,
+            keys: ['teleAvgGolds', 'teleAvgSilvers', 'teleAvgDepotMinerals'],
+            title: 'Teleop Gold, Silver, and Depot',
+            dataLabels: {
+              teleAvgGolds: 'Average Golds',
+              teleAvgSilvers: 'Average Silvers',
+              teleAvgDepotMinerals: 'Average Depot Minerals'
+            }
+          }}
+        />
 
         {/* End Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
-          <Typography variant={'h6'} align={'center'}>
-            End Game Parking
-          </Typography>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={400}
-              height={300}
-              data={endNav}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Latched" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent Parked" />
-            </LineChart>
-          </ResponsiveContainer>
-        </Grid>
+        <Chart
+          {...{
+            insights,
+            labels,
+            keys: ['endPercentLatched', 'endPercentParked'],
+            title: 'Endgame Parking',
+            dataLabels: {
+              endPercentLatched: 'Percent Latched',
+              endPercentParked: 'Percent Parked'
+            }
+          }}
+        />
       </Grid>
     </>
   );
