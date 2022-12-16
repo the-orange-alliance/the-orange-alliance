@@ -183,7 +183,7 @@ export function teamToStrippedJson(team: Team) {
 }
 
 export function getEventDescription(event: Event) {
-  const location = `${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''} ${
+  const location = `${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}${
     event.country
   }`;
   const startDate = DateTime.fromISO(event.startDate);

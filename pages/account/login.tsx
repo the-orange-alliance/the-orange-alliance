@@ -10,6 +10,7 @@ import {
 } from '../../providers/FirebaseProvider';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
+import SEO from '../../components/seo';
 
 const LoginPage: NextPage = () => {
   const t = useTranslate();
@@ -59,6 +60,8 @@ const LoginPage: NextPage = () => {
 
   return (
     <>
+      <SEO title="Sign in" url="/account/login" />
+
       <Grid container direction={'column'} alignContent={'center'}>
         <Grid item sx={{ marginTop: 7 }}>
           <Card onKeyPress={handleKeyPress}>

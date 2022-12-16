@@ -44,9 +44,11 @@ import { useTranslate } from '../../i18n/i18n';
 import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helpers/team-helper';
 import { getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
-import { Season } from '@the-orange-alliance/api/lib/cjs/models';
+import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchesTable from '../../components/MatchTable/MatchTable';
 import { useAppContext } from '../../lib/toa-context';
+import { createOpengraphImageUrl } from '../../lib/opengraph';
+import SEO from '../../components/seo';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();
@@ -101,6 +103,16 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
   return (
     <>
+      <SEO
+        title={`Team #${team.teamNumber}`}
+        description={`Team information and results for FIRST Tech Challenge Team ${
+          team.teamNumber
+        } ${team.teamNameShort} from ${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${
+          team.country
+        }.`}
+        url={`/teams/${team.teamKey}`}
+        ogImage={props.ogImage}
+      />
       <Box sx={{ margin: 2 }}>
         <Typography variant="h4">Team #{team.teamNumber}</Typography>
         {/* // TODO: myTOA
@@ -472,7 +484,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
   try {
     const teamKey = String(params?.team_key);
     const seasonKey = query.season_key ? String(query.season_key) : CURRENT_SEASON;
-    return { props: await fetchTeamData(teamKey, seasonKey) };
+    const props = await fetchTeamData(teamKey, seasonKey);
+
+    const team = new Team().fromJSON(props.team);
+    props.ogImage = createOpengraphImageUrl({
+      title: `#${team.teamNumber} ${team.teamNameShort}`,
+      description: `${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country}`
+    });
+
+    return { props };
   } catch (err) {
     console.log(err);
     return { notFound: true };

@@ -10,6 +10,14 @@ const withTM = require('next-transpile-modules')([
 const cfg = {
   reactStrictMode: true,
   swcMinify: true,
+  async rewrites() {
+    return [
+      {
+        source: '/_opengraph',
+        destination: '/api/opengraph'
+      }
+    ];
+  },
   async redirects() {
     return [
       {

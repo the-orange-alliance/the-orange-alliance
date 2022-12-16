@@ -1,6 +1,7 @@
 import { Avatar, Box, Button, Container, IconButton, Link, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { GitHub, LinkedIn } from '@mui/icons-material';
+import SEO from '../components/seo';
 
 const people: {
   name: string;
@@ -68,6 +69,8 @@ const people: {
 const About = () => {
   return (
     <>
+      <SEO title="About" url="/about" />
+
       <Box
         component="section"
         sx={{

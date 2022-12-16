@@ -30,7 +30,6 @@ function MyApp({
   return (
     <>
       <Head>
-        <title>The Orange Alliance</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>

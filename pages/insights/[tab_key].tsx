@@ -11,6 +11,7 @@ import {
 import InsightsTab from '../../components/SeasonInsights/InsightsTab';
 import FilterCard from '../../components/FilterCard';
 import { useAppContext } from '../../lib/toa-context';
+import SEO from '../../components/seo';
 
 const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const router = useRouter();
@@ -81,6 +82,8 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
 
   return (
     <>
+      <SEO title="Insights" url="/insights" />
+
       <Typography variant="h4" gutterBottom>
         {t('drawer.insights')}
       </Typography>

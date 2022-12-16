@@ -9,10 +9,12 @@ export interface IRawMatchProps {
   matchDetails: any;
   matchParticipants: any[];
   event: any;
+  ogImage?: string;
 }
 
 export interface IMatchProps {
   match: Match;
+  ogImage?: string;
 }
 
 export const parseMatchProps = (props: IRawMatchProps): IMatchProps => {
@@ -21,7 +23,8 @@ export const parseMatchProps = (props: IRawMatchProps): IMatchProps => {
   match.details = getMatchDetails(match.event.seasonKey).fromJSON(props.matchDetails);
   match.participants = props.matchParticipants.map((p: any) => new MatchParticipant().fromJSON(p));
   return {
-    match: match
+    match: match,
+    ogImage: props.ogImage
   };
 };
 

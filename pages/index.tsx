@@ -1,3 +1,4 @@
+import * as React from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   Box,
@@ -11,15 +12,14 @@ import {
 } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
-import { NextSeo } from 'next-seo';
 import StatisticCard from '../components/statistic-card';
 import AnnouncementCard from '../components/AnnouncementCard';
 import { useTranslate } from '../i18n/i18n';
 import { fetchHomeData, IRawHomeProps, useHomeData } from '../lib/page-helpers/home-helper';
 import LeaderboardsModule from '../components/LeaderboardsModule';
-import Search from '../components/search';
-import * as React from 'react';
 import SimpleEventPaper from '../components/SimpleEventPaper';
+import Search from '../components/search';
+import SEO from '../components/seo';
 
 const Home: NextPage<IRawHomeProps> = props => {
   const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore, todaysEvents } =
@@ -28,7 +28,7 @@ const Home: NextPage<IRawHomeProps> = props => {
 
   return (
     <>
-      <NextSeo title={`The Orange Alliance`} description={'we cool bois'} />
+      <SEO url="" />
       <main>
         <Container>
           <Box sx={{ maxWidth: '36rem', mx: 'auto', py: 12, px: 2 }}>
