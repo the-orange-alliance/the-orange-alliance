@@ -16,7 +16,6 @@ import {
 import { useRouter } from 'next/router';
 import {
   isLoggedIn,
-  generateApiKey,
   getAuthInstance,
   logout,
   inStartupState,
@@ -70,19 +69,6 @@ const AccountPage: NextPage = () => {
       .then(user => {
         // Set User Data
         setToaUser(user);
-
-        // Check for API Key
-        if (!user.apiKey && user.emailVerified) {
-          generateApiKey()
-            .then(key => {
-              const newUser = new TOAUser().fromJSON(user.toJSON());
-              newUser.apiKey = key.key;
-              setToaUser(newUser);
-            })
-            .catch(() => {
-              toast.error(t('general.error_occurred'));
-            });
-        }
 
         // Get Teams
         const teamPromises = user.favoriteTeams.map(t => TOAProvider.getAPI().getTeam(t));

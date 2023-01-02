@@ -22,6 +22,8 @@ import toast from 'react-hot-toast';
 
 const baseUrl = 'https://functions.theorangealliance.org';
 // const baseUrl = 'http://localhost:5000/the-orange-alliance/us-central1/requireValidations'; // Tests Only
+const toaBaseUrl = 'https://api.theorangealliance.org';
+// const toaBaseUrl = 'http://localhost:8008/api';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBi0Bn_WysaX9DSnpo-E5c-q0O6XBX7T_k',
@@ -162,7 +164,7 @@ export const fetchUserData = (type?: string): Promise<TOAUser> => {
           ...(type ? { data: type } : {})
         };
 
-        fetch(baseUrl + '/user', { headers: headers })
+        fetch(toaBaseUrl + '/user', { headers: headers })
           .then(data => {
             if (data.status === 428) {
               toast.error('Please verify your email to continue!');
@@ -198,36 +200,11 @@ const getShortUserData = (): Promise<TOAUser> => {
           short: 'true'
         };
 
-        fetch(baseUrl + '/user', { headers: headers })
+        fetch(toaBaseUrl + '/user', { headers: headers })
           .then(data => data.json())
           .then(
             (data: any) => {
               resolve(new TOAUser().fromJSON(data));
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-export const generateApiKey = (): Promise<{ key: string }> => {
-  return new Promise<{ key: string }>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`
-        };
-
-        fetch(baseUrl + '/generateKey', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
             },
             (err: any) => {
               reject(err);
@@ -249,7 +226,7 @@ const addToFavorite = (key: string, type: string): Promise<any> => {
           data: type
         };
 
-        fetch(baseUrl + '/user/addFavorite', { headers: headers, method: 'POST', body: key })
+        fetch(toaBaseUrl + '/user/addFavorite', { headers: headers, method: 'POST', body: key })
           .then(data => data.json())
           .then(
             (data: any) => {
@@ -275,7 +252,7 @@ const removeFromFavorite = (key: string, type: string): Promise<any> => {
           data: type
         };
 
-        fetch(baseUrl + '/user/removeFavorite', {
+        fetch(toaBaseUrl + '/user/removeFavorite', {
           headers: headers,
           method: 'POST',
           body: key
