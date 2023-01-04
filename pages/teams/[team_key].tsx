@@ -105,11 +105,9 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     <>
       <SEO
         title={`Team #${team.teamNumber}`}
-        description={`Team information and results for FIRST Tech Challenge Team ${
-          team.teamNumber
-        } ${team.teamNameShort} from ${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${
-          team.country
-        }.`}
+        description={`Team information and results for FIRST Tech Challenge Team ${team.teamNumber
+          } ${team.teamNameShort} from ${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country
+          }.`}
         url={`/teams/${team.teamKey}`}
         ogImage={props.ogImage}
       />
@@ -224,11 +222,11 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                       style={{ color: theme.palette.text.primary }}
                       href={`
                     https://www.google.com/maps/search/?api=1&query=${(
-                      team.city +
-                      ', ' +
-                      (team.stateProv ? team.stateProv + ', ' : '') +
-                      team.country
-                    ).replace(' ', '+')}`}
+                          team.city +
+                          ', ' +
+                          (team.stateProv ? team.stateProv + ', ' : '') +
+                          team.country
+                        ).replace(' ', '+')}`}
                       target="_blank"
                     >
                       {team.city +
@@ -487,10 +485,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
     const props = await fetchTeamData(teamKey, seasonKey);
 
     const team = new Team().fromJSON(props.team);
-    props.ogImage = createOpengraphImageUrl({
-      title: `#${team.teamNumber} ${team.teamNameShort}`,
-      description: `${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country}`
-    });
+
+    try {
+      props.ogImage = createOpengraphImageUrl({
+        title: `#${team.teamNumber} ${team.teamNameShort}`,
+        description: `${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country}`
+      });
+    } catch (err) {
+      console.error("Failed to create opengraph image for team " + team.teamKey, err);
+    }
 
     return { props };
   } catch (err) {

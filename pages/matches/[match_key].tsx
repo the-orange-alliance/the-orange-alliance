@@ -77,11 +77,18 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     const match = new Match().fromJSON(props.match);
     const event = new Event().fromJSON(props.event);
-    props.ogImage = createOpengraphImageUrl({
-      title: match.matchName,
-      description1: event.fullEventName,
-      description2: getEventDescription(event)
-    });
+
+    try {
+
+      props.ogImage = createOpengraphImageUrl({
+        title: match.matchName,
+        description1: event.fullEventName,
+        description2: getEventDescription(event)
+      });
+
+    } catch (err) {
+      console.error("Error generating OpenGraph image for match " + match.matchKey, err);
+    }
 
     return { props };
   } catch (err) {

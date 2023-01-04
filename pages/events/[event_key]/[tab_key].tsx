@@ -41,9 +41,8 @@ const EventPage: NextPage<IRawEventProps> = props => {
     <>
       <SEO
         title={`${startDate.getFullYear()} ${eventData.fullEventName}`}
-        description={`Match results and rankings for the ${startDate.getFullYear()} ${
-          eventData.fullEventName
-        } in ${getEventDescription(eventData)}.`}
+        description={`Match results and rankings for the ${startDate.getFullYear()} ${eventData.fullEventName
+          } in ${getEventDescription(eventData)}.`}
         ogImage={ogImage}
         url={`/events/${eventData.eventKey}`}
       />
@@ -135,14 +134,20 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const props = await fetchEventData(String(params?.event_key));
 
     const event = new Event().fromJSON(props.event);
-    props.ogImage = createOpengraphImageUrl({
-      title: event.fullEventName,
-      description1: event.getLocation(true),
-      description2: event.getDateString()
-    });
+
+    try {
+      props.ogImage = createOpengraphImageUrl({
+        title: event.fullEventName,
+        description1: event.getLocation(true),
+        description2: event.getDateString()
+      });
+    } catch (err) {
+      console.error("Error creating OpenGraph image for event " + event.eventKey, err);
+    }
 
     return { props };
   } catch (err) {
+    console.log(err)
     return { notFound: true };
   }
 };
