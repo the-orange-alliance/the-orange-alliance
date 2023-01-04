@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Toaster } from 'react-hot-toast';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
@@ -10,6 +10,9 @@ import { UserLanguageProvider } from '../i18n/i18n';
 import TOAAppContext from '../lib/models/AppContext';
 import { fetchAppData, IRawAppProps, useAppData } from '../lib/page-helpers/app-helper';
 import TOAAppContextProvider from '../lib/toa-context';
+import TOAUser from '../lib/TOAUser';
+import { onAuthStateChanged } from 'firebase/auth';
+import { fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -17,7 +20,10 @@ function MyApp({
   Component,
   pageProps
 }: AppProps<{ initialState: TOAAppContext; userLanguage: string }>) {
-  const initialState = useAppData(pageProps.initialState);
+  const globals = useAppData(pageProps.initialState);
+  const [user, setUser] = useState<TOAUser | null>(null);
+  const value = useMemo(() => ({ ...globals, user, setUser }), [user, setUser]);
+  let currUid: string = "";
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -25,6 +31,19 @@ function MyApp({
     if (jssStyles && jssStyles.parentElement) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+
+    // Register Authentication listener
+    onAuthStateChanged(getAuthInstance(), (newUser) => {
+      // Only requery data if UID has changed
+      if (newUser && newUser.uid !== currUid && newUser.uid !== user?.uid) {
+        currUid = newUser.uid;
+        fetchUserData().then((user) => {
+          setUser(user);
+        });
+      } else if (user && !newUser) { // prevent repetative null sets
+        setUser(null);
+      }
+    });
   }, []);
 
   return (
@@ -34,7 +53,7 @@ function MyApp({
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
         <ThemeProvider theme={theme}>
-          <TOAAppContextProvider value={initialState}>
+          <TOAAppContextProvider value={value}>
             <CssBaseline />
             <DrawerLayout title="The Orange Alliance">
               <Component {...pageProps} />

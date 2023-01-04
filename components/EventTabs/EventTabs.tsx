@@ -12,14 +12,7 @@ import {
   AdminTab
 } from './index';
 import { useTranslate } from '../../i18n/i18n';
-import TOAUser from '../../lib/TOAUser';
-import { onAuthStateChanged } from 'firebase/auth';
-import {
-  getAuthInstance,
-  fetchUserData,
-  inStartupState,
-  isLoggedIn
-} from '../../providers/FirebaseProvider';
+import { useAppContext } from '../../lib/toa-context';
 
 interface IProps {
   event: Event;
@@ -35,27 +28,8 @@ interface ITabProps {
 const EventTabs = ({ event, streams }: IProps) => {
   const t = useTranslate();
   const router = useRouter();
-  const [user, setUser] = useState<TOAUser>();
+  const { user } = useAppContext();
   const [localStreams, setLocalStreams] = useState<EventLiveStream[]>(streams);
-
-  useEffect(() => {
-    onAuthStateChanged(getAuthInstance(), user => {
-      if (user) {
-        getUser();
-      } else {
-        setUser(undefined);
-      }
-    });
-    if (!inStartupState() || isLoggedIn()) {
-      getUser();
-    }
-  }, []);
-
-  const getUser = () => {
-    fetchUserData().then(user => {
-      setUser(user);
-    });
-  };
 
   // If add is false, it's a delete
   const handleStreamChange = (stream: EventLiveStream, add: boolean) => {

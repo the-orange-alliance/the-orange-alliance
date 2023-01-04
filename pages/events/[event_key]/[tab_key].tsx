@@ -24,6 +24,7 @@ import { useRouter } from 'next/router';
 import SEO from '../../../components/seo';
 import { createOpengraphImageUrl } from '../../../lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
+import MyTOAFavorite, { myTOAType } from '../../../components/MyTOAFavorite';
 
 const EventPage: NextPage<IRawEventProps> = props => {
   const { event: eventData, streams, otherDivisions: divs, ogImage } = useEventData(props);
@@ -123,6 +124,9 @@ const EventPage: NextPage<IRawEventProps> = props => {
       <Card sx={{ margin: 2 }}>
         <EventTabs key={eventData.eventKey} event={eventData} streams={streams} />
       </Card>
+
+      {/* myTOA FAB */}
+      <MyTOAFavorite dataKey={eventData.eventKey} type={myTOAType.event} />
     </>
   );
 };

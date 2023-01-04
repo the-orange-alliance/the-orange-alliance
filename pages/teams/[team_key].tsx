@@ -49,10 +49,11 @@ import MatchesTable from '../../components/MatchTable/MatchTable';
 import { useAppContext } from '../../lib/toa-context';
 import { createOpengraphImageUrl } from '../../lib/opengraph';
 import SEO from '../../components/seo';
+import MyTOAFavorite, { myTOAType } from '../../components/MyTOAFavorite';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();
-  const { team, wlt, topOpr, cad, github, images, notebook, reveal, matches } = useTeamData(props);
+  const { team, wlt, topOpr, cad, github, images, notebook, reveal } = useTeamData(props);
   const t = useTranslate();
   const router = useRouter();
   const theme = useTheme();
@@ -472,6 +473,9 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           </Card>
         </Grid>
       </Grid>
+
+      {/* myTOA */}
+      <MyTOAFavorite dataKey={team.teamKey} type={myTOAType.team} />
     </>
   );
 };

@@ -217,16 +217,18 @@ const getShortUserData = (): Promise<TOAUser> => {
   });
 };
 
-const addToFavorite = (key: string, type: string): Promise<any> => {
+export const addToFavorite = (key: string, type: "event" | "team"): Promise<any> => {
   return new Promise<any>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          data: type
+          'Content-Type': 'application/json'
         };
 
-        fetch(toaBaseUrl + '/user/addFavorite', { headers: headers, method: 'POST', body: key })
+        const body = {[type === "event" ? "event_key" : "team_key"]: key}
+
+        fetch(toaBaseUrl + '/user/addFavorite', { headers: headers, method: 'POST', body: JSON.stringify(body) })
           .then(data => data.json())
           .then(
             (data: any) => {
@@ -243,19 +245,21 @@ const addToFavorite = (key: string, type: string): Promise<any> => {
   });
 };
 
-const removeFromFavorite = (key: string, type: string): Promise<any> => {
+export const removeFromFavorite = (key: string, type: "team" | "event"): Promise<any> => {
   return new Promise<any>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          data: type
+          'Content-Type': 'application/json'
         };
+
+        const body = {[type === "event" ? "event_key" : "team_key"]: key}
 
         fetch(toaBaseUrl + '/user/removeFavorite', {
           headers: headers,
           method: 'POST',
-          body: key
+          body: JSON.stringify(body)
         })
           .then(data => data.json())
           .then(

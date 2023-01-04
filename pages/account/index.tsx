@@ -15,14 +15,10 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import {
-  isLoggedIn,
-  getAuthInstance,
   logout,
-  inStartupState,
   linkProvider,
   unlinkProvider,
   sendPasswordReset,
-  fetchUserData,
   changeDisplayName,
   changeEmail
 } from '../../providers/FirebaseProvider';
@@ -36,69 +32,39 @@ import SimpleTeamPaper from '../../components/SimpleTeamPaper';
 import NextLink from 'next/link';
 import { GitHub, Google, Lock, LockClock, Password } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
-import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
 import SEO from '../../components/seo';
+import { useAppContext } from '../../lib/toa-context';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
   const t = useTranslate();
 
-  const [toaUser, setToaUser] = useState<TOAUser>();
-  const [regions, setRegions] = useState<Region[]>();
+  const { user, setUser, regions } = useAppContext();
   const [events, setEvents] = useState<Event[]>();
   const [teams, setTeams] = useState<Team[]>();
 
   useEffect(() => {
-    if (inStartupState() || !isLoggedIn()) {
-      onAuthStateChanged(getAuthInstance(), user => {
-        if (!user) {
-          router.push({ pathname: '/account/login' });
-        } else {
-          initPage();
-        }
-      });
-    } else {
-      initPage();
+    if (user) {
+      // Get Teams
+      const teamPromises = user.favoriteTeams.map(t => TOAProvider.getAPI().getTeam(t));
+      Promise.all(teamPromises)
+        .then(teams => setTeams(teams))
+        .catch(() => { });
+
+      // Get Events
+      const eventPromises = user.favoriteEvents.map(e => TOAProvider.getAPI().getEvent(e));
+      Promise.all(eventPromises)
+        .then(events => setEvents(events))
+        .catch(() => {
+          toast.error(t('general.error_occurred'));
+        });
     }
-  }, []);
-
-  const initPage = () => {
-    // Get Data from Firebase
-    fetchUserData()
-      .then(user => {
-        // Set User Data
-        setToaUser(user);
-
-        // Get Teams
-        const teamPromises = user.favoriteTeams.map(t => TOAProvider.getAPI().getTeam(t));
-        Promise.all(teamPromises)
-          .then(teams => setTeams(teams))
-          .catch(() => {});
-
-        // Get Events
-        const eventPromises = user.favoriteEvents.map(e => TOAProvider.getAPI().getEvent(e));
-        Promise.all(eventPromises)
-          .then(events => setEvents(events))
-          .catch(() => {
-            toast.error(t('general.error_occurred'));
-          });
-      })
-      .catch(() => {
-        toast.error(t('general.error_occurred'));
-      });
-
-    // Get Regions
-    TOAProvider.getAPI()
-      .getRegions()
-      .then(r => setRegions(r))
-      .catch(() => {
-        toast.error(t('general.error_occurred'));
-      });
-  };
+  }, [user]);
 
   const doLogoutUser = () => {
     logout().then(() => {
+      setUser(null);
       router.push({ pathname: '/account/login' });
     });
   };
@@ -106,7 +72,7 @@ const AccountPage: NextPage = () => {
   const unlink = (provider: 'github' | 'google') => {
     unlinkProvider(provider)
       .then(() => {
-        const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+        const newUser = new TOAUser().fromJSON(user?.toJSON());
         switch (provider) {
           case 'github':
             newUser.githubLinked = false;
@@ -115,7 +81,7 @@ const AccountPage: NextPage = () => {
             newUser.googleLinked = false;
             break;
         }
-        setToaUser(newUser);
+        setUser(newUser);
       })
       .catch(() => {
         toast.error('general.error_occurred');
@@ -125,7 +91,7 @@ const AccountPage: NextPage = () => {
   const link = (provider: 'github' | 'google') => {
     linkProvider(provider)
       .then(() => {
-        const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+        const newUser = new TOAUser().fromJSON(user?.toJSON());
         switch (provider) {
           case 'github':
             newUser.githubLinked = true;
@@ -134,7 +100,7 @@ const AccountPage: NextPage = () => {
             newUser.googleLinked = true;
             break;
         }
-        setToaUser(newUser);
+        setUser(newUser);
         toast.success(t('general.success').replace('{{ name }}', provider));
       })
       .catch(() => {
@@ -161,9 +127,9 @@ const AccountPage: NextPage = () => {
     }
 
     changeDisplayName(name);
-    const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+    const newUser = new TOAUser().fromJSON(user?.toJSON());
     newUser.displayName = name;
-    setToaUser(newUser);
+    setUser(newUser);
     toast.success(t('account.updated_name'));
   };
 
@@ -177,9 +143,9 @@ const AccountPage: NextPage = () => {
     const success = changeEmail(email);
 
     if (success) {
-      const newUser = new TOAUser().fromJSON(toaUser?.toJSON());
+      const newUser = new TOAUser().fromJSON(user?.toJSON());
       newUser.email = email;
-      setToaUser(newUser);
+      setUser(newUser);
       toast.success(t('account.updated_email'));
     } else {
       toast.error(t('account.fail_update_email'));
@@ -191,23 +157,23 @@ const AccountPage: NextPage = () => {
       <SEO title="Account Overview" description="Overview of your TOA account." url="/account" />
 
       <Card sx={{ margin: 2 }}>
-        {!toaUser && <LinearProgress />}
-        {toaUser && (
+        {!user && <LinearProgress />}
+        {user && (
           <CardContent>
             <Box>
               <Grid container direction={'row'}>
                 <Grid item xs={1}>
-                  {toaUser.photoURL && (
+                  {user.photoURL && (
                     <img
                       className={'profile-image'}
-                      src={toaUser.photoURL}
+                      src={user.photoURL}
                       alt={'user profile photo'}
                     />
                   )}
                 </Grid>
                 <Grid item alignSelf={'end'} sx={{ margin: 2 }} xs={9}>
-                  <Typography variant={'h4'}>{toaUser.displayName || 'User'}</Typography>
-                  {regions && <Typography>{toaUser.summary(regions)}</Typography>}
+                  <Typography variant={'h4'}>{user.displayName || 'User'}</Typography>
+                  {regions && <Typography>{user.summary(regions)}</Typography>}
                 </Grid>
                 <Grid item xs={1} sx={{ margin: 2 }}>
                   <Button variant={'contained'} onClick={doLogoutUser}>
@@ -220,7 +186,7 @@ const AccountPage: NextPage = () => {
         )}
       </Card>
 
-      {toaUser && (
+      {user && (
         <Grid container direction={'row'} spacing={2}>
           {/* Main Content */}
           <Grid item md={8} xs={12}>
@@ -285,17 +251,17 @@ const AccountPage: NextPage = () => {
                     <Typography sx={{ marginTop: 2 }} variant={'h5'}>
                       {t('pages.account.api_card.title')}
                     </Typography>
-                    {toaUser.apiKey && (
+                    {user.apiKey && (
                       <>
                         <Typography sx={{ marginTop: 2 }} variant={'subtitle1'}>
                           {t('pages.account.api_card.your_key')}
                         </Typography>
                         <code style={{ overflowWrap: 'break-word', color: 'red' }}>
-                          {toaUser.apiKey || 'Not found'}
+                          {user.apiKey || 'Not found'}
                         </code>
                       </>
                     )}
-                    {!toaUser.apiKey && toaUser.emailVerified && (
+                    {!user.apiKey && user.emailVerified && (
                       <>
                         <Typography variant={'subtitle1'}>
                           <CircularProgress size={30} />
@@ -303,7 +269,7 @@ const AccountPage: NextPage = () => {
                         </Typography>
                       </>
                     )}
-                    {!toaUser.apiKey && !toaUser.emailVerified && (
+                    {!user.apiKey && !user.emailVerified && (
                       <>
                         <Typography variant={'subtitle1'}>
                           {t('pages.account.no_verify')}
@@ -343,14 +309,14 @@ const AccountPage: NextPage = () => {
                   {/* Un/link Google */}
                   <ListItem
                     button
-                    onClick={() => (toaUser.googleLinked ? unlink('google') : link('google'))}
+                    onClick={() => (user.googleLinked ? unlink('google') : link('google'))}
                   >
                     <ListItemIcon>
                       <Google />
                     </ListItemIcon>
                     <ListItemText>
                       {t(
-                        toaUser.googleLinked
+                        user.googleLinked
                           ? 'pages.account.unlink_account'
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Google')}
@@ -360,14 +326,14 @@ const AccountPage: NextPage = () => {
                   {/* Un/link Github */}
                   <ListItem
                     button
-                    onClick={() => (toaUser.githubLinked ? unlink('github') : link('github'))}
+                    onClick={() => (user.githubLinked ? unlink('github') : link('github'))}
                   >
                     <ListItemIcon>
                       <GitHub />
                     </ListItemIcon>
                     <ListItemText>
                       {t(
-                        toaUser.githubLinked
+                        user.githubLinked
                           ? 'pages.account.unlink_account'
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Github')}
@@ -398,9 +364,9 @@ const AccountPage: NextPage = () => {
                     <ListItemText
                       secondary={t('pages.account.last_signin')}
                       primary={
-                        readableDate(toaUser.metadata.lastSignInTime) +
+                        readableDate(user.metadata.lastSignInTime) +
                         ' ' +
-                        readableTime(toaUser.metadata.lastSignInTime)
+                        readableTime(user.metadata.lastSignInTime)
                       }
                     />
                   </ListItem>

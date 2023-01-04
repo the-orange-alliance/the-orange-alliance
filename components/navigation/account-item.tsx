@@ -1,17 +1,10 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React from 'react';
 import NextLink from 'next/link';
 import { Avatar, Box, Button, ButtonBase, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import TOAUser from '../../lib/TOAUser';
 import { useTranslate } from '../../i18n/i18n';
 import { useRouter } from 'next/router';
-import { onAuthStateChanged } from 'firebase/auth';
-import {
-  fetchUserData,
-  getAuthInstance,
-  inStartupState,
-  isLoggedIn
-} from '../../providers/FirebaseProvider';
+import { useAppContext } from '../../lib/toa-context';
 
 const initials = (name: string) => {
   const [firstName, lastName] = name.split(' ');
@@ -21,28 +14,10 @@ const initials = (name: string) => {
 };
 
 const AccountItem = () => {
-  const [user, setUser] = useState<TOAUser>();
+  const {user} = useAppContext();
   const theme = useTheme();
   const t = useTranslate();
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchUser = () =>
-      fetchUserData().then(user => {
-        setUser(user);
-      });
-
-    const unsubscribe = onAuthStateChanged(getAuthInstance(), user => {
-      if (user) {
-        fetchUser();
-      } else {
-        setUser(undefined);
-      }
-    });
-    if (!inStartupState() || isLoggedIn()) {
-      fetchUser();
-    }
-  }, []);
 
   return (
     <>
