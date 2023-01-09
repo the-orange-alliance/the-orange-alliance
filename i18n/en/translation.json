@@ -462,6 +462,8 @@
       "rookie_year": "Rookie Year",
       "last_active": "Last Active Season",
       "awards_in_season": "{{ awards }} awards in {{ season }}",
+      "no_results": "No results this season",
+      "not_registered": "Team has not yet registered for this season!",
       "robot_profile": {
         "title": "Robot",
         "engineering_notebook": "Engineering Notebook",

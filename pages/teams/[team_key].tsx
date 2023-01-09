@@ -388,6 +388,16 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   </Card>
                 ))}
 
+              {/* No Events this season */}
+              {tab === 0 && team.events.length < 1 &&
+                <Typography variant={'body1'} sx={{mt: 1}}>
+                  {team.lastActive && team.lastActive !== CURRENT_SEASON ? 
+                  t("pages.team.not_registered"): t("pages.team.no_results")
+
+                  }
+                </Typography>
+              }
+
               {/* Team 'Robot' Page */}
               {tab === 1 && (
                 <Box>

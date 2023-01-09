@@ -123,6 +123,8 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
     TOAProvider.getAPI().getTeamRankings(teamKey, seasonKey)
   ]);
 
+  console.log(data[5])
+
   // Get all team events for season
   const events = await Promise.all(
     data[1].map((result: EventParticipant) => {
@@ -143,9 +145,9 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
   const matches = await getEventMatches(filtered, teamKey);
 
   // Calculate top OPR
-  const topOpr = data[5].reduce((prev: Ranking, current: Ranking) => {
+  const topOpr = data[5].length > 0 ? data[5].reduce((prev: Ranking, current: Ranking) => {
     return prev.opr > current.opr ? prev : current;
-  });
+  }) : null;
 
   return {
     team: undefinedToNull(data[0].toJSON()),
