@@ -123,8 +123,6 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
     TOAProvider.getAPI().getTeamRankings(teamKey, seasonKey)
   ]);
 
-  console.log(data[5])
-
   // Get all team events for season
   const events = await Promise.all(
     data[1].map((result: EventParticipant) => {

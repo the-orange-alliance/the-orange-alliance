@@ -202,7 +202,7 @@ const MatchTeamDisplay = ({
 
   const GetLinkElement = ({ team, children }: { team: MatchParticipant; children: ReactNode }) =>
     typeof setSelectedTeam !== 'function' ? (
-      <NextLink id={'/team/sdasdasdas'} href={`/team/${team.teamKey}`} passHref>
+      <NextLink id={`/teams/${team.teamKey}`} href={`/teams/${team.teamKey}`} passHref>
         {children}
       </NextLink>
     ) : (
