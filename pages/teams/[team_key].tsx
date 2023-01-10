@@ -114,15 +114,6 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
       />
       <Box sx={{ margin: 2 }}>
         <Typography variant="h4">Team #{team.teamNumber}</Typography>
-        {/* // TODO: myTOA
-          <div className="col-12 col-md-3">
-          <button mdc-button primary (click)="toggleTeam()" className="align-self-end black" style="text-transform:initial; height: auto; padding: 7px">
-          <mdc-icon *ngIf="favorite" className="mr-1 ml-1">favorite</mdc-icon>
-          <mdc-icon *ngIf="!favorite" className="mr-1 ml-1">favorite_border</mdc-icon>
-        {{(favorite ? 'general.remove_from_mytoa' : 'general.add_to_mytoa') | translate}}
-          </button>
-          </div>
-        */}
       </Box>
 
       <Grid container direction={'row'} spacing={2} sx={{ margin: 2, width: '95%' }}>
@@ -209,14 +200,14 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
               <Box sx={{ paddingTop: 2 }}>
                 <Box sx={{ marginBottom: 1 }}>
-                  <Explore sx={{ marginRight: 1 }} color={'primary'} />
+                  <Explore sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                   <Typography display={'inline'} variant={'body1'}>
                     {t('pages.team.part_of_region').replace('{{ regionKey }}', team.regionKey)}{' '}
                   </Typography>
                 </Box>
 
                 <Box sx={{ marginBottom: 1 }}>
-                  <Room sx={{ marginRight: 1 }} color={'primary'} />
+                  <Room sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                   <Typography display={'inline'} style={{ textTransform: 'capitalize' }}>
                     <a
                       rel={'noreferrer'}
@@ -240,7 +231,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {team.website && getUrl().startsWith('facebook.com/') && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Facebook sx={{ marginRight: 1 }} color={'primary'} />
+                    <Facebook sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       Facebook:{' '}
                       <a style={{ color: theme.palette.text.primary }} href={team.website}>
@@ -252,7 +243,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {team.website && !getUrl().startsWith(' facebook.com/') && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Public sx={{ marginRight: 1 }} color={'primary'} />
+                    <Public sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.website')}: <a href={team.website}>{getUrl()}</a>
                     </Typography>
@@ -261,7 +252,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {team.rookieYear && team.rookieYear !== 0 && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Flare sx={{ marginRight: 1 }} color={'primary'} />
+                    <Flare sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.rookie_year')}: {team.rookieYear}
                     </Typography>
@@ -270,7 +261,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {wlt && false && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Flag sx={{ marginRight: 1 }} color={'primary'} />
+                    <Flag sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       <b>
                         {wlt.wins}-{wlt.losses}-{wlt.ties}
@@ -282,7 +273,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {topOpr && topOpr.opr && topOpr.eventKey && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <FlashOn sx={{ marginRight: 1 }} color={'primary'} />
+                    <FlashOn sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       <b>{topOpr.opr}</b>
                       {' Top OPR ('}
@@ -296,7 +287,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {lastActive && lastActive.seasonKey !== CURRENT_SEASON && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Hotel sx={{ marginRight: 1 }} color={'primary'} />
+                    <Hotel sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.last_active')}: {getSeasonString(lastActive)}
                     </Typography>
@@ -305,7 +296,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
                 {team.awards && selectedSeason && selectedSeason.description && (
                   <Box sx={{ marginBottom: 1 }}>
-                    <Celebration sx={{ marginRight: 1 }} color={'primary'} />
+                    <Celebration sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
                     <Typography display={'inline'}>
                       {t('pages.team.awards_in_season')
                         .replace('{{ awards }}', team.awards.length)
@@ -390,9 +381,9 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
               {/* No Events this season */}
               {tab === 0 && team.events.length < 1 &&
-                <Typography variant={'body1'} sx={{mt: 1}}>
-                  {team.lastActive && team.lastActive !== CURRENT_SEASON ? 
-                  t("pages.team.not_registered"): t("pages.team.no_results")
+                <Typography variant={'body1'} sx={{ mt: 1 }}>
+                  {team.lastActive && team.lastActive !== CURRENT_SEASON ?
+                    t("pages.team.not_registered") : t("pages.team.no_results")
 
                   }
                 </Typography>

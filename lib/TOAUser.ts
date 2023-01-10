@@ -15,7 +15,9 @@ export default class TOAUser implements ISerializable {
   team: string;
   apiKey: string;
   favoriteTeams: string[];
+  notifyTeams: string[];
   favoriteEvents: string[];
+  notifyEvents: string[];
   adminEvents: string[];
   adminLeagues: string[];
   individualAdminEvents: string[];
@@ -43,7 +45,9 @@ export default class TOAUser implements ISerializable {
     this.team = '';
     this.apiKey = '';
     this.favoriteTeams = [];
+    this.notifyTeams = [];
     this.favoriteEvents = [];
+    this.notifyEvents = [];
     this.adminEvents = [];
     this.individualAdminEvents = [];
     this.eventsApiKeys = '';
@@ -72,7 +76,9 @@ export default class TOAUser implements ISerializable {
       team: this.team,
       api_key: this.apiKey,
       favorite_teams: this.favoriteTeams,
+      notify_teams: this.notifyTeams,
       favorite_events: this.favoriteEvents,
+      notify_events: this.notifyEvents,
       admin_events: this.adminEvents,
       individual_admin_events: this.individualAdminEvents,
       events_api_keys: this.eventsApiKeys,
@@ -101,7 +107,9 @@ export default class TOAUser implements ISerializable {
     user.team = json.team;
     user.apiKey = json.api_key;
     user.favoriteTeams = json.favorite_teams || [];
+    user.notifyTeams = json.notify_teams || [];
     user.favoriteEvents = json.favorite_events || [];
+    user.notifyEvents = json.notify_events || [];
     user.adminEvents = json.admin_events || [];
     user.individualAdminEvents = json.individual_admin_events || [];
     user.eventsApiKeys = json.events_api_keys;

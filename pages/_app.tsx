@@ -12,7 +12,7 @@ import { fetchAppData, IRawAppProps, useAppData } from '../lib/page-helpers/app-
 import TOAAppContextProvider from '../lib/toa-context';
 import TOAUser from '../lib/TOAUser';
 import { onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
+import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -26,6 +26,10 @@ function MyApp({
   let currUid: string = "";
 
   useEffect(() => {
+    // Register onMessage event
+    cloudMessaging.onMessage();
+      
+
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles && jssStyles.parentElement) {

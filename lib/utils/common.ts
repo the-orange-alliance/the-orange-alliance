@@ -119,8 +119,10 @@ export const undefinedToNull = (o: any): object | null => {
   if (typeof o === 'undefined' || o === null) return null;
   for (const key of Object.keys(o)) {
     if (typeof o[key] === 'undefined') o[key] = null;
-    if (Array.isArray(o[key])) {
+    if (Array.isArray(o[key])) { // Parse nested arrays
       for (const item in o[key]) o[key][item] = undefinedToNull(o[key][item]);
+    } else if (!Array.isArray(o[key]) && typeof o[key] === 'object') { // Parse nested objects
+      o[key] = undefinedToNull(o[key]);
     }
   }
   return o;

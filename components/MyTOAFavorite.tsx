@@ -1,10 +1,11 @@
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import { CircularProgress, Fab, Tooltip } from "@mui/material";
-import { useState } from "react";
+import { Favorite, FavoriteBorder, NotificationsActive, NotificationsOff, YoutubeSearchedFor } from "@mui/icons-material";
+import { useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Action, Fab } from "react-tiny-fab";
 import { useTranslate } from "../i18n/i18n";
 import { useAppContext } from "../lib/toa-context";
 import TOAUser from "../lib/TOAUser";
-import { addToFavorite, removeFromFavorite } from "../providers/FirebaseProvider";
+import { addToFavorite, removeFromFavorite, setNotifications } from "../providers/FirebaseProvider";
 
 
 export enum myTOAType {
@@ -17,20 +18,27 @@ interface IProps {
     dataKey: string;
 }
 
-const fabStyle = {
-    position: 'fixed',
-    bottom: '1rem',
-    right: '1rem',
-    zIndex: 1000,
-}
-
 const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
 
     const { user, setUser } = useAppContext();
 
+    const calcIsFav = () => !!(type === myTOAType.event ? user?.favoriteEvents?.includes(key) : user?.favoriteTeams?.includes(key))
+    const calcNotiEnabled = () => !!(user && ((type === myTOAType.event && user.notifyEvents.includes(key)) || (type === myTOAType.team && user.notifyTeams.includes(key))));
+
     const t = useTranslate();
-    const [isFav, setIsFav] = useState<boolean>(!!(type === myTOAType.event ? user?.favoriteEvents?.includes(key) : user?.favoriteTeams?.includes(key)));
-    const [loading, setLoading] = useState(false);
+    const [isFav, setIsFav] = useState<boolean>(calcIsFav());
+    const [loading, setLoading] = useState<boolean>(false);
+    const [notiEnabled, setNotiEnabled] = useState<boolean>(calcNotiEnabled());
+    const theme = useTheme();
+
+
+    // Update things when user updates
+    useEffect(() => {
+        if(user) {
+            setIsFav(calcIsFav());
+            setNotiEnabled(calcNotiEnabled());
+        }
+    }, [user]);
 
     const toggleFav = (fav: boolean, user: TOAUser) => {
         //  Check if user is logged in
@@ -65,16 +73,55 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         });
     }
 
+    const toggleNotifications = (enabled: boolean, user: TOAUser) => {
+        //  Check if user is logged in
+        if (!user) return;
+
+        // Set Loading
+        setLoading(true);
+
+        // Add or remove from firebase, then update our local user model
+        setNotifications(type, key, !enabled).then(() => {
+            // Revove from and update global user object
+            if (type === myTOAType.event && enabled) { // Remove event from notifications
+                const notifyEvents = user.notifyEvents.filter((eventKey) => eventKey !== key);
+                setUser(new TOAUser().fromJSON({ ...user.toJSON(), notify_events: notifyEvents }));
+            } else if (type === myTOAType.event && !enabled) { // Add event to notifications
+                if (!user.notifyEvents.includes(key)) user.notifyEvents.push(key);
+                setUser(new TOAUser().fromJSON({ ...user.toJSON() }));
+            } else if (type === myTOAType.team && enabled) { // Remove team from notifications
+                const notifyTeams = user.notifyTeams.filter((eventKey) => eventKey !== key);
+                setUser(new TOAUser().fromJSON({ ...user.toJSON(), notify_teams: notifyTeams }));
+            } else if (type === myTOAType.team && !enabled) { // Add team to notifications
+                if (!user.notifyTeams.includes(key)) user.notifyTeams.push(key);
+                setUser(new TOAUser().fromJSON({ ...user.toJSON() }));
+            }
+
+            // Update state
+            setLoading(false);
+            setNotiEnabled(!enabled);
+        });
+    }
+
     return (
         <>
             {user &&
-                <Tooltip title={isFav ? t('general.remove_from_mytoa') : t('general.add_to_mytoa')}>
-                    <Fab sx={fabStyle} color="primary" aria-label={isFav ? "remove from myTOA" : "add to myTOA"} onClick={() => toggleFav(isFav, user)}>
-                        {!loading && !isFav && <FavoriteBorder />}
-                        {!loading && isFav && <Favorite />}
-                        {loading && <CircularProgress sx={{ color: "black" }} />}
-                    </Fab>
-                </Tooltip>
+                <Fab
+                    icon={isFav ? <Favorite /> : <FavoriteBorder />}
+                    onClick={() => toggleFav(isFav, user)}
+                    text={isFav ? t("general.remove_from_mytoa") : t("general.add_to_mytoa")}
+                    mainButtonStyles={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}
+                >
+                    {isFav &&
+                        <Action
+                            text={t(notiEnabled ? "general.disable_notifications" : "general.enable_notifications")}
+                            onClick={() => toggleNotifications(notiEnabled, user)}
+                            style={{ backgroundColor: theme.palette.primary.light, color: theme.palette.primary.contrastText }}
+                        >
+                            {notiEnabled ? <NotificationsActive /> : <NotificationsOff />}
+                        </Action>
+                    }
+                </Fab>
             }
         </>
     )

@@ -19,6 +19,8 @@ import { getDatabase, ref, set as dbSet } from 'firebase/database';
 import TOAUser from '../lib/TOAUser';
 import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import toast from 'react-hot-toast';
+import localforage from "localforage";
+import { getMessaging, getToken as getMessagingToken, onMessage } from "firebase/messaging";
 
 const baseUrl = 'https://functions.theorangealliance.org';
 // const baseUrl = 'http://localhost:5000/the-orange-alliance/us-central1/requireValidations'; // Tests Only
@@ -26,13 +28,13 @@ const toaBaseUrl = 'https://api.theorangealliance.org';
 // const toaBaseUrl = 'http://localhost:8008/api';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBi0Bn_WysaX9DSnpo-E5c-q0O6XBX7T_k',
-  authDomain: 'the-orange-alliance.firebaseapp.com',
-  databaseURL: 'https://the-orange-alliance.firebaseio.com',
-  projectId: 'the-orange-alliance',
-  storageBucket: 'the-orange-alliance.appspot.com',
-  messagingSenderId: '495169296462',
-  appId: '1:495169296462:web:a8543d9517ea3cea4e0b1f'
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 let app = firebase.initializeApp(firebaseConfig);
 
@@ -94,7 +96,7 @@ export const signUp = (email: string, name: string, password: string, team: stri
 export const changeDisplayName = (name: string) => {
   if (auth.currentUser != null) {
     updateProfile(auth.currentUser, { displayName: name })
-      .then(() => {})
+      .then(() => { })
       .catch(error => console.log(error));
   }
 };
@@ -226,7 +228,7 @@ export const addToFavorite = (key: string, type: "event" | "team"): Promise<any>
           'Content-Type': 'application/json'
         };
 
-        const body = {[type === "event" ? "event_key" : "team_key"]: key}
+        const body = { [type === "event" ? "event_key" : "team_key"]: key }
 
         fetch(toaBaseUrl + '/user/addFavorite', { headers: headers, method: 'POST', body: JSON.stringify(body) })
           .then(data => data.json())
@@ -254,7 +256,7 @@ export const removeFromFavorite = (key: string, type: "team" | "event"): Promise
           'Content-Type': 'application/json'
         };
 
-        const body = {[type === "event" ? "event_key" : "team_key"]: key}
+        const body = { [type === "event" ? "event_key" : "team_key"]: key }
 
         fetch(toaBaseUrl + '/user/removeFavorite', {
           headers: headers,
@@ -276,6 +278,55 @@ export const removeFromFavorite = (key: string, type: "team" | "event"): Promise
       });
   });
 };
+
+const saveMessagingToken = (key: string): Promise<any> => {
+  return new Promise<any>((resolve, reject) => {
+    getToken().then(token => {
+      const headers = {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const body = { token: key };
+
+      fetch(toaBaseUrl + '/user/saveMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
+        .then(data => data.json())
+        .then(
+          (data: any) => {
+            resolve(data);
+          },
+          (err: any) => {
+            reject(err);
+          }
+        ).catch(reject);
+    });
+  });
+};
+
+const removeMessagingToken = (key: string): Promise<any> => {
+  return new Promise<any>((resolve, reject) => {
+    getToken().then(token => {
+      const headers = {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const body = { token: key };
+
+      fetch(toaBaseUrl + '/user/removeMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
+        .then(data => data.json())
+        .then(
+          (data: any) => {
+            resolve(data);
+          },
+          (err: any) => {
+            reject(err);
+          }
+        ).catch(reject);
+    });
+  });
+};
+
 
 const generateEventApiKey = (eventKey: string): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
@@ -510,31 +561,6 @@ const addMediaToPending = (mediaData: {
   });
 };
 
-const getPendingMedia = (): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`
-        };
-
-        fetch(baseUrl + '/getPendingMedia', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
 const addSuggestion = (suggestionData: any): Promise<any> => {
   let dataHeader: any;
   if (suggestionData.match_key !== undefined && suggestionData.event_key === undefined) {
@@ -732,58 +758,6 @@ const toaDelete = (route: string): Promise<any> => {
   });
 };
 
-const eventsRetriever = (year: number): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: `${year}`
-        };
-
-        fetch(baseUrl + '/firstEvents', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const teamsRetriever = (year: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: `${year}`
-        };
-
-        fetch(baseUrl + '/firstTeams', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
 const getEventSettings = (eventKey: string): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
@@ -840,18 +814,19 @@ const updateEventSettings = (eventKey: string, settings: any): Promise<any> => {
   });
 };
 
-const saveMessagingToken = (messagingToken: string): Promise<any> => {
+export const setNotifications = (type: "team" | "event", key: string, notify: boolean): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
-          authorization: `Bearer ${token}`
-        };
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
 
-        fetch(baseUrl + '/user/saveMessagingToken', {
-          headers: headers,
+        fetch(toaBaseUrl + '/user/setNotifications', {
+          headers,
           method: 'POST',
-          body: messagingToken
+          body: JSON.stringify({ [type + "_key"]: key, enabled: notify })
         })
           .then(data => data.json())
           .then(
@@ -867,7 +842,7 @@ const saveMessagingToken = (messagingToken: string): Promise<any> => {
         reject(err);
       });
   });
-};
+}
 
 const getToken = (): Promise<string> => {
   return new Promise<string>((resolve, reject) => {
@@ -885,4 +860,60 @@ const getToken = (): Promise<string> => {
         });
     }
   });
+};
+
+/** Cloud Messaging Stuff **/
+export const cloudMessaging = {
+  tokenInlocalforage: async () => {
+    return await localforage.getItem("fcm_token");
+  },
+  onMessage: async () => {
+    const messaging = getMessaging();
+    onMessage(messaging, (payload) => {
+      if (payload.notification?.title) toast(payload.notification.title)
+    });
+  },
+  disable: async function () {
+    try {
+      const currToken = await this.tokenInlocalforage();
+      if (currToken !== null) {
+        await removeMessagingToken(currToken);
+      }
+    } catch (err) {
+      throw err;
+    }
+  },
+  init: function () {
+    return new Promise<boolean>(async (resolve, reject) => {
+      try {
+        // Check if we have a messaging token
+        if ((await this.tokenInlocalforage()) !== null) {
+          resolve(false);
+        }
+
+        // Get permission to send notifications
+        const messaging = getMessaging(app);
+        await Notification.requestPermission();
+
+        // Get token
+        getMessagingToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID }).then(async (currentToken) => {
+          try {
+            if (currentToken) {
+              // Send the token to your server and update the UI if necessary
+              await saveMessagingToken(currentToken);
+              // save the token in your database
+              localforage.setItem("fcm_token", currentToken);
+              resolve(true)
+            } else {
+              reject("No Token");
+            }
+          } catch (error) {
+            reject(error);
+          }
+        }).catch(reject);
+      } catch (error) {
+        reject(error)
+      }
+    });
+  },
 };
