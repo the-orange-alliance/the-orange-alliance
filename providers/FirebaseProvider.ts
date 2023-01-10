@@ -432,10 +432,10 @@ export const updateEvent = (event: Event): Promise<any> => {
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          data: event.eventKey
+          'Content-Type': 'application/json'
         };
 
-        fetch(baseUrl + '/updateEvent', {
+        fetch(toaBaseUrl + '/user/actions/updateEvent', {
           headers: headers,
           method: 'POST',
           body: JSON.stringify([json])
@@ -602,57 +602,26 @@ const addSuggestion = (suggestionData: any): Promise<any> => {
   });
 };
 
-export const addStream = (stream: EventLiveStream): Promise<boolean> => {
+export const updateStream = (stream: EventLiveStream): Promise<boolean> => {
   return new Promise<boolean>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
-          authorization: `Bearer ${token}`
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
         };
 
-        fetch(baseUrl + '/addStream', {
+        fetch(toaBaseUrl + '/user/actions/updateStream', {
           headers: headers,
           method: 'POST',
           body: JSON.stringify([stream.toJSON()])
-        })
-          .then(data => data.text())
-          .then(
-            (data: string) => {
-              resolve(data === 'Success');
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-export const hideStream = (stream: EventLiveStream): Promise<boolean> => {
-  return new Promise<boolean>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`
-        };
-
-        fetch(baseUrl + '/hideStream', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify([stream.toJSON()])
-        })
-          .then(data => data.text())
-          .then(
-            (data: string) => {
-              resolve(data === 'Success');
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
+        }).then(res => {
+          if (res.ok) {
+            resolve(true);
+          } else {
+            reject(res);
+          }
+        });
       })
       .catch((err: any) => {
         reject(err);
@@ -749,62 +718,6 @@ const toaDelete = (route: string): Promise<any> => {
               } else {
                 reject(err);
               }
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const getEventSettings = (eventKey: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: eventKey
-        };
-
-        fetch(baseUrl + '/user/getEventSettings', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const updateEventSettings = (eventKey: string, settings: any): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: eventKey
-        };
-
-        fetch(baseUrl + '/user/updateEventSettings', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify(settings)
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
             }
           );
       })

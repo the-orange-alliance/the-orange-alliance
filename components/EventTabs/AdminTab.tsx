@@ -13,14 +13,13 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { Event, EventLiveStream, League } from '@the-orange-alliance/api/lib/cjs/models';
+import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAUser from '../../lib/TOAUser';
 import { useTranslate } from '../../i18n/i18n';
-import { Autorenew, Link, LinkOff, Upload, YouTube } from '@mui/icons-material';
+import { Link, LinkOff, Upload, YouTube } from '@mui/icons-material';
 import {
   addEventMedia,
-  addStream,
-  hideStream,
+  updateStream,
   updateEvent
 } from '../../providers/FirebaseProvider';
 import { uploadToImgur } from '../../providers/ImgurProvider';
@@ -195,6 +194,8 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       streamType = StreamType.YouTube;
     }
 
+    console.log(streamLink)
+
     if (streamLink) {
       const stream = new EventLiveStream();
       stream.streamKey = event.eventKey + '-LS1';
@@ -208,7 +209,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       stream.endDateTime = new Date(event.endDate).toJSON().slice(0, 19).replace('T', ' ');
       stream.channelURL = channelLink;
 
-      addStream(stream)
+      updateStream(stream)
         .then(() => {
           handleStreamChange(stream, true);
           setLocalStreams([...localStreams, stream]);
@@ -228,7 +229,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
         .replace('T', ' ');
       localStreams[0].endDateTime = new Date(event.endDate).toJSON().slice(0, 19).replace('T', ' ');
       localStreams[0].isActive = false;
-      hideStream(localStreams[0])
+      updateStream(localStreams[0])
         .then(() => {
           handleStreamChange(localStreams[0], false);
           setLocalStreams([...localStreams.filter(s => s.streamKey !== localStreams[0].streamKey)]);
