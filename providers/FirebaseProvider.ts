@@ -157,6 +157,24 @@ export const isLoggedIn = () => {
   return auth.currentUser !== null;
 };
 
+const getToken = (): Promise<string> => {
+  return new Promise<string>((resolve, reject) => {
+    const user = auth.currentUser;
+    if (user === null) {
+      reject();
+    } else {
+      user
+        .getIdToken(false)
+        .then((token: string) => {
+          resolve(token);
+        })
+        .catch((err: any) => {
+          reject(err);
+        });
+    }
+  });
+};
+
 export const fetchUserData = (type?: string): Promise<TOAUser> => {
   return new Promise<TOAUser>((resolve, reject) => {
     getToken()
@@ -181,32 +199,6 @@ export const fetchUserData = (type?: string): Promise<TOAUser> => {
               } else {
                 reject();
               }
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const getShortUserData = (): Promise<TOAUser> => {
-  return new Promise<TOAUser>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          short: 'true'
-        };
-
-        fetch(toaBaseUrl + '/user', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(new TOAUser().fromJSON(data));
             },
             (err: any) => {
               reject(err);
@@ -279,146 +271,7 @@ export const removeFromFavorite = (key: string, type: "team" | "event"): Promise
   });
 };
 
-const saveMessagingToken = (key: string): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    getToken().then(token => {
-      const headers = {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      const body = { token: key };
-
-      fetch(toaBaseUrl + '/user/saveMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
-        .then(data => data.json())
-        .then(
-          (data: any) => {
-            resolve(data);
-          },
-          (err: any) => {
-            reject(err);
-          }
-        ).catch(reject);
-    });
-  });
-};
-
-const removeMessagingToken = (key: string): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    getToken().then(token => {
-      const headers = {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      const body = { token: key };
-
-      fetch(toaBaseUrl + '/user/removeMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
-        .then(data => data.json())
-        .then(
-          (data: any) => {
-            resolve(data);
-          },
-          (err: any) => {
-            reject(err);
-          }
-        ).catch(reject);
-    });
-  });
-};
-
-
-const generateEventApiKey = (eventKey: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: eventKey
-        };
-
-        fetch(baseUrl + '/eventKey', { headers: headers })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data.key);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const playlistMatchify = (eventKey: string, playlistID: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: eventKey
-        };
-
-        const body = {
-          playlistID: playlistID
-        };
-
-        fetch(baseUrl + '/playlistMatchify', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify(body)
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const setVideos = (eventKey: string, videos: any[]): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: eventKey
-        };
-
-        fetch(baseUrl + '/setVideos', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify(videos)
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-export const updateEvent = (event: Event): Promise<any> => {
+export const updateEvent = (event: Event): Promise<boolean> => {
   const json = event.toJSON() as any;
   delete json.matches;
   delete json.rankings;
@@ -427,32 +280,23 @@ export const updateEvent = (event: Event): Promise<any> => {
   delete json.alliances;
   delete json.insights;
   json.is_active = true;
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        };
+  return new Promise<boolean>((resolve, reject) => {
+    getToken().then(token => {
+      const headers = {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
 
-        fetch(toaBaseUrl + '/user/actions/updateEvent', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify([json])
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              reject(err);
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
+      fetch(toaBaseUrl + '/user/actions/updateEvent', { headers: headers, method: 'POST', body: JSON.stringify([json]) }).then(res => {
+        if (res.ok) {
+          resolve(true);
+        } else {
+          reject(res);
+        }
       });
+    }).catch((err: any) => {
+      reject(err);
+    });
   });
 };
 
@@ -477,6 +321,161 @@ export const addEventMedia = (mediaData: any): Promise<any> => {
             },
             (err: any) => {
               reject(err);
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+};
+
+export const updateStream = (stream: EventLiveStream): Promise<boolean> => {
+  return new Promise<boolean>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+
+        fetch(toaBaseUrl + '/user/actions/updateStream', {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify([stream.toJSON()])
+        }).then(res => {
+          if (res.ok) {
+            resolve(true);
+          } else {
+            reject(res);
+          }
+        });
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+};
+
+export const setNotifications = (type: "team" | "event", key: string, notify: boolean): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+
+        fetch(toaBaseUrl + '/user/setNotifications', {
+          headers,
+          method: 'POST',
+          body: JSON.stringify({ [type + "_key"]: key, enabled: notify })
+        })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data);
+            },
+            (err: any) => {
+              reject(err);
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+}
+
+const toaPost = (body: any, route: string): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          data: route
+        };
+
+        fetch(baseUrl + '/toaapi', {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify(body)
+        })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data);
+            },
+            (err: any) => {
+              if (err.status === 200) {
+                resolve(err);
+              } else {
+                reject(err);
+              }
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+};
+
+const toaPut = (body: any, route: string): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          data: route
+        };
+
+        fetch(baseUrl + '/toaapi', {
+          headers: headers,
+          method: 'PUT',
+          body: JSON.stringify(body)
+        })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data);
+            },
+            (err: any) => {
+              if (err.status === 200) {
+                resolve(err);
+              } else {
+                reject(err);
+              }
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+};
+
+const toaDelete = (route: string): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          data: route
+        };
+
+        fetch(baseUrl + '/toaapi', { headers: headers, method: 'DELETE' })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data);
+            },
+            (err: any) => {
+              if (err.status === 200) {
+                resolve(err);
+              } else {
+                reject(err);
+              }
             }
           );
       })
@@ -602,26 +601,25 @@ const addSuggestion = (suggestionData: any): Promise<any> => {
   });
 };
 
-export const updateStream = (stream: EventLiveStream): Promise<boolean> => {
-  return new Promise<boolean>((resolve, reject) => {
+const getShortUserData = (): Promise<TOAUser> => {
+  return new Promise<TOAUser>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          short: 'true'
         };
 
-        fetch(toaBaseUrl + '/user/actions/updateStream', {
-          headers: headers,
-          method: 'POST',
-          body: JSON.stringify([stream.toJSON()])
-        }).then(res => {
-          if (res.ok) {
-            resolve(true);
-          } else {
-            reject(res);
-          }
-        });
+        fetch(toaBaseUrl + '/user', { headers: headers })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(new TOAUser().fromJSON(data));
+            },
+            (err: any) => {
+              reject(err);
+            }
+          );
       })
       .catch((err: any) => {
         reject(err);
@@ -629,117 +627,50 @@ export const updateStream = (stream: EventLiveStream): Promise<boolean> => {
   });
 };
 
-const toaPost = (body: any, route: string): Promise<any> => {
+
+const generateEventApiKey = (eventKey: string): Promise<any> => {
   return new Promise<any[]>((resolve, reject) => {
     getToken()
       .then(token => {
         const headers = {
           authorization: `Bearer ${token}`,
-          data: route
+          data: eventKey
         };
 
-        fetch(baseUrl + '/toaapi', {
+        fetch(baseUrl + '/eventKey', { headers: headers })
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data.key);
+            },
+            (err: any) => {
+              reject(err);
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
+  });
+};
+
+const playlistMatchify = (eventKey: string, playlistID: string): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          data: eventKey
+        };
+
+        const body = {
+          playlistID: playlistID
+        };
+
+        fetch(baseUrl + '/playlistMatchify', {
           headers: headers,
           method: 'POST',
           body: JSON.stringify(body)
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              if (err.status === 200) {
-                resolve(err);
-              } else {
-                reject(err);
-              }
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const toaPut = (body: any, route: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: route
-        };
-
-        fetch(baseUrl + '/toaapi', {
-          headers: headers,
-          method: 'PUT',
-          body: JSON.stringify(body)
-        })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              if (err.status === 200) {
-                resolve(err);
-              } else {
-                reject(err);
-              }
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-const toaDelete = (route: string): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          data: route
-        };
-
-        fetch(baseUrl + '/toaapi', { headers: headers, method: 'DELETE' })
-          .then(data => data.json())
-          .then(
-            (data: any) => {
-              resolve(data);
-            },
-            (err: any) => {
-              if (err.status === 200) {
-                resolve(err);
-              } else {
-                reject(err);
-              }
-            }
-          );
-      })
-      .catch((err: any) => {
-        reject(err);
-      });
-  });
-};
-
-export const setNotifications = (type: "team" | "event", key: string, notify: boolean): Promise<any> => {
-  return new Promise<any[]>((resolve, reject) => {
-    getToken()
-      .then(token => {
-        const headers = {
-          authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-
-        fetch(toaBaseUrl + '/user/setNotifications', {
-          headers,
-          method: 'POST',
-          body: JSON.stringify({ [type + "_key"]: key, enabled: notify })
         })
           .then(data => data.json())
           .then(
@@ -755,27 +686,89 @@ export const setNotifications = (type: "team" | "event", key: string, notify: bo
         reject(err);
       });
   });
-}
+};
 
-const getToken = (): Promise<string> => {
-  return new Promise<string>((resolve, reject) => {
-    const user = auth.currentUser;
-    if (user === null) {
-      reject();
-    } else {
-      user
-        .getIdToken(false)
-        .then((token: string) => {
-          resolve(token);
+const setVideos = (eventKey: string, videos: any[]): Promise<any> => {
+  return new Promise<any[]>((resolve, reject) => {
+    getToken()
+      .then(token => {
+        const headers = {
+          authorization: `Bearer ${token}`,
+          data: eventKey
+        };
+
+        fetch(baseUrl + '/setVideos', {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify(videos)
         })
-        .catch((err: any) => {
-          reject(err);
-        });
-    }
+          .then(data => data.json())
+          .then(
+            (data: any) => {
+              resolve(data);
+            },
+            (err: any) => {
+              reject(err);
+            }
+          );
+      })
+      .catch((err: any) => {
+        reject(err);
+      });
   });
 };
 
+
 /** Cloud Messaging Stuff **/
+
+const saveMessagingToken = (key: string): Promise<any> => {
+  return new Promise<any>((resolve, reject) => {
+    getToken().then(token => {
+      const headers = {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const body = { token: key };
+
+      fetch(toaBaseUrl + '/user/saveMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
+        .then(data => data.json())
+        .then(
+          (data: any) => {
+            resolve(data);
+          },
+          (err: any) => {
+            reject(err);
+          }
+        ).catch(reject);
+    });
+  });
+};
+
+const removeMessagingToken = (key: string): Promise<any> => {
+  return new Promise<any>((resolve, reject) => {
+    getToken().then(token => {
+      const headers = {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const body = { token: key };
+
+      fetch(toaBaseUrl + '/user/removeMessagingToken', { headers: headers, method: 'POST', body: JSON.stringify(body) })
+        .then(data => data.json())
+        .then(
+          (data: any) => {
+            resolve(data);
+          },
+          (err: any) => {
+            reject(err);
+          }
+        ).catch(reject);
+    });
+  });
+};
+
 export const cloudMessaging = {
   tokenInlocalforage: async () => {
     return await localforage.getItem("fcm_token");
