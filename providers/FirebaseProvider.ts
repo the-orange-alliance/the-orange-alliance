@@ -773,7 +773,7 @@ const removeMessagingToken = (key: string): Promise<any> => {
 };
 
 export const cloudMessaging = {
-  tokenInlocalforage: async () => {
+  tokenInlocalforage: async (): Promise<string | null> => {
     return await localforage.getItem("fcm_token");
   },
   onMessage: async () => {
@@ -784,8 +784,8 @@ export const cloudMessaging = {
   },
   disable: async function () {
     try {
-      const currToken = await this.tokenInlocalforage();
-      if (currToken !== null) {
+      const currToken: string | null = await this.tokenInlocalforage();
+      if (currToken !== null && typeof currToken === "string") {
         await removeMessagingToken(currToken);
       }
     } catch (err) {
