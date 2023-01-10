@@ -279,6 +279,9 @@ export const updateEvent = (event: Event): Promise<boolean> => {
   delete json.teams;
   delete json.alliances;
   delete json.insights;
+  if (json.league_key === null) delete json.league_key;
+  if (json.division_name === null) delete json.division_name;
+  if (json.website === null) delete json.website;
   json.is_active = true;
   return new Promise<boolean>((resolve, reject) => {
     getToken().then(token => {
