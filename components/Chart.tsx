@@ -7,13 +7,14 @@ import {
   LineElement,
   Legend,
   ChartOptions,
+  Tooltip,
   ChartData as _ChartData
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import type Insight from '@the-orange-alliance/api/lib/cjs/models/Insights';
 import useChartData, { PickByType } from '../lib/utils/useChartData';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 const defaultOptions: ChartOptions<'line'> = {
   responsive: true,
   plugins: {
