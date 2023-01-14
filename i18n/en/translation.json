@@ -83,8 +83,8 @@
     "account": {
       "logout": "Logout",
       "level": "Level {{ level }}",
-      "no_verify": "Please verify your email",
-      "why_verify": "In order to enjoy all your account features, your email address needs to be verified.",
+      "verify_email": "Please verify your email",
+      "verify_email_description": "In order to use all of the features of myTOA, you must verify your email address. Please check your email for a verification email.",
       "manage_events": "Manage Events",
       "division_tab": {
         "manage_leagues": "Manage Leagues",
@@ -106,15 +106,17 @@
         "grant_access": "Grant Access",
         "revoke_access": "Revoke Access",
         "enabled": "Notifications are enabled on this device",
-        "blocked": "Notifications are blocked on this device",
+        "disabled": "Notifications are disabled on this device",
+        "unsupported": "Sorry, your browser does not support push notifications.",
         "help": "To disable notification blocking, click the lock icon to the left of the web address, click Site settings and change the notifications permission."
       },
       "api_card": {
-        "title": "Build amazing things with our API",
-        "your_key": "Here is your API Key:",
+        "title": "API Token",
+        "description": "Build your own apps with the TOA API.",
+        "your_key": "Your API Key:",
         "no_key": "You don't have any existing key",
         "generate_key": "Generate a key",
-        "generating_key": "Generating an API Key...",
+        "generating_key": "Your API key is being generated, please check back in a few seconds...",
         "docs": "You can check out our full API Documentation"
       },
       "account_settings": "Account Settings",
@@ -234,7 +236,7 @@
         "failed": "Saving event settings failed. Please try again later"
       },
       "data_source": {
-        "data_provided": "Data Provided By",
+        "data_provided": "Data provided by",
         "first": "FIRST",
         "data_sync": "Official TOA Datasync",
         "affiliate": "Affiliate Source or Event Archive"
@@ -462,6 +464,7 @@
       "event_results": "Event Results",
       "part_of_region": "Part of the {{ regionKey }} Region",
       "website": "Website",
+      "view_website": "View team's website",
       "rookie_year": "Rookie Year",
       "last_active": "Last Active Season",
       "awards_in_season": "{{ awards }} awards in {{ season }}",

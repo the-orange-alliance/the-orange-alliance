@@ -119,9 +119,11 @@ export const undefinedToNull = (o: any): object | null => {
   if (typeof o === 'undefined' || o === null) return null;
   for (const key of Object.keys(o)) {
     if (typeof o[key] === 'undefined') o[key] = null;
-    if (Array.isArray(o[key])) { // Parse nested arrays
+    if (Array.isArray(o[key])) {
+      // Parse nested arrays
       for (const item in o[key]) o[key][item] = undefinedToNull(o[key][item]);
-    } else if (!Array.isArray(o[key]) && typeof o[key] === 'object') { // Parse nested objects
+    } else if (!Array.isArray(o[key]) && typeof o[key] === 'object') {
+      // Parse nested objects
       o[key] = undefinedToNull(o[key]);
     }
   }
@@ -184,10 +186,12 @@ export function teamToStrippedJson(team: Team) {
   };
 }
 
+export function getLocationString(item: Team | Event) {
+  return `${item.city}, ${item.stateProv ? item.stateProv + ', ' : ''}${item.country}`;
+}
+
 export function getEventDescription(event: Event) {
-  const location = `${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}${
-    event.country
-  }`;
+  const location = getLocationString(event);
   const startDate = DateTime.fromISO(event.startDate);
   const endDate = DateTime.fromISO(event.endDate);
 

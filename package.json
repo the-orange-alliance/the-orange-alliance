@@ -26,7 +26,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
-    "react-tiny-fab": "^4.0.4",
     "recharts": "^2.1.15",
     "swagger-ui-react": "^4.15.2"
   },

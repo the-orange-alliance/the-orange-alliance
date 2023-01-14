@@ -71,8 +71,8 @@
     "account": {
       "logout": "Cerrar sesión",
       "level": "Nivel {{ level }}",
-      "no_verify": "Por favor considere verificar su correo electrónico",
-      "why_verify": "Para disfrutar de todas las funciones de tu cuenta, tu dirección de correo electrónico debe verificarse.",
+      "verify_email": "Por favor considere verificar su correo electrónico",
+      "verify_email_description": "Para disfrutar de todas las funciones de tu cuenta, tu dirección de correo electrónico debe verificarse.",
       "manage_events": "Administrar eventos",
       "division_tab": {
         "manage_leagues": "Gestionar Ligas",
@@ -93,7 +93,7 @@
         "summary": "Recibe notificaciones push en función de la configuración de tus eventos.",
         "grant_access": "Conceder Acceso",
         "enabled": "Las notificaciones están habilitadas en este dispositivo",
-        "blocked": "Las notificaciones están bloqueadas en este dispositivo",
+        "disabled": "Las notificaciones están bloqueadas en este dispositivo",
         "help": "Para deshabilitar el bloqueo de notificaciones, haga clic en el icono de candado a la izquierda de la dirección web, haga clic en Configuración del sitio y cambie el permiso de notificaciones."
       },
       "api_card": {

@@ -17,11 +17,7 @@ import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models'
 import TOAUser from '../../lib/TOAUser';
 import { useTranslate } from '../../i18n/i18n';
 import { Link, LinkOff, Upload, YouTube } from '@mui/icons-material';
-import {
-  addEventMedia,
-  updateStream,
-  updateEvent
-} from '../../providers/FirebaseProvider';
+import { addEventMedia, updateStream, updateEvent } from '../../providers/FirebaseProvider';
 import { uploadToImgur } from '../../providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
 import { useAppContext } from '../../lib/toa-context';
@@ -70,7 +66,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       : 'Youtube'
   );
 
-  const cardSx = { border: 'rgba(1, 1, 1, .2) 1.5px solid', m: 1 };
+  const cardSx = { border: '1px solid', borderColor: 'divider', m: 1 };
 
   const updateEventProp = (prop: EditableEventProp, val: string | null) => {
     const temp = new Event().fromJSON(editableEvent.toJSON());
@@ -194,7 +190,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       streamType = StreamType.YouTube;
     }
 
-    console.log(streamLink)
+    console.log(streamLink);
 
     if (streamLink) {
       const stream = new EventLiveStream();

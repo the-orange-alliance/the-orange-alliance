@@ -20,7 +20,7 @@ export interface IRawEventProps {
   alliances: any;
   awards: any;
   insights: any;
-  otherDivisions: any[];
+  divisions: any[];
   streams: any;
   ogImage?: string;
 }
@@ -29,7 +29,7 @@ export interface IEventProps {
   event: Event;
   streams: EventLiveStream[];
   ogImage?: string;
-  otherDivisions: Event[];
+  divisions: Event[];
 }
 
 export const parseEventProps = (props: IRawEventProps): IEventProps => {
@@ -43,10 +43,10 @@ export const parseEventProps = (props: IRawEventProps): IEventProps => {
     i ? getInsightsType(event.seasonKey).fromJSON(i) : null
   );
 
-  const otherDivisions = props.otherDivisions.map((e: any) => new Event().fromJSON(e));
+  const divisions = props.divisions.map((e: any) => new Event().fromJSON(e));
 
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
-  return { event, streams, otherDivisions, ogImage: props.ogImage };
+  return { event, streams, divisions, ogImage: props.ogImage };
 };
 
 export const useEventData = (props: IRawEventProps): IEventProps =>
@@ -75,12 +75,17 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
   const streams = data[8];
 
   const currDiv = parseInt(eventKey.slice(-1));
-  let otherDivisions: Event[] = [];
+  console.log(currDiv, !isNaN(currDiv), event.divisionKey);
+  let divisions: Event[] = [];
   if (!isNaN(currDiv) && event.divisionName !== null && currDiv === event.divisionKey) {
     const toFetch = currDiv === 0 ? [1, 2] : currDiv === 1 ? [0, 2] : [0, 1];
-    otherDivisions = await Promise.all(
+    divisions = await Promise.all(
       toFetch.map(div => TOAProvider.getAPI().getEvent(eventKey.slice(0, -1) + div))
     ).catch(() => []);
+    if (divisions.length > 0) {
+      divisions.push(event);
+      divisions.sort((a, b) => a.divisionKey - b.divisionKey);
+    }
   }
 
   const newInsights = [];
@@ -102,7 +107,7 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
     matches: matches.map(m => undefinedToNull(m.toJSON())),
     alliances: alliances.map(a => undefinedToNull(a.toJSON())),
     awards: awards.map(a => undefinedToNull(a.toJSON())),
-    otherDivisions: otherDivisions.map(d => undefinedToNull(d.toJSON())),
+    divisions: divisions.map(d => undefinedToNull(d.toJSON())),
     insights: newInsights,
     streams: streams.map(s => undefinedToNull(s.toJSON()))
   };

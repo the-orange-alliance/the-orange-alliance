@@ -1,6 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Avatar, Box, Button, ButtonBase, Grid, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonBase, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslate } from '../../i18n/i18n';
 import { useRouter } from 'next/router';
@@ -14,22 +14,31 @@ const initials = (name: string) => {
 };
 
 const AccountItem = () => {
-  const {user} = useAppContext();
+  const { user, isAuthLoaded } = useAppContext();
   const theme = useTheme();
   const t = useTranslate();
   const router = useRouter();
 
   return (
     <>
-      {!user ? (
+      {!isAuthLoaded ? (
+        <Skeleton
+          variant="rounded"
+          height={48}
+          sx={{
+            mx: 1,
+            my: 1.5
+          }}
+        />
+      ) : !user ? (
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'flex-start',
-            py: 2,
+            pt: 2,
             px: 2,
             mx: 1,
-            my: 0.5,
+            mt: 0.5,
             marginBottom: 0,
             paddingBottom: 0.5,
             borderRadius: 2,

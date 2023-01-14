@@ -22,13 +22,13 @@ function MyApp({
 }: AppProps<{ initialState: TOAAppContext; userLanguage: string }>) {
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
-  const value = useMemo(() => ({ ...globals, user, setUser }), [user, setUser]);
-  let currUid: string = "";
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+  const value = useMemo(() => ({ ...globals, isAuthLoaded, user, setUser }), [user, setUser]);
+  let currUid: string = '';
 
   useEffect(() => {
     // Register onMessage event
     cloudMessaging.onMessage();
-      
 
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -37,15 +37,18 @@ function MyApp({
     }
 
     // Register Authentication listener
-    onAuthStateChanged(getAuthInstance(), (newUser) => {
+    onAuthStateChanged(getAuthInstance(), newUser => {
       // Only requery data if UID has changed
       if (newUser && newUser.uid !== currUid && newUser.uid !== user?.uid) {
         currUid = newUser.uid;
-        fetchUserData().then((user) => {
+        fetchUserData().then(user => {
           setUser(user);
+          setIsAuthLoaded(true);
         });
-      } else if (user && !newUser) { // prevent repetative null sets
+      } else if (user && !newUser) {
+        // prevent repetative null sets
         setUser(null);
+        setIsAuthLoaded(true);
       }
     });
   }, []);
