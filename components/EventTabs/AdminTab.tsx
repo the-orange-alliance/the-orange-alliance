@@ -190,8 +190,6 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       streamType = StreamType.YouTube;
     }
 
-    console.log(streamLink);
-
     if (streamLink) {
       const stream = new EventLiveStream();
       stream.streamKey = event.eventKey + '-LS1';

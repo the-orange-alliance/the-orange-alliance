@@ -75,7 +75,6 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
   const streams = data[8];
 
   const currDiv = parseInt(eventKey.slice(-1));
-  console.log(currDiv, !isNaN(currDiv), event.divisionKey);
   let divisions: Event[] = [];
   if (!isNaN(currDiv) && event.divisionName !== null && currDiv === event.divisionKey) {
     const toFetch = currDiv === 0 ? [1, 2] : currDiv === 1 ? [0, 2] : [0, 1];
