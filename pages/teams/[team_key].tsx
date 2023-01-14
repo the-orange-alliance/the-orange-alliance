@@ -249,7 +249,6 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                         {event.matches.length > 0 && (
                           <MatchesTable
                             event={event}
-                            forceSmall
                             disableSingleTeamTeam
                             disableSelection
                             hideHeader
