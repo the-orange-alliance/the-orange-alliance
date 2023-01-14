@@ -53,11 +53,22 @@ const MatchTableRow = ({
           }}
         >
           {match.videoURL ? (
-            <a href={match.videoURL} target={'_blank'} rel={'noreferrer'}>
-              <IconPlay />
-            </a>
+            <Link href={match.videoURL} target="_blank" rel="noopener noreferrer" color="secondary">
+              <IconPlay
+                sx={{
+                  fontSize: '1.25rem',
+                  verticalAlign: 'middle'
+                }}
+              />
+            </Link>
           ) : (
-            <IconPlay color={'disabled'} />
+            <IconPlay
+              sx={{
+                color: 'rgba(0, 0, 0, 0.12)',
+                fontSize: '1.25rem',
+                verticalAlign: 'middle'
+              }}
+            />
           )}
         </TableCell>
         <TableCell padding={'none'}>
@@ -125,11 +136,22 @@ const MatchTableRow = ({
         </TableCell>
         <TableCell>
           {match.videoURL ? (
-            <a href={match.videoURL}>
-              <IconPlay />
-            </a>
+            <Link href={match.videoURL} target="_blank" rel="noopener noreferrer" color="secondary">
+              <IconPlay
+                sx={{
+                  fontSize: '1.25rem',
+                  verticalAlign: 'middle'
+                }}
+              />
+            </Link>
           ) : (
-            <IconPlay color={'disabled'} />
+            <IconPlay
+              sx={{
+                color: 'rgba(0, 0, 0, 0.12)',
+                fontSize: '1.25rem',
+                verticalAlign: 'middle'
+              }}
+            />
           )}
         </TableCell>
         <TableCell padding={'none'}>
