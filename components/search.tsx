@@ -133,6 +133,20 @@ const Search: React.FC<SearchProps> = ({
     }
   }, [watchGlobalCommand]);
 
+  useEffect(() => {
+    if (watchGlobalCommand && router.query.q) {
+      const query = router.query.q as string;
+      if (!isNaN(parseInt(query))) {
+        router.replace(`/teams/${query}`);
+      } else {
+        const input = document.querySelector('input#toa-search') as HTMLInputElement;
+        input?.focus();
+        setInputValue(query);
+        onSearchChange({ target: { value: query } } as React.ChangeEvent<HTMLInputElement>);
+      }
+    }
+  }, [watchGlobalCommand, router.query.q]);
+
   const isOpen = isFocused && inputValue.length > 0 && results !== null;
 
   return (
