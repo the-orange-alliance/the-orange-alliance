@@ -5,6 +5,7 @@ type TOAAppContext = {
   seasons: Season[];
   regions: Region[];
   leagues: League[];
+  isAuthLoaded: boolean;
   user: TOAUser | null;
   setUser: (user: TOAUser | null) => void;
 };

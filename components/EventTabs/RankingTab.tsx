@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import NextLink from 'next/link';
+import { Table, TableHead, TableRow, TableCell, TableBody, Link } from '@mui/material';
 import { Ranking, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 
@@ -30,7 +30,11 @@ const RankingTab = (props: IProps) => {
           <TableRow key={row.team.teamNumber}>
             <TableCell>{row.rank}</TableCell>
             <TableCell>
-              #{row.team.teamNumber} {row.team.teamNameShort}
+              <NextLink href={`/teams/${row.team.teamNumber}`} passHref>
+                <Link underline="hover">
+                  #{row.team.teamNumber} {row.team.teamNameShort}
+                </Link>
+              </NextLink>
             </TableCell>
             <TableCell>{row.rankingPoints}</TableCell>
             <TableCell>{row.tieBreakerPoints}</TableCell>

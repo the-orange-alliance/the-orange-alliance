@@ -13,12 +13,14 @@ import {
   Box,
   CircularProgress,
   IconButton,
-  Divider
+  Divider,
+  Link
 } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
 import MatchTableRow from './MatchTableRow';
-import { ArrowForwardIos, Close, PlayCircleOutline } from '@mui/icons-material';
+import { ArrowForwardIos, Close } from '@mui/icons-material';
+import IconPlay from '@mui/icons-material/PlayCircleOutline';
 import { useRouter } from 'next/router';
 import { CURRENT_SEASON } from '../../constants';
 import { useEffect, useState } from 'react';
@@ -189,12 +191,28 @@ const MatchesTable = (props: IProps) => {
               <TableRow key={m.matchKey}>
                 <TableCell className={'p-0 text-center'} padding={'none'}>
                   {m.videoURL ? (
-                    <a href={m.videoURL}>
-                      <PlayCircleOutline />
-                    </a>
+                    <Link
+                      href={m.videoURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      color="secondary"
+                    >
+                      <IconPlay
+                        sx={{
+                          fontSize: '1.25rem',
+                          verticalAlign: 'middle'
+                        }}
+                      />
+                    </Link>
                   ) : (
-                    <PlayCircleOutline color={'disabled'} />
-                  )}
+                    <IconPlay
+                      sx={{
+                        color: 'rgba(0, 0, 0, 0.12)',
+                        fontSize: '1.25rem',
+                        verticalAlign: 'middle'
+                      }}
+                    />
+                  )}{' '}
                 </TableCell>
                 <TableCell className={`p-0 ${bg}-bg`} padding={'none'}>
                   <Typography

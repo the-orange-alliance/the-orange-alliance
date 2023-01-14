@@ -71,8 +71,8 @@
     "account": {
       "logout": "登出",
       "level": "Level {{ level }}",
-      "no_verify": "请验证你的电子邮箱",
-      "why_verify": "为了能体验到所有的账户功能，你的电子邮箱需要被验证。",
+      "verify_email": "请验证你的电子邮箱",
+      "verify_email_description": "为了能体验到所有的账户功能，你的电子邮箱需要被验证。",
       "manage_events": "管理活动",
       "division_tab": {
         "manage_leagues": "管理联赛",
@@ -93,7 +93,7 @@
         "summary": "通过你的活动设置来收到推送消息。",
         "grant_access": "允许访问",
         "enabled": "推送消息在此设备上被启用",
-        "blocked": "推送消息在此设备上被禁用",
+        "disabled": "推送消息在此设备上被禁用",
         "help": "来取消推送消息禁用，点击地址栏左边的锁型图标，点击网站设置来改变推送消息权限。"
       },
       "api_card": {

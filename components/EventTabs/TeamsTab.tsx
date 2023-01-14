@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { List, ListItem, ListItemText, ListItemAvatar, Button } from '@mui/material';
 import { EventParticipant, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import SimpleTeamPaper from '../SimpleTeamPaper';
 
 interface IProps {
   event: Event;
@@ -11,16 +12,8 @@ const TeamsTab = (props: IProps) => {
 
   return (
     <List sx={{ marginLeft: 2, marginRight: 2 }}>
-      {teams.map((team: EventParticipant) => (
-        <ListItem key={team.teamKey} component="a" button href={`/teams/${team.teamKey}`}>
-          <ListItemAvatar>
-            <Button disabled>{team.teamKey}</Button>
-          </ListItemAvatar>
-          <ListItemText
-            primary={team.team.teamNameShort}
-            secondary={`${team.team.city}, ${team.team.stateProv}, ${team.team.country}`}
-          />
-        </ListItem>
+      {teams.map((participant: EventParticipant) => (
+        <SimpleTeamPaper key={participant.eventParticipantKey} team={participant.team} />
       ))}
     </List>
   );

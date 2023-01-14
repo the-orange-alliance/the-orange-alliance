@@ -23,26 +23,32 @@ import {
   List,
   ListItem,
   CardHeader,
-  Link
+  Link,
+  Container
 } from '@mui/material';
 import {
   Book,
   Celebration,
   Create,
-  Explore,
+  Explore as RegionIcon,
   Facebook,
   Flag,
-  Flare,
-  FlashOn,
+  Flare as RookieIcon,
+  FlashOn as OprIcon,
   GitHub,
-  Hotel,
+  Hotel as InactiveIcon,
   Public,
   Room,
-  YouTube
+  YouTube,
+  CalendarToday as CalendarIcon,
+  LocationOn as LocationIcon,
+  Public as WebsiteIcon,
+  VerifiedUser as SourceIcon,
+  Videocam as StreamIcon
 } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
 import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helpers/team-helper';
-import { getSeasonString, readableDate } from '../../lib/utils/common';
+import { getLocationString, getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchesTable from '../../components/MatchTable/MatchTable';
@@ -69,17 +75,6 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
   const [fetching, setFetching] = useState<boolean>(false);
   const [tab, setTab] = useState<number>(0);
 
-  const getUrl = () => {
-    let website = team.website;
-    website = website.substring(website.indexOf(':') + 3); // Taking off the http/s
-    if (website.endsWith('/') || website.endsWith('?') || website.endsWith('#')) {
-      // Taking off unnecessary chars
-      website = website.substring(0, website.length - 1);
-    }
-
-    return website.startsWith('www.') ? website.substring(4, website.length) : website;
-  };
-
   const pushNewFilter = (season: Season) => {
     setFetching(true);
     setSelectedSeason(season);
@@ -90,9 +85,9 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     });
   };
 
-  const scrollToEvent = (id: string) => {
+  const scrollToEvent = (eventKey: string) => {
     if (!document) return;
-    const element = document.getElementById(id.toLowerCase());
+    const element = document.getElementById(eventKey.toLowerCase());
     if (element) {
       window.scroll({
         behavior: 'smooth',
@@ -106,22 +101,264 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     <>
       <SEO
         title={`Team #${team.teamNumber}`}
-        description={`Team information and results for FIRST Tech Challenge Team ${team.teamNumber
-          } ${team.teamNameShort} from ${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country
-          }.`}
+        description={`Team information and results for FIRST Tech Challenge Team ${
+          team.teamNumber
+        } ${team.teamNameShort} from ${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${
+          team.country
+        }.`}
         url={`/teams/${team.teamKey}`}
         ogImage={props.ogImage}
       />
-      <Box sx={{ margin: 2 }}>
-        <Typography variant="h4">Team #{team.teamNumber}</Typography>
-      </Box>
 
-      <Grid container direction={'row'} spacing={2} sx={{ margin: 2, width: '95%' }}>
-        {/* Nav */}
-        <Grid item xs={12} md={3}>
-          <Card sx={{ position: 'sticky', top: '70px' }}>
-            <CardContent>
-              {team.rookieYear && team.rookieYear > 0 && (
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h1">
+          Team #{team.teamNumber} - {team.teamNameShort}
+        </Typography>
+        {team.teamNameLong && (
+          <Typography fontSize="1.25rem" fontWeight={500} color="text.secondary" pt={0.5}>
+            {team.teamNameLong}
+          </Typography>
+        )}
+
+        <Box mt={2} ml={1} id="info">
+          <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+            <LocationIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
+            From{' '}
+            <Link
+              href={`https://www.google.com/maps/search/?api=1&query=${getLocationString(team)}`}
+              color="secondary"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {getLocationString(team)}
+            </Link>
+          </Typography>
+          <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+            <RegionIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
+            {t('pages.team.part_of_region').replace('{{ regionKey }}', team.regionKey)}{' '}
+          </Typography>
+          {team.rookieYear && (
+            <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+              <RookieIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
+              {t('pages.team.rookie_year')}: {team.rookieYear}
+            </Typography>
+          )}
+
+          {team.website && (
+            <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+              <WebsiteIcon
+                fontSize="inherit"
+                sx={{ mr: 1, position: 'relative', top: '0.125em' }}
+              />
+              <Link href={team.website} color="secondary" target="_blank" rel="noreferrer">
+                {t('pages.team.view_website')}
+              </Link>
+            </Typography>
+          )}
+
+          {topOpr && (
+            <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+              <OprIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
+              Top OPR: {topOpr.opr} (
+              <Link
+                href={'#' + topOpr.eventKey}
+                color="secondary"
+                onClick={() => scrollToEvent(topOpr.eventKey)}
+              >
+                {team.events.find(e => e.eventKey === topOpr.eventKey)?.eventName}
+              </Link>
+              )
+            </Typography>
+          )}
+
+          {lastActive && lastActive.seasonKey !== CURRENT_SEASON && (
+            <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
+              <InactiveIcon
+                fontSize="inherit"
+                sx={{ mr: 1, position: 'relative', top: '0.125em' }}
+              />
+              {t('pages.team.last_active')}: {getSeasonString(lastActive)}
+            </Typography>
+          )}
+        </Box>
+
+        <Grid container direction={'row'} spacing={2} mt={4}>
+          {/* Team Information */}
+          <Grid item xs={12} md={9}>
+            {/* Team Events/Robot */}
+            <Card id={'event-results'}>
+              {/* Nav Tabs */}
+              {(github || reveal || cad || notebook || images.length > 0) && (
+                <Tabs
+                  value={tab}
+                  onChange={(e, val) => setTab(val)}
+                  variant="fullWidth"
+                  scrollButtons="auto"
+                  className={'mb-2 mt-0'}
+                >
+                  <Tab label={t('pages.team.event_results')} />
+                  <Tab label={t('pages.team.robot_profile.title')} />
+                </Tabs>
+              )}
+
+              <CardContent>
+                {/* Team Event Data*/}
+                {tab === 0 &&
+                  team.events.map(event => (
+                    <Card
+                      id={event.eventKey.toLowerCase()}
+                      key={event.eventKey}
+                      sx={{ marginBottom: 3 }}
+                      style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}
+                    >
+                      <CardHeader
+                        title={
+                          <NextLink href={`/events/${event.eventKey}/rankings`} passHref>
+                            <Link fontSize="1.25rem">{event.fullEventName}</Link>
+                          </NextLink>
+                        }
+                        subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
+                      ${event.country} on ${readableDate(event.startDate)}`}
+                      />
+                      <CardContent sx={{ pt: 0 }}>
+                        {event.rankings[0] && (
+                          <Typography variant={'body2'} className={'mb-1 mt-1'}>
+                            <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
+                            <b>
+                              {event.rankings[0].wins}-{event.rankings[0].losses}-
+                              {event.rankings[0].ties}
+                            </b>
+                            {event.rankings[0] && (
+                              <a>
+                                {' '}
+                                and an OPR of <b>{event.rankings[0].opr}</b>
+                              </a>
+                            )}
+                          </Typography>
+                        )}
+                        {event.awards.map(award => (
+                          <Typography
+                            className={'mt-1 mb-1'}
+                            variant={'body2'}
+                            key={award.awardKey}
+                          >
+                            <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
+                            {award.award.awardDescription}
+                          </Typography>
+                        ))}
+                        {event.matches.length > 0 && (
+                          <MatchesTable
+                            event={event}
+                            disableSingleTeamTeam
+                            disableSelection
+                            hideHeader
+                          />
+                        )}
+                        {event.matches.length < 1 && <Typography variant={'body1'} />}
+                      </CardContent>
+                    </Card>
+                  ))}
+
+                {/* No Events this season */}
+                {tab === 0 && team.events.length < 1 && (
+                  <Typography variant={'body1'} sx={{ mt: 1 }}>
+                    {team.lastActive && team.lastActive !== CURRENT_SEASON
+                      ? t('pages.team.not_registered')
+                      : t('pages.team.no_results')}
+                  </Typography>
+                )}
+
+                {/* Team 'Robot' Page */}
+                {tab === 1 && (
+                  <Box>
+                    {(github || cad || notebook) && (
+                      <Typography variant={'h6'} className="mb-1">
+                        {team.teamNameShort} ❤️ Open Source
+                      </Typography>
+                    )}
+                    {github && (
+                      <Box className={'m-2'}>
+                        <Fab
+                          href={github.mediaLink}
+                          target={'_blank'}
+                          className={'text-white'}
+                          style={{ backgroundColor: `#24292e` }}
+                          variant={'extended'}
+                        >
+                          <GitHub className={'me-2'} />
+                          GitHub
+                        </Fab>
+                      </Box>
+                    )}
+                    {cad && (
+                      <Box className={'m-2'}>
+                        <Fab
+                          href={cad.mediaLink}
+                          target={'_blank'}
+                          className={'text-white'}
+                          style={{ backgroundColor: `#9c27b0` }}
+                          variant={'extended'}
+                        >
+                          <Create className={'me-2'} />
+                          CAD Design
+                        </Fab>
+                      </Box>
+                    )}
+                    {notebook && (
+                      <Box className={'m-2'}>
+                        <Fab
+                          href={notebook.mediaLink}
+                          target={'_blank'}
+                          className={'text-white'}
+                          style={{ backgroundColor: `#0097a7` }}
+                          variant={'extended'}
+                        >
+                          <Book className={'me-2'} />
+                          {t('pages.team.robot_profile.engineering_notebook')}
+                        </Fab>
+                      </Box>
+                    )}
+                    {reveal && (
+                      <Box className={'m-2'}>
+                        <Fab
+                          href={reveal.mediaLink}
+                          target={'_blank'}
+                          className={'text-white'}
+                          style={{ backgroundColor: `#b71c1c` }}
+                          variant={'extended'}
+                        >
+                          <YouTube className={'me-2'} />
+                          {t('pages.team.robot_profile.engineering_notebook')}
+                        </Fab>
+                      </Box>
+                    )}
+                    {(github || cad || notebook) && images.length > 0 && (
+                      <Divider className={'mb-3 mt-3'} />
+                    )}
+                    {images.length > 0 && (
+                      <Box className={'m-2'}>
+                        <Typography variant={'h6'}>
+                          {t('pages.team.robot_profile.photos')}
+                        </Typography>
+                        <ImageList variant={'masonry'}>
+                          {images.map(m => (
+                            <ImageListItem className={'w-100'} key={m.mediaKey}>
+                              <NextImage src={m.mediaLink} alt={'Team Media Image'} />
+                            </ImageListItem>
+                          ))}
+                        </ImageList>
+                      </Box>
+                    )}
+                  </Box>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Nav */}
+          <Grid item xs={12} md={3}>
+            <Card sx={{ position: 'sticky', top: '5rem', px: 2, py: 3 }}>
+              {team.rookieYear && (
                 <Box>
                   <Select
                     fullWidth
@@ -137,346 +374,46 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                       </MenuItem>
                     ))}
                   </Select>
-                  {team.events.length > 0 && (
-                    <List>
-                      <ListItem
-                        button
-                        onClick={() => scrollToEvent('info')}
-                        sx={{ fontWeight: 500 }}
-                      >
-                        {t('pages.team.team_info')}
-                      </ListItem>
-                      <ListItem
-                        button
-                        onClick={() => scrollToEvent('event-results')}
-                        sx={{ fontWeight: 500 }}
-                      >
-                        {t('pages.team.event_results')}
-                      </ListItem>
-                      <ListItem sx={{ pt: 0, pr: 0 }}>
-                        <List>
-                          {team.events.map(event => (
-                            <ListItem
-                              button
-                              key={event.eventKey}
-                              sx={{ fontSize: '0.875rem', px: 1.5 }}
-                              onClick={() => scrollToEvent(event.eventKey)}
-                            >
-                              {event.divisionName
-                                ? event.eventName + ' - ' + event.divisionName + ' Division'
-                                : event.eventName}
-                            </ListItem>
-                          ))}
-                        </List>
-                      </ListItem>
-                    </List>
-                  )}
                 </Box>
               )}
-            </CardContent>
-          </Card>
-        </Grid>
 
-        {/* Team Information */}
-        <Grid item xs={12} md={9}>
-          <Card id={'info'} sx={{ marginBottom: 5 }}>
-            {fetching && <LinearProgress />}
-            <CardContent>
-              <Box>
-                {/* team logo <div className="team-logo m-2"></div>*/}
-                <Box>
-                  <Typography variant={'h5'}>
-                    <b>
-                      #{team.teamNumber} - {team.teamNameShort}
-                    </b>
-                  </Typography>
-                  <Typography sx={{ paddingTop: 1 }} variant={'subtitle2'}>
-                    {team.teamNameLong}
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Divider />
-
-              <Box sx={{ paddingTop: 2 }}>
-                <Box sx={{ marginBottom: 1 }}>
-                  <Explore sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                  <Typography display={'inline'} variant={'body1'}>
-                    {t('pages.team.part_of_region').replace('{{ regionKey }}', team.regionKey)}{' '}
-                  </Typography>
-                </Box>
-
-                <Box sx={{ marginBottom: 1 }}>
-                  <Room sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                  <Typography display={'inline'} style={{ textTransform: 'capitalize' }}>
-                    <a
-                      rel={'noreferrer'}
-                      style={{ color: theme.palette.text.primary }}
-                      href={`
-                    https://www.google.com/maps/search/?api=1&query=${(
-                          team.city +
-                          ', ' +
-                          (team.stateProv ? team.stateProv + ', ' : '') +
-                          team.country
-                        ).replace(' ', '+')}`}
-                      target="_blank"
-                    >
-                      {team.city +
-                        ', ' +
-                        (team.stateProv ? team.stateProv + ', ' : '') +
-                        team.country}
-                    </a>
-                  </Typography>
-                </Box>
-
-                {team.website && getUrl().startsWith('facebook.com/') && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Facebook sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      Facebook:{' '}
-                      <a style={{ color: theme.palette.text.primary }} href={team.website}>
-                        {getUrl().replace('www.facebook.com/', '')}
-                      </a>
-                    </Typography>
-                  </Box>
-                )}
-
-                {team.website && !getUrl().startsWith(' facebook.com/') && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Public sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      {t('pages.team.website')}: <a href={team.website}>{getUrl()}</a>
-                    </Typography>
-                  </Box>
-                )}
-
-                {team.rookieYear && team.rookieYear !== 0 && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Flare sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      {t('pages.team.rookie_year')}: {team.rookieYear}
-                    </Typography>
-                  </Box>
-                )}
-
-                {wlt && false && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Flag sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      <b>
-                        {wlt.wins}-{wlt.losses}-{wlt.ties}
-                      </b>{' '}
-                      (W-L-T) {getSeasonString(selectedSeason)} season
-                    </Typography>
-                  </Box>
-                )}
-
-                {topOpr && topOpr.opr && topOpr.eventKey && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <FlashOn sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      <b>{topOpr.opr}</b>
-                      {' Top OPR ('}
-                      <a href={''} onClick={() => scrollToEvent(topOpr.eventKey)}>
-                        Jump
-                      </a>
-                      {')'}
-                    </Typography>
-                  </Box>
-                )}
-
-                {lastActive && lastActive.seasonKey !== CURRENT_SEASON && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Hotel sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      {t('pages.team.last_active')}: {getSeasonString(lastActive)}
-                    </Typography>
-                  </Box>
-                )}
-
-                {team.awards && selectedSeason && selectedSeason.description && (
-                  <Box sx={{ marginBottom: 1 }}>
-                    <Celebration sx={{ mr: 1, mb: '-7px' }} color={'primary'} />
-                    <Typography display={'inline'}>
-                      {t('pages.team.awards_in_season')
-                        .replace('{{ awards }}', team.awards.length)
-                        .replace('{{ season }}', selectedSeason.description)}
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
-            </CardContent>
-          </Card>
-
-          {/* Team Events/Robot */}
-          <Card id={'event-results'}>
-            {/* Nav Tabs */}
-            <Tabs
-              value={tab}
-              onChange={(e, val) => setTab(val)}
-              variant="fullWidth"
-              scrollButtons="auto"
-              className={'mb-2 mt-0'}
-            >
-              <Tab label={t('pages.team.event_results')} />
-              {(github || reveal || cad || notebook || images.length > 0) && (
-                <Tab label={t('pages.team.robot_profile.title')} />
-              )}
-            </Tabs>
-
-            <CardContent>
-              {/* Team Event Data*/}
-              {tab === 0 &&
-                team.events.map(event => (
-                  <Card
-                    id={event.eventKey.toLowerCase()}
-                    key={event.eventKey}
-                    sx={{ marginBottom: 3 }}
-                    style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}
+              {team.events.length > 0 && (
+                <List>
+                  <ListItem button onClick={() => scrollToEvent('info')} sx={{ fontWeight: 500 }}>
+                    {t('pages.team.team_info')}
+                  </ListItem>
+                  <ListItem
+                    button
+                    onClick={() => scrollToEvent('event-results')}
+                    sx={{ fontWeight: 500 }}
                   >
-                    <CardHeader
-                      title={
-                        <NextLink href={`/events/${event.eventKey}/rankings`} passHref>
-                          <Link fontSize="1.25rem">{event.fullEventName}</Link>
-                        </NextLink>
-                      }
-                      subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
-                      ${event.country} on ${readableDate(event.startDate)}`}
-                    />
-                    <CardContent sx={{ pt: 0 }}>
-                      {event.rankings[0] && (
-                        <Typography variant={'body2'} className={'mb-1 mt-1'}>
-                          <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
-                          <b>
-                            {event.rankings[0].wins}-{event.rankings[0].losses}-
-                            {event.rankings[0].ties}
-                          </b>
-                          {event.rankings[0] && (
-                            <a>
-                              {' '}
-                              and an OPR of <b>{event.rankings[0].opr}</b>
-                            </a>
-                          )}
-                        </Typography>
-                      )}
-                      {event.awards.map(award => (
-                        <Typography className={'mt-1 mb-1'} variant={'body2'} key={award.awardKey}>
-                          <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
-                          {award.award.awardDescription}
-                        </Typography>
+                    {t('pages.team.event_results')}
+                  </ListItem>
+                  <ListItem sx={{ pt: 0, pr: 0 }}>
+                    <List>
+                      {team.events.map(event => (
+                        <ListItem
+                          button
+                          key={event.eventKey}
+                          sx={{ fontSize: '0.875rem', px: 1.5 }}
+                          onClick={() => scrollToEvent(event.eventKey)}
+                        >
+                          {event.divisionName
+                            ? event.eventName + ' - ' + event.divisionName + ' Division'
+                            : event.eventName}
+                        </ListItem>
                       ))}
-                      {event.matches.length > 0 && (
-                        <MatchesTable
-                          event={event}
-                          forceSmall
-                          disableSingleTeamTeam
-                          disableSelection
-                          hideHeader
-                        />
-                      )}
-                      {event.matches.length < 1 && <Typography variant={'body1'} />}
-                    </CardContent>
-                  </Card>
-                ))}
-
-              {/* No Events this season */}
-              {tab === 0 && team.events.length < 1 &&
-                <Typography variant={'body1'} sx={{ mt: 1 }}>
-                  {team.lastActive && team.lastActive !== CURRENT_SEASON ?
-                    t("pages.team.not_registered") : t("pages.team.no_results")
-
-                  }
-                </Typography>
-              }
-
-              {/* Team 'Robot' Page */}
-              {tab === 1 && (
-                <Box>
-                  {(github || cad || notebook) && (
-                    <Typography variant={'h6'} className="mb-1">
-                      {team.teamNameShort} ❤️ Open Source
-                    </Typography>
-                  )}
-                  {github && (
-                    <Box className={'m-2'}>
-                      <Fab
-                        href={github.mediaLink}
-                        target={'_blank'}
-                        className={'text-white'}
-                        style={{ backgroundColor: `#24292e` }}
-                        variant={'extended'}
-                      >
-                        <GitHub className={'me-2'} />
-                        GitHub
-                      </Fab>
-                    </Box>
-                  )}
-                  {cad && (
-                    <Box className={'m-2'}>
-                      <Fab
-                        href={cad.mediaLink}
-                        target={'_blank'}
-                        className={'text-white'}
-                        style={{ backgroundColor: `#9c27b0` }}
-                        variant={'extended'}
-                      >
-                        <Create className={'me-2'} />
-                        CAD Design
-                      </Fab>
-                    </Box>
-                  )}
-                  {notebook && (
-                    <Box className={'m-2'}>
-                      <Fab
-                        href={notebook.mediaLink}
-                        target={'_blank'}
-                        className={'text-white'}
-                        style={{ backgroundColor: `#0097a7` }}
-                        variant={'extended'}
-                      >
-                        <Book className={'me-2'} />
-                        {t('pages.team.robot_profile.engineering_notebook')}
-                      </Fab>
-                    </Box>
-                  )}
-                  {reveal && (
-                    <Box className={'m-2'}>
-                      <Fab
-                        href={reveal.mediaLink}
-                        target={'_blank'}
-                        className={'text-white'}
-                        style={{ backgroundColor: `#b71c1c` }}
-                        variant={'extended'}
-                      >
-                        <YouTube className={'me-2'} />
-                        {t('pages.team.robot_profile.engineering_notebook')}
-                      </Fab>
-                    </Box>
-                  )}
-                  {(github || cad || notebook) && images.length > 0 && (
-                    <Divider className={'mb-3 mt-3'} />
-                  )}
-                  {images.length > 0 && (
-                    <Box className={'m-2'}>
-                      <Typography variant={'h6'}>{t('pages.team.robot_profile.photos')}</Typography>
-                      <ImageList variant={'masonry'}>
-                        {images.map(m => (
-                          <ImageListItem className={'w-100'} key={m.mediaKey}>
-                            <NextImage src={m.mediaLink} alt={'Team Media Image'} />
-                          </ImageListItem>
-                        ))}
-                      </ImageList>
-                    </Box>
-                  )}
-                </Box>
+                    </List>
+                  </ListItem>
+                </List>
               )}
-            </CardContent>
-          </Card>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
 
-      {/* myTOA */}
-      <MyTOAFavorite dataKey={team.teamKey} type={myTOAType.team} />
+        {/* myTOA */}
+        <MyTOAFavorite dataKey={team.teamKey} type={myTOAType.team} />
+      </Container>
     </>
   );
 };
@@ -497,7 +434,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
         description: `${team.city}, ${team.stateProv ? team.stateProv + ', ' : ''}${team.country}`
       });
     } catch (err) {
-      console.error("Failed to create opengraph image for team " + team.teamKey, err);
+      console.error('Failed to create opengraph image for team ' + team.teamKey, err);
     }
 
     return { props };
