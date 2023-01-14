@@ -20,7 +20,6 @@ const SeasonInsights1718 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['autoAverageGlyphs'],
             dataLabels: {
               autoAverageGlyphs: 'Avg Glyphs'
             },
@@ -33,7 +32,6 @@ const SeasonInsights1718 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['teleAverageGlyphs', 'teleAverageCiphers'],
             dataLabels: {
               teleAverageGlyphs: 'Avg Glyphs',
               teleAverageCiphers: 'Avg Ciphers'
@@ -47,7 +45,6 @@ const SeasonInsights1718 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endAverageRelic1', 'endAverageRelic2', 'endAverageRelic3'],
             dataLabels: {
               endAverageRelic1: 'Avg Relic 1',
               endAverageRelic2: 'Avg Relic 2',
@@ -62,7 +59,6 @@ const SeasonInsights1718 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endPercentRelicStanding'],
             dataLabels: {
               endPercentRelicStanding: 'Percent Standing'
             },
@@ -75,7 +71,6 @@ const SeasonInsights1718 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endAverageBalanced'],
             dataLabels: {
               endAverageBalanced: 'Avg Balanced'
             },

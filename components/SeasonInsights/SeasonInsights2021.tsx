@@ -20,11 +20,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: [
-              'autoAverageRingsScoredHigh',
-              'autoAverageRingsScoredMid',
-              'autoAverageRingsScoredLow'
-            ],
             title: 'Autonomous Rings',
             dataLabels: {
               autoAverageRingsScoredHigh: 'Avg High Rings',
@@ -39,7 +34,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['autoPercentNavigated'],
             title: 'Autonomous Navigation',
             dataLabels: {
               autoPercentNavigated: 'Percent Navigated'
@@ -52,7 +46,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['autoPercentWobblesDelivered'],
             title: 'Autonomous Wobbles Delivered',
             dataLabels: {
               autoPercentWobblesDelivered: 'Avg Wobbles Delivered'
@@ -65,11 +58,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: [
-              'teleAverageRingsScoredHigh',
-              'teleAverageRingsScoredMid',
-              'teleAverageRingsScoredLow'
-            ],
             title: 'Teleop Rings',
             dataLabels: {
               teleAverageRingsScoredHigh: 'Avg High Rings',
@@ -84,7 +72,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['autoAveragePowerShots', 'endAveragePowerShots'],
             title: 'Power Shots',
             dataLabels: {
               autoAveragePowerShots: 'Avg PowerShots Autonomous',
@@ -97,7 +84,6 @@ const SeasonInsights2021 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['endPercentWobblesOnStart', 'endPercentWobblesInDropZone'],
             title: 'End Game Wobble Location',
             dataLabels: {
               endPercentWobblesOnStart: 'Percent Wobbles On Start',

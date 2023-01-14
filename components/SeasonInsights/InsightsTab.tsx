@@ -26,7 +26,6 @@ const InsightsTab = (props: IProps) => {
             insights,
             labels,
             title: 'Match Scores',
-            keys: ['averageMatchScore', 'averageWinningScore'],
             dataLabels: {
               averageMatchScore: 'Avg Match Score',
               averageWinningScore: 'Avg Winning Score'
@@ -39,7 +38,6 @@ const InsightsTab = (props: IProps) => {
             insights,
             labels,
             title: 'Average Win Margin',
-            keys: ['averageWinningMargin'],
             dataLabels: {
               averageWinningMargin: 'Avg Win Margin'
             }
@@ -52,7 +50,6 @@ const InsightsTab = (props: IProps) => {
             insights,
             labels,
             title: 'Average Match Penalties',
-            keys: ['averageMajorPenalties', 'averageMinorPenalties'],
             dataLabels: {
               averageMajorPenalties: 'Avg Major Penalties',
               averageMinorPenalties: 'Avg Minor Penalties'

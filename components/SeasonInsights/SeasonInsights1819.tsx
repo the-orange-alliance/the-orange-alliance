@@ -20,7 +20,6 @@ const SeasonInsights1819 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['autoPercentLanding'],
             title: 'Autonomous Landing',
             dataLabels: {
               autoPercentLanding: 'Percent Landed'
@@ -33,7 +32,6 @@ const SeasonInsights1819 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['autoPercentSampling', 'autoPercentClaiming'],
             title: 'Autonomous Sampling/Claiming',
             dataLabels: {
               autoPercentSampling: 'Percent Sampled',
@@ -47,7 +45,6 @@ const SeasonInsights1819 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['autoPercentParking'],
             title: 'Autonomous Parking',
             dataLabels: {
               autoPercentParking: 'Percent Parked'
@@ -60,7 +57,6 @@ const SeasonInsights1819 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['teleAvgGolds', 'teleAvgSilvers', 'teleAvgDepotMinerals'],
             title: 'Teleop Gold, Silver, and Depot',
             dataLabels: {
               teleAvgGolds: 'Average Golds',
@@ -75,7 +71,6 @@ const SeasonInsights1819 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endPercentLatched', 'endPercentParked'],
             title: 'Endgame Parking',
             dataLabels: {
               endPercentLatched: 'Percent Latched',

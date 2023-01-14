@@ -2,44 +2,37 @@ import type Insight from '@the-orange-alliance/api/lib/cjs/models/Insights';
 import type { ChartData } from 'chart.js';
 import { useMemo } from 'react';
 
+export type PickByType<T, U> = {
+  [P in keyof T as T[P] extends U ? P : never]: T[P];
+};
+
 /**
  *
  * @param insight the array of insights
- * @param keys the keys to get the data from
- * @param labels the labels for each key
+ * @param labels the labels for each key. The key is the key of the insight, and the value is the label for the chart
  */
-function getChartDatasets<
-  P extends Insight,
-  // TODO: make T = Array<keyof P> where P is a number
-  T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
->(insights: P[], keys: T, labels: Record<T[number], string>) {
-  const data = keys.map(key => {
-    return {
-      data: insights.map(insight =>
-        // not sure why i have to "as number" it, but it shouldn't throw errors in runtime bc I made sure it's a number
-        typeof insight[key] === 'number' ? (insight[key] as unknown as number) : -1
-      ),
-      label: typeof labels[key] === 'string' ? (labels[key] as string) : String(key)
-    };
-  });
-  // console.log(data);
+function getChartDatasets<TInsight extends Insight>(
+  insights: TInsight[],
+  labels: Partial<Record<keyof PickByType<TInsight, number>, string | undefined>>
+) {
+  const data = objectKeys(labels).map(key => ({
+    // @ts-ignore
+    data: insights.map(insight => insight[key] as number),
+    label: labels[key] as string
+  }));
   return data;
 }
 
-function useChartData<
-  P extends Insight,
-  T extends Array<Exclude<keyof P, 'toJSON' | 'fromJSON' | `${string}Match`>>
->(
-  insights: P[],
-  keys: T,
-  labels: Record<T[number], string>,
+function useChartData<TInsight extends Insight>(
+  insights: TInsight[],
+  labels: Partial<Record<keyof PickByType<TInsight, number>, string>>,
   tension: number,
   additionalChartData?: Omit<ChartData<'line', number[], string>, 'datasets'>
 ) {
   return useMemo<ChartData<'line', number[], string>>(() => {
     const colors = ['#6200EE', '#03DAC6', '#F44336', '#29b6f6'];
     return {
-      datasets: getChartDatasets<P, T>(insights, keys, labels).map((dataset, index) => ({
+      datasets: getChartDatasets<TInsight>(insights, labels).map((dataset, index) => ({
         data: dataset.data,
         label: dataset.label,
         tension,
@@ -51,7 +44,11 @@ function useChartData<
       })),
       ...additionalChartData
     };
-  }, [insights, keys, labels, additionalChartData, tension]);
+  }, [insights, labels, additionalChartData, tension]);
+}
+
+function objectKeys<T extends Record<string, unknown>>(obj: T) {
+  return Object.keys(obj) as (keyof T)[];
 }
 
 export { getChartDatasets };

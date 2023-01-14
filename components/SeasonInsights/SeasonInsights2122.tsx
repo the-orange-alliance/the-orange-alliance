@@ -20,12 +20,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: [
-              'autoAverageFreight1',
-              'autoAverageFreight2',
-              'autoAverageFreight3',
-              'autoAverageStorageFreight'
-            ],
             dataLabels: {
               autoAverageFreight1: 'Avg Lvl 1 Freight',
               autoAverageFreight2: 'Avg Lvl 2 Freight',
@@ -41,12 +35,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: [
-              'autoAveragePartialWarehouse',
-              'autoAverageCompleteWarehouse',
-              'autoAveragePartialStorage',
-              'autoAverageCompleteStorage'
-            ],
             dataLabels: {
               autoAveragePartialWarehouse: 'Avg Partial Warehouse',
               autoAverageCompleteWarehouse: 'Avg Complete Warehouse',
@@ -62,7 +50,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['autoAverageBonus'],
             dataLabels: {
               autoAverageBonus: 'Percent Bonuses Received'
             },
@@ -75,12 +62,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: [
-              'teleAverageFreight1',
-              'teleAverageFreight2',
-              'teleAverageFreight3',
-              'teleAverageSharedFreight'
-            ],
             dataLabels: {
               teleAverageFreight1: 'Avg Lvl 1 Freight',
               teleAverageFreight2: 'Avg Lvl 2 Freight',
@@ -96,7 +77,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endAverageDelivered'],
             dataLabels: {
               endAverageDelivered: 'Avg Freight Delivered'
             },
@@ -109,7 +89,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endAverageHubBalanced', 'endAverageSharedHubUnbalanced'],
             dataLabels: {
               endAverageHubBalanced: 'Avg Alliance Balanced',
               endAverageSharedHubUnbalanced: 'Avg Shared Unbalanced'
@@ -123,7 +102,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['averageCapped'],
             dataLabels: {
               averageCapped: 'Percent Capped'
             },
@@ -136,7 +114,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['averageCarousel'],
             dataLabels: {
               averageCarousel: 'Percent Carousel'
             },
@@ -149,7 +126,6 @@ const SeasonInsights2122 = (props: IProps) => {
           {...{
             insights,
             labels,
-            keys: ['endParkedPartialWarehouse', 'endParkedCompleteWarehouse'],
             dataLabels: {
               endParkedPartialWarehouse: 'Percent Partial Warehouse',
               endParkedCompleteWarehouse: 'Percent Complete Warehouse'

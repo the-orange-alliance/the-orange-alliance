@@ -20,11 +20,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: [
-              'autoAverageSkystonesDelivered',
-              'autoAverageStonesDelivered',
-              'autoAveragePlaced'
-            ],
             dataLabels: {
               autoAverageSkystonesDelivered: 'Avg Skystones Delivered',
               autoAverageStonesDelivered: 'Avg Stones Delivered',
@@ -39,7 +34,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['autoPercentParked', 'autoPercentNaved'],
             dataLabels: {
               autoPercentParked: 'Percent Robots Parked',
               autoPercentNaved: 'Percent Robots Navigated'
@@ -53,7 +47,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['percentFoundationMoved', 'percentFoundationRepositioned'],
             dataLabels: {
               percentFoundationMoved: 'Percent Foundation Moved',
               percentFoundationRepositioned: 'Percent Foundation Repositioned'
@@ -67,7 +60,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['teleAverageReturned', 'teleAverageDelivered', 'teleAveragePlaced'],
             dataLabels: {
               teleAverageReturned: 'Avg Returned',
               teleAverageDelivered: 'Avg Delivered',
@@ -82,7 +74,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['endAverageCapLevel'],
             dataLabels: {
               endAverageCapLevel: 'Avg Cap Level'
             },
@@ -95,7 +86,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['endAverageTowerBonus', 'endAverageCapBonus', 'endAverageLevelBonus'],
             dataLabels: {
               endAverageTowerBonus: 'Avg Tower Bonus',
               endAverageCapBonus: 'Avg Cap Bonus',
@@ -110,7 +100,6 @@ const SeasonInsights1920 = (props: IProps) => {
           {...{
             labels,
             insights,
-            keys: ['endPercentParked'],
             dataLabels: {
               endPercentParked: 'Percent Parked'
             },
