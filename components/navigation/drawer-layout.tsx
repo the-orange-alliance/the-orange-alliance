@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Drawer, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, Drawer, SwipeableDrawer, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Navbar from './navbar';
 import DrawerContent from './drawer-content';
@@ -17,16 +17,19 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   // Close sidebar on route change
   useEffect(() => {
     if (mobileOpen) setMobileOpen(false);
-  }, [router.route]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [mobileOpen, router.route]);
 
-  const temporaryDrawer = useMemo(
-    () => smallScreen || ['/live'].includes(router.route),
-    [smallScreen, router.route]
-  );
+  // Close sidebar when not on small screen
+  useEffect(() => {
+    if (!smallScreen) setMobileOpen(false);
+  }, [smallScreen]);
+
+  const disablePermanent = useMemo(() => ['/live'].includes(router.route), [router.route]);
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
@@ -34,25 +37,52 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
     <Box sx={{ display: 'flex' }}>
       <Navbar
         title={title}
-        handleDrawerToggle={temporaryDrawer ? handleDrawerToggle : undefined}
+        handleDrawerToggle={disablePermanent || smallScreen ? handleDrawerToggle : undefined}
         isDrawerOpen={mobileOpen}
       />
 
       <Box sx={{ flexShrink: 0 }}>
-        <Drawer
-          variant={temporaryDrawer ? 'temporary' : 'permanent'}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          sx={{
-            width: DRAWER_WIDTH,
-            [`& .MuiDrawer-paper`]: {
-              width: DRAWER_WIDTH
-            }
-          }}
-        >
-          <Toolbar />
-          <DrawerContent />
-        </Drawer>
+        {disablePermanent || smallScreen ? (
+          <SwipeableDrawer
+            disableBackdropTransition={!iOS}
+            variant="temporary"
+            open={mobileOpen}
+            onOpen={() => setMobileOpen(true)}
+            onClose={() => setMobileOpen(false)}
+            ModalProps={{
+              keepMounted: true
+            }}
+            sx={{
+              width: DRAWER_WIDTH,
+              [`& .MuiDrawer-paper`]: {
+                width: DRAWER_WIDTH
+              }
+            }}
+          >
+            <Toolbar />
+            <DrawerContent />
+          </SwipeableDrawer>
+        ) : (
+          <Drawer
+            variant="permanent"
+            open
+            sx={{
+              width: DRAWER_WIDTH,
+              [`& .MuiDrawer-paper`]: {
+                width: DRAWER_WIDTH
+              },
+              [theme.breakpoints.up('xs')]: {
+                display: 'none'
+              },
+              [theme.breakpoints.up('md')]: {
+                display: 'block'
+              }
+            }}
+          >
+            <Toolbar />
+            <DrawerContent />
+          </Drawer>
+        )}
       </Box>
 
       <Box
