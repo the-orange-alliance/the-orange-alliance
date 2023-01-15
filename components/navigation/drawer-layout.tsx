@@ -22,7 +22,7 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
   // Close sidebar on route change
   useEffect(() => {
     if (mobileOpen) setMobileOpen(false);
-  }, [mobileOpen]);
+  }, [mobileOpen, router.route]);
 
   // Close sidebar when not on small screen
   useEffect(() => {
