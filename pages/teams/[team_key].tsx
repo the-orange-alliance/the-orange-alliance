@@ -89,10 +89,10 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
     if (!document) return;
     const element = document.getElementById(eventKey.toLowerCase());
     if (element) {
-      window.scroll({
+      window.scrollTo({
         behavior: 'smooth',
         left: 0,
-        top: element.getBoundingClientRect().top - 85
+        top: element.offsetTop - 85
       });
     }
   };
