@@ -114,6 +114,9 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
           user.notifyTeams.push(key);
         }
       }
+      // Update global state
+      setUser(new TOAUser().fromJSON({ ...user.toJSON() }));
+      // Update local state
       setIsNotificationsEnabled(!isNotificationsEnabled);
     });
   };

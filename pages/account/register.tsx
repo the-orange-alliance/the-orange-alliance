@@ -34,10 +34,6 @@ const LoginPage: NextPage = () => {
     }
   };
 
-  const postLoginSuccess = () => {
-    router.push({ pathname: '/account' });
-  };
-
   return (
     <>
       <SEO title="Sign up" url="/account/register" />

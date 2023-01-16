@@ -4,6 +4,7 @@ import { useTranslate } from '../../i18n/i18n';
 import { GitHub, Google } from '@mui/icons-material';
 import { useState } from 'react';
 import {
+  fetchUserData,
   loginWithEmailAndPassword,
   loginWithGithub,
   loginWithGoogle
@@ -11,12 +12,14 @@ import {
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import SEO from '../../components/seo';
+import { useAppContext } from '../../lib/toa-context';
 
 const LoginPage: NextPage = () => {
   const t = useTranslate();
   const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { setUser } = useAppContext();
 
   const loginEmail = () => {
     loginWithEmailAndPassword(email, password)
@@ -49,7 +52,24 @@ const LoginPage: NextPage = () => {
   };
 
   const postLoginSuccess = () => {
-    router.push({ pathname: '/account' });
+    // Get redirect URL from local storage
+    const redirect = localStorage.getItem('redirect');
+    let goTo = '/account';
+    // If we were on an event page or a team page, redirect back there
+    if (redirect && typeof redirect === 'string' && (redirect.startsWith('/events') || redirect.startsWith('/teams'))) goTo = redirect;
+    // Redirect
+    router.push({ pathname: goTo });
+    // Fetch the user data
+    fetchUserData().then((data) => {
+      setUser(data);
+    }).catch(() => {
+      toast.error(t('general.error_occurred'));
+      // If we were on any page, redirect back there
+      if (goTo === '/account' && redirect) router.push({ pathname: redirect });
+      else router.push({ pathname: '/' });
+    });
+    // Clear redirect URL from local storage
+    localStorage.removeItem('redirect');
   };
 
   const handleKeyPress = (event: React.KeyboardEvent) => {

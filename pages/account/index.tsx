@@ -1,214 +1,36 @@
-import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import NextLink from 'next/link';
 import {
   Box,
   Button,
-  Card,
-  Checkbox,
   CircularProgress,
   Container,
-  FormControlLabel,
   Grid,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Stack,
   Typography
 } from '@mui/material';
 import {
   logout,
-  linkProvider,
-  unlinkProvider,
-  sendPasswordReset,
-  changeDisplayName,
-  changeEmail,
-  cloudMessaging
 } from '../../providers/FirebaseProvider';
-import TOAUser from '../../lib/TOAUser';
-import TOAProvider from '../../providers/TOAProvider';
-import { Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
-import SimpleEventPaper from '../../components/SimpleEventPaper';
-import SimpleTeamPaper from '../../components/SimpleTeamPaper';
-import { GitHub, Google, Lock, LockClock } from '@mui/icons-material';
-import { readableDate, readableTime } from '../../lib/utils/common';
-import { toast } from 'react-hot-toast';
 import SEO from '../../components/seo';
 import { useAppContext } from '../../lib/toa-context';
+import AccountSettingsCard from '../../components/AccountWidgets/AccountSettingsCard';
+import APICard from '../../components/AccountWidgets/APICard';
+import NotificationsCard from '../../components/AccountWidgets/NotificationsCard';
+import FavoritesCard from '../../components/AccountWidgets/FavoritesCard';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
   const t = useTranslate();
 
-  const { user, setUser, regions } = useAppContext();
-  const [events, setEvents] = useState<Event[]>();
-  const [teams, setTeams] = useState<Team[]>();
-
-  const [notificationsConsent, setNotificationsConsent] = useState<
-    'granted' | 'denied' | 'unsupported' | null
-  >(null);
-
-  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (user) {
-      // Fetch teams
-      const teamPromises = user.favoriteTeams.map(t => TOAProvider.getAPI().getTeam(t));
-      Promise.allSettled(teamPromises).then(results =>
-        setTeams(
-          (results.filter(e => e.status === 'fulfilled') as PromiseFulfilledResult<Team>[]).map(
-            result => result.value
-          )
-        )
-      );
-
-      // Fetch events
-      const eventPromises = user.favoriteEvents.map(e => TOAProvider.getAPI().getEvent(e));
-      Promise.allSettled(eventPromises).then(results =>
-        setEvents(
-          (results.filter(e => e.status === 'fulfilled') as PromiseFulfilledResult<Event>[]).map(
-            result => result.value
-          )
-        )
-      );
-    }
-  }, [user]);
-
-  useEffect(() => {
-    cloudMessaging.isSupported().then(supported => {
-      if (!supported) {
-        setNotificationsConsent('unsupported');
-      } else if (Notification.permission === 'granted') {
-        cloudMessaging
-          .tokenInlocalforage()
-          .then(token => {
-            setNotificationsConsent('granted');
-            setNotificationsEnabled(!!token);
-          })
-          .catch(() => setNotificationsConsent('unsupported'));
-      } else {
-        setNotificationsConsent('denied');
-      }
-    });
-  }, []);
+  const { user, setUser } = useAppContext();
 
   const doLogoutUser = () => {
     logout().then(() => {
       setUser(null);
       router.push({ pathname: '/account/login' });
     });
-  };
-
-  const unlink = (provider: 'github' | 'google') => {
-    unlinkProvider(provider)
-      .then(() => {
-        const newUser = new TOAUser().fromJSON(user?.toJSON());
-        switch (provider) {
-          case 'github':
-            newUser.githubLinked = false;
-            break;
-          case 'google':
-            newUser.googleLinked = false;
-            break;
-        }
-        setUser(newUser);
-      })
-      .catch(() => {
-        toast.error('general.error_occurred');
-      });
-  };
-
-  const link = (provider: 'github' | 'google') => {
-    linkProvider(provider)
-      .then(() => {
-        const newUser = new TOAUser().fromJSON(user?.toJSON());
-        switch (provider) {
-          case 'github':
-            newUser.githubLinked = true;
-            break;
-          case 'google':
-            newUser.googleLinked = true;
-            break;
-        }
-        setUser(newUser);
-        toast.success(t('general.success').replace('{{ name }}', provider));
-      })
-      .catch(() => {
-        toast.error(t('general.error_occurred'));
-      });
-  };
-
-  const reset = () => {
-    sendPasswordReset()
-      .then(() => {
-        toast.success(t('pages.account.reset_password_email'));
-      })
-      .catch(() => {
-        toast.error(t('general.error_occurred'));
-      });
-  };
-
-  const changeName = () => {
-    const name = prompt('Please Enter a New Name:');
-    if (name == null) {
-      return toast.error(t('general.error_occurred'));
-    }
-
-    changeDisplayName(name);
-    const newUser = new TOAUser().fromJSON(user?.toJSON());
-    newUser.displayName = name;
-    setUser(newUser);
-    toast.success(t('account.updated_name'));
-  };
-
-  const changeEmailAddress = () => {
-    const email = prompt('Please Enter a New Email:');
-
-    if (email == null) {
-      toast.error(t('general.error_occurred'));
-      return;
-    }
-    const success = changeEmail(email);
-
-    if (success) {
-      const newUser = new TOAUser().fromJSON(user?.toJSON());
-      newUser.email = email;
-      setUser(newUser);
-      toast.success(t('account.updated_email'));
-    } else {
-      toast.error(t('account.fail_update_email'));
-    }
-  };
-
-  const handleToggleNotifications = () => {
-    if (notificationsEnabled) {
-      cloudMessaging
-        .disable()
-        .then(() => {
-          setNotificationsEnabled(false);
-          toast.success(t('pages.account.notifications_card.disabled'));
-        })
-        .catch(() => {
-          toast.error(t('general.error_occurred'));
-        });
-    } else {
-      cloudMessaging
-        .init()
-        .then(() => {
-          setNotificationsEnabled(true);
-          setNotificationsConsent('granted');
-          toast.success(t('pages.account.notifications_card.enabled'));
-        })
-        .catch(() => {
-          toast.error(
-            t('general.error_occurred') + '. ' + t('pages.account.notifications_card.help')
-          );
-        });
-    }
   };
 
   return (
@@ -266,194 +88,20 @@ const AccountPage: NextPage = () => {
             {/* Left Column */}
             <Grid item lg={7} md={12}>
               {/* Favorite Teams/Events */}
-              <Card sx={{ p: 3 }}>
-                <Grid container direction={'row'} spacing={2} style={{ width: '100%' }}>
-                  <Grid item xs={12} sm={6}>
-                    <Typography sx={{ ml: 1, mb: 1 }} variant="h6">
-                      {t('general.teams')}
-                    </Typography>
-                    {teams && teams.length === 0 && (
-                      <Typography sx={{ marginLeft: 2 }} variant={'subtitle2'}>
-                        {t('no_data.teams')}
-                      </Typography>
-                    )}
-                    {teams && teams.length > 0 && (
-                      <List disablePadding dense>
-                        {teams.map(t => (
-                          <ListItem key={t.teamKey} sx={{ padding: 0 }}>
-                            <SimpleTeamPaper team={t} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    )}
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Typography sx={{ ml: 1, mb: 1 }} variant="h6">
-                      {t('general.events')}
-                    </Typography>
-                    {teams && teams.length === 0 && (
-                      <Typography sx={{ marginLeft: 2 }} variant={'subtitle2'}>
-                        {t('no_data.teams')}
-                      </Typography>
-                    )}
-                    {events && events.length > 0 && (
-                      <List disablePadding dense>
-                        {events.map(e => (
-                          <ListItem key={e.eventKey} sx={{ padding: 0 }}>
-                            <SimpleEventPaper event={e} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    )}
-                  </Grid>
-                </Grid>
-              </Card>
+              <FavoritesCard />
             </Grid>
 
             {/* Right Column */}
             <Grid item lg={5} md={12}>
               {/* Notifications */}
-
-              {notificationsConsent && (
-                <SideCard
-                  title="pages.account.notifications_card.title"
-                  description="pages.account.notifications_card.summary"
-                >
-                  {notificationsConsent === 'unsupported' ? (
-                    <div>{t('pages.account.notifications_card.unsupported')}</div>
-                  ) : (
-                    <>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={notificationsEnabled}
-                            onChange={handleToggleNotifications}
-                            disabled={notificationsConsent !== 'granted'}
-                          />
-                        }
-                        label={t(
-                          notificationsEnabled
-                            ? 'pages.account.notifications_card.enabled'
-                            : 'pages.account.notifications_card.disabled'
-                        )}
-                      />
-
-                      {notificationsConsent !== 'granted' && (
-                        <Button variant="contained" fullWidth onClick={handleToggleNotifications}>
-                          {t('pages.account.notifications_card.grant_access')}
-                        </Button>
-                      )}
-                    </>
-                  )}
-                </SideCard>
-              )}
+              <NotificationsCard />
 
               {/* API Key */}
-              <SideCard
-                title="pages.account.api_card.title"
-                description="pages.account.api_card.description"
-              >
-                {/* API Key Generated */}
-                {user.apiKey ? (
-                  <>
-                    <Typography variant="subtitle2">
-                      {t('pages.account.api_card.your_key')}
-                    </Typography>
-                    <code className="api-key">{user.apiKey || 'Not found'}</code>
-                  </>
-                ) : (
-                  <Typography fontWeight={500}>
-                    {t('pages.account.api_card.generating_key')}
-                  </Typography>
-                )}
-
-                {/* API Docs */}
-                <Typography sx={{ marginTop: 2 }} variant={'subtitle1'}>
-                  Check out the{' '}
-                  <NextLink href="/apidocs" passHref>
-                    <Link>API Documentation</Link>
-                  </NextLink>{' '}
-                  for more information.
-                </Typography>
-              </SideCard>
+              <APICard />
 
               {/* Account Settings */}
-              <SideCard title="pages.account.account_settings">
-                <List>
-                  {/* Reset Password */}
-                  <ListItem button onClick={reset}>
-                    <ListItemIcon>
-                      <Lock />
-                    </ListItemIcon>
-                    <ListItemText>{t('pages.account.reset_password')}</ListItemText>
-                  </ListItem>
+              <AccountSettingsCard />
 
-                  {/* Un/link Google */}
-                  <ListItem
-                    button
-                    onClick={() => (user.googleLinked ? unlink('google') : link('google'))}
-                  >
-                    <ListItemIcon>
-                      <Google />
-                    </ListItemIcon>
-                    <ListItemText>
-                      {t(
-                        user.googleLinked
-                          ? 'pages.account.unlink_account'
-                          : 'pages.account.link_account'
-                      ).replace('{{ name }}', 'Google')}
-                    </ListItemText>
-                  </ListItem>
-
-                  {/* Un/link Github */}
-                  <ListItem
-                    button
-                    onClick={() => (user.githubLinked ? unlink('github') : link('github'))}
-                  >
-                    <ListItemIcon>
-                      <GitHub />
-                    </ListItemIcon>
-                    <ListItemText>
-                      {t(
-                        user.githubLinked
-                          ? 'pages.account.unlink_account'
-                          : 'pages.account.link_account'
-                      ).replace('{{ name }}', 'Github')}
-                    </ListItemText>
-                  </ListItem>
-
-                  {/* Change Name */}
-                  <ListItem button onClick={changeName}>
-                    <ListItemIcon>
-                      <Lock />
-                    </ListItemIcon>
-                    <ListItemText>{t('pages.account.change_name')}</ListItemText>
-                  </ListItem>
-
-                  {/* Change Email Address */}
-                  <ListItem button onClick={changeEmailAddress}>
-                    <ListItemIcon>
-                      <Lock />
-                    </ListItemIcon>
-                    <ListItemText>{t('pages.account.change_email_address')}</ListItemText>
-                  </ListItem>
-
-                  {/* Login Info */}
-                  <ListItem>
-                    <ListItemIcon>
-                      <LockClock />
-                    </ListItemIcon>
-                    <ListItemText
-                      secondary={t('pages.account.last_signin')}
-                      primary={
-                        readableDate(user.metadata.lastSignInTime) +
-                        ' ' +
-                        readableTime(user.metadata.lastSignInTime)
-                      }
-                    />
-                  </ListItem>
-                </List>
-              </SideCard>
             </Grid>
           </Grid>
         </Container>
@@ -475,41 +123,8 @@ const AccountPage: NextPage = () => {
           display: inline-block;
           pointer-events: none;
         }
-        .api-key {
-          display: inline-block;
-          color: #2563eb;
-          background: #eff6ff;
-          line-height: 1.2;
-          overflow-wrap: anywhere;
-          padding: 0.25rem 0.5rem;
-          border-radius: 0.5rem;
-        }
       `}</style>
     </>
-  );
-};
-
-interface SideCardProps {
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-}
-
-const SideCard = ({ children, title, description }: SideCardProps) => {
-  const t = useTranslate();
-
-  return (
-    <Card sx={{ p: 3, mb: 2 }}>
-      <Typography fontSize="1.25rem" fontWeight={500} mb={description ? 0 : 2}>
-        {t(title)}
-      </Typography>
-      {description && (
-        <Typography fontSize="1rem" color="gray" mb={2}>
-          {t(description)}
-        </Typography>
-      )}
-      {children}
-    </Card>
   );
 };
 

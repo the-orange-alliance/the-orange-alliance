@@ -19,6 +19,11 @@ const AccountItem = () => {
   const t = useTranslate();
   const router = useRouter();
 
+  const doLogin = () => {
+    localStorage.setItem('redirect', router.asPath);
+    router.push({ pathname: '/account/login' });
+  }
+
   return (
     <>
       {!isAuthLoaded ? (
@@ -58,7 +63,7 @@ const AccountItem = () => {
                 <Grid item>
                   <Button
                     size={'small'}
-                    onClick={() => router.push({ pathname: '/account/login' })}
+                    onClick={doLogin}
                   >
                     {t('drawer.mytoa.login')}
                   </Button>

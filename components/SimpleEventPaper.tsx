@@ -5,6 +5,9 @@ import { Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { readableDate } from '../lib/utils/common';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/system';
+import { useAppContext } from '../lib/toa-context';
+import { useEffect, useState } from 'react';
+import { NotificationsActive } from '@mui/icons-material';
 
 interface IProps {
   event: Event;
@@ -13,6 +16,12 @@ interface IProps {
 const SimpleEventPaper = (props: IProps) => {
   const { event } = props;
   const router = useRouter();
+  const { user } = useAppContext();
+  const [notify, setNotify] = useState<boolean>(user?.notifyEvents.includes(event.eventKey) ?? false);
+
+  useEffect(() => {
+    if (user) setNotify(user.notifyEvents.includes(event.eventKey) ?? false);
+  }, [user]);
 
   const secondaryTxt =
     event.startDate === event.endDate
@@ -44,7 +53,9 @@ const SimpleEventPaper = (props: IProps) => {
           }}
         ></Box>
       )}
-      <ListItemText primary={event.fullEventName} secondary={secondaryTxt} />
+      <ListItemText 
+      primary={notify ? (<>{event.fullEventName}<NotificationsActive sx={{ fontSize: 14, ml: 1, mb: "-2px" }} /></>) : event.fullEventName} 
+      secondary={secondaryTxt} />
     </ListItem>
   );
 };

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Divider } from '@mui/material';
-import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
 import HomeIcon from '@mui/icons-material/HomeRounded';
 import EventsIcon from '@mui/icons-material/EventRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
@@ -14,7 +12,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LegalIcon from '@mui/icons-material/DescriptionRounded';
 import { useTranslate } from '../../i18n/i18n';
 import DrawerItem from './drawer-item';
-import TOAUser from '../../lib/TOAUser';
 import AccountItem from './account-item';
 
 const DrawerContent = () => {
