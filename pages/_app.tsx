@@ -23,7 +23,10 @@ function MyApp({
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
-  const value = useMemo(() => ({ ...globals, isAuthLoaded, user, setUser }), [user, setUser]);
+  const value = useMemo(
+    () => ({ ...globals, isAuthLoaded, user, setUser }),
+    [user, setUser, isAuthLoaded]
+  );
   let currUid: string = '';
 
   useEffect(() => {
@@ -48,6 +51,8 @@ function MyApp({
       } else if (user && !newUser) {
         // prevent repetative null sets
         setUser(null);
+        setIsAuthLoaded(true);
+      } else {
         setIsAuthLoaded(true);
       }
     });
