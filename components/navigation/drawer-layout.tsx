@@ -21,8 +21,10 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
 
   // Close sidebar on route change
   useEffect(() => {
-    if (mobileOpen) setMobileOpen(false);
-  }, [mobileOpen, router.route]);
+    const handleRouteChange = () => setMobileOpen(false);
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => router.events.off('routeChangeComplete', handleRouteChange);
+  }, [router.events]);
 
   // Close sidebar when not on small screen
   useEffect(() => {
