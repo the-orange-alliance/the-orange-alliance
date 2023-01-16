@@ -45,8 +45,6 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [isNotificationsEnabled, setIsNotificationsEnabled] = useState<boolean>(false);
   const [isNotificationsSupported, setIsNotificationsSupported] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const theme = useTheme();
 
   // Update things when user updates
   useEffect(() => {
@@ -65,9 +63,6 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
     //  Check if user is logged in
     if (!user) return;
 
-    // Set Loading
-    setLoading(true);
-
     // Add or remove from firebase
     const promise = isFavorite ? removeFromFavorite(key, type) : addToFavorite(key, type);
 
@@ -77,7 +72,9 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
       if (type === myTOAType.event && isFavorite) {
         // Remove event from favorites
         const favEvents = user.favoriteEvents.filter(eventKey => eventKey !== key);
-        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_events: favEvents }));
+        // Remove event from notifications (backend does this in the DB)
+        const notiEvents = user.notifyEvents.filter(eventKey => eventKey !== key);
+        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_events: favEvents, notify_events: notiEvents }));
       } else if (type === myTOAType.event && !isFavorite) {
         // Add event to favorites
         if (!user.favoriteEvents.includes(key)) user.favoriteEvents.push(key);
@@ -85,7 +82,9 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
       } else if (type === myTOAType.team && isFavorite) {
         // Remove team from favorites
         const favTeams = user.favoriteTeams.filter(eventKey => eventKey !== key);
-        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_teams: favTeams }));
+        // Remove team from notifications (backend does this in the DB)
+        const notiTeams = user.notifyTeams.filter(eventKey => eventKey !== key);
+        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_teams: favTeams, notify_teams: notiTeams }));
       } else if (type === myTOAType.team && !isFavorite) {
         // Add team to favorites
         if (!user.favoriteTeams.includes(key)) user.favoriteTeams.push(key);
@@ -93,14 +92,12 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
       }
 
       // Update state
-      setLoading(false);
       setIsFavorite(!isFavorite);
     });
   };
 
   const handleNotificationToggle = () => {
     if (!user) return;
-    setLoading(true);
 
     // Add or remove from firebase, then update our local user model
     setNotifications(type, key, !isNotificationsEnabled).then(() => {
@@ -117,7 +114,6 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
           user.notifyTeams.push(key);
         }
       }
-      setLoading(false);
       setIsNotificationsEnabled(!isNotificationsEnabled);
     });
   };
@@ -145,17 +141,19 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         right: 24
       }}
     >
-      <SpeedDialAction
-        onClick={handleNotificationToggle}
-        icon={isNotificationsEnabled ? <NotificationsActive /> : <NotificationsOff />}
-        tooltipTitle={t(
-          isNotificationsEnabled ? 'general.disable_notifications' : 'general.enable_notifications'
-        )}
-        sx={{
-          border: '1px solid',
-          borderColor: 'divider'
-        }}
-      />
+      {isFavorite && isNotificationsSupported && (
+        <SpeedDialAction
+          onClick={handleNotificationToggle}
+          icon={isNotificationsEnabled ? <NotificationsActive /> : <NotificationsOff />}
+          tooltipTitle={t(
+            isNotificationsEnabled ? 'general.disable_notifications' : 'general.enable_notifications'
+          )}
+          sx={{
+            border: '1px solid',
+            borderColor: 'divider'
+          }}
+        />
+      )}
     </SpeedDial>
   );
 };
