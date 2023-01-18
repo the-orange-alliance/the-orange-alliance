@@ -13,6 +13,7 @@ import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import PowerPlayInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2223/PowerPlayInsights';
 import { insightsGraphColors as colors } from '../../constants';
+import { useTranslate } from '../../i18n/i18n';
 
 interface IProps {
   insights: { [key: string]: Insights };
@@ -20,6 +21,8 @@ interface IProps {
 
 const SeasonInsights2122 = (props: IProps) => {
   const { insights } = props;
+
+  const t = useTranslate();
 
   const autoSignalSleeves = [];
   const autoParked = [];
@@ -87,7 +90,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Auto Signal Sleeves */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Signal Sleeves
+            {t('pages.event.subpages.insights.2223.title_signal_sleeves')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -104,9 +107,9 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Signal Sleeves Used" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.percent_signal_sleeves')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -114,7 +117,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Auto Parking */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Autonomous Parking
+            {t('pages.event.subpages.insights.2223.title_auto_parking')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -131,10 +134,10 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent in Terminal/Substation" />
-              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Percent in Signal Zone" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.percent_terminal_substation')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y2" stroke={colors[1]} name={t('pages.event.subpages.insights.2223.percent_signal_zone')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -142,7 +145,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Auto Cones */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Autonomous Cones Scored Junctions/Terminals
+            {t('pages.event.subpages.insights.2223.title_auto_cones')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -159,13 +162,13 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Junctions" />
-              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Junctions" />
-              <Line type="monotone" dataKey="y3" stroke={colors[2]} name="Avg Low Junctions" />
-              <Line type="monotone" dataKey="y4" stroke={colors[3]} name="Avg Ground Junctions" />
-              <Line type="monotone" dataKey="y5" stroke={colors[4]} name="Avg in Terminal" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.avg_high_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y2" stroke={colors[1]} name={t('pages.event.subpages.insights.2223.avg_mid_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y3" stroke={colors[2]} name={t('pages.event.subpages.insights.2223.avg_low_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y4" stroke={colors[3]} name={t('pages.event.subpages.insights.2223.avg_ground_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y5" stroke={colors[4]} name={t('pages.event.subpages.insights.2223.avg_terminal_general')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -173,7 +176,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Tele Cones */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Driver-Controlled Cones Scored on Junctions
+            {t('pages.event.subpages.insights.2223.title_tele_cones')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -190,12 +193,12 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Junctions" />
-              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Junctions" />
-              <Line type="monotone" dataKey="y3" stroke={colors[2]} name="Avg Low Junctions" />
-              <Line type="monotone" dataKey="y4" stroke={colors[3]} name="Avg Ground Junctions" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.avg_high_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y2" stroke={colors[1]} name={t('pages.event.subpages.insights.2223.avg_mid_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y3" stroke={colors[2]} name={t('pages.event.subpages.insights.2223.avg_low_junction')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y4" stroke={colors[3]} name={t('pages.event.subpages.insights.2223.avg_ground_junction')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -203,7 +206,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Tele Terminals */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Driver-Controled Cones Scored in Terminals
+            {t('pages.event.subpages.insights.2223.title_tele_terminals')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -220,10 +223,10 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Terminal Far" />
-              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Terminal Near" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.avg_terminal_far')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y2" stroke={colors[1]} name={t('pages.event.subpages.insights.2223.avg_terminal_near')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -231,7 +234,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* End Navigation */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            End Game Navigated
+            {t('pages.event.subpages.insights.2223.title_end_nav')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -248,9 +251,9 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Navigated" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.percent_navigated')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -258,7 +261,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* End Beacons/Owned */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            End Game Beacons/Owned Junctions
+            {t('pages.event.subpages.insights.2223.title_end_beacons_owned')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -275,10 +278,10 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Beacons Used" />
-              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Owned Junctions" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.percent_beacons_used')} />
+              <Line type="monotone" isAnimationActive={false} dataKey="y2" stroke={colors[1]} name={t('pages.event.subpages.insights.2223.avg_owned_junctions')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -286,7 +289,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* End Circuits */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            End Game Circuits
+            {t('pages.event.subpages.insights.2223.title_end_circuits')}
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -303,9 +306,9 @@ const SeasonInsights2122 = (props: IProps) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
-              <Tooltip />
+              <Tooltip isAnimationActive={false} />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Circuits Acheived" />
+              <Line type="monotone" isAnimationActive={false} dataKey="y1" stroke={colors[0]} name={t('pages.event.subpages.insights.2223.percent_circuits')} />
             </LineChart>
           </ResponsiveContainer>
         </Grid>

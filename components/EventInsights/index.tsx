@@ -3,8 +3,10 @@ import FreightFrenzyInsights from './FreightFrenzyInsights';
 import UltimateGoalInsights from './UltimateGoalInsights';
 import SkystoneInsights from './SkystoneInsights';
 import RoverRuckusInsights from './RoverRuckusInsights';
+import PowerPlayInsights from './PowerPlayInsights';
 
 const seasons: { [key: string]: (insights: any) => any } = {
+  '2223': PowerPlayInsights,
   '2122': FreightFrenzyInsights,
   '2021': UltimateGoalInsights,
   '1920': SkystoneInsights,

@@ -4,7 +4,6 @@
     "englishName": "English",
     "direction": "ltr"
   },
-
   "general": {
     "team": "Team",
     "teams": "Teams",
@@ -28,7 +27,6 @@
     "enable_notifications": "Enable Notifications",
     "disable_notifications": "Disable Notifications"
   },
-
   "drawer": {
     "home": "Home",
     "teams": "Teams",
@@ -54,7 +52,6 @@
       "login": "Login"
     }
   },
-
   "pages": {
     "add_data": {
       "title": "Add Data",
@@ -65,21 +62,17 @@
       "add_event_stream": "Add event stream",
       "stream_your_event": "Stream your event on TOA Twitch channel"
     },
-
     "404": {
       "title": "Page Not found",
       "short_info": "Looks like you've followed a broken link or entered a team/event/match that doesn't exist."
     },
-
     "500": {
       "title": "Internal Server Error",
       "short_info": "Something within TOA is very sad. Please try again later. If the issue persists, please reach out on our Discord."
     },
-
     "about": {
       "title": "About Us"
     },
-
     "account": {
       "logout": "Logout",
       "level": "Level {{ level }}",
@@ -195,7 +188,6 @@
         }
       }
     },
-
     "home": {
       "title": "Home",
       "short_info": "The Orange Alliance is the <b>official</b> match, event, and team data provider for <em>FIRST</em> Tech Challenge.",
@@ -212,7 +204,6 @@
         "penalty_free": "Penalty Free"
       }
     },
-
     "event": {
       "event_info": "Event Information",
       "game_info": "Game Information",
@@ -284,30 +275,54 @@
           "avg_golds": "Average # of Golds Minerals in Cargo Hold",
           "avg_silvers": "Average # of Silvers Minerals in Cargo Hold",
           "avg_depot": "Average # of Minerals in Depot",
+          "2223": {
+            "percent_signal_sleeves": "% Signal Sleeves Used",
+            "percent_terminal_substation": "% in Terminal/Substation",
+            "percent_signal_zone": "% in Signal Zone",
+            "avg_high_junction": "Average Cones High Junctions",
+            "avg_mid_junction": "Average Cones Mid Junctions",
+            "avg_low_junction": "Average Cones Low Junctions",
+            "avg_ground_junction": "Average Cones Ground Junctions",
+            "avg_terminal_general": "Average Cones in Terminal",
+            "avg_terminal_near": "Average Cones in Terminal",
+            "avg_terminal_far": "Average Cones in Terminal",
+            "percent_navigated": "% Navigated",
+            "percent_beacons_used": "% Beacons Used",
+            "avg_owned_junctions": "Average Owned Junctions",
+            "percent_circuits": "% Circuits Achieved",
+            "title_signal_sleeves": "Autonomous Parking",
+            "title_auto_parking": "Autonomous Parking",
+            "title_auto_cones": "Autonomous Cones Scored Junctions/Terminals",
+            "title_tele_cones": "Driver-Controlled Cones Scored on Junctions",
+            "title_tele_terminals": "Driver-Controled Cones Scored in Terminals",
+            "title_end_nav": "End Game Navigated",
+            "title_end_beacons_owned": "End Game Beacons/Owned Junctions",
+            "title_end_circuits": "End Game Circuits"
+          },
           "2122": {
-            "partially_in_storage": "Percent Partially In Storage",
-            "completely_in_storage": "Percent Completely In Storage",
-            "partially_in_warehouse": "Percent Partially In Warehouse",
-            "completely_in_warehouse": "Percent Completely In Warehouse",
+            "partially_in_storage": "% Partially In Storage",
+            "completely_in_storage": "% Completely In Storage",
+            "partially_in_warehouse": "% Partially In Warehouse",
+            "completely_in_warehouse": "% Completely In Warehouse",
             "avg_lvl_1_freight": "Average Level 1 Freight",
             "avg_lvl_2_freight": "Average Level 2 Freight",
             "avg_lvl_3_freight": "Average Level 3 Freight",
             "avg_storage_freight": "Average Storage Freight",
-            "percent_bonuses_earned": "Percent Bonuses Earned",
-            "alliance_hubs_balanced": "Percent Alliance Hubs Balanced",
-            "shared_hubs_unbalanced": "Percent Shared Hubs Unbalanced",
-            "capped": "Percent Capped",
-            "carousels": "Percent Carousels"
+            "percent_bonuses_earned": "% Bonuses Earned",
+            "alliance_hubs_balanced": "% Alliance Hubs Balanced",
+            "shared_hubs_unbalanced": "% Shared Hubs Unbalanced",
+            "capped": "% Capped",
+            "carousels": "% Carousels"
           },
           "2021": {
             "avg_high_rings": "Average High Rings",
             "avg_middle_rings": "Average Middle Rings",
             "avg_low_rings": "Average Low Rings",
             "avg_powershots_hit": "Average Powershots Hit",
-            "wobble_goals_delivered": "Percent Wobble Goals Delivered",
+            "wobble_goals_delivered": "% Wobble Goals Delivered",
             "parked_on_line": "Percent Robots Parked On Line (Navigated)",
             "avg_wobble_goal_rings": "Average Rings On Wobble Goals",
-            "wobble_goal_start": "Percent Wobble Goals on Start Line",
+            "wobble_goal_start": "% Wobble Goals on Start Line",
             "wobble_goal_drop_zone": "Percent Wobble Goals in Drop Zone"
           },
           "1920": {
@@ -315,13 +330,13 @@
             "avg_stone_delivered": "Average Stones Delivered",
             "avg_parked": "Average Parked",
             "avg_placed": "Average Placed",
-            "foundations_repositioned": "Percent Foundations Repositioned",
+            "foundations_repositioned": "% Foundations Repositioned",
             "returned": "Average Returned",
             "placed": "Average Placed",
             "delivered": "Average Delivered",
             "cap_level": "Average Cap Level",
             "parked": "Percent Parked",
-            "foundation_moved": "Percent Foundation Moved",
+            "foundation_moved": "% Foundation Moved",
             "tower_bonus": "Average Tower Bonus",
             "cap_bonus": "Average Cap Bonus",
             "level_bonus": "Average Level Bonus"
@@ -419,14 +434,12 @@
         }
       }
     },
-
     "events": {
       "filter_season": "Season",
       "filter_region": "Region",
       "filter": "Filter Options",
       "clear_filter": "Clear Filter"
     },
-
     "match": {
       "match_info": "Match Information",
       "match_key": "Match Key",
@@ -434,7 +447,6 @@
       "no_video": "No video available",
       "add_one": "Add one"
     },
-
     "streams": {
       "event_results": "Event Results",
       "close_stream": "Close Stream",
@@ -458,7 +470,6 @@
         "3_3_view": "3x3 View"
       }
     },
-
     "team": {
       "team_info": "Team Information",
       "event_results": "Event Results",
@@ -477,14 +488,12 @@
         "photos": "Photos"
       }
     },
-
     "teams": {
       "title": "Teams",
       "filter": "Filter by number, name, or location",
       "results": "{{ results }} Results"
     }
   },
-
   "match_table": {
     "teams": "Teams",
     "score": "Score",
@@ -511,7 +520,6 @@
       "surrogate": "<b>*</b> is Surrogate"
     }
   },
-
   "no_data": {
     "teams": "No teams found",
     "teams_long": "There are no teams that match that query",
