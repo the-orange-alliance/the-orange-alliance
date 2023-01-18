@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import { insightsGraphColors as colors } from '../../constants';
 
 interface IProps {
   insights: { [key: string]: Insights };
@@ -83,7 +84,7 @@ const SeasonInsights1819 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Landed" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Landed" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -110,8 +111,8 @@ const SeasonInsights1819 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Sampled" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent Claimed" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Sampled" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Percent Claimed" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -138,7 +139,7 @@ const SeasonInsights1819 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Parked" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Parked" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -165,8 +166,8 @@ const SeasonInsights1819 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Gold" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Silver" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Gold" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Silver" />
               <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Depot Minerals" />
             </LineChart>
           </ResponsiveContainer>
@@ -194,8 +195,8 @@ const SeasonInsights1819 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Latched" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent Parked" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Latched" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Percent Parked" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>

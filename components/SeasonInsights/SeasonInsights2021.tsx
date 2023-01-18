@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import { insightsGraphColors as colors } from '../../constants';
 
 interface IProps {
   insights: { [key: string]: Insights };
@@ -90,8 +91,8 @@ const SeasonInsights2021 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg High Rings" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Mid Rings" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Rings" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Rings" />
               <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Low Rings" />
             </LineChart>
           </ResponsiveContainer>
@@ -119,7 +120,7 @@ const SeasonInsights2021 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Navigated" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Navigated" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -146,7 +147,7 @@ const SeasonInsights2021 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Wobbles Delivered" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Wobbles Delivered" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -173,8 +174,8 @@ const SeasonInsights2021 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg High Rings" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Mid Rings" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Rings" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Rings" />
               <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Low Rings" />
             </LineChart>
           </ResponsiveContainer>
@@ -205,16 +206,16 @@ const SeasonInsights2021 = (props: IProps) => {
               <Line
                 type="monotone"
                 dataKey="y1"
-                stroke="#6200EE"
+                stroke={colors[0]}
                 name="Avg PowerShots Autonomous"
               />
               <Line
                 type="monotone"
                 dataKey="y2"
-                stroke="#03DAC6"
+                stroke={colors[1]}
                 name="Avg PowerShots Autonomous"
               />
-              <Line type="monotone" dataKey="y1" stroke="#03DAC6" name="Avg PowerShots End" />
+              <Line type="monotone" dataKey="y1" stroke={colors[1]} name="Avg PowerShots End" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -241,11 +242,11 @@ const SeasonInsights2021 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Wobbles on Start" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Wobbles on Start" />
               <Line
                 type="monotone"
                 dataKey="y1"
-                stroke="#03DAC6"
+                stroke={colors[1]}
                 name="Percent Wobbles in Drop Zone"
               />
             </LineChart>

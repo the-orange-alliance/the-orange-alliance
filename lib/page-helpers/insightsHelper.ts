@@ -94,7 +94,6 @@ const getInsightsData = async (
 
     for (const key in data[0]) {
       data[0][key].highScoreMatch = null;
-      console.log(key)
       elimsMultiTeam[key] = undefinedToNull(data[0][key].toJSON());
     }
 

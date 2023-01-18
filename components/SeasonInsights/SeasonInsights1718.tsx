@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
+import { insightsGraphColors as colors } from '../../constants';
 
 interface IProps {
   insights: { [key: string]: Insights };
@@ -82,7 +83,7 @@ const SeasonInsights1718 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Glyphs" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Glyphs" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -109,8 +110,8 @@ const SeasonInsights1718 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Glyphs" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Ciphers" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Glyphs" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Ciphers" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -137,8 +138,8 @@ const SeasonInsights1718 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Relic 1" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Avg Relic 2" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Relic 1" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Relic 2" />
               <Line type="monotone" dataKey="y3" stroke="#F44336" name="Avg Relic 3" />
             </LineChart>
           </ResponsiveContainer>
@@ -166,7 +167,7 @@ const SeasonInsights1718 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Standing" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Standing" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -193,7 +194,7 @@ const SeasonInsights1718 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Balanced" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Balanced" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>

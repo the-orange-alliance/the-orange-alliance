@@ -17,6 +17,8 @@ import SeasonInsights2021 from './SeasonInsights2021';
 import SeasonInsights1920 from './SeasonInsights1920';
 import SeasonInsights1819 from './SeasonInsights1819';
 import SeasonInsights1718 from './SeasonInsights1718';
+import { insightsGraphColors as colors } from '../../constants';
+
 interface IProps {
   insights: { [key: string]: Insights };
   seasonKey: string;
@@ -76,14 +78,14 @@ const InsightsTab = (props: IProps) => {
               <Line
                 type="monotone"
                 dataKey="y1"
-                stroke="#6200EE"
+                stroke={colors[0]}
                 name="Avg Match Score"
                 isAnimationActive={false}
               />
               <Line
                 type="monotone"
                 dataKey="y2"
-                stroke="#03DAC6"
+                stroke={colors[1]}
                 name="Avg Winning Score"
                 isAnimationActive={false}
               />
@@ -116,7 +118,7 @@ const InsightsTab = (props: IProps) => {
               <Line
                 type="monotone"
                 dataKey="y1"
-                stroke="#6200EE"
+                stroke={colors[0]}
                 name="Avg Win Margin"
                 isAnimationActive={false}
               />
@@ -149,14 +151,14 @@ const InsightsTab = (props: IProps) => {
               <Line
                 type="monotone"
                 dataKey="y1"
-                stroke="#6200EE"
+                stroke={colors[0]}
                 name="Avg Major Penalties"
                 isAnimationActive={false}
               />
               <Line
                 type="monotone"
                 dataKey="y2"
-                stroke="#6200EE"
+                stroke={colors[0]}
                 name="Avg Minor Penalties"
                 isAnimationActive={false}
               />

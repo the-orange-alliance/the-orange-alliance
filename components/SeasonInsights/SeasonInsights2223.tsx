@@ -12,6 +12,7 @@ import {
 import { getWeekShort } from '../../lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import PowerPlayInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2223/PowerPlayInsights';
+import { insightsGraphColors as colors } from '../../constants';
 
 interface IProps {
   insights: { [key: string]: Insights };
@@ -105,7 +106,7 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Signal Sleeves Used" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Signal Sleeves Used" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -132,8 +133,8 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent in Terminal/Substation" />
-              <Line type="monotone" dataKey="y2" stroke="#03DAC6" name="Percent in Signal Zone" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent in Terminal/Substation" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Percent in Signal Zone" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -141,7 +142,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Auto Cones */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Autonomous Junctions/Terminals
+            Autonomous Cones Scored Junctions/Terminals
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -160,11 +161,11 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg High Junctions" />
-              <Line type="monotone" dataKey="y2" stroke="#6200EE" name="Avg Mid Junctions" />
-              <Line type="monotone" dataKey="y3" stroke="#6200EE" name="Avg Low Junctions" />
-              <Line type="monotone" dataKey="y4" stroke="#6200EE" name="Avg Ground Junctions" />
-              <Line type="monotone" dataKey="y5" stroke="#6200EE" name="Avg in Terminal" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Junctions" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Junctions" />
+              <Line type="monotone" dataKey="y3" stroke={colors[2]} name="Avg Low Junctions" />
+              <Line type="monotone" dataKey="y4" stroke={colors[3]} name="Avg Ground Junctions" />
+              <Line type="monotone" dataKey="y5" stroke={colors[4]} name="Avg in Terminal" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -172,7 +173,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Tele Cones */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Driver-Controlled Junctions
+            Driver-Controlled Cones Scored on Junctions
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -191,10 +192,10 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg High Junctions" />
-              <Line type="monotone" dataKey="y2" stroke="#6200EE" name="Avg Mid Junctions" />
-              <Line type="monotone" dataKey="y3" stroke="#6200EE" name="Avg Low Junctions" />
-              <Line type="monotone" dataKey="y4" stroke="#6200EE" name="Avg Ground Junctions" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg High Junctions" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Mid Junctions" />
+              <Line type="monotone" dataKey="y3" stroke={colors[2]} name="Avg Low Junctions" />
+              <Line type="monotone" dataKey="y4" stroke={colors[3]} name="Avg Ground Junctions" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -202,7 +203,7 @@ const SeasonInsights2122 = (props: IProps) => {
         {/* Tele Terminals */}
         <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
           <Typography variant={'h6'} align={'center'}>
-            Terminals
+            Driver-Controled Cones Scored in Terminals
           </Typography>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -221,8 +222,8 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Terminal Far" />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Terminal Near" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Avg Terminal Far" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Terminal Near" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -249,7 +250,7 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Navigated" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Navigated" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -276,8 +277,8 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Beacons Used" />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Avg Owned Junctions" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Beacons Used" />
+              <Line type="monotone" dataKey="y2" stroke={colors[1]} name="Avg Owned Junctions" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>
@@ -304,7 +305,7 @@ const SeasonInsights2122 = (props: IProps) => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="y1" stroke="#6200EE" name="Percent Circuits Acheived" />
+              <Line type="monotone" dataKey="y1" stroke={colors[0]} name="Percent Circuits Acheived" />
             </LineChart>
           </ResponsiveContainer>
         </Grid>

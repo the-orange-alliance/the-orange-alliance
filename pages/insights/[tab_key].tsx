@@ -101,7 +101,7 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
           ]}
         </Tabs>
 
-        <Box sx={{ marginTop: 2 }}>
+        <Box sx={{ marginTop: 2, pb: 6 }}>
           {currentTab === 0 && <InsightsTab insights={qualsMultiTeam} seasonKey={seasonKey} />}
           {currentTab === 1 && <InsightsTab insights={elimsMultiTeam} seasonKey={seasonKey} />}
           {currentTab === 2 && <InsightsTab insights={qualsSingleTeam} seasonKey={seasonKey} />}

@@ -135,7 +135,6 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         onClick: e => {
           setOpen(true);
           handleFavoriteToggle();
-          console.log(e);
         }
       }}
       sx={{
