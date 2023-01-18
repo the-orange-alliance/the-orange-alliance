@@ -95,7 +95,7 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
           <Tab label="Qualification" value={0} />
           <Tab label="Elimination" value={1} />
 
-          {(seasonKey === '2021' || seasonKey === '2122') && [
+          {(seasonKey === '2021' || seasonKey === '2122' || seasonKey === '2223') && [
             <Tab key={'stq'} label="Single-Team Qualification" value={2} />,
             <Tab key={'combo'} label="Combined Qualification" value={3} />
           ]}

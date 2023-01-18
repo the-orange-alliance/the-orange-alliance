@@ -11,6 +11,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import { getWeekShort } from '../../lib/utils/common';
+import SeasonInsights2223 from './SeasonInsights2223';
 import SeasonInsights2122 from './SeasonInsights2122';
 import SeasonInsights2021 from './SeasonInsights2021';
 import SeasonInsights1920 from './SeasonInsights1920';
@@ -169,6 +170,7 @@ const InsightsTab = (props: IProps) => {
       </Typography>
 
       {/* Season Specific */}
+      {seasonKey === '2223' && <SeasonInsights2223 insights={insights} />}
       {seasonKey === '2122' && <SeasonInsights2122 insights={insights} />}
       {seasonKey === '2021' && <SeasonInsights2021 insights={insights} />}
       {seasonKey === '1920' && <SeasonInsights1920 insights={insights} />}

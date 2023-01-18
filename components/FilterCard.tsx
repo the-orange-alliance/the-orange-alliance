@@ -101,7 +101,9 @@ const FilterCard = (props: IProps) => {
   const pushNewFilter = (season?: Season, region?: Region): Promise<any> => {
     const query = {} as any;
     if (season && season.seasonKey !== CURRENT_SEASON) query.season_key = season.seasonKey;
+    if (season && season.seasonKey === CURRENT_SEASON) query.season_key = undefined;
     if (region && region.regionKey !== 'all') query.region_key = region.regionKey;
+    if (region && region.regionKey === 'all') query.region_key = undefined;
 
     const seasonTestData = query.season_key ?? CURRENT_SEASON;
     const regionTestData = query.region_key ?? 'all';

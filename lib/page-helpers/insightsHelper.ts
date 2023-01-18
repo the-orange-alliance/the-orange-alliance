@@ -63,7 +63,7 @@ const getInsightsData = async (
   const optionalProps = regionKey && regionKey.length > 0 ? { region_key: regionKey } : {};
 
   /* Seasons where single-team matches are a thing */
-  if (seasonKey === '2021' || seasonKey === '2122') {
+  if (seasonKey === '2021' || seasonKey === '2122' || seasonKey === '2223') {
     const data = await Promise.all([
       TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
@@ -94,6 +94,7 @@ const getInsightsData = async (
 
     for (const key in data[0]) {
       data[0][key].highScoreMatch = null;
+      console.log(key)
       elimsMultiTeam[key] = undefinedToNull(data[0][key].toJSON());
     }
 

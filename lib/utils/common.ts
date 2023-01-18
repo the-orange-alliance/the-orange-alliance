@@ -1,4 +1,4 @@
-import { Region, Season, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import { Region, Season, Event, Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import { DateTime } from 'luxon';
 
