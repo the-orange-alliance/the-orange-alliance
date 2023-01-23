@@ -6,7 +6,7 @@ const withTM = require('next-transpile-modules')([
 /** @type {import('next').NextConfig} */
 const cfg = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: false,
   async redirects() {
     return [
       {
