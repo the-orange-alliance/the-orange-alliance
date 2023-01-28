@@ -6,7 +6,7 @@ const ApiDocs = () => {
   return (
     <>
       <SEO title="API Docs" description="API Documentation for the TOA REST API." url="/apidocs" />
-      <SwaggerUI url="https://orange-alliance.github.io/TOA-Docs/openapi.yml" />
+      <SwaggerUI url="https://the-orange-alliance.github.io/TOA-Docs/openapi.yml" />
     </>
   );
 };
