@@ -257,7 +257,7 @@ const About = () => {
           </Link>
 
           <Link
-            href="https://github.com/orange-alliance"
+            href="https://github.com/the-orange-alliance"
             target="_blank"
             underline="none"
             sx={{
