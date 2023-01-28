@@ -76,7 +76,7 @@ const DrawerContent = () => {
       />
       <DrawerItem
         title={t('drawer.open_source')}
-        href="https://github.com/orange-alliance"
+        href="https://github.com/the-orange-alliance"
         icon={<GitHubIcon />}
       />
       <DrawerItem
