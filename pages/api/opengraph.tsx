@@ -11,7 +11,7 @@ const font = fetch(
 
 const key = crypto.subtle.importKey(
   'raw',
-  new TextEncoder().encode(process.env.OG_SECRET),
+  new TextEncoder().encode(process.env.OG_SECRET ?? ''),
   { name: 'HMAC', hash: { name: 'SHA-256' } },
   false,
   ['sign']
