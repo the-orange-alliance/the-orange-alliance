@@ -51,7 +51,7 @@ import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helper
 import { getLocationString, getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
-import MatchesTable from '../../components/MatchTable/MatchTable';
+import MatchTable from '../../components/MatchTable';
 import { useAppContext } from '../../lib/toa-context';
 import { createOpengraphImageUrl } from '../../lib/opengraph';
 import SEO from '../../components/seo';
@@ -247,12 +247,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           </Typography>
                         ))}
                         {event.matches.length > 0 && (
-                          <MatchesTable
-                            event={event}
-                            disableSingleTeamTeam
-                            disableSelection
-                            hideHeader
-                          />
+                          <MatchTable event={event} disableSingleTeamTeam hideHeader />
                         )}
                         {event.matches.length < 1 && <Typography variant={'body1'} />}
                       </CardContent>

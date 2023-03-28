@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { MatchParticipant, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
 import {
@@ -12,7 +11,6 @@ import {
   TableRow,
   Link
 } from '@mui/material';
-import { colorCalc } from '../lib/utils/common';
 import NextLink from 'next/link';
 
 interface IProps {
@@ -23,71 +21,13 @@ interface IProps {
 const SimpleMatchTable = (props: IProps) => {
   const { match, header = true } = props;
 
-  const renderRedAlliance = (match: Match) => {
-    const { participants } = match;
-    const redAlliance: MatchParticipant[] = participants.filter(
-      (p: MatchParticipant) => p.station < MatchStations.Blue1
-    );
-    return (
-      <TableRow
-        style={{
-          backgroundColor: colorCalc(false, 'red', match.redScore > match.blueScore)
-        }}
-      >
-        {redAlliance.map((p: MatchParticipant) => (
-          <TableCell key={p.matchParticipantKey} align="center">
-            <NextLink href={`/teams/${p.teamKey}`} passHref>
-              <Link
-                fontWeight={match.blueScore < match.redScore ? 700 : undefined}
-                underline="none"
-              >
-                {p.teamKey}
-              </Link>
-            </NextLink>
-          </TableCell>
-        ))}
-        <TableCell align="center">
-          <Typography fontWeight={match.blueScore < match.redScore ? 700 : undefined}>
-            {match.redScore}
-          </Typography>
-        </TableCell>
-      </TableRow>
-    );
-  };
+  const redAlliance: MatchParticipant[] = match.participants.filter(
+    (p: MatchParticipant) => p.station < MatchStations.Blue1
+  );
 
-  const renderBlueAlliance = (match: Match) => {
-    const { participants } = match;
-    const blueAlliance: MatchParticipant[] = participants.filter(
-      (p: MatchParticipant) => p.station >= MatchStations.Blue1
-    );
-    return (
-      <TableRow
-        style={{
-          backgroundColor: colorCalc(false, 'blue', match.redScore < match.blueScore)
-        }}
-      >
-        {blueAlliance.map((p: MatchParticipant) => {
-          return (
-            <TableCell key={p.matchParticipantKey} align="center">
-              <NextLink href={`/teams/${p.teamKey}`} passHref>
-                <Link
-                  fontWeight={match.blueScore > match.redScore ? 700 : undefined}
-                  underline="none"
-                >
-                  {p.teamKey}
-                </Link>
-              </NextLink>
-            </TableCell>
-          );
-        })}
-        <TableCell align="center">
-          <Typography fontWeight={match.blueScore > match.redScore ? 700 : undefined}>
-            {match.blueScore}
-          </Typography>
-        </TableCell>
-      </TableRow>
-    );
-  };
+  const blueAlliance: MatchParticipant[] = match.participants.filter(
+    (p: MatchParticipant) => p.station >= MatchStations.Blue1
+  );
 
   return (
     <div>
@@ -103,20 +43,62 @@ const SimpleMatchTable = (props: IProps) => {
           }}
         >
           {header ? (
-            <TableHead style={{ backgroundColor: 'rgb(240, 240, 240)' }}>
+            <TableHead style={{ backgroundColor: 'rgba(0, 0, 0, 0.02)' }}>
               <TableRow>
                 <TableCell align="center" colSpan={match.participants.length > 4 ? 3 : 2}>
-                  <Typography>Teams</Typography>
+                  <Typography fontSize="0.875rem" fontWeight={500}>
+                    Teams
+                  </Typography>
                 </TableCell>
                 <TableCell align="center" colSpan={1}>
-                  <Typography>Scores</Typography>
+                  <Typography fontSize="0.875rem" fontWeight={500}>
+                    Scores
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
           ) : null}
           <TableBody>
-            {renderRedAlliance(match)}
-            {renderBlueAlliance(match)}
+            <TableRow style={{ backgroundColor: 'var(--toa-colors-red-transparent)' }}>
+              {redAlliance.map((p: MatchParticipant) => (
+                <TableCell key={p.matchParticipantKey} align="center">
+                  <NextLink href={`/teams/${p.teamKey}`} passHref>
+                    <Link
+                      fontWeight={match.blueScore < match.redScore ? 700 : undefined}
+                      underline="none"
+                    >
+                      {p.teamKey}
+                    </Link>
+                  </NextLink>
+                </TableCell>
+              ))}
+              <TableCell align="center">
+                <Typography fontWeight={match.blueScore < match.redScore ? 700 : undefined}>
+                  {match.redScore}
+                </Typography>
+              </TableCell>
+            </TableRow>
+            <TableRow style={{ backgroundColor: 'var(--toa-colors-blue-transparent)' }}>
+              {blueAlliance.map((p: MatchParticipant) => {
+                return (
+                  <TableCell key={p.matchParticipantKey} align="center">
+                    <NextLink href={`/teams/${p.teamKey}`} passHref>
+                      <Link
+                        fontWeight={match.blueScore > match.redScore ? 700 : undefined}
+                        underline="none"
+                      >
+                        {p.teamKey}
+                      </Link>
+                    </NextLink>
+                  </TableCell>
+                );
+              })}
+              <TableCell align="center">
+                <Typography fontWeight={match.blueScore > match.redScore ? 700 : undefined}>
+                  {match.blueScore}
+                </Typography>
+              </TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

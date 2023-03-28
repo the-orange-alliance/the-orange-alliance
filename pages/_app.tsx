@@ -77,6 +77,12 @@ function MyApp({
       <style jsx global>{`
         :root {
           --toa-navbar-height: 56px;
+          --toa-colors-red: #f44336;
+          --toa-colors-red-transparent: rgba(244, 67, 54, 0.12);
+          --toa-colors-blue: #2196f3;
+          --toa-colors-blue-transparent: rgba(33, 150, 243, 0.12);
+          --toa-colors-tie: #aa00ff;
+          --toa-colors-tie-transparent: rgba(170, 0, 255, 0.12);
         }
         @media (min-width: 0px) and (orientation: landscape) {
           :root {

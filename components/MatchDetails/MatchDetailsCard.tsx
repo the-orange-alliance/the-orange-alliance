@@ -8,7 +8,6 @@ import MatchBreakdown2122 from './MatchBreakdowns/MatchBreakdown2122';
 import MatchBreakdown2223 from './MatchBreakdowns/MatchBreakdown2223';
 import { MatchBreakdownRow, MatchBreakdownTitle } from './MatchBreakdownRow';
 import { Box, Divider, Grid, Typography } from '@mui/material';
-import { colorCalc } from '../../lib/utils/common';
 
 interface IProps {
   match: Match;
@@ -68,7 +67,7 @@ const MatchDetailsCard = (props: IProps) => {
             xs={4}
             sx={{
               padding: 1,
-              backgroundColor: colorCalc(false, 'red', r.isTitle),
+              backgroundColor: 'var(--toa-colors-red-transparent)',
               textAlign: 'center'
             }}
             item
@@ -104,7 +103,7 @@ const MatchDetailsCard = (props: IProps) => {
               xs={4}
               sx={{
                 padding: 1,
-                backgroundColor: colorCalc(false, 'blue', r.isTitle),
+                backgroundColor: 'var(--toa-colors-blue-transparent)',
                 textAlign: 'center'
               }}
               item
