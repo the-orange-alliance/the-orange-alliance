@@ -93,7 +93,8 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
           flexDirection: 'column',
           flexGrow: 1,
           minHeight: '100vh',
-          bgcolor: 'background.default'
+          bgcolor: 'background.default',
+          maxWidth: '100%'
         }}
       >
         <Toolbar />
