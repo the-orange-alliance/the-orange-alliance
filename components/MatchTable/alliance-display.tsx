@@ -35,6 +35,7 @@ const MatchAllianceDisplay: React.FC<MatchAllianceDisplayProps> = ({
         })
         .map((team: MatchParticipant) => (
           <MatchTeamDisplay
+            key={team.matchParticipantKey}
             team={team}
             match={match}
             win={isWin}

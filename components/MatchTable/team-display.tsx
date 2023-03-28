@@ -51,7 +51,7 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
             fontWeight: win ? 700 : undefined,
             padding: '0.5em 0.5em'
           }}
-          aria-title={`View Team #${team.teamKey}}`}
+          aria-label={`View Team #${team.teamKey}}`}
           onClick={e => {
             if (handleClick && !e.metaKey) {
               e.preventDefault();

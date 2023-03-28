@@ -63,7 +63,7 @@ const TeamSelectionBar: React.FC<TeamSelectionBarProps> = ({ team, rankings }) =
                   sx={{ color: '#92400e', bgcolor: '#fde68a' }}
                 />
               </Stack>
-              <NextLink href={`/teams/${team.teamKey}`} passHref>
+              <NextLink href={`/teams/${rank.teamKey}`} passHref>
                 <Button size="small" sx={{ color: '#fff' }} endIcon={<ArrowForwardIos />}>
                   {t('match_table.view_team')}
                 </Button>
