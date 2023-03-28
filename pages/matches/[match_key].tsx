@@ -1,6 +1,16 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
-import { Box, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
+  Link,
+  Stack,
+  Typography
+} from '@mui/material';
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
 import { fetchMatchData, IRawMatchProps, useMatchData } from '../../lib/page-helpers/match-helper';
@@ -25,23 +35,26 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
         ogImage={ogImage}
         url={`/matches/${match.matchKey}`}
       />
-      <Box sx={{ m: 1 }}>
-        <Typography variant={'h4'}>{match.matchName}</Typography>
-        <Typography variant={'subtitle1'}>
-          <NextLink href={`/events/${match.event.eventKey}/rankings`}>
-            <a className="text-black">
-              {match.event.divisionName
-                ? match.event.eventName + ' - ' + match.event.divisionName
-                : match.event.eventName}
-            </a>
-          </NextLink>
-        </Typography>
-        <Grid container direction={'row'} spacing={2}>
-          <Grid item xs={4}>
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h1">{match.matchName}</Typography>
+        <NextLink href={`/events/${match.event.eventKey}/rankings`} passHref>
+          <Link
+            component="a"
+            fontSize="1.25rem"
+            fontWeight={500}
+            color="text.secondary"
+            pt={0.5}
+            underline="none"
+          >
+            {match.event.divisionName
+              ? match.event.eventName + ' - ' + match.event.divisionName
+              : match.event.eventName}
+          </Link>
+        </NextLink>
+        <Grid container spacing={2} mt={2}>
+          <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant={'h5'}>{t('pages.match.match_info')}</Typography>
-                <Divider />
                 {match.redScore === -1 &&
                   match.blueScore === -1 &&
                   match.scheduledTime &&
@@ -51,25 +64,42 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                       {t('pages.match.scheduled_time')}: {readableDate(match.scheduledTime)}
                     </Typography>
                   )}
-                {!match.videoURL /* TODO: Link to suggestions tab eventually*/ && (
-                  <>
-                    <PlayCircleOutline sx={{mb: "-7px"}} />
-                    <Typography sx={{display: "inline"}} variant={'body1'}>
-                      {t('pages.match.no_video')}
-                    </Typography>
-                  </>
+                {!match.videoURL ? (
+                  <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+                    <PlayCircleOutline sx={{ fontSize: '1em' }} />
+                    <Link
+                      href={match.videoURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      color="secondary"
+                    >
+                      Watch Match
+                    </Link>
+                  </Stack>
+                ) : (
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    color="text.secondary"
+                    mb={2}
+                  >
+                    <PlayCircleOutline sx={{ fontSize: '1em' }} />
+                    <Typography>{t('pages.match.no_video')}</Typography>
+                  </Stack>
                 )}
+
                 <SimpleMatchTable match={match} />
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Card>
               <MatchDetailsCard match={match} />
             </Card>
           </Grid>
         </Grid>
-      </Box>
+      </Container>
     </>
   );
 };
@@ -82,15 +112,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const event = new Event().fromJSON(props.event);
 
     try {
-
       props.ogImage = createOpengraphImageUrl({
         title: match.matchName,
         description1: event.fullEventName,
         description2: getEventDescription(event)
       });
-
     } catch (err) {
-      console.error("Error generating OpenGraph image for match " + match.matchKey, err);
+      console.error('Error generating OpenGraph image for match ' + match.matchKey, err);
     }
 
     return { props };
