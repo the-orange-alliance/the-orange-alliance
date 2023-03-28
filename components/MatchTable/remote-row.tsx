@@ -27,7 +27,7 @@ const MatchTableRemoteRow: React.FC<MatchTableRemoteRowProps> = ({
         <MatchNameDisplay match={match} onClick={onMatchClick} isRemote />
       </td>
       <td>
-        <MatchScoresDisplay match={match} isRemote />
+        <MatchScoresDisplay match={match} isRemote onClick={onMatchClick} />
       </td>
     </tr>
   );

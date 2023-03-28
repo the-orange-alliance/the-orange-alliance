@@ -36,6 +36,7 @@ const MatchNameDisplay: React.FC<MatchNameDisplayProps> = ({ match, isRemote, on
           onClick(match);
         }
       }}
+      tabIndex={-1}
     >
       {isRemote ? match.matchName : getShortName(match)}
     </Link>

@@ -32,7 +32,7 @@ const MatchTableRow: React.FC<MatchTableRowProps> = ({
                 <MatchNameDisplay match={match} onClick={onMatchClick} />
               </td>
               <td className="toa-match-table__scores" rowSpan={2} style={{ width: '5em' }}>
-                <MatchScoresDisplay match={match} />
+                <MatchScoresDisplay match={match} onClick={onMatchClick} />
               </td>
               <MatchAllianceDisplay
                 teamWidth={`calc((100% - 11em) / ${match.participants.length / 2})`}
@@ -62,7 +62,7 @@ const MatchTableRow: React.FC<MatchTableRowProps> = ({
             <MatchNameDisplay match={match} onClick={onMatchClick} />
           </td>
           <td style={{ width: '6em' }}>
-            <MatchScoresDisplay match={match} />
+            <MatchScoresDisplay match={match} onClick={onMatchClick} />
           </td>
           <MatchAllianceDisplay
             teamWidth={`calc((100% - 14.5em) / ${match.participants.length})`}
