@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import EventResultsIcon from '@mui/icons-material/EqualizerRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
@@ -9,7 +10,7 @@ import {
   DialogTitle,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Tooltip,
@@ -18,7 +19,6 @@ import {
 import StreamIcon from '@mui/icons-material/VideocamRounded';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
-import { useRouter } from 'next/router';
 
 const LiveStreamPanel = ({
   streams,
@@ -45,7 +45,11 @@ const LiveStreamPanel = ({
         {selectedStream ? (
           <>
             <iframe
-              src={`${selectedStream.streamURL}${selectedStream.streamURL.indexOf("twitch") > -1 ? '&parent=theorangealliance.org&parent=localhost' : ''}`}
+              src={`${selectedStream.streamURL}${
+                selectedStream.streamURL.indexOf('twitch') > -1
+                  ? '&parent=theorangealliance.org&parent=localhost'
+                  : ''
+              }`}
               frameBorder="0"
               scrolling="no"
               allowFullScreen
@@ -74,7 +78,12 @@ const LiveStreamPanel = ({
             </div>
           </>
         ) : (
-          <Button variant={'contained'} color={'primary'} onClick={() => setModalOpen(true)}>
+          <Button
+            variant="contained"
+            color="inherit"
+            size="small"
+            onClick={() => setModalOpen(true)}
+          >
             {t('pages.streams.select_stream')}
           </Button>
         )}
@@ -88,13 +97,12 @@ const LiveStreamPanel = ({
             {streams
               .filter(s => s.isActive)
               .map(s => (
-                <ListItem button onClick={() => selectStream(s)} key={s.streamKey}>
+                <ListItemButton onClick={() => selectStream(s)} key={s.streamKey}>
                   <ListItemIcon>
                     <StreamIcon />
                   </ListItemIcon>
-
                   <ListItemText primary={s.streamName} />
-                </ListItem>
+                </ListItemButton>
               ))}
           </List>
         </DialogContent>
@@ -106,7 +114,7 @@ const LiveStreamPanel = ({
           align-items: center;
           justify-content: center;
           background: #000;
-          outline: #ffffff solid 1px;
+          outline: #333 solid 1px;
           padding: 0;
           height: 100%;
           width: 100%;
