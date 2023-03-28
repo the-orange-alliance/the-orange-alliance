@@ -6,7 +6,7 @@ import TOAProvider from '../../providers/TOAProvider';
 import TeamSelectionBar from './team-selection-bar';
 import MatchTableRow from './row';
 import MatchTableRemoteRow from './remote-row';
-import MatchDetailsModal from './Details-modal';
+import MatchDetailsModal from './breakdown-modal';
 
 interface MatchTableProps {
   event: Event;

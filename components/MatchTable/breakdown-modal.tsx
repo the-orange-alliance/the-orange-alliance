@@ -10,13 +10,13 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import MatchDetailsCard from '../MatchDetails/MatchDetailsCard';
 
-interface MatchDetailsModalProps {
+interface MatchBreakdownModalProps {
   match: Match | null;
   open: boolean;
   onClose: () => void;
 }
 
-const MatchDetailsModal: React.FC<MatchDetailsModalProps> = ({ match, open, onClose }) => {
+const MatchBreakdownModal: React.FC<MatchBreakdownModalProps> = ({ match, open, onClose }) => {
   return (
     <Dialog
       open={open}
@@ -68,4 +68,4 @@ const MatchDetailsModal: React.FC<MatchDetailsModalProps> = ({ match, open, onCl
   );
 };
 
-export default MatchDetailsModal;
+export default MatchBreakdownModal;
