@@ -44,7 +44,8 @@ import {
   LocationOn as LocationIcon,
   Public as WebsiteIcon,
   VerifiedUser as SourceIcon,
-  Videocam as StreamIcon
+  Videocam as StreamIcon,
+  EmojiEventsOutlined as TrophyIcon
 } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
 import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helpers/team-helper';
@@ -222,7 +223,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                       />
                       <CardContent sx={{ pt: 0 }}>
                         {event.rankings[0] && (
-                          <Typography variant={'body2'} className={'mb-1 mt-1'}>
+                          <Typography variant="body2" mb={1}>
                             <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
                             <b>
                               {event.rankings[0].wins}-{event.rankings[0].losses}-
@@ -237,13 +238,16 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           </Typography>
                         )}
                         {event.awards.map(award => (
-                          <Typography
-                            className={'mt-1 mb-1'}
-                            variant={'body2'}
-                            key={award.awardKey}
-                          >
-                            <Celebration sx={{ marginRight: 1 }} fontSize={'inherit'} />
+                          <Typography key={award.awardKey} variant="body2" mb={1}>
+                            <TrophyIcon
+                              sx={{
+                                fontSize: '1.125em',
+                                marginRight: 1,
+                                verticalAlign: 'middle'
+                              }}
+                            />
                             {award.award.awardDescription}
+                            {award.receiverName ? ` (${award.receiverName})` : ''}
                           </Typography>
                         ))}
                         {event.matches.length > 0 && <MatchTable event={event} hideHeader />}

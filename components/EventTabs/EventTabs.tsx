@@ -73,7 +73,7 @@ const EventTabs = ({ event, streams }: IProps) => {
     if (event.awards.length) {
       tabs.push({
         id: 'awards',
-        component: <AwardsTab event={event} />,
+        component: <AwardsTab awards={event.awards} />,
         count: event.awards.length
       });
     }

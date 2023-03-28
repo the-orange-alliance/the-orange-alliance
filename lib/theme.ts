@@ -97,6 +97,14 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
         }
       }
     },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '0.5rem',
+          overflow: 'hidden'
+        }
+      }
+    },
     MuiDialog: {
       styleOverrides: {
         paper: {
