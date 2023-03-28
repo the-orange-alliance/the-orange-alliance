@@ -1,15 +1,12 @@
-import * as React from 'react';
-import { List, ListItem, ListItemText, ListItemAvatar, Button } from '@mui/material';
-import { EventParticipant, Event } from '@the-orange-alliance/api/lib/cjs/models';
+import { List } from '@mui/material';
+import { EventParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import SimpleTeamPaper from '../SimpleTeamPaper';
 
-interface IProps {
-  event: Event;
+interface TeamsTabProps {
+  teams: EventParticipant[];
 }
 
-const TeamsTab = (props: IProps) => {
-  const { teams } = props.event;
-
+const TeamsTab: React.FC<TeamsTabProps> = ({ teams }) => {
   return (
     <List sx={{ marginLeft: 2, marginRight: 2 }}>
       {teams.map((participant: EventParticipant) => (

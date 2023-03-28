@@ -28,23 +28,15 @@ import {
 } from '@mui/material';
 import {
   Book,
-  Celebration,
   Create,
   Explore as RegionIcon,
-  Facebook,
-  Flag,
   Flare as RookieIcon,
   FlashOn as OprIcon,
   GitHub,
   Hotel as InactiveIcon,
-  Public,
-  Room,
   YouTube,
-  CalendarToday as CalendarIcon,
   LocationOn as LocationIcon,
   Public as WebsiteIcon,
-  VerifiedUser as SourceIcon,
-  Videocam as StreamIcon,
   EmojiEventsOutlined as TrophyIcon
 } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
