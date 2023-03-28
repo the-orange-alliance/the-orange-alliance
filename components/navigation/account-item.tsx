@@ -3,7 +3,6 @@ import NextLink from 'next/link';
 import { Avatar, Box, Button, ButtonBase, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslate } from '../../i18n/i18n';
-import { useRouter } from 'next/router';
 import { useAppContext } from '../../lib/toa-context';
 
 const initials = (name: string) => {
@@ -17,12 +16,6 @@ const AccountItem = () => {
   const { user, isAuthLoaded } = useAppContext();
   const theme = useTheme();
   const t = useTranslate();
-  const router = useRouter();
-
-  const doLogin = () => {
-    localStorage.setItem('redirect', router.asPath);
-    router.push({ pathname: '/account/login' });
-  }
 
   return (
     <>
@@ -59,22 +52,16 @@ const AccountItem = () => {
               {t('drawer.mytoa.hello').replace('{{ name }}', t('drawer.mytoa.guest'))}
             </Grid>
             <Grid item>
-              <Grid container direction={'row'}>
+              <Grid container direction="row">
                 <Grid item>
-                  <Button
-                    size={'small'}
-                    onClick={doLogin}
-                  >
-                    {t('drawer.mytoa.login')}
-                  </Button>
+                  <NextLink href="/account/login" passHref>
+                    <Button size="small">{t('drawer.mytoa.login')}</Button>
+                  </NextLink>
                 </Grid>
                 <Grid item>
-                  <Button
-                    size={'small'}
-                    onClick={() => router.push({ pathname: '/account/register' })}
-                  >
-                    {t('drawer.mytoa.register')}
-                  </Button>
+                  <NextLink href="/account/register" passHref>
+                    <Button size="small">{t('drawer.mytoa.register')}</Button>
+                  </NextLink>
                 </Grid>
               </Grid>
             </Grid>
