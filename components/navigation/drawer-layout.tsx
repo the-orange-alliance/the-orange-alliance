@@ -54,12 +54,13 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
             ModalProps={{
               keepMounted: true
             }}
-            sx={{
+            sx={theme => ({
               width: DRAWER_WIDTH,
+              zIndex: theme.zIndex.appBar - 1,
               [`& .MuiDrawer-paper`]: {
                 width: DRAWER_WIDTH
               }
-            }}
+            })}
           >
             <Toolbar />
             <DrawerContent />
@@ -68,10 +69,11 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
           <Drawer
             variant="permanent"
             open
-            sx={{
+            sx={theme => ({
               width: DRAWER_WIDTH,
               [`& .MuiDrawer-paper`]: {
-                width: DRAWER_WIDTH
+                width: DRAWER_WIDTH,
+                zIndex: theme.zIndex.appBar - 1
               },
               [theme.breakpoints.up('xs')]: {
                 display: 'none'
@@ -79,7 +81,7 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
               [theme.breakpoints.up('md')]: {
                 display: 'block'
               }
-            }}
+            })}
           >
             <Toolbar />
             <DrawerContent />
@@ -93,7 +95,8 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
           flexDirection: 'column',
           flexGrow: 1,
           minHeight: '100vh',
-          bgcolor: 'background.default'
+          bgcolor: 'background.default',
+          maxWidth: '100%'
         }}
       >
         <Toolbar />

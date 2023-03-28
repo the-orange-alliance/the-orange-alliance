@@ -1,11 +1,4 @@
-import {
-  AppBar,
-  Backdrop,
-  IconButton,
-  Toolbar,
-  Typography,
-  useMediaQuery
-} from '@mui/material';
+import { AppBar, Backdrop, IconButton, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from 'react';
 import { useTranslate } from '../../i18n/i18n';
@@ -41,7 +34,7 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
 
   return (
     <>
-      <AppBar elevation={0} position="fixed" sx={{ zIndex: 1304 }}>
+      <AppBar elevation={0} position="fixed">
         <Toolbar>
           {!isMobileSearchOpen && (
             <>

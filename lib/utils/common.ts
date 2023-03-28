@@ -1,5 +1,4 @@
-import { Region, Season, Event, Insights } from '@the-orange-alliance/api/lib/cjs/models';
-import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
+import type { Region, Season, Event, Team, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import { DateTime } from 'luxon';
 
 export function readableDate(date: Date | string): string {
@@ -21,21 +20,15 @@ export function readableTime(date: Date | string): string {
   return `${h}:${m} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
-export function colorCalc(selected: boolean, color: string, win: boolean) {
-  if (selected) {
-    return '#fbcc81';
-  } else if (win) {
-    if (color === 'red') {
-      return '#ffe5e5';
-    } else {
-      return '#e5e5ff';
-    }
+export function getMatchWinner(match: Match) {
+  if (match.redScore > match.blueScore) {
+    return 'red';
+  } else if (match.blueScore > match.redScore) {
+    return 'blue';
+  } else if (match.redScore > -1 && match.blueScore > -1) {
+    return 'tie';
   } else {
-    if (color === 'red') {
-      return 'rgba(255,82,82,.13)';
-    } else {
-      return 'rgba(68,138,255,.13)';
-    }
+    return null;
   }
 }
 

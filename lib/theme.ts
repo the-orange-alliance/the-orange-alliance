@@ -51,6 +51,16 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
     ...(Array(25 - 6).fill('none') as string[])
   ] as Shadows,
+  zIndex: {
+    appBar: 1304,
+    drawer: 1310,
+    fab: 1050,
+    mobileStepper: 1000,
+    modal: 1320,
+    snackbar: 1400,
+    speedDial: 1050,
+    tooltip: 1500
+  },
   components: {
     MuiLink: {
       defaultProps: {
@@ -61,13 +71,11 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundImage: 'none',
-          boxShadow: 'none',
-          borderRadius: '1rem'
+          borderRadius: '0.875rem'
         }
       },
       defaultProps: {
-        elevation: 0
+        elevation: 2
       }
     },
     MuiCardHeader: {
@@ -92,7 +100,7 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          borderRadius: '1rem'
+          borderRadius: '0.75rem'
         }
       }
     }
