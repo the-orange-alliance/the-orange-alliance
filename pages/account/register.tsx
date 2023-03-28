@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Grid, Stack, TextField, Typography } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import { useState } from 'react';
 import { signUp } from '../../providers/FirebaseProvider';
@@ -14,23 +14,25 @@ const LoginPage: NextPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [team, setTeam] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const doSignUp = () => {
+  const handleSignUp = () => {
     if (!fullName || fullName.trim().length < 4) {
       toast.error('You forgot to type your FULL NAME.');
     } else if (password !== confirmPassword) {
       toast.error(`Those passwords didn't match. Try again.`);
     } else {
-      signUp(email, fullName, password, team)
+      setIsLoading(true);
+      signUp(email, fullName, password)
         .then(() => {
           toast.success(t('pages.account.subpages.register.success'));
-          router.push({ pathname: '/account/login' });
+          router.push({ pathname: '/account' });
         })
         .catch(err => {
           console.log(err);
           toast.error(t('general.error_occurred'));
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -38,76 +40,60 @@ const LoginPage: NextPage = () => {
     <>
       <SEO title="Sign up" url="/account/register" />
 
-      <Grid container direction={'column'} alignContent={'center'}>
-        <Grid item sx={{ marginTop: 7 }}>
-          <Card>
-            <CardContent>
-              <Typography variant={'h4'}>{t('pages.account.subpages.register.title')}</Typography>
-              <Grid container direction={'column'} sx={{ marginTop: 0, width: 400 }} spacing={2}>
-                <Grid item>
-                  <TextField
-                    type={'text'}
-                    variant={'outlined'}
-                    value={fullName}
-                    onChange={e => setFullName(e.target.value)}
-                    required
-                    fullWidth
-                    label={t('pages.account.subpages.register.full_name')}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    type={'email'}
-                    variant={'outlined'}
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    fullWidth
-                    label={t('pages.account.subpages.login.email')}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    type={'password'}
-                    variant={'outlined'}
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    fullWidth
-                    label={t('pages.account.subpages.register.password')}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    type={'password'}
-                    variant={'outlined'}
-                    value={confirmPassword}
-                    onChange={e => setConfirmPassword(e.target.value)}
-                    required
-                    fullWidth
-                    label={t('pages.account.subpages.register.confirm_password')}
-                  />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    type={'text'}
-                    variant={'outlined'}
-                    value={team}
-                    onChange={e => setTeam(e.target.value)}
-                    fullWidth
-                    label={t('pages.account.subpages.register.your_team')}
-                  />
-                </Grid>
-                <Grid item>
-                  <Button fullWidth variant={'contained'} onClick={doSignUp}>
-                    {t('pages.account.subpages.register.sign_up')}
-                  </Button>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
+        <Card sx={{ width: 400 }}>
+          <CardContent>
+            <Typography variant="h4" mb={2}>
+              {t('pages.account.subpages.register.title')}
+            </Typography>
+            <Stack spacing={1}>
+              <TextField
+                type="text"
+                variant="outlined"
+                autoComplete="name"
+                value={fullName}
+                onChange={e => setFullName(e.target.value)}
+                required
+                fullWidth
+                label={t('pages.account.subpages.register.full_name')}
+              />
+              <TextField
+                type="email"
+                variant="outlined"
+                autoComplete="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+                fullWidth
+                label={t('pages.account.subpages.login.email')}
+              />
+              <TextField
+                type="password"
+                variant="outlined"
+                autoComplete="new-password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                fullWidth
+                label={t('pages.account.subpages.register.password')}
+              />
+              <TextField
+                type="password"
+                variant="outlined"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                required
+                fullWidth
+                label={t('pages.account.subpages.register.confirm_password')}
+              />
+              <Button fullWidth variant="contained" onClick={handleSignUp} disabled={isLoading}>
+                {isLoading ? t('general.loading') : t('pages.account.subpages.register.sign_up')}
+              </Button>
+            </Stack>
+          </CardContent>
+        </Card>
+      </Box>
     </>
   );
 };

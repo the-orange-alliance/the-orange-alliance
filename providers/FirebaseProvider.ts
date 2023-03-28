@@ -51,12 +51,11 @@ const githubProvider = new GithubAuthProvider();
 export const getAuthInstance = () => {
   if (!app) app = firebase.initializeApp(firebaseConfig);
   if (!auth) auth = getAuth(app);
-  if (!db) db = getDatabase(app);
   return auth;
 };
 
 export const inStartupState = () => {
-  return !app || !auth || !db;
+  return !app || !auth;
 };
 
 export const logout = () => {
@@ -81,20 +80,10 @@ export const sendPasswordReset = () => {
   return sendPasswordResetEmail(auth, auth.currentUser.email);
 };
 
-export const signUp = (email: string, name: string, password: string, team: string) => {
+export const signUp = (email: string, name: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password).then(user => {
-    updateProfile(user.user, { displayName: name, photoURL: null }).catch(error =>
-      console.log(error)
-    );
-    const data = {} as any;
-    data['fullName'] = name;
-    if (team && team.trim().length > 0) {
-      data['team'] = team;
-    }
-    const dbRef = ref(db, `Users/${user.user.uid}`);
-    return dbSet(dbRef, data).then(value => {
-      return sendEmailVerification(user.user);
-    });
+    sendEmailVerification(user.user);
+    updateProfile(user.user, { displayName: name, photoURL: null });
   });
 };
 
