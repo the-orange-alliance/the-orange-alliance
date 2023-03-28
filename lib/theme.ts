@@ -71,13 +71,11 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     MuiCard: {
       styleOverrides: {
         root: {
-          backgroundImage: 'none',
-          boxShadow: 'none',
-          borderRadius: '1rem'
+          borderRadius: '0.875rem'
         }
       },
       defaultProps: {
-        elevation: 0
+        elevation: 2
       }
     },
     MuiCardHeader: {
@@ -102,7 +100,7 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          borderRadius: '1rem'
+          borderRadius: '0.75rem'
         }
       }
     }
