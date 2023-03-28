@@ -112,6 +112,8 @@ const MatchTable: React.FC<MatchTableProps> = ({
                 <th style={{ width: '6em' }}>{t('match_table.scores')}</th>
                 <th
                   style={{
+                    color: '#fff',
+                    backgroundColor: 'var(--toa-colors-red)',
                     // WebKit support
                     minWidth: 'calc((100% - 12.5em) / 2)',
                     maxWidth: 'calc((100% - 12.5em) / 2)'
@@ -121,6 +123,8 @@ const MatchTable: React.FC<MatchTableProps> = ({
                 </th>
                 <th
                   style={{
+                    color: '#fff',
+                    backgroundColor: 'var(--toa-colors-blue)',
                     // WebKit support
                     minWidth: 'calc((100% - 12.5em) / 2)',
                     maxWidth: 'calc((100% - 12.5em) / 2)'
