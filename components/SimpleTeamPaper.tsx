@@ -1,15 +1,15 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+import { ListItemAvatar, ListItemButton, ListItemText } from '@mui/material';
+import { NotificationsActive } from '@mui/icons-material';
 import { Team } from '@the-orange-alliance/api/lib/cjs/models';
 import { useAppContext } from '../lib/toa-context';
-import { NotificationsActive, NotificationsOff } from '@mui/icons-material';
-import { useEffect, useState } from 'react';
 
-interface IProps {
+interface SimpleTeamPaperProps {
   team: Team;
 }
 
-const SimpleTeamPaper = ({ team }: IProps) => {
+const SimpleTeamPaper: React.FC<SimpleTeamPaperProps> = ({ team }) => {
   const teamName = team.teamNameShort?.length > 0 ? team.teamNameShort : `Team #${team.teamKey}`;
   const location = `${team.city}, ${team.stateProv ? `${team.stateProv}, ` : ''}${team.country}`;
   const { user } = useAppContext();
@@ -21,15 +21,25 @@ const SimpleTeamPaper = ({ team }: IProps) => {
 
   return (
     <Link href={`/teams/${team.teamKey}`} passHref>
-      <ListItem button component="a">
+      <ListItemButton component="a">
         <ListItemAvatar sx={{ fontWeight: 700, textAlign: 'center', mr: 2 }}>
           {team.teamKey}
         </ListItemAvatar>
         <ListItemText
-          primary={notify ? (<>{teamName}<NotificationsActive sx={{ fontSize: 14, ml: 1, mb: "-2px" }} /></>) : teamName}
+          primary={
+            notify ? (
+              <>
+                {teamName}
+                <NotificationsActive sx={{ fontSize: 14, ml: 1, mb: '-2px' }} />
+              </>
+            ) : (
+              teamName
+            )
+          }
           secondary={location}
+          sx={{ my: 0 }}
         />
-      </ListItem>
+      </ListItemButton>
     </Link>
   );
 };
