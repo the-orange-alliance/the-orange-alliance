@@ -32,7 +32,7 @@
     "teams": "Teams",
     "events": "Events",
     "insights": "Insights",
-    "streaming": "Streaming",
+    "streaming": "Watch",
     "android_app": "Android App",
     "ios_app": "iOS App",
     "add_data": "Add Data",
@@ -255,7 +255,23 @@
           "title": "Alliances"
         },
         "awards": {
-          "title": "Awards"
+          "title": "Awards",
+          "award_names": {
+            "inspire": "Inspire Award Winners",
+            "think": "Think Award Winners",
+            "connect": "Connect Award Winners",
+            "innovate": "Collins Aerospace Innovate Award Winners",
+            "design": "Design Award Winners",
+            "motivate": "Motivate Award Winners",
+            "control": "Control Award Winners",
+            "promote": "Promote Award Winners",
+            "compass": "Compass Award Winners",
+            "judges": "Judges Award Winners",
+            "win": "Winning Alliance Award Winners",
+            "finalist": "Finalist Alliance Award Winners",
+            "deans_final": "Dean's List Finalist Award Winners",
+            "deans": "Dean's List Award Winners"
+          }
         },
         "insights": {
           "title": "Insights",

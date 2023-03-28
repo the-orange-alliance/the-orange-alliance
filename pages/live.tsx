@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import {
-  List,
-  ListItem,
   ListItemIcon,
   ListItemText,
   Checkbox,
@@ -10,7 +9,9 @@ import {
   Box,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  ListItemButton,
+  List
 } from '@mui/material';
 import { useTranslate } from '../i18n/i18n';
 import {
@@ -19,7 +20,6 @@ import {
   useStreamsData
 } from '../lib/page-helpers/streams-helper';
 import * as Layouts from '../components/streaming/layouts';
-import { useRouter } from 'next/router';
 import SEO from '../components/seo';
 
 interface StreamView {
@@ -126,7 +126,7 @@ const Streams: NextPage<IRawStreamsProps> = props => {
         component={Box}
         sx={{
           height: 'calc(100vh - var(--toa-navbar-height))',
-          bgcolor: '#121212',
+          bgcolor: '#0a0a0a',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center'
@@ -140,12 +140,13 @@ const Streams: NextPage<IRawStreamsProps> = props => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                bgcolor: 'background.paper',
+                color: '#fff',
+                bgcolor: '#141414',
                 mx: 4,
                 my: 'auto',
                 width: 400,
                 maxWidth: '100%',
-                borderRadius: 4,
+                borderRadius: 2,
                 maxHeight: '90%',
                 overflow: 'hidden'
               }}
@@ -157,20 +158,24 @@ const Streams: NextPage<IRawStreamsProps> = props => {
                 {views
                   .filter(v => (isMobile ? v.mobile : true))
                   .map(v => (
-                    <ListItem
-                      button
+                    <ListItemButton
                       key={v.id}
                       dense
                       sx={{ my: 0.5, py: 1 }}
                       onClick={() => setSelectedLayout(v)}
                     >
                       <ListItemIcon>
-                        <svg style={{ width: '25px', height: '20px' }} viewBox="0 0 23 15">
+                        <svg
+                          style={{ width: 25, height: 20, fill: 'rgba(255, 255, 255, 0.4)' }}
+                          viewBox="0 0 23 15"
+                        >
                           <path d={v.svgPath} />
                         </svg>
                       </ListItemIcon>
-                      <ListItemText>{t('pages.streams.layouts.' + v.id)}</ListItemText>
-                    </ListItem>
+                      <ListItemText primaryTypographyProps={{ fontWeight: 500 }}>
+                        {t('pages.streams.layouts.' + v.id)}
+                      </ListItemText>
+                    </ListItemButton>
                   ))}
               </List>
               {!smallScreen && (

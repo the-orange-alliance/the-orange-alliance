@@ -12,10 +12,9 @@ import {
 import TOAProvider from '../../providers/TOAProvider';
 import { MatchSorter } from '../utils/match';
 import { EventSorter } from '../utils/event';
-import { sort } from '../utils/award';
+import { sortAwards } from '../utils/award';
 import { MediaTypeTeam } from '@the-orange-alliance/api/lib/cjs/models/types/MediaType';
 import { undefinedToNull } from '../utils/common';
-import rankingTab from '../../components/EventTabs/RankingTab';
 
 export interface IRawTeamProps {
   team: any;
@@ -52,7 +51,7 @@ export const parseTeamProps = (props: IRawTeamProps): ITeamProps => {
   for (const event of team.events) {
     // Map awards to event
     let awards = team.awards.filter(a => a.eventKey === event.eventKey);
-    awards = sort(awards);
+    awards = sortAwards(awards);
 
     event.awards = awards;
 
@@ -143,9 +142,12 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
   const matches = await getEventMatches(filtered, teamKey);
 
   // Calculate top OPR
-  const topOpr = data[5].length > 0 ? data[5].reduce((prev: Ranking, current: Ranking) => {
-    return prev.opr > current.opr ? prev : current;
-  }) : null;
+  const topOpr =
+    data[5].length > 0
+      ? data[5].reduce((prev: Ranking, current: Ranking) => {
+          return prev.opr > current.opr ? prev : current;
+        })
+      : null;
 
   return {
     team: undefinedToNull(data[0].toJSON()),
