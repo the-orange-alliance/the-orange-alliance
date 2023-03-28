@@ -1,68 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  Typography,
-  Snackbar,
-  Grid,
-  Drawer,
-  Box,
-  CircularProgress,
-  IconButton,
-  Divider,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { useMemo, useState } from 'react';
+import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
-import MatchDetailsCard from '../MatchDetails/MatchDetailsCard';
 import TOAProvider from '../../providers/TOAProvider';
 import TeamSelectionBar from './team-selection-bar';
 import MatchTableRow from './row';
 import MatchTableRemoteRow from './remote-row';
+import MatchDetailsModal from './Details-modal';
 
-interface IProps {
+interface MatchTableProps {
   event: Event;
   forceSmall?: boolean;
-  disableSingleTeamTeam?: boolean;
   allowSelection?: boolean;
   hideHeader?: boolean;
 }
 
-const MatchTable = (props: IProps) => {
-  const { forceSmall, allowSelection, disableSingleTeamTeam } = props;
-  const { matches } = props.event;
+const MatchTable: React.FC<MatchTableProps> = ({
+  event,
+  forceSmall,
+  allowSelection,
+  hideHeader
+}) => {
   const t = useTranslate();
   const theme = useTheme();
   const isStacked = useMediaQuery(theme.breakpoints.down('sm')) || forceSmall;
-
+  const matches = event.matches;
   const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(null);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!drawerOpen && selectedMatch) {
-      setTimeout(() => setSelectedMatch(null), 200);
-    }
-  }, [drawerOpen]);
-
-  useEffect(() => {
-    if (selectedMatch) setDrawerOpen(true);
-    if (selectedMatch && selectedMatch.details.matchDetailKey === '') {
-      TOAProvider.getAPI()
-        .getMatchDetails(selectedMatch.matchKey)
-        .then(dtls => {
-          const copy = new Match().fromJSON(selectedMatch.toJSON());
-          copy.details = dtls;
-          // Set these details because this technically should reference to the original data we got from the server
-          // This way, the next time the user loads these details they exist
-          selectedMatch.details = dtls;
-          setSelectedMatch(copy);
-        })
-        .catch(err => {
-          setDrawerOpen(false);
-        });
-    }
-  }, [selectedMatch]);
 
   const groupedMatches = useMemo(() => {
     const grouped: { [key: string]: Match[] } = {};
@@ -107,10 +71,28 @@ const MatchTable = (props: IProps) => {
     setSelectedTeam(current => (current && current.teamKey === team.teamKey ? null : team));
   };
 
+  const handleMatchClick = (match: Match) => {
+    setSelectedMatch(match);
+    if (match.details.matchDetailKey === '') {
+      TOAProvider.getAPI()
+        .getMatchDetails(match.matchKey)
+        .then(dtls => {
+          const copy = new Match().fromJSON(match.toJSON());
+          copy.details = dtls;
+          // Cache these details, so the next time we don't have to fetch them
+          match.details = dtls;
+          setSelectedMatch(copy);
+        })
+        .catch(err => {
+          setSelectedMatch(null);
+        });
+    }
+  };
+
   return (
     <>
       <table className="event-match-table toa-match-table__root">
-        {!props.hideHeader && (
+        {!hideHeader && (
           <thead className="toa-match-table__thead">
             {isStacked ? (
               <tr>
@@ -150,7 +132,6 @@ const MatchTable = (props: IProps) => {
             )}
           </thead>
         )}
-
         <tbody>
           {groupedMatches.map((group, i) => {
             return (
@@ -180,7 +161,7 @@ const MatchTable = (props: IProps) => {
                       isStacked={isStacked}
                       onTeamClick={allowSelection ? handleTeamClick : undefined}
                       selectedTeam={allowSelection ? selectedTeam : null}
-                      onMatchClick={setSelectedMatch}
+                      onMatchClick={handleMatchClick}
                     />
                   ) : (
                     <MatchTableRow
@@ -189,7 +170,7 @@ const MatchTable = (props: IProps) => {
                       isStacked={isStacked}
                       onTeamClick={allowSelection ? handleTeamClick : undefined}
                       selectedTeam={allowSelection ? selectedTeam : null}
-                      onMatchClick={setSelectedMatch}
+                      onMatchClick={handleMatchClick}
                     />
                   )
                 )}
@@ -198,6 +179,14 @@ const MatchTable = (props: IProps) => {
           })}
         </tbody>
       </table>
+
+      <TeamSelectionBar team={selectedTeam} rankings={event.rankings} />
+
+      <MatchDetailsModal
+        open={selectedMatch !== null}
+        match={selectedMatch}
+        onClose={() => setSelectedMatch(null)}
+      />
 
       <style jsx>{`
         .toa-match-table__root {
@@ -242,57 +231,6 @@ const MatchTable = (props: IProps) => {
           }
         }
       `}</style>
-
-      {/* SELECTED TEAM SNACKBAR */}
-      <Snackbar
-        open={selectedTeam !== null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        message={<TeamSelectionBar team={selectedTeam} rankings={props.event.rankings} />}
-      />
-
-      {/* SELECTED MATCH TRAY */}
-      <Drawer
-        anchor={'right'}
-        open={drawerOpen}
-        transitionDuration={200}
-        PaperProps={{ style: { maxWidth: '90%' } }}
-        onClose={() => setDrawerOpen(false)}
-        sx={theme => {
-          return { zIndex: theme.zIndex.drawer + 2 };
-        }}
-      >
-        <Box>
-          {selectedMatch && [
-            <Grid
-              key={'header'}
-              container
-              direction={'row'}
-              sx={{ textAlign: 'center', backgroundColor: 'rgba(224, 224, 224, 1)' }}
-            >
-              <Grid item xs={11} sx={{ marginTop: 0.5 }}>
-                <Typography variant={'h6'}>{selectedMatch.matchName}</Typography>
-              </Grid>
-              <Grid item xs={1}>
-                <IconButton onClick={() => setDrawerOpen(false)}>
-                  <Close />
-                </IconButton>
-              </Grid>
-            </Grid>,
-            <Divider key={'divider'} />
-          ]}
-          {selectedMatch && selectedMatch.details.matchKey === '' && (
-            <Box className={'text-center mt-5'} sx={{ minWidth: 300 }}>
-              <CircularProgress />
-            </Box>
-          )}
-          {selectedMatch && selectedMatch.details.matchKey !== '' && (
-            <MatchDetailsCard match={selectedMatch} />
-          )}
-        </Box>
-      </Drawer>
     </>
   );
 };

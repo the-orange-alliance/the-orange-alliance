@@ -246,9 +246,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                             {award.award.awardDescription}
                           </Typography>
                         ))}
-                        {event.matches.length > 0 && (
-                          <MatchTable event={event} disableSingleTeamTeam hideHeader />
-                        )}
+                        {event.matches.length > 0 && <MatchTable event={event} hideHeader />}
                         {event.matches.length < 1 && <Typography variant={'body1'} />}
                       </CardContent>
                     </Card>

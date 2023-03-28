@@ -1,4 +1,4 @@
-import { Match, MatchParticipant, Ranking } from '@the-orange-alliance/api/lib/cjs/models';
+import { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchVideoIcon from './video-icon';
 import MatchNameDisplay from './name-display';
 import MatchScoresDisplay from './scores-display';
