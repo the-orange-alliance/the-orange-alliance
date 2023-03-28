@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {
-  ListItem,
   ListItemIcon,
   ListItemText,
   Checkbox,
