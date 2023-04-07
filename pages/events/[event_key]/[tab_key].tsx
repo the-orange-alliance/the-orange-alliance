@@ -122,7 +122,8 @@ const EventPage: NextPage<IRawEventProps> = props => {
                       size="small"
                       color={isSelected ? 'secondary' : 'inherit'}
                       sx={{
-                        color: isSelected ? undefined : 'text.secondary'
+                        color: isSelected ? undefined : 'text.secondary',
+                        textAlign: 'center'
                       }}
                     >
                       {div.divisionName} Division
