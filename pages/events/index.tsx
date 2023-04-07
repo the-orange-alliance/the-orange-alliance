@@ -98,22 +98,22 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
       <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={selectedWeek}
-            onChange={selectTab}
-            variant={'fullWidth'}
-            scrollButtons={'auto'}
-          >
+          <Tabs value={selectedWeek} onChange={selectTab} variant="scrollable" scrollButtons="auto">
             {weeks.map((week: Week) => (
               <Tab
                 key={week.weekKey}
                 label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
                 value={week.weekKey}
-                iconPosition={'top'}
+                iconPosition="top"
                 icon={
-                  <Badge badgeContent={getEventsByWeek(week).length} max={9999} color={'primary'} />
+                  <Badge
+                    badgeContent={getEventsByWeek(week).length}
+                    max={9999}
+                    color={'primary'}
+                    sx={{ mb: 1 }}
+                  />
                 }
-                sx={{ px: 3 }}
+                sx={{ px: 2, maxWidth: '14em' }}
               />
             ))}
           </Tabs>
