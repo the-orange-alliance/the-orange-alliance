@@ -96,6 +96,7 @@ const DrawerLayout = ({ title, children }: DrawerLayoutProps) => {
           flexGrow: 1,
           minHeight: '100vh',
           bgcolor: 'background.default',
+          minWidth: 0,
           maxWidth: '100%'
         }}
       >
