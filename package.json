@@ -30,6 +30,7 @@
     "swagger-ui-react": "^4.15.2"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.12",
     "@types/node": "16.11.7",
     "@types/react": "^18.0.25",
     "@types/swagger-ui-react": "^3.35.3",

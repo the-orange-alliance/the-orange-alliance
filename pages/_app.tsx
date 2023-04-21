@@ -13,6 +13,7 @@ import TOAAppContextProvider from '../lib/toa-context';
 import TOAUser from '../lib/TOAUser';
 import { onAuthStateChanged } from 'firebase/auth';
 import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
+import { AnalyticsScript, useAnalytics } from '../lib/analytics';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -28,6 +29,8 @@ function MyApp({
     [user, setUser, isAuthLoaded]
   );
   let currUid: string = '';
+
+  useAnalytics();
 
   useEffect(() => {
     // Register onMessage event
@@ -71,6 +74,7 @@ function MyApp({
               <Component {...pageProps} />
             </DrawerLayout>
             <Toaster />
+            <AnalyticsScript />
           </TOAAppContextProvider>
         </ThemeProvider>
       </UserLanguageProvider>
