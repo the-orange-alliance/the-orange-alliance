@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 export const GA_TRACKING_ID = 'UA-105262657-1';
 
 export const pageView = (url: URL) => {
-  console.log('pageView', url);
   window.gtag('config', GA_TRACKING_ID, {
     page_path: url
   });

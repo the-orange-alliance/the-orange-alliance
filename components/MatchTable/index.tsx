@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
@@ -139,7 +139,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
         <tbody>
           {groupedMatches.map((group, i) => {
             return (
-              <>
+              <React.Fragment key={group.label}>
                 <tr style={{ backgroundColor: '#f0f0f0' }}>
                   <th>
                     <Typography
@@ -178,7 +178,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
                     />
                   )
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </tbody>

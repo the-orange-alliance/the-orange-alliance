@@ -23,7 +23,7 @@ function toHex(arrayBuffer: ArrayBuffer) {
     .join('');
 }
 
-export default async function (req: NextRequest) {
+const handler = async function (req: NextRequest) {
   const fontData = await font;
 
   const { searchParams } = req.nextUrl;
@@ -86,4 +86,6 @@ export default async function (req: NextRequest) {
       ]
     }
   );
-}
+};
+
+export default handler;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Toaster } from 'react-hot-toast';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
@@ -24,11 +24,11 @@ function MyApp({
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+  const authedUserId = useRef<string | null>(null);
   const value = useMemo(
     () => ({ ...globals, isAuthLoaded, user, setUser }),
     [user, setUser, isAuthLoaded]
   );
-  let currUid: string = '';
 
   useAnalytics();
 
@@ -45,8 +45,8 @@ function MyApp({
     // Register Authentication listener
     onAuthStateChanged(getAuthInstance(), newUser => {
       // Only requery data if UID has changed
-      if (newUser && newUser.uid !== currUid && newUser.uid !== user?.uid) {
-        currUid = newUser.uid;
+      if (newUser && newUser.uid !== authedUserId.current && newUser.uid !== user?.uid) {
+        authedUserId.current = newUser.uid;
         fetchUserData().then(user => {
           setUser(user);
           setIsAuthLoaded(true);
