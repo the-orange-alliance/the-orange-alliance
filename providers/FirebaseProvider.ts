@@ -33,13 +33,13 @@ const toaBaseUrl = 'https://api.theorangealliance.org';
 // const toaBaseUrl = 'http://localhost:8008/api';
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+  apiKey: 'AIzaSyBi0Bn_WysaX9DSnpo-E5c-q0O6XBX7T_k',
+  authDomain: 'auth.theorangealliance.org',
+  databaseURL: 'https://the-orange-alliance.firebaseio.com',
+  projectId: 'the-orange-alliance',
+  storageBucket: 'the-orange-alliance.appspot.com',
+  messagingSenderId: '495169296462',
+  appId: '1:495169296462:web:a8543d9517ea3cea4e0b1f'
 };
 let app = firebase.initializeApp(firebaseConfig);
 
