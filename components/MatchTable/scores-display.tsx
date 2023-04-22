@@ -16,7 +16,7 @@ const MatchScoresDisplay: React.FC<MatchScoresDisplayProps> = ({ match, isRemote
   const time = new Date(match.scheduledTime);
   const isToday = isSameDay(time, new Date());
   const scheduledTime =
-    isPlayed || isNaN(time.getTime())
+    isPlayed || !match.scheduledTime || isNaN(time.getTime())
       ? ''
       : isToday
       ? time.toLocaleTimeString(`${language}-US`, { hour: 'numeric', minute: 'numeric' })
