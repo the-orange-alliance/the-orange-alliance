@@ -38,7 +38,7 @@ export const useAnalytics = () => {
 export const AnalyticsScript = () => {
   return (
     <>
-      {/* Global site tag (gtag.js) - Google Analytics */}
+      {Global site tag (gtag.js) - Google Analytics}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         strategy="afterInteractive"
