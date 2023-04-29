@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
 
-/*export const GA_TRACKING_ID = 'UA-105262657-1';
+export const GA_TRACKING_ID = 'UA-105262657-1';
 
 export const pageView = (url: URL) => {
   window.gtag('config', GA_TRACKING_ID, {
@@ -29,6 +29,7 @@ export const useAnalytics = () => {
       pageView(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
+
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
@@ -36,9 +37,11 @@ export const useAnalytics = () => {
 };
 
 export const AnalyticsScript = () => {
+  useAnalytics();
+
   return (
     <>
-      {Global site tag (gtag.js) - Google Analytics}
+      {/* {Global site tag (gtag.js) - Google Analytics} */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         strategy="afterInteractive"
@@ -54,4 +57,3 @@ export const AnalyticsScript = () => {
     </>
   );
 };
-*/

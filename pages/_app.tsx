@@ -13,7 +13,7 @@ import TOAAppContextProvider from '../lib/toa-context';
 import TOAUser from '../lib/TOAUser';
 import { onAuthStateChanged } from 'firebase/auth';
 import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
-import { AnalyticsScript, useAnalytics } from '../lib/analytics';
+import { AnalyticsScript } from '../lib/analytics';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -29,8 +29,6 @@ function MyApp({
     () => ({ ...globals, isAuthLoaded, user, setUser }),
     [user, setUser, isAuthLoaded]
   );
-
-  useAnalytics();
 
   useEffect(() => {
     // Register onMessage event
