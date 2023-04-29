@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { useEffect } from 'react';
 
-export const GA_TRACKING_ID = 'UA-105262657-1';
+/*export const GA_TRACKING_ID = 'UA-105262657-1';
 
 export const pageView = (url: URL) => {
   window.gtag('config', GA_TRACKING_ID, {
@@ -54,3 +54,4 @@ export const AnalyticsScript = () => {
     </>
   );
 };
+*/
