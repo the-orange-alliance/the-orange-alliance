@@ -72,7 +72,7 @@ function MyApp({
               <Component {...pageProps} />
             </DrawerLayout>
             <Toaster />
-            <AnalyticsScript />
+            {/* <AnalyticsScript /> */}
           </TOAAppContextProvider>
         </ThemeProvider>
       </UserLanguageProvider>
