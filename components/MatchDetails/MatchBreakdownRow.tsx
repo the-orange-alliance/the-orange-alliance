@@ -3,6 +3,7 @@ import { Check, Close } from '@mui/icons-material';
 export class MatchBreakdownConstants {
   trueValue = -1000;
   falseValue = -2000;
+  stringPassthrough = -2;
   null = -1;
   velocityVortexParking = 1;
   velocityVortexCapBall = 2;
@@ -10,6 +11,7 @@ export class MatchBreakdownConstants {
   freightFrenzyParking = 4;
   freightFrenzyBarcodeElement = 5;
   powerPlayParking = 6;
+  centerstageParking = 7;
 }
 
 export class MatchBreakdownRow {
@@ -86,6 +88,10 @@ export class MatchBreakdownRow {
       return this.getFreightFrenzyBarcodeElement(s);
     } else if (this.gameType === constants.powerPlayParking && typeof s === 'string') {
       return this.getPowerPlayParking(s);
+    } else if (this.gameType === constants.centerstageParking && typeof s === 'string') {
+      return this.getCenterstageParking(s);
+    } else if (this.gameType === constants.stringPassthrough && typeof s === 'string') {
+      return s;
     } else {
       const isTrue = s === constants.trueValue;
       const isFalse = s === constants.falseValue;
@@ -181,6 +187,18 @@ export class MatchBreakdownRow {
     }
     return 'Not Scored';
   }
+
+  getCenterstageParking(key: string) {
+    switch (key) {
+      case 'NONE':
+        return 'None';
+      case 'BACKSTAGE':
+        return 'Backstage (+5)';
+      case 'RIGGING':
+        return 'Rigging (+20)';
+    }
+    return 'Not Scored';
+  }
 }
 
 export function MatchBreakdownTitle(name: string, redScore: number, blueScore: number) {
@@ -189,6 +207,18 @@ export function MatchBreakdownTitle(name: string, redScore: number, blueScore: n
 
 export function MatchBreakdownField(name: string, red: number, blue: number, points: number) {
   return new MatchBreakdownRow(false, name, red, blue, points, points);
+}
+
+export function MatchBreakdownCenterstageParking(name: string, red: string, blue: string) {
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().centerstageParking
+  );
 }
 
 export function MatchBreakdownPowerPlayParking(name: string, red: string, blue: string) {
@@ -294,5 +324,17 @@ export function MatchBreakdownBoolFieldVariable(
     blue ? constants.trueValue : constants.falseValue,
     redPoint,
     bluePoint
+  );
+}
+
+export function MatchBreakdownStringField(name: string, red: string, blue: string) {
+  return new MatchBreakdownRow(
+    false,
+    name,
+    red,
+    blue,
+    -1,
+    -1,
+    new MatchBreakdownConstants().stringPassthrough
   );
 }
