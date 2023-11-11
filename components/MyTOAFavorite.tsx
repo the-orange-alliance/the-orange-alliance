@@ -57,7 +57,7 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         setIsNotificationsSupported(true);
       }
     });
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleFavoriteToggle = () => {
     //  Check if user is logged in
@@ -74,7 +74,13 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         const favEvents = user.favoriteEvents.filter(eventKey => eventKey !== key);
         // Remove event from notifications (backend does this in the DB)
         const notiEvents = user.notifyEvents.filter(eventKey => eventKey !== key);
-        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_events: favEvents, notify_events: notiEvents }));
+        setUser(
+          new TOAUser().fromJSON({
+            ...user.toJSON(),
+            favorite_events: favEvents,
+            notify_events: notiEvents
+          })
+        );
       } else if (type === myTOAType.event && !isFavorite) {
         // Add event to favorites
         if (!user.favoriteEvents.includes(key)) user.favoriteEvents.push(key);
@@ -84,7 +90,13 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
         const favTeams = user.favoriteTeams.filter(eventKey => eventKey !== key);
         // Remove team from notifications (backend does this in the DB)
         const notiTeams = user.notifyTeams.filter(eventKey => eventKey !== key);
-        setUser(new TOAUser().fromJSON({ ...user.toJSON(), favorite_teams: favTeams, notify_teams: notiTeams }));
+        setUser(
+          new TOAUser().fromJSON({
+            ...user.toJSON(),
+            favorite_teams: favTeams,
+            notify_teams: notiTeams
+          })
+        );
       } else if (type === myTOAType.team && !isFavorite) {
         // Add team to favorites
         if (!user.favoriteTeams.includes(key)) user.favoriteTeams.push(key);
@@ -148,7 +160,9 @@ const MyTOAFavorite = ({ type, dataKey: key }: IProps) => {
           onClick={handleNotificationToggle}
           icon={isNotificationsEnabled ? <NotificationsActive /> : <NotificationsOff />}
           tooltipTitle={t(
-            isNotificationsEnabled ? 'general.disable_notifications' : 'general.enable_notifications'
+            isNotificationsEnabled
+              ? 'general.disable_notifications'
+              : 'general.enable_notifications'
           )}
           sx={{
             border: '1px solid',

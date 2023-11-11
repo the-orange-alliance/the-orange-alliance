@@ -56,7 +56,7 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
         tabHandler(null, 0);
       }
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateTab = (tab: number) => {
     setCurrentTab(tab);

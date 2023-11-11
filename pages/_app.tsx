@@ -27,7 +27,7 @@ function MyApp({
   const authedUserId = useRef<string | null>(null);
   const value = useMemo(
     () => ({ ...globals, isAuthLoaded, user, setUser }),
-    [user, setUser, isAuthLoaded]
+    [user, setUser, isAuthLoaded] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function MyApp({
         setIsAuthLoaded(true);
       }
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

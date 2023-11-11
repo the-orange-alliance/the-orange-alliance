@@ -103,7 +103,7 @@ const EventTabs = ({ event, streams }: IProps) => {
       });
     }
     return tabs;
-  }, [event, user]);
+  }, [event, user]); // eslint-disable-line react-hooks/exhaustive-deps
   const [selectedTabId, setSelectedTabId] = useState<string>(tabs[0]?.id);
 
   const selectedTab = useMemo(

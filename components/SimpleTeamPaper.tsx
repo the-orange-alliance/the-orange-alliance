@@ -17,7 +17,7 @@ const SimpleTeamPaper: React.FC<SimpleTeamPaperProps> = ({ team }) => {
 
   useEffect(() => {
     if (user) setNotify(user.notifyTeams.includes(team.teamKey) ?? false);
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Link href={`/teams/${team.teamKey}`} passHref>

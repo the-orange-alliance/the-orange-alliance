@@ -75,7 +75,7 @@ const FilterCard = (props: IProps) => {
       })
     );
     setSelectedSeason(tempSeason);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getRegionString = (region: Region) => {
     if (region.regionKey === 'all') return region.description;

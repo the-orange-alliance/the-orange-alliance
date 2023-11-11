@@ -18,7 +18,7 @@ const SimpleEventPaper: React.FC<SimpleEventPaperProps> = ({ event }) => {
 
   useEffect(() => {
     if (user) setNotify(user.notifyEvents.includes(event.eventKey) ?? false);
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const secondaryText =
     event.startDate === event.endDate

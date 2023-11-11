@@ -89,7 +89,7 @@ const Search: React.FC<SearchProps> = ({
         router.push(`/events/${item.key}/rankings`);
       }
     },
-    [onBlur]
+    [onBlur] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const options = useMemo(
@@ -115,7 +115,7 @@ const Search: React.FC<SearchProps> = ({
                 }
           )
         : [],
-    [t, results]
+    [t, results] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const Search: React.FC<SearchProps> = ({
         onSearchChange({ target: { value: query } } as React.ChangeEvent<HTMLInputElement>);
       }
     }
-  }, [watchGlobalCommand, router.query.q]);
+  }, [watchGlobalCommand, router.query.q]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const isOpen = isFocused && inputValue.length > 0 && results !== null;
 
