@@ -85,7 +85,13 @@ export default class MatchBreakdown2324 {
         'Robot 2 Drone Launch',
         this.calcDrone(red.drone_2),
         this.calcDrone(blue.drone_2)
-      )
+      ),
+
+      MatchBreakdownTitle('Penalty', blue.penaltyPointsComitted, red.penaltyPointsComitted),
+      MatchBreakdownField('Minor Penalty', details.blueMinPen, details.redMinPen, 10),
+      MatchBreakdownField('Major Penalty', details.blueMajPen, details.redMajPen, 30),
+
+      MatchBreakdownTitle('Final', match.redScore, match.blueScore)
     ];
   }
 }
