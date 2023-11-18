@@ -87,9 +87,9 @@ export default class MatchBreakdown2324 {
         this.calcDrone(blue.drone_2)
       ),
 
-      MatchBreakdownTitle('Penalty', blue.penaltyPointsComitted, red.penaltyPointsComitted),
-      MatchBreakdownField('Minor Penalty', details.blueMinPen, details.redMinPen, 10),
-      MatchBreakdownField('Major Penalty', details.blueMajPen, details.redMajPen, 30),
+      MatchBreakdownTitle('Penalty', red.penalty_points_committed, blue.penalty_points_committed),
+      MatchBreakdownField('Minor Penalty', details.redMinPen, details.blueMinPen, 10),
+      MatchBreakdownField('Major Penalty', details.redMajPen, details.blueMajPen, 30),
 
       MatchBreakdownTitle('Final', match.redScore, match.blueScore)
     ];
