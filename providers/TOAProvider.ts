@@ -17,8 +17,9 @@ class TOAProvider {
     // this.api.setCustomUrl('http://localhost:8008/api');
   }
 
-  public getAPI(internal?: Boolean): API {
-    if (internal) this.api.setCustomUrl('http://127.0.0.1:8008/api');
+  public getAPI(): API {
+    // Use local request if we're on the backend
+    if (typeof window === 'undefined') this.api.setCustomUrl('http://127.0.0.1:8008/api');
     else this.api.setCustomUrl('https://api.theorangealliance.org');
     return this.api;
   }

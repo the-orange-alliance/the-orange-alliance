@@ -65,22 +65,22 @@ const getInsightsData = async (
   /* Seasons where single-team matches are a thing */
   if (seasonKey === '2021' || seasonKey === '2122' || seasonKey === '2223') {
     const data = await Promise.all([
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'elims',
         single_team: 'excluded'
       }),
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'quals',
         single_team: 'included'
       }),
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'quals',
         single_team: 'only'
       }),
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'quals',
         single_team: 'excluded'
@@ -123,12 +123,12 @@ const getInsightsData = async (
     /* Seasons where single-team matches are NOT a thing */
   } else {
     const data = await Promise.all([
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'elims',
         single_team: 'excluded'
       }),
-      TOAProvider.getAPI(true).getSeasonInsights(seasonKey, {
+      TOAProvider.getAPI().getSeasonInsights(seasonKey, {
         ...optionalProps,
         type: 'quals',
         single_team: 'excluded'

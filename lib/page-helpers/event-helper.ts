@@ -54,15 +54,15 @@ export const useEventData = (props: IRawEventProps): IEventProps =>
 
 export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> => {
   const data = await Promise.all([
-    TOAProvider.getAPI(true).getEvent(eventKey),
-    TOAProvider.getAPI(true).getEventTeams(eventKey),
-    TOAProvider.getAPI(true).getEventRankings(eventKey),
-    TOAProvider.getAPI(true).getEventMatches(eventKey),
-    TOAProvider.getAPI(true).getEventAlliances(eventKey),
-    TOAProvider.getAPI(true).getEventAwards(eventKey),
-    TOAProvider.getAPI(true).getEventInsights(eventKey, 'quals'),
-    TOAProvider.getAPI(true).getEventInsights(eventKey, 'elims'),
-    TOAProvider.getAPI(true).getEventStreams(eventKey)
+    TOAProvider.getAPI().getEvent(eventKey),
+    TOAProvider.getAPI().getEventTeams(eventKey),
+    TOAProvider.getAPI().getEventRankings(eventKey),
+    TOAProvider.getAPI().getEventMatches(eventKey),
+    TOAProvider.getAPI().getEventAlliances(eventKey),
+    TOAProvider.getAPI().getEventAwards(eventKey),
+    TOAProvider.getAPI().getEventInsights(eventKey, 'quals'),
+    TOAProvider.getAPI().getEventInsights(eventKey, 'elims'),
+    TOAProvider.getAPI().getEventStreams(eventKey)
   ]);
 
   const event = data[0];
@@ -79,7 +79,7 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
   if (!isNaN(currDiv) && event.divisionName !== null && currDiv === event.divisionKey) {
     const toFetch = currDiv === 0 ? [1, 2] : currDiv === 1 ? [0, 2] : [0, 1];
     divisions = await Promise.all(
-      toFetch.map(div => TOAProvider.getAPI(true).getEvent(eventKey.slice(0, -1) + div))
+      toFetch.map(div => TOAProvider.getAPI().getEvent(eventKey.slice(0, -1) + div))
     ).catch(() => []);
     if (divisions.length > 0) {
       divisions.push(event);

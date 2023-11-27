@@ -30,9 +30,9 @@ export const useAppData = (props: IRawAppProps): IAppProps =>
 
 export const fetchAppData = async (): Promise<IRawAppProps> => {
   const data = await Promise.all([
-    TOAProvider.getAPI(true).getRegions(),
-    TOAProvider.getAPI(true).getSeasons(),
-    TOAProvider.getAPI(true).getLeagues(undefined, CURRENT_SEASON)
+    TOAProvider.getAPI().getRegions(),
+    TOAProvider.getAPI().getSeasons(),
+    TOAProvider.getAPI().getLeagues(undefined, CURRENT_SEASON)
   ]);
 
   // Add "All Regions"

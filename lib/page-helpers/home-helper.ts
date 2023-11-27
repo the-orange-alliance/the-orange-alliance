@@ -86,12 +86,12 @@ export const fetchHomeData = async (): Promise<IRawHomeProps> => {
   const now = new Date();
   const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
   const homePageResults = await Promise.all([
-    TOAProvider.getAPI(true).getTeamCount({ last_active: CURRENT_SEASON }),
-    TOAProvider.getAPI(true).getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
+    TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
+    TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
     getHighScoreMatch('all', true, true),
     getHighScoreMatch('quals', false, true),
     getHighScoreMatch('elims', false, true),
-    TOAProvider.getAPI(true).getEvents({
+    TOAProvider.getAPI().getEvents({
       season_key: CURRENT_SEASON,
       on: today,
       includeTeamCount: true

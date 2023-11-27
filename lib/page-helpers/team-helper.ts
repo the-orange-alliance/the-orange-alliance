@@ -114,12 +114,12 @@ export const useTeamData = (props: IRawTeamProps): ITeamProps =>
 
 export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise<IRawTeamProps> => {
   const data = await Promise.all([
-    TOAProvider.getAPI(true).getTeam(teamKey),
-    TOAProvider.getAPI(true).getTeamEvents(teamKey, seasonKey),
-    TOAProvider.getAPI(true).getTeamWLT(teamKey, { season_key: seasonKey }),
-    TOAProvider.getAPI(true).getTeamMedia(teamKey, seasonKey),
-    TOAProvider.getAPI(true).getTeamAwards(teamKey, seasonKey),
-    TOAProvider.getAPI(true).getTeamRankings(teamKey, seasonKey)
+    TOAProvider.getAPI().getTeam(teamKey),
+    TOAProvider.getAPI().getTeamEvents(teamKey, seasonKey),
+    TOAProvider.getAPI().getTeamWLT(teamKey, { season_key: seasonKey }),
+    TOAProvider.getAPI().getTeamMedia(teamKey, seasonKey),
+    TOAProvider.getAPI().getTeamAwards(teamKey, seasonKey),
+    TOAProvider.getAPI().getTeamRankings(teamKey, seasonKey)
   ]);
 
   // Get all team events for season
@@ -127,7 +127,7 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
     data[1].map((result: EventParticipant) => {
       // Some teams are a part of orphaned events (I.E. The event key is invalid)
       // Catch those errors and return null
-      return TOAProvider.getAPI(true)
+      return TOAProvider.getAPI()
         .getEvent(result.eventKey)
         .catch(() => null);
     })
@@ -189,7 +189,7 @@ const getEventMatches = async (events: Event[], teamKey: string): Promise<any[]>
 
   await Promise.all(
     events.map(event =>
-      TOAProvider.getAPI(true)
+      TOAProvider.getAPI()
         .getEventMatches(event.eventKey)
         .then((data: Match[]) => {
           responseMap[event.eventKey] = sortAndFind(teamKey, data).map(m =>

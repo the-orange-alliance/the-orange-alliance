@@ -34,10 +34,10 @@ export const useMatchData = (props: IRawMatchProps): IMatchProps =>
 export const fetchMatchData = async (matchKey: string): Promise<IRawMatchProps> => {
   const split = matchKey.split('-');
   const data = await Promise.all([
-    TOAProvider.getAPI(true).getMatch(matchKey),
-    TOAProvider.getAPI(true).getMatchDetails(matchKey),
-    TOAProvider.getAPI(true).getMatchParticipants(matchKey),
-    TOAProvider.getAPI(true).getEvent(`${split[0]}-${split[1]}-${split[2]}`)
+    TOAProvider.getAPI().getMatch(matchKey),
+    TOAProvider.getAPI().getMatchDetails(matchKey),
+    TOAProvider.getAPI().getMatchParticipants(matchKey),
+    TOAProvider.getAPI().getEvent(`${split[0]}-${split[1]}-${split[2]}`)
   ]);
 
   return {
