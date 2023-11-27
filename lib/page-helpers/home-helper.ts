@@ -30,17 +30,16 @@ export interface IHomeProps {
 
 export const getHighScoreMatch = (
   type: 'all' | 'elims' | 'quals' | 'single_team',
-  penalty: boolean,
-  internal?: boolean
+  penalty: boolean
 ): Promise<Match | undefined> => {
   return new Promise<Match | undefined>(async (resolve, reject) => {
     try {
-      const match: Match = await TOAProvider.getAPI(internal).getHighScoreMatch(type, {
+      const match: Match = await TOAProvider.getAPI().getHighScoreMatch(type, {
         season_key: CURRENT_SEASON,
         penalty
       });
       if (match) {
-        match.event = await TOAProvider.getAPI(internal).getEvent(match.eventKey);
+        match.event = await TOAProvider.getAPI().getEvent(match.eventKey);
         resolve(match);
       } else {
         resolve(undefined);
@@ -88,9 +87,9 @@ export const fetchHomeData = async (): Promise<IRawHomeProps> => {
   const homePageResults = await Promise.all([
     TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
     TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
-    getHighScoreMatch('all', true, true),
-    getHighScoreMatch('quals', false, true),
-    getHighScoreMatch('elims', false, true),
+    getHighScoreMatch('all', true),
+    getHighScoreMatch('quals', false),
+    getHighScoreMatch('elims', false),
     TOAProvider.getAPI().getEvents({
       season_key: CURRENT_SEASON,
       on: today,
