@@ -1,9 +1,9 @@
 import { FormControlLabel, Checkbox, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useTranslate } from '../../../i18n/i18n';
-import { useAppContext } from '../../../lib/toa-context';
-import { cloudMessaging } from '../../../providers/firebase-provider';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
+import { cloudMessaging } from '@/providers/firebase-provider';
 import SideCard from './SideCard';
 
 const NotificationsCard = () => {

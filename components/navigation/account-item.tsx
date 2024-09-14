@@ -2,8 +2,8 @@ import React from 'react';
 import NextLink from 'next/link';
 import { Avatar, Box, Button, ButtonBase, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useTranslate } from '../../i18n/i18n';
-import { useAppContext } from '../../lib/toa-context';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
 
 const initials = (name: string) => {
   const [firstName, lastName] = name.split(' ');

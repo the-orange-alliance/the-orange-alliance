@@ -17,10 +17,9 @@ import EventIcon from '@mui/icons-material/EventOutlined';
 import TeamIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { SearchResult } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/toa-provider';
-import { useTranslate } from '../../i18n/i18n';
-import { getEventDescription } from '../../lib/utils/common';
-import theme from '../../lib/theme';
+import TOAProvider from '@/providers/toa-provider';
+import { useTranslate } from '@/i18n/i18n';
+import { getEventDescription } from '@/lib/utils/common';
 
 interface Option {
   key: string;

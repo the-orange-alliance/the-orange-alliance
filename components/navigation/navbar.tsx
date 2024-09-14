@@ -1,7 +1,7 @@
 import { AppBar, Backdrop, IconButton, Toolbar, Typography, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from 'react';
-import { useTranslate } from '../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import { useTheme } from '@mui/material/styles';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Search from './search';

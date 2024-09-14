@@ -1,14 +1,14 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Box, Button, CircularProgress, Container, Grid, Stack, Typography } from '@mui/material';
-import { logout } from '../../providers/firebase-provider';
-import { useTranslate } from '../../i18n/i18n';
-import SEO from '../../components/seo';
-import { useAppContext } from '../../lib/toa-context';
-import AccountSettingsCard from '../../components/pages/account/AccountSettingsCard';
-import APICard from '../../components/pages/account/APICard';
-import NotificationsCard from '../../components/pages/account/NotificationsCard';
-import FavoritesCard from '../../components/pages/account/FavoritesCard';
+import { logout } from '@/providers/firebase-provider';
+import { useTranslate } from '@/i18n/i18n';
+import SEO from '@/components/seo';
+import { useAppContext } from '@/lib/toa-context';
+import AccountSettingsCard from '@/components/pages/account/AccountSettingsCard';
+import APICard from '@/components/pages/account/APICard';
+import NotificationsCard from '@/components/pages/account/NotificationsCard';
+import FavoritesCard from '@/components/pages/account/FavoritesCard';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();

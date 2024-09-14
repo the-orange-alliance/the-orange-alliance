@@ -16,7 +16,7 @@ import {
   updateEmail
 } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
-import TOAUser from '../lib/models/toa-user';
+import TOAUser from '@/lib/models/toa-user';
 import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import toast from 'react-hot-toast';
 import localforage from 'localforage';

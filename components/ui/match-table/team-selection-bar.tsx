@@ -3,8 +3,8 @@ import NextLink from 'next/link';
 import { Button, Chip, Snackbar, Stack, Typography } from '@mui/material';
 import { ArrowForwardIos } from '@mui/icons-material';
 import { MatchParticipant, Ranking } from '@the-orange-alliance/api/lib/cjs/models';
-import { getLocationString } from '../../../lib/utils/common';
-import { useTranslate } from '../../../i18n/i18n';
+import { getLocationString } from '@/lib/utils/common';
+import { useTranslate } from '@/i18n/i18n';
 
 interface TeamSelectionBarProps {
   team: MatchParticipant | null;

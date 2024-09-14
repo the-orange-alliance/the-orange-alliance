@@ -13,14 +13,14 @@ import {
 } from '@mui/material';
 import { Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useEffect, useState } from 'react';
-import { useTranslate } from '../../../i18n/i18n';
-import { useAppContext } from '../../../lib/toa-context';
-import TOAUser from '../../../lib/models/toa-user';
-import { removeFromFavorite, setNotifications } from '../../../providers/firebase-provider';
-import TOAProvider from '../../../providers/toa-provider';
-import { myTOAType } from '../../ui/mytoa-favorite-button';
-import EventItem from '../../ui/event-item';
-import TeamItem from '../../ui/team-item';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
+import TOAUser from '@/lib/models/toa-user';
+import { removeFromFavorite, setNotifications } from '@/providers/firebase-provider';
+import TOAProvider from '@/providers/toa-provider';
+import { myTOAType } from '@/components/ui/mytoa-favorite-button';
+import EventItem from '@/components/ui/event-item';
+import TeamItem from '@/components/ui/team-item';
 
 const FavoritesCard = () => {
   const t = useTranslate();

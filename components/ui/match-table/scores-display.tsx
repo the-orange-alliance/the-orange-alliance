@@ -1,7 +1,7 @@
 import { Link } from '@mui/material';
 import { Match } from '@the-orange-alliance/api/lib/cjs/models';
-import { useUserLanguage } from '../../../i18n/i18n';
-import { getMatchWinner, isSameDay } from '../../../lib/utils/common';
+import { useUserLanguage } from '@/i18n/i18n';
+import { getMatchWinner, isSameDay } from '@/lib/utils/common';
 
 interface MatchScoresDisplayProps {
   match: Match;

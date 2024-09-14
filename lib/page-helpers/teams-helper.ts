@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
-import TOAProvider from '../../providers/toa-provider';
-import { CURRENT_SEASON } from '../../constants';
-import { undefinedToNull } from '../utils/common';
+import TOAProvider from '@/providers/toa-provider';
+import { CURRENT_SEASON } from '@/constants';
+import { undefinedToNull } from '@/lib/utils/common';
 
 export interface IRawTeamsProps {
   teams: any;

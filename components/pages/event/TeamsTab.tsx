@@ -1,6 +1,6 @@
 import { List } from '@mui/material';
 import { EventParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import TeamItem from '../../ui/team-item';
+import TeamItem from '@/components/ui/team-item';
 
 interface TeamsTabProps {
   teams: EventParticipant[];

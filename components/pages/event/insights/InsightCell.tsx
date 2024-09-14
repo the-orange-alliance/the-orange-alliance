@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useTranslate } from '../../../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import CircularProgressWithLabel from './seasons/CircularProgressWithLabel';
 
 const InsightCell = function ({

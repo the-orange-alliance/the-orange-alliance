@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ListItemAvatar, ListItemButton, ListItemText } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
 import { Team } from '@the-orange-alliance/api/lib/cjs/models';
-import { useAppContext } from '../../lib/toa-context';
+import { useAppContext } from '@/lib/toa-context';
 
 interface TeamItemProps {
   team: Team;

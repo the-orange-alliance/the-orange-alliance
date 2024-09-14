@@ -27,18 +27,18 @@ import {
   changeDisplayName,
   changeEmail,
   cloudMessaging
-} from '../../providers/firebase-provider';
-import TOAUser from '../../lib/models/toa-user';
-import TOAProvider from '../../providers/toa-provider';
+} from '@/providers/firebase-provider';
+import TOAUser from '@/lib/models/toa-user';
+import TOAProvider from '@/providers/toa-provider';
 import { Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../i18n/i18n';
-import EventItem from '../../components/ui/event-item';
-import TeamItem from '../../components/ui/team-item';
+import { useTranslate } from '@/i18n/i18n';
+import EventItem from '@/components/ui/event-item';
+import TeamItem from '@/components/ui/team-item';
 import { GitHub, Google, Lock, LockClock } from '@mui/icons-material';
-import { readableDate, readableTime } from '../../lib/utils/common';
+import { readableDate, readableTime } from '@/lib/utils/common';
 import { toast } from 'react-hot-toast';
-import SEO from '../../components/seo';
-import { useAppContext } from '../../lib/toa-context';
+import SEO from '@/components/seo';
+import { useAppContext } from '@/lib/toa-context';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();

@@ -4,15 +4,14 @@ import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import DrawerLayout from '../components/navigation/drawer-layout';
-import theme from '../lib/theme';
-import { UserLanguageProvider } from '../i18n/i18n';
-import { fetchAppData, IRawAppProps, useAppData } from '../lib/page-helpers/app-helper';
-import TOAAppContextProvider, { IAppContext } from '../lib/toa-context';
-import TOAUser from '../lib/models/toa-user';
+import DrawerLayout from '@/components/navigation/drawer-layout';
+import theme from '@/lib/theme';
+import { UserLanguageProvider } from '@/i18n/i18n';
+import { fetchAppData, IRawAppProps, useAppData } from '@/lib/page-helpers/app-helper';
+import TOAAppContextProvider, { IAppContext } from '@/lib/toa-context';
+import TOAUser from '@/lib/models/toa-user';
 import { onAuthStateChanged } from 'firebase/auth';
-import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/firebase-provider';
-import { AnalyticsScript } from '../lib/analytics';
+import { cloudMessaging, fetchUserData, getAuthInstance } from '@/providers/firebase-provider';
 
 let toaGlobalData: IRawAppProps | null = null;
 

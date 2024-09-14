@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
-import { useTranslate } from '../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import { Card, CardContent, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import { Box } from '@mui/system';
-import SEO from '../components/seo';
+import SEO from '@/components/seo';
 
 const Legal: NextPage = props => {
   const t = useTranslate();

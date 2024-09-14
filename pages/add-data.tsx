@@ -1,6 +1,6 @@
 import { Button, Card, CardContent, Container, Link, Typography } from '@mui/material';
 import { Email, Upload } from '@mui/icons-material';
-import SEO from '../components/seo';
+import SEO from '@/components/seo';
 
 const ApiDocs = () => {
   return (

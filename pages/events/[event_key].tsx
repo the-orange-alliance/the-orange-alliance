@@ -9,14 +9,14 @@ import {
   Videocam as StreamIcon
 } from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
-import { useTranslate } from '../../i18n/i18n';
-import { fetchEventData, IRawEventProps, useEventData } from '../../lib/page-helpers/event-helper';
-import { getEventDescription, readableDate } from '../../lib/utils/common';
+import { useTranslate } from '@/i18n/i18n';
+import { fetchEventData, IRawEventProps, useEventData } from '@/lib/page-helpers/event-helper';
+import { getEventDescription, readableDate } from '@/lib/utils/common';
 import { Box, Container } from '@mui/system';
-import SEO from '../../components/seo';
-import { createOpengraphImageUrl } from '../../lib/opengraph';
+import SEO from '@/components/seo';
+import { createOpengraphImageUrl } from '@/lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import MyTOAFavorite, { myTOAType } from '../../components/ui/mytoa-favorite-button';
+import MyTOAFavorite, { myTOAType } from '@/components/ui/mytoa-favorite-button';
 import {
   AdminTab,
   AlliancesTab,
@@ -25,8 +25,8 @@ import {
   MatchesTab,
   RankingTab,
   TeamsTab
-} from '../../components/pages/event';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
+} from '@/components/pages/event';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import RankingsIcon from '@mui/icons-material/FormatListNumbered';
 import MatchesIcon from '@mui/icons-material/SportsEsports';
 import TeamsIcon from '@mui/icons-material/SupervisorAccount';
@@ -34,7 +34,7 @@ import AlliancesIcon from '@mui/icons-material/Anchor';
 import AwardsIcon from '@mui/icons-material/EmojiEvents';
 import InsightsIcon from '@mui/icons-material/Insights';
 import AdminIcon from '@mui/icons-material/Tune';
-import { useAppContext } from '../../lib/toa-context';
+import { useAppContext } from '@/lib/toa-context';
 import { useMemo } from 'react';
 
 const EventPage: NextPage<IRawEventProps> = props => {

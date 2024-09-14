@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
-import { getMatchWinner } from '../../../lib/utils/common';
+import { getMatchWinner } from '@/lib/utils/common';
 import MatchTeamDisplay from './team-display';
 
 interface MatchAllianceDisplayProps {

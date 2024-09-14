@@ -1,10 +1,8 @@
 import React, { forwardRef } from 'react';
 import NextLink from 'next/link';
-import { Box, Button, ButtonBase, Grid, Typography } from '@mui/material';
+import { Box, ButtonBase } from '@mui/material';
 import { useTheme, alpha } from '@mui/material/styles';
-import TOAUser from '../../lib/models/toa-user';
-import { useTranslate } from '../../i18n/i18n';
-import { useRouter } from 'next/router';
+import TOAUser from '@/lib/models/toa-user';
 
 interface DrawerItemProps {
   title: string;

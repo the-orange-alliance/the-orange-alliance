@@ -13,14 +13,14 @@ import {
   ListItemButton,
   List
 } from '@mui/material';
-import { useTranslate } from '../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import {
   fetchStreamsData,
   IRawStreamsProps,
   useStreamsData
-} from '../lib/page-helpers/streams-helper';
-import * as Layouts from '../components/pages/streaming/layouts';
-import SEO from '../components/seo';
+} from '@/lib/page-helpers/streams-helper';
+import * as Layouts from '@/components/pages/streaming/layouts';
+import SEO from '@/components/seo';
 
 interface StreamView {
   id: string;

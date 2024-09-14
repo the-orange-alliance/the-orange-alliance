@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../../i18n/i18n';
-import TOAProvider from '../../../providers/toa-provider';
+import { useTranslate } from '@/i18n/i18n';
+import TOAProvider from '@/providers/toa-provider';
 import TeamSelectionBar from './team-selection-bar';
 import MatchTableRow from './row';
 import MatchTableRemoteRow from './remote-row';

@@ -10,9 +10,9 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { getWeekShort } from '../../../../lib/utils/common';
+import { getWeekShort } from '@/lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
-import { insightsGraphColors as colors } from '../../../../constants';
+import { insightsGraphColors as colors } from '@/constants';
 
 interface IProps {
   insights: { [key: string]: Insights };

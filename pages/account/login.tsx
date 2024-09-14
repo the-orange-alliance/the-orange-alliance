@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import { Button, Card, CardContent, Container, Grid, TextField, Typography } from '@mui/material';
-import { useTranslate } from '../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import { GitHub, Google } from '@mui/icons-material';
 import { useState } from 'react';
 import {
@@ -8,11 +8,11 @@ import {
   loginWithEmailAndPassword,
   loginWithGithub,
   loginWithGoogle
-} from '../../providers/firebase-provider';
+} from '@/providers/firebase-provider';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
-import SEO from '../../components/seo';
-import { useAppContext } from '../../lib/toa-context';
+import SEO from '@/components/seo';
+import { useAppContext } from '@/lib/toa-context';
 
 const LoginPage: NextPage = () => {
   const t = useTranslate();

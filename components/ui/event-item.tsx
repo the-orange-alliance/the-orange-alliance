@@ -3,8 +3,8 @@ import NextLink from 'next/link';
 import { Box, ListItemButton, ListItemText } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
 import type { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import { readableDate } from '../../lib/utils/common';
-import { useAppContext } from '../../lib/toa-context';
+import { readableDate } from '@/lib/utils/common';
+import { useAppContext } from '@/lib/toa-context';
 
 interface EventItemProps {
   event: Event;

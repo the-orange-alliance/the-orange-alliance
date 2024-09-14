@@ -1,6 +1,6 @@
 import { Link } from '@mui/material';
 import { Match } from '@the-orange-alliance/api/lib/cjs/models';
-import { getMatchWinner } from '../../../lib/utils/common';
+import { getMatchWinner } from '@/lib/utils/common';
 
 interface MatchNameDisplayProps {
   match: Match;
