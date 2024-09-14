@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { Box, Button, Card, CardContent, Grid, Stack, TextField, Typography } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
 import { useState } from 'react';
-import { signUp } from '../../providers/FirebaseProvider';
+import { signUp } from '../../providers/firebase-provider';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import SEO from '../../components/seo';

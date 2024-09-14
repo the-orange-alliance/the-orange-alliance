@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/TOAProvider';
+import TOAProvider from '../../providers/toa-provider';
 import { undefinedToNull } from '../utils/common';
 
 export interface IRawStreamsProps {

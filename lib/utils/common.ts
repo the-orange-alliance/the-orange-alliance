@@ -123,6 +123,12 @@ export const undefinedToNull = (o: any): object | null => {
   return o;
 };
 
+export const getSeasonYear = (season: Season) => {
+  const codeOne = season.seasonKey.toString().substring(0, 2);
+  const codeTwo = season.seasonKey.toString().substring(2, 4);
+  return '20' + codeOne + '/' + codeTwo;
+};
+
 export const getSeasonString = (season: Season) => {
   const codeOne = season.seasonKey.toString().substring(0, 2);
   const codeTwo = season.seasonKey.toString().substring(2, 4);

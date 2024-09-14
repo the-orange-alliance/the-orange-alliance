@@ -44,11 +44,11 @@ import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helper
 import { getLocationString, getSeasonString, readableDate } from '../../lib/utils/common';
 import { CURRENT_SEASON } from '../../constants';
 import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
-import MatchTable from '../../components/MatchTable';
+import MatchTable from '../../components/ui/match-table';
 import { useAppContext } from '../../lib/toa-context';
 import { createOpengraphImageUrl } from '../../lib/opengraph';
 import SEO from '../../components/seo';
-import MyTOAFavorite, { myTOAType } from '../../components/MyTOAFavorite';
+import MyTOAFavorite, { myTOAType } from '../../components/ui/mytoa-favorite-button';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();
@@ -175,11 +175,11 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           )}
         </Box>
 
-        <Grid container direction={'row'} spacing={2} mt={4}>
+        <Grid container direction="row" spacing={2} mt={4}>
           {/* Team Information */}
           <Grid item xs={12} md={9}>
             {/* Team Events/Robot */}
-            <Card id={'event-results'}>
+            <Card id="event-results">
               {/* Nav Tabs */}
               {(github || reveal || cad || notebook || images.length > 0) && (
                 <Tabs
@@ -187,7 +187,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   onChange={(e, val) => setTab(val)}
                   variant="fullWidth"
                   scrollButtons="auto"
-                  className={'mb-2 mt-0'}
+                  className="mb-2 mt-0"
                 >
                   <Tab label={t('pages.team.event_results')} />
                   <Tab label={t('pages.team.robot_profile.title')} />
@@ -201,13 +201,15 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     <Card
                       id={event.eventKey.toLowerCase()}
                       key={event.eventKey}
-                      sx={{ marginBottom: 3 }}
-                      style={{ border: '1px solid rgba(0, 0, 0, 0.15)' }}
+                      sx={{ mb: 3 }}
+                      variant="outlined"
                     >
                       <CardHeader
                         title={
                           <NextLink href={`/events/${event.eventKey}`} passHref>
-                            <Link fontSize="1.25rem">{event.fullEventName}</Link>
+                            <Link fontSize="1.25rem" underline="none">
+                              {event.fullEventName}
+                            </Link>
                           </NextLink>
                         }
                         subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
@@ -243,14 +245,14 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           </Typography>
                         ))}
                         {event.matches.length > 0 && <MatchTable event={event} hideHeader />}
-                        {event.matches.length < 1 && <Typography variant={'body1'} />}
+                        {event.matches.length < 1 && <Typography variant="body1" />}
                       </CardContent>
                     </Card>
                   ))}
 
                 {/* No Events this season */}
                 {tab === 0 && team.events.length < 1 && (
-                  <Typography variant={'body1'} sx={{ mt: 1 }}>
+                  <Typography variant="body1" sx={{ mt: 1 }}>
                     {team.lastActive && team.lastActive !== CURRENT_SEASON
                       ? t('pages.team.not_registered')
                       : t('pages.team.no_results')}
@@ -261,78 +263,76 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 {tab === 1 && (
                   <Box>
                     {(github || cad || notebook) && (
-                      <Typography variant={'h6'} className="mb-1">
+                      <Typography variant="h6" className="mb-1">
                         {team.teamNameShort} ❤️ Open Source
                       </Typography>
                     )}
                     {github && (
-                      <Box className={'m-2'}>
+                      <Box className="m-2">
                         <Fab
                           href={github.mediaLink}
-                          target={'_blank'}
-                          className={'text-white'}
+                          target="_blank"
+                          className="text-white"
                           style={{ backgroundColor: `#24292e` }}
-                          variant={'extended'}
+                          variant="extended"
                         >
-                          <GitHub className={'me-2'} />
+                          <GitHub className="me-2" />
                           GitHub
                         </Fab>
                       </Box>
                     )}
                     {cad && (
-                      <Box className={'m-2'}>
+                      <Box className="m-2">
                         <Fab
                           href={cad.mediaLink}
-                          target={'_blank'}
-                          className={'text-white'}
+                          target="_blank"
+                          className="text-white"
                           style={{ backgroundColor: `#9c27b0` }}
-                          variant={'extended'}
+                          variant="extended"
                         >
-                          <Create className={'me-2'} />
+                          <Create className="me-2" />
                           CAD Design
                         </Fab>
                       </Box>
                     )}
                     {notebook && (
-                      <Box className={'m-2'}>
+                      <Box className="m-2">
                         <Fab
                           href={notebook.mediaLink}
-                          target={'_blank'}
-                          className={'text-white'}
+                          target="_blank"
+                          className="text-white"
                           style={{ backgroundColor: `#0097a7` }}
-                          variant={'extended'}
+                          variant="extended"
                         >
-                          <Book className={'me-2'} />
+                          <Book className="me-2" />
                           {t('pages.team.robot_profile.engineering_notebook')}
                         </Fab>
                       </Box>
                     )}
                     {reveal && (
-                      <Box className={'m-2'}>
+                      <Box className="m-2">
                         <Fab
                           href={reveal.mediaLink}
-                          target={'_blank'}
-                          className={'text-white'}
+                          target="_blank"
+                          className="text-white"
                           style={{ backgroundColor: `#b71c1c` }}
-                          variant={'extended'}
+                          variant="extended"
                         >
-                          <YouTube className={'me-2'} />
+                          <YouTube className="me-2" />
                           {t('pages.team.robot_profile.engineering_notebook')}
                         </Fab>
                       </Box>
                     )}
                     {(github || cad || notebook) && images.length > 0 && (
-                      <Divider className={'mb-3 mt-3'} />
+                      <Divider className="mb-3 mt-3" />
                     )}
                     {images.length > 0 && (
-                      <Box className={'m-2'}>
-                        <Typography variant={'h6'}>
-                          {t('pages.team.robot_profile.photos')}
-                        </Typography>
-                        <ImageList variant={'masonry'}>
+                      <Box className="m-2">
+                        <Typography variant="h6">{t('pages.team.robot_profile.photos')}</Typography>
+                        <ImageList variant="masonry">
                           {images.map(m => (
-                            <ImageListItem className={'w-100'} key={m.mediaKey}>
-                              <NextImage src={m.mediaLink} alt={'Team Media Image'} />
+                            <ImageListItem className="w-100" key={m.mediaKey}>
+                              <NextImage src={m.mediaLink} alt="Team Media Image" />
                             </ImageListItem>
                           ))}
                         </ImageList>
@@ -352,7 +352,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   <Select
                     fullWidth
                     value={seasons.findIndex(s => s.seasonKey === selectedSeason.seasonKey)}
-                    variant={'standard'}
+                    variant="standard"
                     onChange={(val: SelectChangeEvent<number>) =>
                       pushNewFilter(seasons[val.target.value as number])
                     }

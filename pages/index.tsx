@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import {
   Box,
@@ -12,13 +11,12 @@ import {
 } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
-import StatisticCard from '../components/statistic-card';
-import AnnouncementCard from '../components/AnnouncementCard';
+import StatisticCard from '../components/pages/home/statistic-card';
 import { useTranslate } from '../i18n/i18n';
 import { fetchHomeData, IRawHomeProps, useHomeData } from '../lib/page-helpers/home-helper';
-import LeaderboardsModule from '../components/LeaderboardsModule';
-import SimpleEventPaper from '../components/SimpleEventPaper';
-import Search from '../components/search';
+import LeaderboardCard from '../components/pages/home/leaderboard-card';
+import EventItem from '../components/ui/event-item';
+import Search from '../components/navigation/search';
 import SEO from '../components/seo';
 
 const Home: NextPage<IRawHomeProps> = props => {
@@ -58,14 +56,14 @@ const Home: NextPage<IRawHomeProps> = props => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6}>
                   <StatisticCard
-                    title={`${matchSize}`}
+                    title={`${matchSize.toLocaleString('en-US')}`}
                     subtitle={t('pages.home.matches_played')}
                     icon={<MatchesIcon />}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
                   <StatisticCard
-                    title={`${teamSize}`}
+                    title={`${teamSize.toLocaleString('en-US')}`}
                     subtitle={t('pages.home.active_teams')}
                     icon={<TeamsIcon />}
                   />
@@ -77,19 +75,19 @@ const Home: NextPage<IRawHomeProps> = props => {
                 <Divider />
                 <CardContent>
                   {todaysEvents.length === 0 && (
-                    <Typography variant={'h6'} sx={{ marginTop: 1 }}>
+                    <Typography variant="h6" sx={{ marginTop: 1 }}>
                       {t('pages.home.no_events_today')}
                     </Typography>
                   )}
                   {todaysEvents.map(event => (
-                    <SimpleEventPaper key={event.eventKey} event={event} />
+                    <EventItem key={event.eventKey} event={event} />
                   ))}
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               {/* This is temporary. ReactDOMServer does not support Suspense, yet. */}
-              <LeaderboardsModule
+              <LeaderboardCard
                 overall={overallHighScore}
                 elims={elimsHighScore}
                 quals={qualsHighScore}

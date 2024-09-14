@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import TOAProvider from '../../providers/TOAProvider';
+import TOAProvider from '../../providers/toa-provider';
 import { CURRENT_SEASON } from '../../constants';
 import { undefinedToNull } from '../utils/common';
-import TOAAppContext from '../models/AppContext';
 import { League, Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 
 export interface IRawAppProps {

@@ -27,13 +27,13 @@ import {
   changeDisplayName,
   changeEmail,
   cloudMessaging
-} from '../../providers/FirebaseProvider';
-import TOAUser from '../../lib/TOAUser';
-import TOAProvider from '../../providers/TOAProvider';
+} from '../../providers/firebase-provider';
+import TOAUser from '../../lib/models/toa-user';
+import TOAProvider from '../../providers/toa-provider';
 import { Team, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '../../i18n/i18n';
-import SimpleEventPaper from '../../components/SimpleEventPaper';
-import SimpleTeamPaper from '../../components/SimpleTeamPaper';
+import EventItem from '../../components/ui/event-item';
+import TeamItem from '../../components/ui/team-item';
 import { GitHub, Google, Lock, LockClock } from '@mui/icons-material';
 import { readableDate, readableTime } from '../../lib/utils/common';
 import { toast } from 'react-hot-toast';
@@ -257,23 +257,23 @@ const AccountPage: NextPage = () => {
                 Welcome back, {user.displayName || 'User'}
               </Typography>
             </Box>
-            <Button variant={'contained'} onClick={doLogoutUser}>
+            <Button variant="contained" onClick={doLogoutUser}>
               {t('pages.account.logout')}
             </Button>
           </Box>
 
-          <Grid container direction={'row'} spacing={2}>
+          <Grid container direction="row" spacing={2}>
             {/* Left Column */}
             <Grid item lg={7} md={12}>
               {/* Favorite Teams/Events */}
               <Card sx={{ p: 3 }}>
-                <Grid container direction={'row'} spacing={2} style={{ width: '100%' }}>
+                <Grid container direction="row" spacing={2} style={{ width: '100%' }}>
                   <Grid item xs={12} sm={6}>
                     <Typography sx={{ ml: 1, mb: 1 }} variant="h6">
                       {t('general.teams')}
                     </Typography>
                     {teams && teams.length === 0 && (
-                      <Typography sx={{ marginLeft: 2 }} variant={'subtitle2'}>
+                      <Typography sx={{ marginLeft: 2 }} variant="subtitle2">
                         {t('no_data.teams')}
                       </Typography>
                     )}
@@ -281,7 +281,7 @@ const AccountPage: NextPage = () => {
                       <List disablePadding dense>
                         {teams.map(t => (
                           <ListItem key={t.teamKey} sx={{ padding: 0 }}>
-                            <SimpleTeamPaper team={t} />
+                            <TeamItem team={t} />
                           </ListItem>
                         ))}
                       </List>
@@ -292,7 +292,7 @@ const AccountPage: NextPage = () => {
                       {t('general.events')}
                     </Typography>
                     {teams && teams.length === 0 && (
-                      <Typography sx={{ marginLeft: 2 }} variant={'subtitle2'}>
+                      <Typography sx={{ marginLeft: 2 }} variant="subtitle2">
                         {t('no_data.teams')}
                       </Typography>
                     )}
@@ -300,7 +300,7 @@ const AccountPage: NextPage = () => {
                       <List disablePadding dense>
                         {events.map(e => (
                           <ListItem key={e.eventKey} sx={{ padding: 0 }}>
-                            <SimpleEventPaper event={e} />
+                            <EventItem event={e} />
                           </ListItem>
                         ))}
                       </List>
@@ -368,7 +368,7 @@ const AccountPage: NextPage = () => {
                 )}
 
                 {/* API Docs */}
-                <Typography sx={{ marginTop: 2 }} variant={'subtitle1'}>
+                <Typography sx={{ marginTop: 2 }} variant="subtitle1">
                   Check out the{' '}
                   <NextLink href="/apidocs" passHref>
                     <Link>API Documentation</Link>

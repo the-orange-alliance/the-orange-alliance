@@ -47,7 +47,7 @@ const AccountItem = () => {
         >
           {/* <Box sx={{ mr: 3 }}>{icon}</Box> */}
 
-          <Grid container direction={'column'} justifyContent="center">
+          <Grid container direction="column" justifyContent="center">
             <Grid item>
               {t('drawer.mytoa.hello').replace('{{ name }}', t('drawer.mytoa.guest'))}
             </Grid>

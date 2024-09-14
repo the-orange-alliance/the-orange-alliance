@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/TOAProvider';
+import TOAProvider from '../../providers/toa-provider';
 import { CURRENT_SEASON } from '../../constants';
 import { undefinedToNull } from '../utils/common';
 

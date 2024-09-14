@@ -14,9 +14,9 @@ const Legal: NextPage = props => {
       <SEO title="Legal Notice" url="/legal" />
 
       <Card sx={{ m: 2 }}>
-        <Tabs variant={'fullWidth'} value={tab} onChange={(e, t) => setTab(t)}>
-          <Tab value={0} label={'Privacy Policy'} />
-          <Tab value={1} label={'Terms and Conditions'} />
+        <Tabs variant="fullWidth" value={tab} onChange={(e, t) => setTab(t)}>
+          <Tab value={0} label="Privacy Policy" />
+          <Tab value={1} label="Terms and Conditions" />
         </Tabs>
         <CardContent>
           {tab === 0 && (

@@ -7,12 +7,11 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import DrawerLayout from '../components/navigation/drawer-layout';
 import theme from '../lib/theme';
 import { UserLanguageProvider } from '../i18n/i18n';
-import TOAAppContext from '../lib/models/AppContext';
 import { fetchAppData, IRawAppProps, useAppData } from '../lib/page-helpers/app-helper';
-import TOAAppContextProvider from '../lib/toa-context';
-import TOAUser from '../lib/TOAUser';
+import TOAAppContextProvider, { IAppContext } from '../lib/toa-context';
+import TOAUser from '../lib/models/toa-user';
 import { onAuthStateChanged } from 'firebase/auth';
-import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/FirebaseProvider';
+import { cloudMessaging, fetchUserData, getAuthInstance } from '../providers/firebase-provider';
 import { AnalyticsScript } from '../lib/analytics';
 
 let toaGlobalData: IRawAppProps | null = null;
@@ -20,7 +19,7 @@ let toaGlobalData: IRawAppProps | null = null;
 function MyApp({
   Component,
   pageProps
-}: AppProps<{ initialState: TOAAppContext; userLanguage: string }>) {
+}: AppProps<{ initialState: IAppContext; userLanguage: string }>) {
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);

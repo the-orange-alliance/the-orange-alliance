@@ -9,7 +9,7 @@ import {
   Season,
   Team
 } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/TOAProvider';
+import TOAProvider from '../../providers/toa-provider';
 import { MatchSorter } from '../utils/match';
 import { EventSorter } from '../utils/event';
 import { sortAwards } from '../utils/award';
