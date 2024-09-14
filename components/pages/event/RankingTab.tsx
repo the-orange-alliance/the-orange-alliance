@@ -18,8 +18,8 @@ const RankingTab = (props: IProps) => {
           <TableRow>
             <TableCell>{t('pages.event.subpages.rankings.rank')}</TableCell>
             <TableCell>{t('pages.event.subpages.rankings.team')}</TableCell>
-            <TableCell>{t('pages.event.subpages.rankings.ranking_points')}</TableCell>
-            <TableCell>{t('pages.event.subpages.rankings.tie_breaker_points')}</TableCell>
+            <TableCell>RP</TableCell>
+            <TableCell>TBP</TableCell>
             <TableCell>{t('pages.event.subpages.rankings.highest_score')}</TableCell>
             <TableCell>{t('pages.event.subpages.rankings.matches_played')}</TableCell>
             <TableCell>OPR</TableCell>
@@ -37,8 +37,8 @@ const RankingTab = (props: IProps) => {
                   </Link>
                 </NextLink>
               </TableCell>
-              <TableCell>{row.rankingPoints}</TableCell>
-              <TableCell>{row.tieBreakerPoints}</TableCell>
+              <TableCell>{row.rankingPoints.toFixed(2)}</TableCell>
+              <TableCell>{row.tieBreakerPoints.toFixed(2)}</TableCell>
               <TableCell>{row.highestQualScore}</TableCell>
               <TableCell>{row.played}</TableCell>
               <TableCell>{row.opr}</TableCell>
