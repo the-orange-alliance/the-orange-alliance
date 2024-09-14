@@ -52,8 +52,8 @@ const EventPage: NextPage<IRawEventProps> = props => {
       (eventData.leagueKey && user.adminLeagues.includes(eventData.leagueKey)));
 
   const firstTab = useMemo(() => {
-    if (eventData.rankings.length > 0) return 'rankings';
     if (eventData.matches.length > 0) return 'matches';
+    if (eventData.rankings.length > 0) return 'rankings';
     if (eventData.teams.length > 0) return 'teams';
     if (eventData.alliances.length > 0) return 'alliances';
     if (eventData.awards.length > 0) return 'awards';
@@ -168,11 +168,6 @@ const EventPage: NextPage<IRawEventProps> = props => {
         <Tabs defaultValue={firstTab || ''}>
           {firstTab && (
             <TabsList>
-              {eventData.rankings.length > 0 && (
-                <TabsTrigger value="rankings" icon={<RankingsIcon />}>
-                  {t('pages.event.subpages.rankings.title')}
-                </TabsTrigger>
-              )}
               {eventData.matches.length > 0 && (
                 <TabsTrigger
                   value="matches"
@@ -180,6 +175,11 @@ const EventPage: NextPage<IRawEventProps> = props => {
                   badgeCount={eventData.matches.length}
                 >
                   {t('pages.event.subpages.matches.title')}
+                </TabsTrigger>
+              )}
+              {eventData.rankings.length > 0 && (
+                <TabsTrigger value="rankings" icon={<RankingsIcon />}>
+                  {t('pages.event.subpages.rankings.title')}
                 </TabsTrigger>
               )}
               {eventData.teams.length > 0 && (
