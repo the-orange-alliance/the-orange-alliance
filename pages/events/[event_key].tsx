@@ -9,28 +9,59 @@ import {
   Videocam as StreamIcon
 } from '@mui/icons-material';
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
-import { useTranslate } from '../../../i18n/i18n';
-import {
-  fetchEventData,
-  IRawEventProps,
-  useEventData
-} from '../../../lib/page-helpers/event-helper';
-import EventTabs from '../../../components/EventTabs/EventTabs';
-import { getEventDescription, readableDate } from '../../../lib/utils/common';
+import { useTranslate } from '../../i18n/i18n';
+import { fetchEventData, IRawEventProps, useEventData } from '../../lib/page-helpers/event-helper';
+import { getEventDescription, readableDate } from '../../lib/utils/common';
 import { Box, Container } from '@mui/system';
-import { ChangeEvent } from 'react';
-import { useRouter } from 'next/router';
-import SEO from '../../../components/seo';
-import { createOpengraphImageUrl } from '../../../lib/opengraph';
+import SEO from '../../components/seo';
+import { createOpengraphImageUrl } from '../../lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import MyTOAFavorite, { myTOAType } from '../../../components/MyTOAFavorite';
+import MyTOAFavorite, { myTOAType } from '../../components/MyTOAFavorite';
+import * as Tabs from '@radix-ui/react-tabs';
+import {
+  AdminTab,
+  AlliancesTab,
+  AwardsTab,
+  InsightsTab,
+  MatchesTab,
+  RankingTab,
+  TeamsTab
+} from '../../components/EventTabs';
+import { TabsList, TabsTrigger } from '../../components/ui/tabs';
+import RankingsIcon from '@mui/icons-material/FormatListNumbered';
+import MatchesIcon from '@mui/icons-material/SportsEsports';
+import TeamsIcon from '@mui/icons-material/SupervisorAccount';
+import AlliancesIcon from '@mui/icons-material/Anchor';
+import AwardsIcon from '@mui/icons-material/EmojiEvents';
+import InsightsIcon from '@mui/icons-material/Insights';
+import AdminIcon from '@mui/icons-material/Tune';
+import { useAppContext } from '../../lib/toa-context';
+import { useMemo } from 'react';
 
 const EventPage: NextPage<IRawEventProps> = props => {
   const { event: eventData, streams, divisions, ogImage } = useEventData(props);
   const t = useTranslate();
-  const router = useRouter();
+  const { user } = useAppContext();
 
   const startDate = new Date(eventData.startDate); // TODO: Use moment.js
+
+  const isEventAdmin =
+    user &&
+    (user.level === 6 ||
+      user.adminRegions.includes(eventData.regionKey) ||
+      user.adminEvents.includes(eventData.eventKey) ||
+      (eventData.leagueKey && user.adminLeagues.includes(eventData.leagueKey)));
+
+  const firstTab = useMemo(() => {
+    if (eventData.rankings.length > 0) return 'rankings';
+    if (eventData.matches.length > 0) return 'matches';
+    if (eventData.teams.length > 0) return 'teams';
+    if (eventData.alliances.length > 0) return 'alliances';
+    if (eventData.awards.length > 0) return 'awards';
+    if (eventData.insights.filter(insights => insights).length > 0) return 'insights';
+    if (isEventAdmin) return 'admin';
+    return null;
+  }, [eventData, isEventAdmin]);
 
   return (
     <>
@@ -48,7 +79,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
           {startDate.getFullYear()} {eventData.fullEventName}
         </Typography>
 
-        <Box mt={2} ml={1}>
+        <Box mt={2} mb={4} ml={1}>
           <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
             <CalendarIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
             {readableDate(startDate)}
@@ -117,7 +148,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
               {divisions.map((div, index) => {
                 const isSelected = div.eventKey === eventData.eventKey;
                 return (
-                  <NextLink key={div.eventKey} href={`/events/${div.eventKey}/rankings`} passHref>
+                  <NextLink key={div.eventKey} href={`/events/${div.eventKey}`} passHref>
                     <Button
                       size="small"
                       color={isSelected ? 'secondary' : 'inherit'}
@@ -135,9 +166,90 @@ const EventPage: NextPage<IRawEventProps> = props => {
           )}
         </Box>
 
-        <Card sx={{ mt: 4 }}>
-          <EventTabs key={eventData.eventKey} event={eventData} streams={streams} />
-        </Card>
+        <Tabs.Root defaultValue={firstTab || ''}>
+          {firstTab && (
+            <TabsList>
+              {eventData.rankings.length > 0 && (
+                <TabsTrigger value="rankings" icon={<RankingsIcon />}>
+                  Rankings
+                </TabsTrigger>
+              )}
+              {eventData.matches.length > 0 && (
+                <TabsTrigger
+                  value="matches"
+                  icon={<MatchesIcon />}
+                  badgeCount={eventData.matches.length}
+                >
+                  Matches
+                </TabsTrigger>
+              )}
+              {eventData.teams.length > 0 && (
+                <TabsTrigger value="teams" icon={<TeamsIcon />} badgeCount={eventData.teams.length}>
+                  Teams
+                </TabsTrigger>
+              )}
+              {eventData.alliances.length > 0 && (
+                <TabsTrigger
+                  value="alliances"
+                  icon={<AlliancesIcon />}
+                  badgeCount={eventData.alliances.length}
+                >
+                  Alliances
+                </TabsTrigger>
+              )}
+              {eventData.awards.length > 0 && (
+                <TabsTrigger value="awards" icon={<AwardsIcon />}>
+                  Awards
+                </TabsTrigger>
+              )}
+              {eventData.insights.filter(insights => insights).length > 0 && (
+                <TabsTrigger value="insights" icon={<InsightsIcon />}>
+                  Insights
+                </TabsTrigger>
+              )}
+              {isEventAdmin && (
+                <TabsTrigger value="admin" icon={<AdminIcon />}>
+                  Admin
+                </TabsTrigger>
+              )}
+            </TabsList>
+          )}
+
+          <Card sx={{ mt: 1 }}>
+            {!firstTab && (
+              <Box
+                sx={{
+                  p: 3,
+                  textAlign: 'center',
+                  color: 'text.secondary'
+                }}
+              >
+                {t('no_data.event_long')}
+              </Box>
+            )}
+            <Tabs.Content value="rankings">
+              <RankingTab event={eventData} />
+            </Tabs.Content>
+            <Tabs.Content value="matches">
+              <MatchesTab event={eventData} />
+            </Tabs.Content>
+            <Tabs.Content value="teams">
+              <TeamsTab teams={eventData.teams} />
+            </Tabs.Content>
+            <Tabs.Content value="alliances">
+              <AlliancesTab event={eventData} />
+            </Tabs.Content>
+            <Tabs.Content value="awards">
+              <AwardsTab awards={eventData.awards} />
+            </Tabs.Content>
+            <Tabs.Content value="insights">
+              <InsightsTab event={eventData} />
+            </Tabs.Content>
+            <Tabs.Content value="admin">
+              <AdminTab event={eventData} streams={streams} />
+            </Tabs.Content>
+          </Card>
+        </Tabs.Root>
 
         {/* myTOA FAB */}
         <MyTOAFavorite dataKey={eventData.eventKey} type={myTOAType.event} />

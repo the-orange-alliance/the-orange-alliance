@@ -86,7 +86,7 @@ const Search: React.FC<SearchProps> = ({
       if (item.type === 'team') {
         router.push(`/teams/${item.key}`);
       } else if (item.type === 'event') {
-        router.push(`/events/${item.key}/rankings`);
+        router.push(`/events/${item.key}`);
       }
     },
     [onBlur] // eslint-disable-line react-hooks/exhaustive-deps

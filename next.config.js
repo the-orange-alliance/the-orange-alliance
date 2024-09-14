@@ -24,6 +24,11 @@ const cfg = {
         source: '/home',
         destination: '/',
         permanent: true
+      },
+      {
+        source: '/events/:key/:tab',
+        destination: '/events/:key',
+        permanent: true
       }
     ];
   }

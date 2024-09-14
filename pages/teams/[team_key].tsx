@@ -206,7 +206,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     >
                       <CardHeader
                         title={
-                          <NextLink href={`/events/${event.eventKey}/rankings`} passHref>
+                          <NextLink href={`/events/${event.eventKey}`} passHref>
                             <Link fontSize="1.25rem">{event.fullEventName}</Link>
                           </NextLink>
                         }
