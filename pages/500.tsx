@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Grid, Typography } from '@mui/material';
-import { useTranslate } from '../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 
 const InternalErrorPage = () => {
   const t = useTranslate();

@@ -9,12 +9,12 @@ import {
   Season,
   Team
 } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/toa-provider';
-import { MatchSorter } from '../utils/match';
-import { EventSorter } from '../utils/event';
-import { sortAwards } from '../utils/award';
+import TOAProvider from '@/providers/toa-provider';
+import { MatchSorter } from '@/lib/utils/match';
+import { EventSorter } from '@/lib/utils/event';
+import { sortAwards } from '@/lib/utils/award';
 import { MediaTypeTeam } from '@the-orange-alliance/api/lib/cjs/models/types/MediaType';
-import { undefinedToNull } from '../utils/common';
+import { undefinedToNull } from '@/lib/utils/common';
 
 export interface IRawTeamProps {
   team: any;

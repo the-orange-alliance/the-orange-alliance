@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Grid, Typography } from '@mui/material';
-import { useTranslate } from '../i18n/i18n';
-import SEO from '../components/seo';
+import { useTranslate } from '@/i18n/i18n';
+import SEO from '@/components/seo';
 
 const NotFoundPage = () => {
   const t = useTranslate();

@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import StreamIcon from '@mui/icons-material/VideocamRounded';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 
 const LiveStreamPanel = ({
   streams,

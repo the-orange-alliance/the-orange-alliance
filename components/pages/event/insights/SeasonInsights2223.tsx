@@ -9,11 +9,11 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { getWeekShort } from '../../../../lib/utils/common';
+import { getWeekShort } from '@/lib/utils/common';
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
 import PowerPlayInsights from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2223/PowerPlayInsights';
-import { insightsGraphColors as colors } from '../../../../constants';
-import { useTranslate } from '../../../../i18n/i18n';
+import { insightsGraphColors as colors } from '@/constants';
+import { useTranslate } from '@/i18n/i18n';
 
 interface IProps {
   insights: { [key: string]: Insights };

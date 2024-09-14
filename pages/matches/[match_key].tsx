@@ -12,14 +12,14 @@ import {
   Typography
 } from '@mui/material';
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
-import { useTranslate } from '../../i18n/i18n';
-import { fetchMatchData, IRawMatchProps, useMatchData } from '../../lib/page-helpers/match-helper';
-import { getEventDescription, readableDate } from '../../lib/utils/common';
-import SingleMatchTable from '../../components/ui/single-match-table';
-import MatchDetailsCard from '../../components/pages/match/match-details-card';
-import SEO from '../../components/seo';
+import { useTranslate } from '@/i18n/i18n';
+import { fetchMatchData, IRawMatchProps, useMatchData } from '@/lib/page-helpers/match-helper';
+import { getEventDescription, readableDate } from '@/lib/utils/common';
+import SingleMatchTable from '@/components/ui/single-match-table';
+import MatchDetailsCard from '@/components/pages/match/match-details-card';
+import SEO from '@/components/seo';
 import { Event, Match } from '@the-orange-alliance/api/lib/cjs/models';
-import { createOpengraphImageUrl } from '../../lib/opengraph';
+import { createOpengraphImageUrl } from '@/lib/opengraph';
 
 const MatchPage: NextPage<IRawMatchProps> = props => {
   const { match, ogImage } = useMatchData(props);

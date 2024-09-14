@@ -9,8 +9,8 @@ import {
   EventLiveStream
 } from '@the-orange-alliance/api/lib/cjs/models';
 import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/InsightsData';
-import TOAProvider from '../../providers/toa-provider';
-import { undefinedToNull } from '../utils/common';
+import TOAProvider from '@/providers/toa-provider';
+import { undefinedToNull } from '@/lib/utils/common';
 
 export interface IRawEventProps {
   event: any;

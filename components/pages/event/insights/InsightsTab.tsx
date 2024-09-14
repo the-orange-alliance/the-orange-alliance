@@ -10,14 +10,14 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { getWeekShort } from '../../../../lib/utils/common';
+import { getWeekShort } from '@/lib/utils/common';
 import SeasonInsights2223 from './SeasonInsights2223';
 import SeasonInsights2122 from './SeasonInsights2122';
 import SeasonInsights2021 from './SeasonInsights2021';
 import SeasonInsights1920 from './SeasonInsights1920';
 import SeasonInsights1819 from './SeasonInsights1819';
 import SeasonInsights1718 from './SeasonInsights1718';
-import { insightsGraphColors as colors } from '../../../../constants';
+import { insightsGraphColors as colors } from '@/constants';
 
 interface IProps {
   insights: { [key: string]: Insights };

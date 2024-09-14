@@ -1,5 +1,5 @@
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import MatchTable from '../../ui/match-table';
+import MatchTable from '@/components/ui/match-table';
 
 interface IProps {
   event: Event;

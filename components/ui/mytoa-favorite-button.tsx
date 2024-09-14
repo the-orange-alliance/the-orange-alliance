@@ -6,15 +6,15 @@ import {
 } from '@mui/icons-material';
 import { SpeedDial, SpeedDialAction, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useTranslate } from '../../i18n/i18n';
-import { useAppContext } from '../../lib/toa-context';
-import TOAUser from '../../lib/models/toa-user';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
+import TOAUser from '@/lib/models/toa-user';
 import {
   addToFavorite,
   cloudMessaging,
   removeFromFavorite,
   setNotifications
-} from '../../providers/firebase-provider';
+} from '@/providers/firebase-provider';
 
 export enum myTOAType {
   event = 'event',

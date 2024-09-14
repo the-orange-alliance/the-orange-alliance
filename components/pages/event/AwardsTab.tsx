@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 import NextLink from 'next/link';
 import { Box, ListItemText, ListItemIcon, ListItemButton, Typography } from '@mui/material';
 import type { AwardRecipient } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../../i18n/i18n';
-import { getAwardHeader, sortAwards } from '../../../lib/utils/award';
+import { useTranslate } from '@/i18n/i18n';
+import { getAwardHeader, sortAwards } from '@/lib/utils/award';
 
 interface AwardsTabProps {
   awards: AwardRecipient[];

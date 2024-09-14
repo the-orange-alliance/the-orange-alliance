@@ -13,13 +13,13 @@ import {
   Typography
 } from '@mui/material';
 import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAUser from '../../../lib/models/toa-user';
-import { useTranslate } from '../../../i18n/i18n';
+import TOAUser from '@/lib/models/toa-user';
+import { useTranslate } from '@/i18n/i18n';
 import { Link, LinkOff, Upload, YouTube } from '@mui/icons-material';
-import { addEventMedia, updateStream, updateEvent } from '../../../providers/firebase-provider';
-import { uploadToImgur } from '../../../providers/ImgurProvider';
+import { addEventMedia, updateStream, updateEvent } from '@/providers/firebase-provider';
+import { uploadToImgur } from '@/providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
-import { useAppContext } from '../../../lib/toa-context';
+import { useAppContext } from '@/lib/toa-context';
 import toast from 'react-hot-toast';
 
 interface IProps {

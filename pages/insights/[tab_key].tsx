@@ -2,17 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Box, Card, Tab, Tabs, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useTranslate } from '../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import {
   getInsightsData,
   IRawInsightsProps,
   parseInsightsProps
-} from '../../lib/page-helpers/insightsHelper';
-import InsightsTab from '../../components/pages/event/insights/InsightsTab';
-import FiltersCard from '../../components/ui/filters-card';
-import { useAppContext } from '../../lib/toa-context';
-import SEO from '../../components/seo';
-import { getSeasonString } from '../../lib/utils/common';
+} from '@/lib/page-helpers/insightsHelper';
+import InsightsTab from '@/components/pages/event/insights/InsightsTab';
+import FiltersCard from '@/components/ui/filters-card';
+import { useAppContext } from '@/lib/toa-context';
+import SEO from '@/components/seo';
+import { getSeasonString } from '@/lib/utils/common';
 
 const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const router = useRouter();

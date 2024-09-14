@@ -10,7 +10,7 @@ import AddDataIcon from '@mui/icons-material/PublishRounded';
 import AboutIcon from '@mui/icons-material/InfoOutlined';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LegalIcon from '@mui/icons-material/DescriptionRounded';
-import { useTranslate } from '../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import DrawerItem from './drawer-item';
 import AccountItem from './account-item';
 

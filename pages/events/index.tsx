@@ -3,20 +3,20 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import { Badge, Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
-import EventItem from '../../components/ui/event-item';
-import FiltersCard from '../../components/ui/filters-card';
+import EventItem from '@/components/ui/event-item';
+import FiltersCard from '@/components/ui/filters-card';
 import {
   fetchEventsData,
   IRawEventsProps,
   organizeEventsByWeek,
   parseEventsProps
-} from '../../lib/page-helpers/events-helper';
-import { useTranslate } from '../../i18n/i18n';
-import { CURRENT_SEASON } from '../../constants';
-import { getSeasonYear, getWeekName } from '../../lib/utils/common';
-import TOAProvider from '../../providers/toa-provider';
-import { useAppContext } from '../../lib/toa-context';
-import SEO from '../../components/seo';
+} from '@/lib/page-helpers/events-helper';
+import { useTranslate } from '@/i18n/i18n';
+import { CURRENT_SEASON } from '@/constants';
+import { getSeasonYear, getWeekName } from '@/lib/utils/common';
+import TOAProvider from '@/providers/toa-provider';
+import { useAppContext } from '@/lib/toa-context';
+import SEO from '@/components/seo';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();

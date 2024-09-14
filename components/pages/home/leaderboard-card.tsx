@@ -1,10 +1,10 @@
 import NextLink from 'next/link';
-import SingleMatchTable from '../../ui/single-match-table';
+import SingleMatchTable from '@/components/ui/single-match-table';
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
-import { useTranslate } from '../../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 import { Card, CardContent, CardHeader, Divider, Link, Typography, useTheme } from '@mui/material';
-import { useAppContext } from '../../../lib/toa-context';
-import { CURRENT_SEASON } from '../../../constants';
+import { useAppContext } from '@/lib/toa-context';
+import { CURRENT_SEASON } from '@/constants';
 
 interface LeaderboardCardProps {
   quals: Match;

@@ -39,16 +39,16 @@ import {
   Public as WebsiteIcon,
   EmojiEventsOutlined as TrophyIcon
 } from '@mui/icons-material';
-import { useTranslate } from '../../i18n/i18n';
-import { fetchTeamData, IRawTeamProps, useTeamData } from '../../lib/page-helpers/team-helper';
-import { getLocationString, getSeasonString, readableDate } from '../../lib/utils/common';
-import { CURRENT_SEASON } from '../../constants';
+import { useTranslate } from '@/i18n/i18n';
+import { fetchTeamData, IRawTeamProps, useTeamData } from '@/lib/page-helpers/team-helper';
+import { getLocationString, getSeasonString, readableDate } from '@/lib/utils/common';
+import { CURRENT_SEASON } from '@/constants';
 import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
-import MatchTable from '../../components/ui/match-table';
-import { useAppContext } from '../../lib/toa-context';
-import { createOpengraphImageUrl } from '../../lib/opengraph';
-import SEO from '../../components/seo';
-import MyTOAFavorite, { myTOAType } from '../../components/ui/mytoa-favorite-button';
+import MatchTable from '@/components/ui/match-table';
+import { useAppContext } from '@/lib/toa-context';
+import { createOpengraphImageUrl } from '@/lib/opengraph';
+import SEO from '@/components/seo';
+import MyTOAFavorite, { myTOAType } from '@/components/ui/mytoa-favorite-button';
 
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();

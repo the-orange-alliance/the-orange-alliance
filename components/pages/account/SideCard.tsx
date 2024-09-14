@@ -1,5 +1,5 @@
 import { Card, Typography } from '@mui/material';
-import { useTranslate } from '../../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 
 interface IProps {
   title: string;

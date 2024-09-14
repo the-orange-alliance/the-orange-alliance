@@ -8,7 +8,7 @@ import {
   IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import MatchDetailsCard from '../../pages/match/match-details-card';
+import MatchDetailsCard from '@/components/pages/match/match-details-card';
 
 interface MatchBreakdownModalProps {
   match: Match | null;

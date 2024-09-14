@@ -1,8 +1,8 @@
 import { Insights } from '@the-orange-alliance/api/lib/cjs/models';
-import TOAProvider from '../../providers/toa-provider';
-import { undefinedToNull } from '../../lib/utils/common';
+import TOAProvider from '@/providers/toa-provider';
+import { undefinedToNull } from '@/lib/utils/common';
 import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/InsightsData';
-import { CURRENT_SEASON } from '../../constants';
+import { CURRENT_SEASON } from '@/constants';
 
 interface IRawInsightsProps {
   qualsSingleTeam: { [key: string]: any };

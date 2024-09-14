@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
 import { Table, TableHead, TableRow, TableCell, TableBody, Link, Hidden } from '@mui/material';
 import { Ranking, Event } from '@the-orange-alliance/api/lib/cjs/models';
-import { useTranslate } from '../../../i18n/i18n';
+import { useTranslate } from '@/i18n/i18n';
 
 interface IProps {
   event: Event;

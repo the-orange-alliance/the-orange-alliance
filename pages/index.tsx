@@ -11,13 +11,13 @@ import {
 } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
-import StatisticCard from '../components/pages/home/statistic-card';
-import { useTranslate } from '../i18n/i18n';
-import { fetchHomeData, IRawHomeProps, useHomeData } from '../lib/page-helpers/home-helper';
-import LeaderboardCard from '../components/pages/home/leaderboard-card';
-import EventItem from '../components/ui/event-item';
-import Search from '../components/navigation/search';
-import SEO from '../components/seo';
+import StatisticCard from '@/components/pages/home/statistic-card';
+import { useTranslate } from '@/i18n/i18n';
+import { fetchHomeData, IRawHomeProps, useHomeData } from '@/lib/page-helpers/home-helper';
+import LeaderboardCard from '@/components/pages/home/leaderboard-card';
+import EventItem from '@/components/ui/event-item';
+import Search from '@/components/navigation/search';
+import SEO from '@/components/seo';
 
 const Home: NextPage<IRawHomeProps> = props => {
   const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore, todaysEvents } =

@@ -1,6 +1,6 @@
 import { Link, Typography } from '@mui/material';
-import { useTranslate } from '../../../i18n/i18n';
-import { useAppContext } from '../../../lib/toa-context';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
 import SideCard from './SideCard';
 import NextLink from 'next/link';
 

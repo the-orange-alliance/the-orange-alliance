@@ -1,17 +1,17 @@
 import { Google, GitHub, LockClock, Lock } from '@mui/icons-material';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import toast from 'react-hot-toast';
-import { useTranslate } from '../../../i18n/i18n';
-import { useAppContext } from '../../../lib/toa-context';
-import TOAUser from '../../../lib/models/toa-user';
-import { readableDate, readableTime } from '../../../lib/utils/common';
+import { useTranslate } from '@/i18n/i18n';
+import { useAppContext } from '@/lib/toa-context';
+import TOAUser from '@/lib/models/toa-user';
+import { readableDate, readableTime } from '@/lib/utils/common';
 import {
   unlinkProvider,
   linkProvider,
   sendPasswordReset,
   changeDisplayName,
   changeEmail
-} from '../../../providers/firebase-provider';
+} from '@/providers/firebase-provider';
 import SideCard from './SideCard';
 
 const AccountSettingsCard = () => {
