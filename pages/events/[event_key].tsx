@@ -16,8 +16,7 @@ import { Box, Container } from '@mui/system';
 import SEO from '../../components/seo';
 import { createOpengraphImageUrl } from '../../lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
-import MyTOAFavorite, { myTOAType } from '../../components/MyTOAFavorite';
-import * as Tabs from '@radix-ui/react-tabs';
+import MyTOAFavorite, { myTOAType } from '../../components/ui/mytoa-favorite-button';
 import {
   AdminTab,
   AlliancesTab,
@@ -26,8 +25,8 @@ import {
   MatchesTab,
   RankingTab,
   TeamsTab
-} from '../../components/EventTabs';
-import { TabsList, TabsTrigger } from '../../components/ui/tabs';
+} from '../../components/pages/event';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import RankingsIcon from '@mui/icons-material/FormatListNumbered';
 import MatchesIcon from '@mui/icons-material/SportsEsports';
 import TeamsIcon from '@mui/icons-material/SupervisorAccount';
@@ -166,12 +165,12 @@ const EventPage: NextPage<IRawEventProps> = props => {
           )}
         </Box>
 
-        <Tabs.Root defaultValue={firstTab || ''}>
+        <Tabs defaultValue={firstTab || ''}>
           {firstTab && (
             <TabsList>
               {eventData.rankings.length > 0 && (
                 <TabsTrigger value="rankings" icon={<RankingsIcon />}>
-                  Rankings
+                  {t('pages.event.subpages.rankings.title')}
                 </TabsTrigger>
               )}
               {eventData.matches.length > 0 && (
@@ -180,12 +179,12 @@ const EventPage: NextPage<IRawEventProps> = props => {
                   icon={<MatchesIcon />}
                   badgeCount={eventData.matches.length}
                 >
-                  Matches
+                  {t('pages.event.subpages.matches.title')}
                 </TabsTrigger>
               )}
               {eventData.teams.length > 0 && (
                 <TabsTrigger value="teams" icon={<TeamsIcon />} badgeCount={eventData.teams.length}>
-                  Teams
+                  {t('pages.event.subpages.teams.title')}
                 </TabsTrigger>
               )}
               {eventData.alliances.length > 0 && (
@@ -194,17 +193,17 @@ const EventPage: NextPage<IRawEventProps> = props => {
                   icon={<AlliancesIcon />}
                   badgeCount={eventData.alliances.length}
                 >
-                  Alliances
+                  {t('pages.event.subpages.alliances.title')}
                 </TabsTrigger>
               )}
               {eventData.awards.length > 0 && (
                 <TabsTrigger value="awards" icon={<AwardsIcon />}>
-                  Awards
+                  {t('pages.event.subpages.awards.title')}
                 </TabsTrigger>
               )}
               {eventData.insights.filter(insights => insights).length > 0 && (
                 <TabsTrigger value="insights" icon={<InsightsIcon />}>
-                  Insights
+                  {t('pages.event.subpages.insights.title')}
                 </TabsTrigger>
               )}
               {isEventAdmin && (
@@ -227,29 +226,29 @@ const EventPage: NextPage<IRawEventProps> = props => {
                 {t('no_data.event_long')}
               </Box>
             )}
-            <Tabs.Content value="rankings">
+            <TabsContent value="rankings">
               <RankingTab event={eventData} />
-            </Tabs.Content>
-            <Tabs.Content value="matches">
+            </TabsContent>
+            <TabsContent value="matches">
               <MatchesTab event={eventData} />
-            </Tabs.Content>
-            <Tabs.Content value="teams">
+            </TabsContent>
+            <TabsContent value="teams">
               <TeamsTab teams={eventData.teams} />
-            </Tabs.Content>
-            <Tabs.Content value="alliances">
+            </TabsContent>
+            <TabsContent value="alliances">
               <AlliancesTab event={eventData} />
-            </Tabs.Content>
-            <Tabs.Content value="awards">
+            </TabsContent>
+            <TabsContent value="awards">
               <AwardsTab awards={eventData.awards} />
-            </Tabs.Content>
-            <Tabs.Content value="insights">
+            </TabsContent>
+            <TabsContent value="insights">
               <InsightsTab event={eventData} />
-            </Tabs.Content>
-            <Tabs.Content value="admin">
+            </TabsContent>
+            <TabsContent value="admin">
               <AdminTab event={eventData} streams={streams} />
-            </Tabs.Content>
+            </TabsContent>
           </Card>
-        </Tabs.Root>
+        </Tabs>
 
         {/* myTOA FAB */}
         <MyTOAFavorite dataKey={eventData.eventKey} type={myTOAType.event} />

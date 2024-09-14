@@ -15,8 +15,8 @@ import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
 import { useTranslate } from '../../i18n/i18n';
 import { fetchMatchData, IRawMatchProps, useMatchData } from '../../lib/page-helpers/match-helper';
 import { getEventDescription, readableDate } from '../../lib/utils/common';
-import SimpleMatchTable from '../../components/SimpleMatchTable';
-import MatchDetailsCard from '../../components/MatchDetails/MatchDetailsCard';
+import SingleMatchTable from '../../components/ui/single-match-table';
+import MatchDetailsCard from '../../components/pages/match/match-details-card';
 import SEO from '../../components/seo';
 import { Event, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import { createOpengraphImageUrl } from '../../lib/opengraph';
@@ -59,7 +59,7 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                   match.blueScore === -1 &&
                   match.scheduledTime &&
                   match.scheduledTime !== '0000-00-00 00:00:00' && (
-                    <Typography variant={'body1'}>
+                    <Typography variant="body1">
                       <QueryBuilder />
                       {t('pages.match.scheduled_time')}: {readableDate(match.scheduledTime)}
                     </Typography>
@@ -89,7 +89,7 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                   </Stack>
                 )}
 
-                <SimpleMatchTable match={match} />
+                <SingleMatchTable match={match} />
               </CardContent>
             </Card>
           </Grid>

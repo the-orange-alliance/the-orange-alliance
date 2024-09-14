@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslate } from '../../i18n/i18n';
 import { useTheme } from '@mui/material/styles';
 import { Search as SearchIcon } from '@mui/icons-material';
-import Search from '../search';
+import Search from './search';
 
 interface NavbarProps {
   title: string;
@@ -56,7 +56,7 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
           {isSmallScreen && !isMobileSearchOpen ? (
             <IconButton
               color="inherit"
-              aria-label={'Show Search'}
+              aria-label="Show Search"
               edge="start"
               onClick={() => setIsMobileSearchOpen(true)}
               size="large"

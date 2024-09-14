@@ -19,7 +19,7 @@ import {
   IRawStreamsProps,
   useStreamsData
 } from '../lib/page-helpers/streams-helper';
-import * as Layouts from '../components/streaming/layouts';
+import * as Layouts from '../components/pages/streaming/layouts';
 import SEO from '../components/seo';
 
 interface StreamView {

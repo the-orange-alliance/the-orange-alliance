@@ -11,11 +11,11 @@ const NotFoundPage = () => {
     <>
       <SEO title="Page Not Found" />
 
-      <Grid container alignItems={'center'} justifyContent={'center'}>
+      <Grid container alignItems="center" justifyContent="center">
         <Grid item sx={{ textAlign: 'center' }}>
           <Image src={`/imgs/404-${rand}.png`} alt="404" height={310} width={310} />
-          <Typography variant={'h3'}>{t('pages.404.title')}</Typography>
-          <Typography variant={'body1'}>{t('pages.404.short_info')}</Typography>
+          <Typography variant="h3">{t('pages.404.title')}</Typography>
+          <Typography variant="body1">{t('pages.404.short_info')}</Typography>
         </Grid>
       </Grid>
     </>

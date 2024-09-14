@@ -1,24 +1,14 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  Stack,
-  Typography
-} from '@mui/material';
-import {
-  logout,
-} from '../../providers/FirebaseProvider';
+import { Box, Button, CircularProgress, Container, Grid, Stack, Typography } from '@mui/material';
+import { logout } from '../../providers/firebase-provider';
 import { useTranslate } from '../../i18n/i18n';
 import SEO from '../../components/seo';
 import { useAppContext } from '../../lib/toa-context';
-import AccountSettingsCard from '../../components/AccountWidgets/AccountSettingsCard';
-import APICard from '../../components/AccountWidgets/APICard';
-import NotificationsCard from '../../components/AccountWidgets/NotificationsCard';
-import FavoritesCard from '../../components/AccountWidgets/FavoritesCard';
+import AccountSettingsCard from '../../components/pages/account/AccountSettingsCard';
+import APICard from '../../components/pages/account/APICard';
+import NotificationsCard from '../../components/pages/account/NotificationsCard';
+import FavoritesCard from '../../components/pages/account/FavoritesCard';
 
 const AccountPage: NextPage = () => {
   const router = useRouter();
@@ -79,12 +69,12 @@ const AccountPage: NextPage = () => {
                 Welcome back, {user.displayName || 'User'}
               </Typography>
             </Box>
-            <Button variant={'contained'} onClick={doLogoutUser}>
+            <Button variant="contained" onClick={doLogoutUser}>
               {t('pages.account.logout')}
             </Button>
           </Box>
 
-          <Grid container direction={'row'} spacing={2}>
+          <Grid container direction="row" spacing={2}>
             {/* Left Column */}
             <Grid item lg={7} md={12}>
               {/* Favorite Teams/Events */}
@@ -101,7 +91,6 @@ const AccountPage: NextPage = () => {
 
               {/* Account Settings */}
               <AccountSettingsCard />
-
             </Grid>
           </Grid>
         </Container>

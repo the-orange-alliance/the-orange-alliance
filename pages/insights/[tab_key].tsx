@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
 import { Box, Card, Tab, Tabs, Typography } from '@mui/material';
-import { useTranslate } from '../../i18n/i18n';
 import { useRouter } from 'next/router';
+import { useTranslate } from '../../i18n/i18n';
 import {
   getInsightsData,
   IRawInsightsProps,
   parseInsightsProps
 } from '../../lib/page-helpers/insightsHelper';
-import InsightsTab from '../../components/SeasonInsights/InsightsTab';
-import FilterCard from '../../components/FilterCard';
+import InsightsTab from '../../components/pages/event/insights/InsightsTab';
+import FiltersCard from '../../components/ui/filters-card';
 import { useAppContext } from '../../lib/toa-context';
 import SEO from '../../components/seo';
+import { getSeasonString } from '../../lib/utils/common';
 
 const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const router = useRouter();
@@ -22,6 +23,8 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const { elimsMultiTeam, combo, qualsMultiTeam, qualsSingleTeam, seasonKey } =
     parseInsightsProps(props);
   const tabs = ['quals', 'elims', 'stquals', 'combined'];
+
+  const selectedSeason = seasons.find(s => s.seasonKey === seasonKey)!;
 
   useEffect(() => {
     const tabByPath = tabs.findIndex(t => t === router.query.tab_key);
@@ -84,20 +87,20 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
     <>
       <SEO title="Insights" url="/insights" />
 
-      <Typography variant="h4" gutterBottom>
-        {t('drawer.insights')}
+      <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
+        {getSeasonString(selectedSeason)} {t('drawer.insights')}
       </Typography>
 
-      <FilterCard regions={regions} seasons={seasons} route={'/insights'} forceReload={true} />
+      <FiltersCard regions={regions} seasons={seasons} route="/insights" forceReload={true} />
 
       <Card sx={{ margin: 2, marginTop: 5 }}>
-        <Tabs value={currentTab} onChange={tabHandler} variant={'fullWidth'}>
+        <Tabs value={currentTab} onChange={tabHandler} variant="fullWidth">
           <Tab label="Qualification" value={0} />
           <Tab label="Elimination" value={1} />
 
           {(seasonKey === '2021' || seasonKey === '2122' || seasonKey === '2223') && [
-            <Tab key={'stq'} label="Single-Team Qualification" value={2} />,
-            <Tab key={'combo'} label="Combined Qualification" value={3} />
+            <Tab key="stq" label="Single-Team Qualification" value={2} />,
+            <Tab key="combo" label="Combined Qualification" value={3} />
           ]}
         </Tabs>
 

@@ -8,7 +8,7 @@ import {
   loginWithEmailAndPassword,
   loginWithGithub,
   loginWithGoogle
-} from '../../providers/FirebaseProvider';
+} from '../../providers/firebase-provider';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
 import SEO from '../../components/seo';
@@ -56,18 +56,25 @@ const LoginPage: NextPage = () => {
     const redirect = localStorage.getItem('redirect');
     let goTo = '/account';
     // If we were on an event page or a team page, redirect back there
-    if (redirect && typeof redirect === 'string' && (redirect.startsWith('/events') || redirect.startsWith('/teams'))) goTo = redirect;
+    if (
+      redirect &&
+      typeof redirect === 'string' &&
+      (redirect.startsWith('/events') || redirect.startsWith('/teams'))
+    )
+      goTo = redirect;
     // Redirect
     router.push({ pathname: goTo });
     // Fetch the user data
-    fetchUserData().then((data) => {
-      setUser(data);
-    }).catch(() => {
-      toast.error(t('general.error_occurred'));
-      // If we were on any page, redirect back there
-      if (goTo === '/account' && redirect) router.push({ pathname: redirect });
-      else router.push({ pathname: '/' });
-    });
+    fetchUserData()
+      .then(data => {
+        setUser(data);
+      })
+      .catch(() => {
+        toast.error(t('general.error_occurred'));
+        // If we were on any page, redirect back there
+        if (goTo === '/account' && redirect) router.push({ pathname: redirect });
+        else router.push({ pathname: '/' });
+      });
     // Clear redirect URL from local storage
     localStorage.removeItem('redirect');
   };
@@ -82,16 +89,16 @@ const LoginPage: NextPage = () => {
     <>
       <SEO title="Sign in" url="/account/login" />
 
-      <Grid container direction={'column'} alignContent={'center'}>
+      <Grid container direction="column" alignContent="center">
         <Grid item sx={{ marginTop: 7 }}>
           <Card onKeyPress={handleKeyPress}>
             <CardContent>
-              <Typography variant={'h4'}>{t('pages.account.subpages.login.title')}</Typography>
-              <Grid container direction={'column'} sx={{ marginTop: 0, width: 400 }} spacing={2}>
+              <Typography variant="h4">{t('pages.account.subpages.login.title')}</Typography>
+              <Grid container direction="column" sx={{ marginTop: 0, width: 400 }} spacing={2}>
                 <Grid item>
                   <TextField
-                    type={'email'}
-                    variant={'outlined'}
+                    type="email"
+                    variant="outlined"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
@@ -101,8 +108,8 @@ const LoginPage: NextPage = () => {
                 </Grid>
                 <Grid item>
                   <TextField
-                    type={'password'}
-                    variant={'outlined'}
+                    type="password"
+                    variant="outlined"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
@@ -111,20 +118,20 @@ const LoginPage: NextPage = () => {
                   />
                 </Grid>
                 <Grid item>
-                  <Button fullWidth variant={'contained'} onClick={loginEmail}>
+                  <Button fullWidth variant="contained" onClick={loginEmail}>
                     {t('pages.account.subpages.login.login')}
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Grid container direction={'row'} spacing={2}>
+                  <Grid container direction="row" spacing={2}>
                     <Grid item xs={6}>
-                      <button className={'login-with-button'} onClick={loginGoogle}>
+                      <button className="login-with-button" onClick={loginGoogle}>
                         <Google />
                         {t('pages.account.subpages.login.login_google')}
                       </button>
                     </Grid>
                     <Grid item xs={6}>
-                      <button className={'login-with-button'} onClick={loginGithub}>
+                      <button className="login-with-button" onClick={loginGithub}>
                         <GitHub />
                         {t('pages.account.subpages.login.login_github')}
                       </button>

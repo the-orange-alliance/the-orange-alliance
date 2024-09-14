@@ -13,7 +13,7 @@ import {
   Typography
 } from '@mui/material';
 import { useTranslate } from '../../i18n/i18n';
-import SimpleTeamPaper from '../../components/SimpleTeamPaper';
+import TeamItem from '../../components/ui/team-item';
 import { Box } from '@mui/system';
 import {
   fetchTeamsData,
@@ -68,8 +68,8 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
     <>
       <SEO title="Teams" description="List of FIRST Tech Challenge teams." url="/teams" />
 
-      <Typography sx={{ margin: 2 }} variant="h4">
-        {t('pages.teams.title')}
+      <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
+        <em>FIRST</em> Tech Challenge Teams
       </Typography>
       <Card sx={{ margin: 2 }}>
         <CardContent>
@@ -81,14 +81,14 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
             <Grid item xs={12} sm={12} md={6}>
               <List>
                 {[...currentTeams].splice(0, 10).map(team => (
-                  <SimpleTeamPaper key={team.teamKey} team={team} />
+                  <TeamItem key={team.teamKey} team={team} />
                 ))}
               </List>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <List>
                 {[...currentTeams].splice(10, 20).map(team => (
-                  <SimpleTeamPaper key={team.teamKey} team={team} />
+                  <TeamItem key={team.teamKey} team={team} />
                 ))}
               </List>
             </Grid>

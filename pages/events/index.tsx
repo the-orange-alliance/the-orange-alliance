@@ -3,8 +3,8 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import { Badge, Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
-import SimpleEventPaper from '../../components/SimpleEventPaper';
-import FilterCard from '../../components/FilterCard';
+import EventItem from '../../components/ui/event-item';
+import FiltersCard from '../../components/ui/filters-card';
 import {
   fetchEventsData,
   IRawEventsProps,
@@ -13,8 +13,8 @@ import {
 } from '../../lib/page-helpers/events-helper';
 import { useTranslate } from '../../i18n/i18n';
 import { CURRENT_SEASON } from '../../constants';
-import { getWeekName } from '../../lib/utils/common';
-import TOAProvider from '../../providers/TOAProvider';
+import { getSeasonYear, getWeekName } from '../../lib/utils/common';
+import TOAProvider from '../../providers/toa-provider';
 import { useAppContext } from '../../lib/toa-context';
 import SEO from '../../components/seo';
 
@@ -23,6 +23,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   const { events: initialEvents } = parseEventsProps(props);
   const t = useTranslate();
   const [selectedRegion, setSelectedRegion] = useState<Region>(() => regions[0]);
+  const [selectedSeason, setSelectedSeason] = useState<Season>(() => seasons[0]);
   const [isFetching, setFetching] = useState<boolean>(false);
   const [seasonEvents, setSeasonEvents] = useState(initialEvents);
   const [filteredEvents, setFilteredEvents] = useState(seasonEvents);
@@ -32,6 +33,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   const handleSeasonSelect = useCallback(
     (season: Season) => {
       if (!season) return;
+      setSelectedSeason(season);
       if (season.seasonKey === CURRENT_SEASON) {
         setSeasonEvents(initialEvents);
       } else {
@@ -81,14 +83,14 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
     <>
       <SEO title="Events" description="List of FIRST Tech Challenge events." url="/events" />
 
-      <Typography sx={{ margin: 2 }} variant="h4">
-        {t('general.events')}
+      <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
+        {getSeasonYear(selectedSeason)} <em>FIRST</em> Tech Challenge Events
       </Typography>
 
-      <FilterCard
+      <FiltersCard
         regions={regions}
         seasons={seasons}
-        route={'/events'}
+        route="/events"
         forceReload={false}
         onRegionComplete={handleRegionSelect}
         onSeasonComplete={handleSeasonSelect}
@@ -109,7 +111,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
                   <Badge
                     badgeContent={getEventsByWeek(week).length}
                     max={9999}
-                    color={'primary'}
+                    color="primary"
                     sx={{ mb: 1 }}
                   />
                 }
@@ -123,7 +125,7 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
             <Box sx={{ width: '100%' }}>
               {filteredEvents.map(event => {
                 if (event.weekKey === selectedWeek) {
-                  return <SimpleEventPaper key={event.eventKey} event={event} />;
+                  return <EventItem key={event.eventKey} event={event} />;
                 }
               })}
             </Box>
