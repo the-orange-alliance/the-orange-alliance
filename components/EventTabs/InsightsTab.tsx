@@ -24,10 +24,10 @@ const InsightsTab = (props: IProps) => {
   const elimInsights = insights.length > 1 ? insights[1] : new Insights();
 
   return (
-    <Grid container spacing={8}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       {qualInsights && (
         <Grid item xs={12} sm={6}>
-          <Card>
+          <Card variant="outlined">
             <CardHeader title="Qualification"></CardHeader>
             <CardContent>
               <CardContentList season={seasonKey} insight={qualInsights}></CardContentList>
@@ -37,7 +37,7 @@ const InsightsTab = (props: IProps) => {
       )}
       {elimInsights && (
         <Grid item xs={12} sm={6}>
-          <Card>
+          <Card variant="outlined">
             <CardHeader title="Playoff"></CardHeader>
             <CardContent>
               <CardContentList season={seasonKey} insight={elimInsights}></CardContentList>
@@ -56,6 +56,7 @@ const CardContentList = function ({ insight, season }: { insight: Insights; seas
         component="a"
         button
         href={insight.highScoreMatch ? `/matches/${insight.highScoreMatch.matchKey}` : undefined}
+        dense
       >
         <ListItemText
           primary={'High Score'}
@@ -69,28 +70,28 @@ const CardContentList = function ({ insight, season }: { insight: Insights; seas
             ' - ' +
             (insight.highScoreMatch ? insight.highScoreMatch.matchName : '')
           }
-        ></ListItemText>
+        />
       </ListItem>
-      <ListItem>
+      <ListItem dense>
         <ListItemText
           primary={'Average Score'}
           primaryTypographyProps={{ variant: 'button' }}
           secondary={insight.averageMatchScore}
-        ></ListItemText>
+        />
       </ListItem>
-      <ListItem>
+      <ListItem dense>
         <ListItemText
           primary={'Average Win Score'}
           primaryTypographyProps={{ variant: 'button' }}
           secondary={insight.averageWinningScore}
-        ></ListItemText>
+        />
       </ListItem>
-      <ListItem>
+      <ListItem dense>
         <ListItemText
           primary={'Average Win Margin'}
           primaryTypographyProps={{ variant: 'button' }}
           secondary={insight.averageWinningMargin}
-        ></ListItemText>
+        />
       </ListItem>
       {insightSeasonBreakdown({ insight, season })}
     </List>

@@ -209,7 +209,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
         }
         .toa-match-table__thead th {
           font-weight: 500 !important;
-          padding: 0.5em 0.25em;
+          padding: 0.75em 0.25em;
         }
         .toa-match-table__root :global(.toa-match-table__row) {
           display: table;

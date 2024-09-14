@@ -29,7 +29,7 @@ const LeaderboardsModule = ({ quals, elims, overall }: IProps) => {
         <Typography variant={'subtitle1'} gutterBottom>
           {subtitle}
         </Typography>
-        <NextLink href={`/events/${match.event?.eventKey}/rankings`} passHref>
+        <NextLink href={`/events/${match.event?.eventKey}`} passHref>
           <Link underline="none" fontSize="0.875rem" color="text.secondary" display="block">
             {match.event?.eventName}
           </Link>

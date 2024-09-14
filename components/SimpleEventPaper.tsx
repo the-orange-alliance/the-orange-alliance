@@ -32,7 +32,7 @@ const SimpleEventPaper: React.FC<SimpleEventPaperProps> = ({ event }) => {
   // TODO: figure out LTR
 
   return (
-    <NextLink href={`/events/${event.eventKey}/rankings`} passHref>
+    <NextLink href={`/events/${event.eventKey}`} passHref>
       <ListItemButton sx={{ pl: '1.25em' }}>
         {event.teamCount > 0 && (
           <Box

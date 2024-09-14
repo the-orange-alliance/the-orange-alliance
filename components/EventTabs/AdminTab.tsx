@@ -25,9 +25,7 @@ import toast from 'react-hot-toast';
 
 interface IProps {
   event: Event;
-  user: TOAUser;
   streams: EventLiveStream[];
-  handleStreamChange: (stream: EventLiveStream, add: boolean) => void;
 }
 
 type EditableEventProp =
@@ -41,7 +39,7 @@ type EditableEventProp =
   | 'country'
   | 'league_key';
 
-const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
+const AdminTab = ({ event, streams }: IProps) => {
   const t = useTranslate();
   const { leagues } = useAppContext();
   const [localStreams, setLocalStreams] = useState<EventLiveStream[]>(
@@ -65,8 +63,6 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
         : 'Twitch'
       : 'Youtube'
   );
-
-  const cardSx = { border: '1px solid', borderColor: 'divider', m: 1 };
 
   const updateEventProp = (prop: EditableEventProp, val: string | null) => {
     const temp = new Event().fromJSON(editableEvent.toJSON());
@@ -205,7 +201,6 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
 
       updateStream(stream)
         .then(() => {
-          handleStreamChange(stream, true);
           setLocalStreams([...localStreams, stream]);
           toast.success(t('pages.event.settings.saved'));
         })
@@ -225,7 +220,6 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
       localStreams[0].isActive = false;
       updateStream(localStreams[0])
         .then(() => {
-          handleStreamChange(localStreams[0], false);
           setLocalStreams([...localStreams.filter(s => s.streamKey !== localStreams[0].streamKey)]);
           toast.success(t('pages.event.settings.saved'));
         })
@@ -246,10 +240,10 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
   };
 
   return (
-    <Grid container direction={'row'}>
+    <Grid container spacing={2} sx={{ p: 2 }}>
       {/* Left Column */}
       <Grid item xs={12} md={6}>
-        {/*<Card sx={cardSx}>*/}
+        {/*<Card variant='outlined'>*/}
         {/*  <CardContent>*/}
         {/*    <Typography sx={{ mb: 4 }} variant={'h6'}>*/}
         {/*      {t('pages.account.datasync_card.title')}*/}
@@ -260,7 +254,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
         {/*    </Button>*/}
         {/*  </CardContent>*/}
         {/*</Card>*/}
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography sx={{ mb: 4 }} variant={'h6'}>
               {t('pages.event.subpages.admin.update_info_card.title')}
@@ -371,7 +365,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
 
       {/* Right Column */}
       <Grid item xs={12} md={6}>
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography sx={{ mb: 4 }} variant={'h6'}>
               {t('pages.event.subpages.admin.playlist_card.title')}
@@ -381,7 +375,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
             </Typography>
           </CardContent>
         </Card>
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography variant={'h6'}>
               {t('pages.event.subpages.for-participants.schedule')}
@@ -408,7 +402,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
             </Button>
           </CardContent>
         </Card>
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography variant={'h6'}>
               {t('pages.event.subpages.for-participants.pits_map')}
@@ -436,7 +430,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
             </Button>
           </CardContent>
         </Card>
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography variant={'h6'}>
               {t('pages.event.subpages.for-participants.venue_map')}
@@ -463,7 +457,7 @@ const AdminTab = ({ event, streams, user, handleStreamChange }: IProps) => {
             </Button>
           </CardContent>
         </Card>{' '}
-        <Card sx={cardSx}>
+        <Card variant="outlined">
           <CardContent>
             <Typography variant={'h6'}>
               {t('pages.event.subpages.admin.stream_card.add_stream')}
