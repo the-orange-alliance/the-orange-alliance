@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import NextLink from 'next/link';
-import { Link } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import type { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
 
@@ -25,8 +25,9 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
 }) => {
   const alliance = team.station >= MatchStations.Blue1 ? 'blue' : 'red';
   return (
-    <td
-      style={{
+    <Box
+      component="td"
+      sx={{
         color: isSelected ? '#fff' : undefined,
         backgroundColor: isRemote
           ? isSelected
@@ -38,7 +39,11 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
         textAlign: 'center',
         // WebKit support
         minWidth: width,
-        maxWidth: width
+        maxWidth: width,
+        ':hover': {
+          boxShadow: `inset 0 0 0 2px var(--toa-colors-${alliance})`
+        },
+        transition: 'background-color 150ms, color 150ms'
       }}
     >
       <NextLink href={`/teams/${team.teamKey}#${match.eventKey.toLowerCase()}`} passHref>
@@ -62,7 +67,7 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
           {team.teamKey}
         </Link>
       </NextLink>
-    </td>
+    </Box>
   );
 };
 export default MatchTeamDisplay;
