@@ -5,6 +5,16 @@ import { orange } from '@mui/material/colors';
 const mode: PaletteMode = 'light';
 
 const getDesignTokens = (mode: PaletteMode): Theme => ({
+  colorSchemes: {
+    dark: {
+      palette: {
+        primary: orange,
+        secondary: {
+          main: '#06c'
+        }
+      }
+    }
+  },
   palette: {
     // TODO: Fix types
     // @ts-ignore
@@ -86,14 +96,6 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
         },
         subheader: {
           fontSize: '0.875rem'
-        }
-      }
-    },
-    MuiListItem: {
-      styleOverrides: {
-        button: {
-          borderRadius: '0.625rem',
-          overflow: 'hidden'
         }
       }
     },

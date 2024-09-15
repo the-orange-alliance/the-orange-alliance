@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '@/i18n/i18n';
 import TOAProvider from '@/providers/toa-provider';
@@ -140,23 +140,32 @@ const MatchTable: React.FC<MatchTableProps> = ({
           {groupedMatches.map((group, i) => {
             return (
               <React.Fragment key={group.label}>
-                <tr style={{ backgroundColor: '#f0f0f0' }}>
+                <Box
+                  component="tr"
+                  sx={{
+                    bgcolor: 'background.default'
+                  }}
+                >
                   <th>
                     <Typography
                       fontWeight={500}
                       align="center"
                       sx={{
                         display: 'inline-block',
-                        backgroundColor: '#fff',
+                        bgcolor: 'background.paper',
                         padding: '0.125em 0.75em',
                         borderRadius: '10rem',
-                        margin: '0.25em 0.5em'
+                        margin: '0.25em 0.5em',
+                        ...theme.applyStyles('dark', {
+                          bgcolor: 'grey.900'
+                        })
                       }}
+                      component="span"
                     >
                       {group.label}
                     </Typography>
                   </th>
-                </tr>
+                </Box>
                 {group.matches.map((match: Match) =>
                   match.participants.length === 1 ? (
                     <MatchTableRemoteRow
@@ -202,12 +211,12 @@ const MatchTable: React.FC<MatchTableProps> = ({
         .toa-match-table__root tbody {
           display: block;
         }
-        .toa-match-table__root tr {
+        .toa-match-table__root :global(tr) {
           display: table;
           width: 100%;
           table-layout: fixed;
         }
-        .toa-match-table__thead th {
+        .toa-match-table__thead :global(th) {
           font-weight: 500 !important;
           padding: 0.75em 0.25em;
         }

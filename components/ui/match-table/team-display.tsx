@@ -27,26 +27,30 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
   return (
     <Box
       component="td"
-      sx={{
-        color: isSelected ? '#fff' : undefined,
-        backgroundColor: isRemote
-          ? isSelected
-            ? 'var(--toa-colors-tie)'
-            : undefined
-          : isSelected
-          ? `var(--toa-colors-${alliance})`
-          : `var(--toa-colors-${alliance}-transparent)`,
-        textAlign: 'center',
-        // WebKit support
-        minWidth: width,
-        maxWidth: width,
-        ':hover': {
-          boxShadow: `inset 0 0 0 2px var(--toa-colors-${alliance})`
+      sx={[
+        {
+          color: isSelected ? '#fff' : undefined,
+          backgroundColor: isRemote
+            ? isSelected
+              ? 'var(--toa-colors-tie)'
+              : undefined
+            : isSelected
+            ? `var(--toa-colors-${alliance})`
+            : `var(--toa-colors-${alliance}-transparent)`,
+          textAlign: 'center',
+          // WebKit support
+          minWidth: width,
+          maxWidth: width,
+          transition: 'background-color 150ms, color 150ms'
         },
-        transition: 'background-color 150ms, color 150ms'
-      }}
+        handleClick !== undefined && {
+          ':hover': {
+            boxShadow: `inset 0 0 0 2px var(--toa-colors-${alliance})`
+          }
+        }
+      ]}
     >
-      <NextLink href={`/teams/${team.teamKey}#${match.eventKey.toLowerCase()}`} passHref>
+      <NextLink href={`/teams/${team.teamKey}`} passHref legacyBehavior>
         <Link
           underline="none"
           sx={{

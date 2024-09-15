@@ -28,7 +28,7 @@ interface Option {
   type: 'divider' | 'team' | 'event';
 }
 
-interface SearchProps extends Partial<AutocompleteProps<Option, false, false, true>> {
+interface SearchProps extends Partial<AutocompleteProps<Option, false, false, false>> {
   onFocus?: () => void;
   onBlur?: () => void;
   showIcon?: boolean;
@@ -152,7 +152,7 @@ const Search: React.FC<SearchProps> = ({
     <>
       <Autocomplete
         id={watchGlobalCommand ? 'toa-search' : undefined}
-        getOptionLabel={item => (typeof item === 'string' ? item : item.label)}
+        getOptionLabel={item => item.label}
         getOptionDisabled={item => item.type === 'divider'}
         filterOptions={item => item}
         inputValue={inputValue}
@@ -236,7 +236,14 @@ const Search: React.FC<SearchProps> = ({
                   padding:
                     variant === 'navbar' ? '0.5em 0.875em !important' : '0.75em 1.25em !important',
                   paddingLeft: variant === 'navbar' || isFocused ? undefined : '2.75em !important',
-                  background: variant === 'navbar' ? 'rgba(0, 0, 0, 0.04)' : '#fff',
+                  background: theme =>
+                    variant === 'navbar'
+                      ? theme.palette.mode === 'dark'
+                        ? 'rgba(255, 255, 255, 0.08)'
+                        : 'rgba(0, 0, 0, 0.04)'
+                      : theme.palette.mode === 'dark'
+                      ? '#1e1e1e'
+                      : theme.palette.background.paper,
                   boxShadow:
                     variant === 'navbar'
                       ? 'none'
@@ -253,12 +260,17 @@ const Search: React.FC<SearchProps> = ({
                       : '1rem',
                   my: variant === 'navbar' ? 0.5 : undefined,
                   transition: 'all 0.2s ease-in-out',
-                  '&:focus': {
+                  '&:focus': theme => ({
                     background: variant === 'navbar' ? 'transparent' : undefined,
                     boxShadow: {
-                      sm: variant === 'navbar' ? '0 0 0 1px rgba(0, 0, 0, 0.08)' : undefined
+                      sm:
+                        variant === 'navbar'
+                          ? theme.palette.mode === 'dark'
+                            ? '0 0 0 1px rgba(255, 255, 255, 0.12)'
+                            : '0 0 0 1px rgba(0, 0, 0, 0.08)'
+                          : undefined
                     }
-                  }
+                  })
                 }
               },
               disableUnderline: true,
@@ -299,7 +311,7 @@ const Search: React.FC<SearchProps> = ({
                         fontSize: '0.875em',
                         fontWeight: 500,
                         border: '1px solid',
-                        borderColor: 'rgba(0, 0, 0, 0.2)'
+                        borderColor: 'divider'
                       }}
                     >
                       /
@@ -324,9 +336,9 @@ const Search: React.FC<SearchProps> = ({
         renderOption={({ className, ...props }, option) => {
           return (
             <Box
-              key={option.key}
               component="li"
               {...props}
+              key={option.key}
               sx={{
                 display: 'flex',
                 px: '0.75em',
@@ -343,7 +355,7 @@ const Search: React.FC<SearchProps> = ({
                 cursor: 'pointer',
                 listStyle: 'none',
                 '&.Mui-focused': {
-                  bgcolor: 'rgba(0, 0, 0, 0.04)'
+                  bgcolor: theme => theme.palette.action.hover
                 }
               }}
             >

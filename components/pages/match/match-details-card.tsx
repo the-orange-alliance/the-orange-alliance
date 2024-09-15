@@ -97,7 +97,12 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
         <Grid
           key={index}
           container
-          sx={{ backgroundColor: r.isTitle ? 'rgba(0, 0, 0, 0.04)' : '' }}
+          sx={theme => ({
+            backgroundColor: r.isTitle ? 'rgba(0, 0, 0, 0.04)' : '',
+            ...theme.applyStyles('dark', {
+              backgroundColor: r.isTitle ? 'rgba(0, 0, 0, 0.12)' : ''
+            })
+          })}
         >
           <Grid xs={6} sx={{ padding: 1 }} item>
             <Typography style={{ fontWeight: r.isTitle ? 'bold' : 'normal' }}>{r.name}</Typography>
@@ -117,14 +122,14 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
           >
             <Typography
               display="inline-flex"
-              style={{
+              sx={{
                 verticalAlign: 'bottom',
                 color:
                   r.red !== 0
                     ? isRemote
                       ? 'var(--toa-colors-tie)'
                       : 'var(--toa-colors-red)'
-                    : 'rgba(0, 0, 0, 0.54)',
+                    : 'text.secondary',
                 fontWeight: r.isTitle ? 700 : r.red !== 0 ? 500 : 400
               }}
             >
@@ -146,9 +151,9 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
             >
               <Typography
                 display="inline-flex"
-                style={{
+                sx={{
                   verticalAlign: 'bottom',
-                  color: r.blue !== 0 ? 'var(--toa-colors-blue)' : 'rgba(0, 0, 0, 0.54)',
+                  color: r.blue !== 0 ? 'var(--toa-colors-blue)' : 'text.secondary',
                   fontWeight: r.isTitle ? 700 : r.blue !== 0 ? 500 : 400
                 }}
               >

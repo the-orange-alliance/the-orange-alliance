@@ -3,7 +3,11 @@ import { Toaster } from 'react-hot-toast';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import {
+  CssBaseline,
+  Experimental_CssVarsProvider as CssVarsProvider,
+  ThemeProvider
+} from '@mui/material';
 import DrawerLayout from '@/components/navigation/drawer-layout';
 import theme from '@/lib/theme';
 import { UserLanguageProvider } from '@/i18n/i18n';
@@ -93,6 +97,11 @@ function MyApp({
           :root {
             --toa-navbar-height: 64px;
           }
+        }
+        html,
+        body {
+          scroll-padding-top: var(--toa-navbar-height);
+          scroll-behavior: smooth;
         }
       `}</style>
     </>

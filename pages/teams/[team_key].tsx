@@ -50,6 +50,8 @@ import { createOpengraphImageUrl } from '@/lib/opengraph';
 import SEO from '@/components/seo';
 import MyTOAFavorite, { myTOAType } from '@/components/ui/mytoa-favorite-button';
 
+import ListItemButton from '@mui/material/ListItemButton';
+
 const TeamPage: NextPage<IRawTeamProps> = props => {
   const { seasons } = useAppContext();
   const { team, wlt, topOpr, cad, github, images, notebook, reveal } = useTeamData(props);
@@ -102,7 +104,6 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
         url={`/teams/${team.teamKey}`}
         ogImage={props.ogImage}
       />
-
       <Container sx={{ py: 6 }}>
         <Typography variant="h1">
           Team #{team.teamNumber} - {team.teamNameShort}
@@ -213,7 +214,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           </NextLink>
                         }
                         subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
-                      ${event.country} on ${readableDate(event.startDate)}`}
+                    ${event.country} on ${readableDate(event.startDate)}`}
                       />
                       <CardContent sx={{ pt: 0 }}>
                         {event.rankings[0] && (
@@ -368,21 +369,19 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
               {team.events.length > 0 && (
                 <List>
-                  <ListItem button onClick={() => scrollToEvent('info')} sx={{ fontWeight: 500 }}>
+                  <ListItemButton onClick={() => scrollToEvent('info')} sx={{ fontWeight: 500 }}>
                     {t('pages.team.team_info')}
-                  </ListItem>
-                  <ListItem
-                    button
+                  </ListItemButton>
+                  <ListItemButton
                     onClick={() => scrollToEvent('event-results')}
                     sx={{ fontWeight: 500 }}
                   >
                     {t('pages.team.event_results')}
-                  </ListItem>
+                  </ListItemButton>
                   <ListItem sx={{ pt: 0, pr: 0 }}>
                     <List>
                       {team.events.map(event => (
-                        <ListItem
-                          button
+                        <ListItemButton
                           key={event.eventKey}
                           sx={{ fontSize: '0.875rem', px: 1.5 }}
                           onClick={() => scrollToEvent(event.eventKey)}
@@ -390,7 +389,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                           {event.divisionName
                             ? event.eventName + ' - ' + event.divisionName + ' Division'
                             : event.eventName}
-                        </ListItem>
+                        </ListItemButton>
                       ))}
                     </List>
                   </ListItem>

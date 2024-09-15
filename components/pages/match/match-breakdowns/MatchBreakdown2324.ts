@@ -18,7 +18,7 @@ export default class MatchBreakdown2324 {
 
   calcDrone(zone: number): string {
     const points = (4 - zone) * 10;
-    return zone === 0 ? `0` : `Zone ${zone}+(${points}))`;
+    return zone === 0 ? `0` : `Zone ${zone} (+${points})`;
   }
 
   getRows(match: Match): MatchBreakdownRow[] {

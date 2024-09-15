@@ -12,6 +12,8 @@ import {
 import { Insights, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import seasonInsights from './insights/seasons';
 
+import ListItemButton from '@mui/material/ListItemButton';
+
 interface IProps {
   event: Event;
 }
@@ -51,9 +53,8 @@ const InsightsTab = (props: IProps) => {
 const CardContentList = function ({ insight, season }: { insight: Insights; season: string }) {
   return (
     <List>
-      <ListItem
+      <ListItemButton
         component="a"
-        button
         href={insight.highScoreMatch ? `/matches/${insight.highScoreMatch.matchKey}` : undefined}
         dense
       >
@@ -70,7 +71,7 @@ const CardContentList = function ({ insight, season }: { insight: Insights; seas
             (insight.highScoreMatch ? insight.highScoreMatch.matchName : '')
           }
         />
-      </ListItem>
+      </ListItemButton>
       <ListItem dense>
         <ListItemText
           primary="Average Score"

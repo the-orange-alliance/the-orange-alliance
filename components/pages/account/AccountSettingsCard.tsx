@@ -14,6 +14,8 @@ import {
 } from '@/providers/firebase-provider';
 import SideCard from './SideCard';
 
+import ListItemButton from '@mui/material/ListItemButton';
+
 const AccountSettingsCard = () => {
   const { user, setUser } = useAppContext();
   const t = useTranslate();
@@ -105,15 +107,15 @@ const AccountSettingsCard = () => {
     <SideCard title="pages.account.account_settings">
       <List>
         {/* Reset Password */}
-        <ListItem button onClick={reset}>
+        <ListItemButton onClick={reset}>
           <ListItemIcon>
             <Lock />
           </ListItemIcon>
           <ListItemText>{t('pages.account.reset_password')}</ListItemText>
-        </ListItem>
+        </ListItemButton>
 
         {/* Un/link Google */}
-        <ListItem button onClick={() => (user.googleLinked ? unlink('google') : link('google'))}>
+        <ListItemButton onClick={() => (user.googleLinked ? unlink('google') : link('google'))}>
           <ListItemIcon>
             <Google />
           </ListItemIcon>
@@ -122,10 +124,10 @@ const AccountSettingsCard = () => {
               user.googleLinked ? 'pages.account.unlink_account' : 'pages.account.link_account'
             ).replace('{{ name }}', 'Google')}
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
 
         {/* Un/link Github */}
-        <ListItem button onClick={() => (user.githubLinked ? unlink('github') : link('github'))}>
+        <ListItemButton onClick={() => (user.githubLinked ? unlink('github') : link('github'))}>
           <ListItemIcon>
             <GitHub />
           </ListItemIcon>
@@ -134,23 +136,23 @@ const AccountSettingsCard = () => {
               user.githubLinked ? 'pages.account.unlink_account' : 'pages.account.link_account'
             ).replace('{{ name }}', 'Github')}
           </ListItemText>
-        </ListItem>
+        </ListItemButton>
 
         {/* Change Name */}
-        <ListItem button onClick={changeName}>
+        <ListItemButton onClick={changeName}>
           <ListItemIcon>
             <Lock />
           </ListItemIcon>
           <ListItemText>{t('pages.account.change_name')}</ListItemText>
-        </ListItem>
+        </ListItemButton>
 
         {/* Change Email Address */}
-        <ListItem button onClick={changeEmailAddress}>
+        <ListItemButton onClick={changeEmailAddress}>
           <ListItemIcon>
             <Lock />
           </ListItemIcon>
           <ListItemText>{t('pages.account.change_email_address')}</ListItemText>
-        </ListItem>
+        </ListItemButton>
 
         {/* Login Info */}
         <ListItem>

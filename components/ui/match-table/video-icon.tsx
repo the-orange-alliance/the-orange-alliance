@@ -24,7 +24,7 @@ const MatchVideoIcon: React.FC<MatchVideoIconProps> = ({ videoUrl }) => {
   ) : (
     <PlayIcon
       sx={{
-        color: 'rgba(0, 0, 0, 0.12)',
+        color: 'divider',
         fontSize: '1.125em',
         verticalAlign: 'middle'
       }}
