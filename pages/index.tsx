@@ -7,7 +7,8 @@ import {
   Container,
   Divider,
   Grid,
-  Typography
+  Typography,
+  alpha
 } from '@mui/material';
 import MatchesIcon from '@mui/icons-material/SportsEsportsRounded';
 import TeamsIcon from '@mui/icons-material/GroupsRounded';
@@ -27,7 +28,31 @@ const Home: NextPage<IRawHomeProps> = props => {
   return (
     <>
       <SEO url="" />
-      <main>
+      <Box
+        component="main"
+        sx={theme => {
+          console.log(theme);
+
+          const forgroundColor =
+            theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
+          const backgroundColor =
+            theme.palette.mode === 'dark' ? theme.palette.common.black : theme.palette.common.white;
+
+          return {
+            background: [
+              `linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, ${theme.palette.background.default} 300px)`,
+              `fixed 0 0 /20px 20px radial-gradient(${alpha(
+                forgroundColor,
+                0.2
+              )} 1px, transparent 0)`,
+              `fixed 10px 10px /20px 20px radial-gradient(${alpha(
+                forgroundColor,
+                0.2
+              )} 1px, transparent 0), ${backgroundColor}`
+            ].join(', ')
+          };
+        }}
+      >
         <Container>
           <Box sx={{ maxWidth: '36rem', mx: 'auto', py: 12, px: 2 }}>
             <Typography
@@ -95,15 +120,7 @@ const Home: NextPage<IRawHomeProps> = props => {
             </Grid>
           </Grid>
         </Container>
-      </main>
-
-      <style jsx>{`
-        :global(main) {
-          background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #f5f6f7 300px),
-            fixed 0 0 /20px 20px radial-gradient(#d1d1d1 1px, transparent 0),
-            fixed 10px 10px /20px 20px radial-gradient(#d1d1d1 1px, transparent 0), #fff;
-        }
-      `}</style>
+      </Box>
     </>
   );
 };

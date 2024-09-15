@@ -73,7 +73,7 @@ const TabsTrigger = forwardRef<
             border: '1px solid',
             borderColor: 'divider',
             color: 'text.secondary',
-            bgcolor: 'common.white',
+            bgcolor: 'background.paper',
             padding: '0.25em 0.5em',
             fontSize: '0.75em',
             fontWeight: '700',

@@ -1,10 +1,19 @@
-import { AppBar, Backdrop, IconButton, Toolbar, Typography, useMediaQuery } from '@mui/material';
+import {
+  AppBar,
+  Backdrop,
+  IconButton,
+  NoSsr,
+  Toolbar,
+  Typography,
+  useMediaQuery
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from 'react';
-import { useTranslate } from '@/i18n/i18n';
 import { useTheme } from '@mui/material/styles';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Search from './search';
+import ThemeSwitcher from './theme-switcher';
+import RouterProgress from './router-progress';
 
 interface NavbarProps {
   title: string;
@@ -13,7 +22,6 @@ interface NavbarProps {
 }
 
 const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
-  const t = useTranslate();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
@@ -34,7 +42,8 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
 
   return (
     <>
-      <AppBar elevation={0} position="fixed">
+      <AppBar elevation={1} position="fixed">
+        <RouterProgress />
         <Toolbar>
           {!isMobileSearchOpen && (
             <>
@@ -59,7 +68,6 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
               aria-label="Show Search"
               edge="start"
               onClick={() => setIsMobileSearchOpen(true)}
-              size="large"
             >
               <SearchIcon />
             </IconButton>
@@ -77,6 +85,11 @@ const Navbar = ({ title, isDrawerOpen, handleDrawerToggle }: NavbarProps) => {
               maxResults={6}
               watchGlobalCommand
             />
+          )}
+          {!isMobileSearchOpen && (
+            <NoSsr>
+              <ThemeSwitcher />
+            </NoSsr>
           )}
         </Toolbar>
       </AppBar>

@@ -40,6 +40,8 @@ import { toast } from 'react-hot-toast';
 import SEO from '@/components/seo';
 import { useAppContext } from '@/lib/toa-context';
 
+import ListItemButton from '@mui/material/ListItemButton';
+
 const AccountPage: NextPage = () => {
   const router = useRouter();
   const t = useTranslate();
@@ -214,7 +216,6 @@ const AccountPage: NextPage = () => {
   return (
     <>
       <SEO title="Account Overview" description="Overview of your TOA account." url="/account" />
-
       {!user || !user.emailVerified ? (
         <Container
           sx={{
@@ -381,16 +382,15 @@ const AccountPage: NextPage = () => {
               <SideCard title="pages.account.account_settings">
                 <List>
                   {/* Reset Password */}
-                  <ListItem button onClick={reset}>
+                  <ListItemButton onClick={reset}>
                     <ListItemIcon>
                       <Lock />
                     </ListItemIcon>
                     <ListItemText>{t('pages.account.reset_password')}</ListItemText>
-                  </ListItem>
+                  </ListItemButton>
 
                   {/* Un/link Google */}
-                  <ListItem
-                    button
+                  <ListItemButton
                     onClick={() => (user.googleLinked ? unlink('google') : link('google'))}
                   >
                     <ListItemIcon>
@@ -403,11 +403,10 @@ const AccountPage: NextPage = () => {
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Google')}
                     </ListItemText>
-                  </ListItem>
+                  </ListItemButton>
 
                   {/* Un/link Github */}
-                  <ListItem
-                    button
+                  <ListItemButton
                     onClick={() => (user.githubLinked ? unlink('github') : link('github'))}
                   >
                     <ListItemIcon>
@@ -420,23 +419,23 @@ const AccountPage: NextPage = () => {
                           : 'pages.account.link_account'
                       ).replace('{{ name }}', 'Github')}
                     </ListItemText>
-                  </ListItem>
+                  </ListItemButton>
 
                   {/* Change Name */}
-                  <ListItem button onClick={changeName}>
+                  <ListItemButton onClick={changeName}>
                     <ListItemIcon>
                       <Lock />
                     </ListItemIcon>
                     <ListItemText>{t('pages.account.change_name')}</ListItemText>
-                  </ListItem>
+                  </ListItemButton>
 
                   {/* Change Email Address */}
-                  <ListItem button onClick={changeEmailAddress}>
+                  <ListItemButton onClick={changeEmailAddress}>
                     <ListItemIcon>
                       <Lock />
                     </ListItemIcon>
                     <ListItemText>{t('pages.account.change_email_address')}</ListItemText>
-                  </ListItem>
+                  </ListItemButton>
 
                   {/* Login Info */}
                   <ListItem>
@@ -458,7 +457,6 @@ const AccountPage: NextPage = () => {
           </Grid>
         </Container>
       )}
-
       <style jsx>{`
         .profile-image {
           flex: none;

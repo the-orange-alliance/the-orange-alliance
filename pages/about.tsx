@@ -1,5 +1,5 @@
-import { Avatar, Box, Button, Container, IconButton, Link, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Avatar, Box, Button, Card, Container, IconButton, Link, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { GitHub, LinkedIn } from '@mui/icons-material';
 import SEO from '@/components/seo';
 
@@ -74,7 +74,8 @@ const About = () => {
       <Box
         component="section"
         sx={{
-          background: 'linear-gradient(25deg, #ff98002e, #ffffff 80%)'
+          background: theme =>
+            `linear-gradient(25deg, #ff98002e, ${theme.palette.background.paper})`
         }}
       >
         <Container maxWidth="md" sx={{ py: 8 }}>
@@ -103,7 +104,7 @@ const About = () => {
 
       <Container component="section" maxWidth="md" sx={{ py: 6 }}>
         <Grid container spacing={4}>
-          <Grid xs={12} lg={7}>
+          <Grid size={{ xs: 12, lg: 7 }}>
             <Box>
               <Typography fontSize="1.125rem" fontWeight={500} mb={2}>
                 The Orange Alliance is best way to scout, watch, and relive <em>FIRST</em> Tech
@@ -127,7 +128,7 @@ const About = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid xs={12} lg={5}>
+          <Grid size={{ xs: 12, lg: 5 }}>
             <Box
               sx={{
                 display: 'block',
@@ -223,7 +224,7 @@ const About = () => {
               borderRadius: 2,
               transition: 'background-color 0.2s ease',
               '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                backgroundColor: 'action.hover'
               }
             }}
           >
@@ -237,7 +238,7 @@ const About = () => {
                 height: '3.5rem',
                 width: '3.5rem',
                 boxShadow: 1,
-                border: '2px solid #fff',
+                border: theme => `2px solid ${theme.palette.background.paper}`,
                 '& > svg': {
                   width: '1.5rem',
                   height: '1.5rem'
@@ -269,7 +270,7 @@ const About = () => {
               borderRadius: 2,
               transition: 'background-color 0.2s ease',
               '&:hover, &:focus': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                backgroundColor: 'action.hover'
               }
             }}
           >
@@ -283,14 +284,18 @@ const About = () => {
                 height: '3.5rem',
                 width: '3.5rem',
                 boxShadow: 1,
-                border: '2px solid #fff',
-                '& > svg': {
+                border: theme => `2px solid ${theme.palette.background.paper}`,
+                '& > svg': theme => ({
                   width: '1.5rem',
-                  height: '1.5rem'
-                }
+                  height: '1.5rem',
+                  fill: '#0F172A',
+                  ...theme.applyStyles('dark', {
+                    fill: '#fff'
+                  })
+                })
               }}
             >
-              <svg viewBox="0 0 28 28" fill="#0F172A" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 28 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -314,15 +319,14 @@ const About = () => {
         </Typography>
         <Grid container direction="row" spacing={2}>
           {people.map(person => (
-            <Grid key={person.name} xs={12} sm={6} lg={4}>
-              <Box
+            <Grid key={person.name} size={{ xs: 12, sm: 6, lg: 4 }}>
+              <Card
                 sx={{
-                  bgcolor: 'background.paper',
                   borderRadius: 2,
-                  boxShadow: 1,
                   p: 2,
                   height: '100%'
                 }}
+                variant="outlined"
               >
                 <Box display="flex">
                   <Avatar
@@ -364,7 +368,7 @@ const About = () => {
                 <Typography fontSize="0.875rem" color="text.secondary">
                   {person.title}
                 </Typography>
-              </Box>
+              </Card>
             </Grid>
           ))}
         </Grid>

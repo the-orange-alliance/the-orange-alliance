@@ -64,7 +64,7 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                       {t('pages.match.scheduled_time')}: {readableDate(match.scheduledTime)}
                     </Typography>
                   )}
-                {!match.videoURL ? (
+                {match.videoURL ? (
                   <Stack direction="row" spacing={1} alignItems="center" mb={2}>
                     <PlayCircleOutline sx={{ fontSize: '1em' }} />
                     <Link
