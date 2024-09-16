@@ -6,14 +6,14 @@ export function readableDate(date: Date | string): string {
   if (typeof date === 'string') date = new Date(date);
   if (typeof date.getMonth !== 'function') return '';
   const shortMonth = getShortMonth(date.getMonth());
-  return `${shortMonth} ${date.getDate() + 1}, ${date.getFullYear()}`;
+  return `${shortMonth} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
 export function readableTime(date: Date | string): string {
   if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
   if (typeof date.getHours !== 'function') return '';
-  const hour = date.getHours() + 1;
+  const hour = date.getHours();
   const min = date.getMinutes();
   const h = (hour < 10 ? '0' : '') + (hour > 12 ? hour - 12 : hour);
   const m = (min < 10 ? '0' : '') + min;
