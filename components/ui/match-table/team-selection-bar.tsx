@@ -5,6 +5,7 @@ import { ArrowForwardIos } from '@mui/icons-material';
 import { MatchParticipant, Ranking } from '@the-orange-alliance/api/lib/cjs/models';
 import { getLocationString } from '@/lib/utils/common';
 import { useTranslate } from '@/i18n/i18n';
+import theme from '@/lib/theme';
 
 interface TeamSelectionBarProps {
   team: MatchParticipant | null;
@@ -22,6 +23,13 @@ const TeamSelectionBar: React.FC<TeamSelectionBarProps> = ({ team, rankings }) =
         vertical: 'bottom',
         horizontal: 'center'
       }}
+      sx={{
+        '& .MuiSnackbarContent-message': {
+          width: '100%',
+          px: 0.5,
+          py: 1.5
+        }
+      }}
       message={
         rank ? (
           <>
@@ -29,7 +37,13 @@ const TeamSelectionBar: React.FC<TeamSelectionBarProps> = ({ team, rankings }) =
               <Typography fontSize="1.125rem" fontWeight={500} lineHeight={1}>
                 <strong>#{rank.teamKey}</strong> {rank.team.teamNameShort}
               </Typography>
-              <Typography fontSize="0.875rem" sx={{ color: 'rgba(255,255,255,0.54)', mb: 1 }}>
+              <Typography
+                fontSize="0.875rem"
+                sx={{
+                  color: theme => (theme.palette.mode === 'dark' ? 'grey.600' : 'grey.400'),
+                  mb: 1
+                }}
+              >
                 {getLocationString(rank.team)}
               </Typography>
             </Stack>
@@ -64,7 +78,12 @@ const TeamSelectionBar: React.FC<TeamSelectionBarProps> = ({ team, rankings }) =
                 />
               </Stack>
               <NextLink href={`/teams/${rank.teamKey}`} passHref>
-                <Button size="small" sx={{ color: '#fff' }} endIcon={<ArrowForwardIos />}>
+                <Button
+                  size="small"
+                  color="inherit"
+                  endIcon={<ArrowForwardIos />}
+                  sx={{ textWrap: 'nowrap' }}
+                >
                   {t('match_table.view_team')}
                 </Button>
               </NextLink>

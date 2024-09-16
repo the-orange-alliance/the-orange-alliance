@@ -31,7 +31,7 @@ const MatchTableRow: React.FC<MatchTableRowProps> = ({
               <td className="toa-match-table__name" rowSpan={2} style={{ width: '4em' }}>
                 <MatchNameDisplay match={match} onClick={onMatchClick} />
               </td>
-              <td className="toa-match-table__scores" rowSpan={2} style={{ width: '5em' }}>
+              <td className="toa-match-table__scores" rowSpan={2} style={{ width: '6em' }}>
                 <MatchScoresDisplay match={match} onClick={onMatchClick} />
               </td>
               <MatchAllianceDisplay

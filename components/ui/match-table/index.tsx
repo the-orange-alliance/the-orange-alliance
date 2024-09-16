@@ -142,9 +142,8 @@ const MatchTable: React.FC<MatchTableProps> = ({
               <React.Fragment key={group.label}>
                 <Box
                   component="tr"
-                  sx={{
-                    bgcolor: 'background.default'
-                  }}
+                  bgcolor="background.default"
+                  className="toa-match-table__group-header"
                 >
                   <th>
                     <Typography
@@ -211,12 +210,13 @@ const MatchTable: React.FC<MatchTableProps> = ({
         .toa-match-table__root tbody {
           display: block;
         }
-        .toa-match-table__root :global(tr) {
+        .toa-match-table__root tr,
+        .toa-match-table__root :global(.toa-match-table__group-header) {
           display: table;
           width: 100%;
           table-layout: fixed;
         }
-        .toa-match-table__thead :global(th) {
+        .toa-match-table__thead th {
           font-weight: 500 !important;
           padding: 0.75em 0.25em;
         }
@@ -228,15 +228,13 @@ const MatchTable: React.FC<MatchTableProps> = ({
           min-width: 100%;
         }
         .toa-match-table__root :global(.toa-match-table__row):nth-of-type(odd) {
-          background-color: rgba(0, 0, 0, 0.04);
+          background-color: ${theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, 0.04)'
+            : 'rgba(0, 0, 0, 0.04)'};
         }
         .toa-match-table__root :global(.toa-match-table__row td) {
           padding: 0;
           text-align: center;
-        }
-        .toa-match-table__root :global(.toa-match-table__video) {
-          text-align: left !important;
-          padding-left: 0.25em !important;
         }
         @media (max-width: 600px) {
           .toa-match-table__root {
