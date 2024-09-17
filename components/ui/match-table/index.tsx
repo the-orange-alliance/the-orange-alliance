@@ -152,9 +152,15 @@ const MatchTable: React.FC<MatchTableProps> = ({
                       sx={{
                         display: 'inline-block',
                         bgcolor: 'background.paper',
-                        padding: '0.125em 0.75em',
+                        border: 1,
+                        borderColor: 'divider',
+                        padding: '0.25em 1em',
                         borderRadius: '10rem',
-                        margin: '0.25em 0.5em',
+                        margin: '0.5em 0.5em',
+                        fontSize: {
+                          xs: '0.875rem',
+                          md: '1rem'
+                        },
                         ...theme.applyStyles('dark', {
                           bgcolor: 'grey.900'
                         })
@@ -191,6 +197,10 @@ const MatchTable: React.FC<MatchTableProps> = ({
           })}
         </tbody>
       </table>
+
+      <Typography variant="body2" color="text.secondary" sx={{ p: 3, mt: 1 }}>
+        All times are displayed in your local timezone.
+      </Typography>
 
       <TeamSelectionBar team={selectedTeam} rankings={event.rankings} />
 

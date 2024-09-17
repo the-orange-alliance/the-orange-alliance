@@ -61,7 +61,7 @@ const MatchTableRow: React.FC<MatchTableRowProps> = ({
           <td style={{ width: '6em' }}>
             <MatchNameDisplay match={match} onClick={onMatchClick} />
           </td>
-          <td style={{ width: '6em' }}>
+          <td style={{ width: '7em' }}>
             <MatchScoresDisplay match={match} onClick={onMatchClick} />
           </td>
           <MatchAllianceDisplay
