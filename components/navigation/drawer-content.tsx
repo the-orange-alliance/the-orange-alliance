@@ -44,9 +44,9 @@ const DrawerContent = () => {
       />
       <DrawerItem
         title={t('drawer.insights')}
-        href="/insights/quals"
+        href="/insights"
         icon={<InsightsIcon />}
-        isActive={router.route.startsWith('/insights')}
+        isActive={router.route === '/insights'}
       />
       <DrawerItem
         title={t('drawer.streaming')}

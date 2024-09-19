@@ -41,8 +41,8 @@ const RankingTab = (props: IProps) => {
               <TableCell>{row.tieBreakerPoints.toFixed(2)}</TableCell>
               <TableCell>{row.highestQualScore}</TableCell>
               <TableCell>{row.played}</TableCell>
-              <TableCell>{row.opr}</TableCell>
-              <TableCell>{row.npOpr}</TableCell>
+              <TableCell>{row.opr.toFixed(2)}</TableCell>
+              <TableCell>{row.npOpr.toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

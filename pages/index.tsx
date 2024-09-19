@@ -31,8 +31,6 @@ const Home: NextPage<IRawHomeProps> = props => {
       <Box
         component="main"
         sx={theme => {
-          console.log(theme);
-
           const forgroundColor =
             theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.common.black;
           const backgroundColor =
@@ -100,7 +98,7 @@ const Home: NextPage<IRawHomeProps> = props => {
                 <Divider />
                 <CardContent>
                   {todaysEvents.length === 0 && (
-                    <Typography variant="h6" sx={{ marginTop: 1 }}>
+                    <Typography variant="subtitle1" color="text.secondary" mt={1}>
                       {t('pages.home.no_events_today')}
                     </Typography>
                   )}

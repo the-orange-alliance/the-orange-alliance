@@ -32,7 +32,6 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
 
   const handleSeasonSelect = useCallback(
     (season: Season) => {
-      if (!season) return;
       setSelectedSeason(season);
       if (season.seasonKey === CURRENT_SEASON) {
         setSeasonEvents(initialEvents);
@@ -48,19 +47,12 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   );
 
   const handleRegionSelect = useCallback((region: Region) => {
-    if (!region) return;
     setSelectedRegion(region);
   }, []);
 
   const selectTab = useCallback((e: SyntheticEvent, val: string) => {
     setSelectedWeek(val);
   }, []);
-
-  const clearFilters = useCallback(() => {
-    const season = seasons.find(s => s.seasonKey === CURRENT_SEASON) || seasons[0];
-    setSelectedRegion(regions[0]);
-    handleSeasonSelect(season);
-  }, [handleSeasonSelect, regions, seasons]);
 
   useEffect(() => {
     const filteredEvents =
@@ -88,50 +80,52 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       </Typography>
 
       <FiltersCard
-        regions={regions}
-        seasons={seasons}
-        route="/events"
-        forceReload={false}
-        onRegionComplete={handleRegionSelect}
-        onSeasonComplete={handleSeasonSelect}
-        onClearFiltersComplete={clearFilters}
-        fetchingOverride={isFetching}
+        onSeasonChange={handleSeasonSelect}
+        onRegionChange={handleRegionSelect}
+        fetching={isFetching}
       />
 
-      <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={selectedWeek} onChange={selectTab} variant="scrollable" scrollButtons="auto">
-            {weeks.map((week: Week) => (
-              <Tab
-                key={week.weekKey}
-                label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
-                value={week.weekKey}
-                iconPosition="top"
-                icon={
-                  <Badge
-                    badgeContent={getEventsByWeek(week).length}
-                    max={9999}
-                    color="primary"
-                    sx={{ mb: 1 }}
-                  />
-                }
-                sx={{ px: 2, maxWidth: '14em' }}
-              />
-            ))}
-          </Tabs>
-        </Box>
-        {!isFetching && filteredEvents.length > 0 && (
-          <CardContent>
-            <Box sx={{ width: '100%' }}>
-              {filteredEvents.map(event => {
-                if (event.weekKey === selectedWeek) {
-                  return <EventItem key={event.eventKey} event={event} />;
-                }
-              })}
-            </Box>
-          </CardContent>
-        )}
-      </Card>
+      {filteredEvents.length > 0 && (
+        <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={selectedWeek}
+              onChange={selectTab}
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              {weeks.map((week: Week) => (
+                <Tab
+                  key={week.weekKey}
+                  label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
+                  value={week.weekKey}
+                  iconPosition="top"
+                  icon={
+                    <Badge
+                      badgeContent={getEventsByWeek(week).length}
+                      max={9999}
+                      color="primary"
+                      sx={{ mb: 1 }}
+                    />
+                  }
+                  sx={{ px: 2, maxWidth: '14em' }}
+                />
+              ))}
+            </Tabs>
+          </Box>
+          {!isFetching && filteredEvents.length > 0 && (
+            <CardContent>
+              <Box sx={{ width: '100%' }}>
+                {filteredEvents.map(event => {
+                  if (event.weekKey === selectedWeek) {
+                    return <EventItem key={event.eventKey} event={event} />;
+                  }
+                })}
+              </Box>
+            </CardContent>
+          )}
+        </Card>
+      )}
 
       {/* No Event Data */}
       {!isFetching && filteredEvents.length === 0 && (

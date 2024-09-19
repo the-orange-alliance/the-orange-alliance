@@ -1,187 +1,117 @@
-import { useEffect, SyntheticEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Autocomplete,
-  Button,
   Card,
   Divider,
-  Grid,
+  FormControl,
+  Grid2 as Grid,
+  InputLabel,
   LinearProgress,
-  TextField,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Typography
 } from '@mui/material';
 import { Region, Season } from '@the-orange-alliance/api/lib/cjs/models';
 import { useRouter } from 'next/router';
-import { getSeasonString } from '@/lib/utils/common';
+import { getRegionString, getSeasonString } from '@/lib/utils/common';
 import { useTranslate } from '@/i18n/i18n';
 import { CURRENT_SEASON } from '@/constants';
+import { useAppContext } from '@/lib/toa-context';
 
 interface IProps {
-  seasons: Season[];
-  regions: Region[];
-  route: string;
-  forceReload: boolean;
-  fetchingOverride?: boolean;
-  onRegionComplete?: (region: Region) => any;
-  onSeasonComplete?: (season: Season) => any;
-  onClearFiltersComplete?: () => any;
+  forceReload?: boolean;
+  fetching?: boolean;
+  onRegionChange?: (region: Region) => void;
+  onSeasonChange?: (season: Season) => void;
 }
 
-interface AutoComplete<T> {
-  label: string;
-  parent: T;
-}
-
-const FiltersCard = (props: IProps) => {
+const FiltersCard = ({ fetching, forceReload, onSeasonChange, onRegionChange }: IProps) => {
   const router = useRouter();
   const t = useTranslate();
-
-  const {
-    seasons,
-    regions,
-    route,
-    forceReload,
-    onSeasonComplete,
-    onRegionComplete,
-    onClearFiltersComplete,
-    fetchingOverride
-  } = props;
-
-  const [localRegions, setLocalRegions] = useState<AutoComplete<Region>[]>([]);
-  const [localSeasons, setLocalSeasons] = useState<AutoComplete<Season>[]>([]);
-  const [selectedRegion, setSelectedRegion] = useState<AutoComplete<Region>>();
-  const [selectedSeason, setSelectedSeason] = useState<AutoComplete<Season>>();
-  const [fetching, setFetching] = useState<boolean>(false);
+  const { regions, seasons } = useAppContext();
+  const [selectedSeasonKey, setSelectedSeasonKey] = useState<string>(CURRENT_SEASON);
+  const [selectedRegionKey, setSelectedRegionKey] = useState<string>('all');
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // Set Region and create region dropdown options
-    let tempRegion = { label: regions[0].description, parent: regions[0] };
-    setLocalRegions(
-      regions.map((r: Region) => {
-        const temp = { label: getRegionString(r), parent: r };
-        if (r.regionKey === router.query.region_key) tempRegion = temp;
-        return temp;
-      })
-    );
-    setSelectedRegion(tempRegion);
-
-    // Set Season and create season dropdown options
-    let tempSeason = { label: getSeasonString(seasons[0]), parent: seasons[0] };
-    setLocalSeasons(
-      seasons.map((s: Season) => {
-        const temp = { label: getSeasonString(s), parent: s };
-        if (s.seasonKey === router.query.season_key) tempSeason = temp;
-        return temp;
-      })
-    );
-    setSelectedSeason(tempSeason);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getRegionString = (region: Region) => {
-    if (region.regionKey === 'all') return region.description;
-    return `${region.regionKey.toUpperCase()} - ${region.description}`;
-  };
-
-  const onSelectSeason = (event: any, val: AutoComplete<Season> | null) => {
-    if (!val) return;
-    if (selectedSeason && val.parent.seasonKey === selectedSeason.parent.seasonKey) return;
-    pushNewFilter(val.parent, selectedRegion?.parent).then(() => {
-      if (onSeasonComplete) onSeasonComplete(val.parent);
-    });
-  };
-
-  const onSelectRegion = (event: any, val: AutoComplete<Region> | null) => {
-    if (!val) return;
-    if (selectedRegion && val.parent.regionKey === selectedRegion.parent.regionKey) return;
-    pushNewFilter(selectedSeason?.parent, val.parent).then(() => {
-      if (onRegionComplete) onRegionComplete(val.parent);
-    });
-  };
-
-  const pushNewFilter = (season?: Season, region?: Region): Promise<any> => {
-    const query = {} as any;
-    if (season && season.seasonKey !== CURRENT_SEASON) query.season_key = season.seasonKey;
-    if (season && season.seasonKey === CURRENT_SEASON) query.season_key = undefined;
-    if (region && region.regionKey !== 'all') query.region_key = region.regionKey;
-    if (region && region.regionKey === 'all') query.region_key = undefined;
-
-    const seasonTestData = query.season_key ?? CURRENT_SEASON;
-    const regionTestData = query.region_key ?? 'all';
-
-    // Make sure we're not pushing to the same route we're already at
-    if (
-      seasonTestData !== selectedSeason?.parent.seasonKey ||
-      regionTestData !== selectedRegion?.parent.regionKey
-    ) {
-      setFetching(true);
-      return router
-        .push({ pathname: route, query: query }, undefined, { shallow: !forceReload })
-        .then(() => {
-          setFetching(false);
-          setSelectedSeason(
-            query.season_key
-              ? localSeasons.find(s => s.parent.seasonKey === query.season_key)
-              : localSeasons[0]
-          );
-          setSelectedRegion(
-            query.region_key
-              ? localRegions.find(r => r.parent.regionKey === query.region_key)
-              : localRegions[0]
-          );
-        });
-    } else {
-      return new Promise<void>(resolve => resolve());
+    const query = router.query as any;
+    if (query.season) {
+      setSelectedSeasonKey(query.season as string);
     }
-  };
+    if (query.region) {
+      setSelectedRegionKey(query.region as string);
+    }
+  }, [router.query]);
 
-  const clearFilters = () => {
-    pushNewFilter().then(() => {
-      if (onClearFiltersComplete) onClearFiltersComplete();
-    });
-  };
+  useEffect(() => {
+    if (!router.isReady) return;
+    const query = {} as any;
+    if (selectedSeasonKey !== CURRENT_SEASON) {
+      query.season = selectedSeasonKey;
+    }
+    if (selectedRegionKey !== 'all') {
+      query.region = selectedRegionKey;
+    }
+
+    setIsPageLoading(true);
+    router
+      .push({ query: query }, undefined, { shallow: !forceReload })
+      .then(() => setIsPageLoading(false));
+  }, [selectedSeasonKey, selectedRegionKey, forceReload]);
+
+  useEffect(() => {
+    const season = seasons.find(s => s.seasonKey === selectedSeasonKey)!;
+    onSeasonChange?.(season);
+  }, [selectedSeasonKey]);
+
+  useEffect(() => {
+    const region = regions.find(r => r.regionKey === selectedRegionKey)!;
+    onRegionChange?.(region);
+  }, [selectedRegionKey]);
 
   return (
     <Card sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
-      {(fetching || fetchingOverride) && <LinearProgress />}
+      {(fetching || isPageLoading) && <LinearProgress />}
       <Typography sx={{ margin: 2 }} variant="subtitle2">
         {t('pages.events.filter')}
       </Typography>
       <Divider />
-      <Grid container>
-        <Grid item xs={6} md={4} p={2}>
-          <Autocomplete
-            key={selectedSeason?.label}
-            disablePortal
-            id="seasons-filter"
-            options={localSeasons}
-            value={selectedSeason}
-            isOptionEqualToValue={(a, b) => a.parent.seasonKey === b.parent.seasonKey}
-            defaultValue={selectedSeason}
-            onChange={onSelectSeason}
-            renderInput={params => (
-              <TextField {...params} size="small" label={t('pages.events.filter_season')} />
-            )}
-          />
+      <Grid container p={2} spacing={2} maxWidth="sm">
+        <Grid size={6}>
+          <FormControl size="small" fullWidth>
+            <InputLabel id="season-select-label">Season</InputLabel>
+            <Select
+              labelId="season-select-label"
+              label="Season"
+              value={selectedSeasonKey}
+              onChange={(event: SelectChangeEvent) => setSelectedSeasonKey(event.target.value)}
+            >
+              {seasons.map(season => (
+                <MenuItem key={season.seasonKey} value={season.seasonKey}>
+                  {getSeasonString(season)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
-        <Grid item xs={6} md={4} p={2}>
-          <Autocomplete
-            key={selectedRegion?.label}
-            disablePortal
-            id="regions-filter"
-            options={localRegions}
-            value={selectedRegion}
-            isOptionEqualToValue={(a, b) => a.parent.regionKey === b.parent.regionKey}
-            defaultValue={selectedRegion}
-            onChange={onSelectRegion}
-            renderInput={params => (
-              <TextField {...params} size="small" label={t('pages.events.filter_region')} />
-            )}
-          />
+        <Grid size={6}>
+          <FormControl size="small" fullWidth>
+            <InputLabel id="region-select-label">Region</InputLabel>
+            <Select
+              labelId="region-select-label"
+              label="Region"
+              value={selectedRegionKey}
+              onChange={(event: SelectChangeEvent) => setSelectedRegionKey(event.target.value)}
+            >
+              {regions.map(region => (
+                <MenuItem key={region.regionKey} value={region.regionKey}>
+                  {getRegionString(region)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
-      <Divider />
-      <Button fullWidth onClick={clearFilters}>
-        {t('pages.events.clear_filter')}
-      </Button>
     </Card>
   );
 };

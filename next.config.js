@@ -29,6 +29,11 @@ const cfg = {
         source: '/events/:key/:tab',
         destination: '/events/:key',
         permanent: true
+      },
+      {
+        source: '/insights/:tab',
+        destination: '/insights',
+        permanent: true
       }
     ];
   }

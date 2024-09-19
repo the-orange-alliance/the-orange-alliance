@@ -368,7 +368,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
               )}
 
               {team.events.length > 0 && (
-                <List>
+                <List dense>
                   <ListItemButton onClick={() => scrollToEvent('info')} sx={{ fontWeight: 500 }}>
                     {t('pages.team.team_info')}
                   </ListItemButton>
@@ -379,7 +379,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     {t('pages.team.event_results')}
                   </ListItemButton>
                   <ListItem sx={{ pt: 0, pr: 0 }}>
-                    <List>
+                    <List dense>
                       {team.events.map(event => (
                         <ListItemButton
                           key={event.eventKey}
