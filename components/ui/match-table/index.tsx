@@ -198,10 +198,6 @@ const MatchTable: React.FC<MatchTableProps> = ({
         </tbody>
       </table>
 
-      <Typography variant="body2" color="text.secondary" sx={{ p: 3, mt: 1 }}>
-        All times are displayed in your local timezone.
-      </Typography>
-
       <TeamSelectionBar team={selectedTeam} rankings={event.rankings} />
 
       <MatchDetailsModal
