@@ -1,13 +1,10 @@
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import {
-  MatchBreakdownBoolField,
   MatchBreakdownField,
-  MatchBreakdownBoolFieldVariable,
   MatchBreakdownRow,
   MatchBreakdownTitle,
-  MatchBreakdownCenterstageParking,
   MatchBreakdownStringField
-} from '../MatchBreakdownRow';
+} from '../match-breakdown-row';
 import MatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2425/MatchDetails';
 import AllianceDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2425/AllianceDetails';
 
