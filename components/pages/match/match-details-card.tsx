@@ -10,6 +10,7 @@ import MatchBreakdown2122 from './match-breakdowns/MatchBreakdown2122';
 import MatchBreakdown2223 from './match-breakdowns/MatchBreakdown2223';
 import { MatchBreakdownRow, MatchBreakdownTitle } from './match-breakdown-row';
 import MatchBreakdown2324 from './match-breakdowns/MatchBreakdown2324';
+import MatchBreakdown2425 from './match-breakdowns/MatchBreakdown2425';
 
 interface MatchDetailsCardProps {
   match: Match;
@@ -37,6 +38,8 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
           return new MatchBreakdown2223().getRows(match);
         case 2324:
           return new MatchBreakdown2324().getRows(match);
+        case 2425:
+          return new MatchBreakdown2425().getRows(match);
       }
     }
 
