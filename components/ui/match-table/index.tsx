@@ -43,7 +43,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
       } else if (match.tournamentLevel === 4) {
         group = 'Finals';
       } else if (match.tournamentLevel >= 200) {
-        group = 'Double Elimination Matches';
+        group = 'Double Elimination';
       }
 
       if (!grouped[group]) {
