@@ -31,7 +31,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
   const groupedMatches = useMemo(() => {
     const grouped: { [key: string]: Match[] } = {};
     for (const match of matches) {
-      let group = 'Unknown Matchs';
+      let group = 'Unknown Matches';
       if (match.participants.length === 1) {
         group = `Team ${match.participants[0].teamKey}`;
       } else if (match.tournamentLevel === 1) {
