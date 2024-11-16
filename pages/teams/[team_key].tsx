@@ -153,7 +153,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           {topOpr && (
             <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
               <OprIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
-              Top OPR: {topOpr.opr.toFixed(2)} (
+              Top OPR: {topOpr?.opr?.toFixed(2) ?? 0} (
               <Link
                 href={'#' + topOpr.eventKey}
                 color="secondary"
@@ -227,7 +227,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                             {event.rankings[0] && (
                               <a>
                                 {' '}
-                                and an OPR of <b>{event.rankings[0].opr.toFixed(2)}</b>
+                                and an OPR of <b>{event.rankings[0]?.opr?.toFixed(2) || 0}</b>
                               </a>
                             )}
                           </Typography>

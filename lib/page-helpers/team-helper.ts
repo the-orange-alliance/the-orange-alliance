@@ -15,6 +15,7 @@ import { EventSorter } from '@/lib/utils/event';
 import { sortAwards } from '@/lib/utils/award';
 import { MediaTypeTeam } from '@the-orange-alliance/api/lib/cjs/models/types/MediaType';
 import { undefinedToNull } from '@/lib/utils/common';
+import { PrecisionManufacturing } from '@mui/icons-material';
 
 export interface IRawTeamProps {
   team: any;
@@ -145,6 +146,7 @@ export const fetchTeamData = async (teamKey: string, seasonKey: string): Promise
   const topOpr =
     data[5].length > 0
       ? data[5].reduce((prev: Ranking, current: Ranking) => {
+          if (typeof current.opr === 'undefined') return prev;
           return prev.opr > current.opr ? prev : current;
         })
       : null;
