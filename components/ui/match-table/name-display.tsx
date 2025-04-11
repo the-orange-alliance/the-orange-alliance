@@ -11,6 +11,8 @@ interface MatchNameDisplayProps {
 const getShortName = (match: Match) => {
   return match.matchName
     .replace(/Qual(?:s|ification\sMatch)?\s(\d+)/, 'Q-$1')
+    .replace(/(Upper|Lower|Final) Bracket\s+Round \d+ Match (\d+)/, 'M-$2')
+    .replace('Tiebreaker', '(TB)')
     .replace(/Semis (\d+) Match (\d+)/, 'SF$1-$2')
     .replace(/Final(?:s|\sMatch)?\s(\d+)/, 'F-$1');
 };
