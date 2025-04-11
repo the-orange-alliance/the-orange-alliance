@@ -107,7 +107,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
             })
           })}
         >
-          <Grid xs={6} sx={{ padding: 1 }} item>
+          <Grid xs={6} sx={{ px: 2, py: 1 }} item>
             <Typography style={{ fontWeight: r.isTitle ? 'bold' : 'normal' }}>{r.name}</Typography>
           </Grid>
 

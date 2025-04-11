@@ -1,14 +1,5 @@
-import {
-  Grid,
-  Card,
-  CardHeader,
-  CardContent,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Typography
-} from '@mui/material';
+import NextLink from 'next/link';
+import { Grid, Card, CardHeader, CardContent, List, ListItem, ListItemText } from '@mui/material';
 import { Insights, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import seasonInsights from './insights/seasons';
 
@@ -30,7 +21,7 @@ const InsightsTab = (props: IProps) => {
         <Grid item xs={12} sm={6}>
           <Card variant="outlined">
             <CardHeader title="Qualification"></CardHeader>
-            <CardContent>
+            <CardContent sx={{ py: 0 }}>
               <CardContentList season={seasonKey} insight={qualInsights}></CardContentList>
             </CardContent>
           </Card>
@@ -40,7 +31,7 @@ const InsightsTab = (props: IProps) => {
         <Grid item xs={12} sm={6}>
           <Card variant="outlined">
             <CardHeader title="Playoff"></CardHeader>
-            <CardContent>
+            <CardContent sx={{ py: 0 }}>
               <CardContentList season={seasonKey} insight={elimInsights}></CardContentList>
             </CardContent>
           </Card>
@@ -53,25 +44,26 @@ const InsightsTab = (props: IProps) => {
 const CardContentList = function ({ insight, season }: { insight: Insights; season: string }) {
   return (
     <List>
-      <ListItemButton
-        component="a"
-        href={insight.highScoreMatch ? `/matches/${insight.highScoreMatch.matchKey}` : undefined}
-        dense
+      <NextLink
+        href={insight.highScoreMatch ? `/matches/${insight.highScoreMatch.matchKey}` : '#'}
+        passHref
       >
-        <ListItemText
-          primary="High Score"
-          primaryTypographyProps={{ variant: 'button' }}
-          secondary={
-            (insight.highScoreMatch
-              ? insight.highScoreMatch.redScore > insight.highScoreMatch.blueScore
-                ? insight.highScoreMatch.redScore
-                : insight.highScoreMatch.blueScore
-              : '') +
-            ' - ' +
-            (insight.highScoreMatch ? insight.highScoreMatch.matchName : '')
-          }
-        />
-      </ListItemButton>
+        <ListItemButton component="a" dense>
+          <ListItemText
+            primary="High Score"
+            primaryTypographyProps={{ variant: 'button' }}
+            secondary={
+              (insight.highScoreMatch
+                ? insight.highScoreMatch.redScore > insight.highScoreMatch.blueScore
+                  ? insight.highScoreMatch.redScore
+                  : insight.highScoreMatch.blueScore
+                : '') +
+              ' - ' +
+              (insight.highScoreMatch ? insight.highScoreMatch.matchName : '')
+            }
+          />
+        </ListItemButton>
+      </NextLink>
       <ListItem dense>
         <ListItemText
           primary="Average Score"

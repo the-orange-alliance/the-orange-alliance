@@ -44,9 +44,9 @@ const MatchScoresDisplay: React.FC<MatchScoresDisplayProps> = ({ match, isRemote
         >
           <span
             style={
-              winner === 'red'
+              winner === 'red' || winner === 'tie'
                 ? {
-                    color: 'var(--toa-colors-red)',
+                    color: `var(--toa-colors-${winner})`,
                     fontWeight: 700
                   }
                 : undefined
@@ -57,9 +57,9 @@ const MatchScoresDisplay: React.FC<MatchScoresDisplayProps> = ({ match, isRemote
           -{' '}
           <span
             style={
-              winner === 'blue'
+              winner === 'blue' || winner === 'tie'
                 ? {
-                    color: 'var(--toa-colors-blue)',
+                    color: `var(--toa-colors-${winner})`,
                     fontWeight: 700
                   }
                 : undefined

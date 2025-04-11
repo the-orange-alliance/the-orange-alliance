@@ -10,7 +10,7 @@ const MatchesTab = (props: IProps) => {
   return (
     <>
       <MatchTable event={props.event} allowSelection />
-      <Typography variant="body2" color="text.secondary" sx={{ p: 3 }}>
+      <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
         All times are displayed in your local timezone.
       </Typography>
     </>
