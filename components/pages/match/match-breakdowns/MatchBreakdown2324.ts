@@ -73,7 +73,7 @@ export default class MatchBreakdown2324 {
       MatchBreakdownField('Backdrop Pixels', red.tele_backdrop, blue.tele_backdrop, 3),
       MatchBreakdownField('Completed Mosaics', red.mosaics, blue.mosaics, 10),
       MatchBreakdownField('Set Line Bonus', red.max_set_line, blue.max_set_line, 10),
-      MatchBreakdownTitle('End Game', red.end_points, red.end_points),
+      MatchBreakdownTitle('End Game', red.end_points, blue.end_points),
       MatchBreakdownCenterstageParking('Robot 1 Parking', red.end_robot_1, blue.end_robot_1),
       MatchBreakdownCenterstageParking('Robot 2 Parking', red.end_robot_2, blue.end_robot_2),
       MatchBreakdownStringField(
