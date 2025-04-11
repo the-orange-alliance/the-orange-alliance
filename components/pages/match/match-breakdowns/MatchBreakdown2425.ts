@@ -66,6 +66,11 @@ export default class MatchBreakdown2425 {
         this.calcAutoLocation(red.robot2Teleop),
         this.calcAutoLocation(blue.robot2Teleop)
       ),
+      MatchBreakdownTitle(
+        'Penalty',
+        details.blueMinPen * 5 + details.blueMajPen * 15,
+        details.redMinPen * 5 + details.redMajPen * 15
+      ),
       MatchBreakdownField('Minor Fouls', red.minorFouls, blue.minorFouls, 5),
       MatchBreakdownField('Major Fouls', red.majorFouls, blue.majorFouls, 15)
     ];
