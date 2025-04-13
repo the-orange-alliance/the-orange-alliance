@@ -12,6 +12,8 @@ import { getInsightsType } from '@the-orange-alliance/api/lib/cjs/models/game-sp
 import TOAProvider from '@/providers/toa-provider';
 import { undefinedToNull } from '@/lib/utils/common';
 
+const MAX_EVENT_DIVISIONS = 5; // FIRST Championships have 4 divisions + 1 master division
+
 export interface IRawEventProps {
   event: any;
   teams: any;
@@ -74,13 +76,19 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
   const insights = [data[6][0], data[7][0]];
   const streams = data[8];
 
-  const currDiv = parseInt(eventKey.slice(-1));
   let divisions: Event[] = [];
-  if (!isNaN(currDiv) && event.divisionName !== null && currDiv === event.divisionKey) {
-    const toFetch = currDiv === 0 ? [1, 2] : currDiv === 1 ? [0, 2] : [0, 1];
+  if (event.divisionName) {
+    const divisionsToFetch = Array.from({ length: MAX_EVENT_DIVISIONS }, (_, i) => i).filter(
+      // Skip fetching the current division
+      key => key !== event.divisionKey
+    );
     divisions = await Promise.all(
-      toFetch.map(div => TOAProvider.getAPI().getEvent(eventKey.slice(0, -1) + div))
-    ).catch(() => []);
+      divisionsToFetch.map(divisionId =>
+        TOAProvider.getAPI()
+          .getEvent(eventKey.slice(0, -1) + divisionId)
+          .catch(() => null)
+      )
+    ).then(results => results.filter(e => e !== null));
     if (divisions.length > 0) {
       divisions.push(event);
       divisions.sort((a, b) => a.divisionKey - b.divisionKey);

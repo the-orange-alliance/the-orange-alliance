@@ -36,6 +36,7 @@ import InsightsIcon from '@mui/icons-material/Insights';
 import AdminIcon from '@mui/icons-material/Tune';
 import { useAppContext } from '@/lib/toa-context';
 import { useMemo } from 'react';
+import DivisionsSwitcher from '@/components/pages/event/divisions-switcher';
 
 const EventPage: NextPage<IRawEventProps> = props => {
   const { event: eventData, streams, divisions, ogImage } = useEventData(props);
@@ -131,37 +132,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
           )}
 
           {divisions.length > 0 && (
-            <Stack
-              direction="row"
-              spacing={1}
-              sx={{
-                display: 'inline-flex',
-                py: 0.5,
-                px: 1,
-                border: '1px solid',
-                borderColor: 'divider',
-                bgcolor: 'background.paper',
-                borderRadius: 1
-              }}
-            >
-              {divisions.map((div, index) => {
-                const isSelected = div.eventKey === eventData.eventKey;
-                return (
-                  <NextLink key={div.eventKey} href={`/events/${div.eventKey}`} passHref>
-                    <Button
-                      size="small"
-                      color={isSelected ? 'secondary' : 'inherit'}
-                      sx={{
-                        color: isSelected ? undefined : 'text.secondary',
-                        textAlign: 'center'
-                      }}
-                    >
-                      {div.divisionName} Division
-                    </Button>
-                  </NextLink>
-                );
-              })}
-            </Stack>
+            <DivisionsSwitcher divisions={divisions} eventKey={eventData.eventKey} />
           )}
         </Box>
 
