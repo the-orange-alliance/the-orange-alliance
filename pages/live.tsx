@@ -48,6 +48,11 @@ const views: StreamView[] = [
     container: Layouts.DualHorizontalView
   },
   {
+    id: 'quad_view',
+    svgPath: 'M0 0h11v7h-11v-7z M0 8h11v7h-11v-7z M12 0h11v7h-11v-7z M12 8h11v7h-11v-7z',
+    container: Layouts.QuadView
+  },
+  {
     id: '1_2_view',
     svgPath: 'M0 0h14v15h-14v-15zM15 0h8v7h-8v-7zM15 8h8v7h-8v-7z',
     container: Layouts.OnePlusTwoView
@@ -68,11 +73,6 @@ const views: StreamView[] = [
     svgPath:
       'm0 0h15v11h-15v-15zm16 0h7v3h-7v-3zm0 4h7v3h-7v3zm0 4h7v3h-7v-3zm0 4h7v3h-7v-3zm-16 0h7v3h-7v-3m8 0h7v3h-7v-3',
     container: Layouts.OnePlusSixView
-  },
-  {
-    id: 'quad_view',
-    svgPath: 'M0 0h11v7h-11v-7z M0 8h11v7h-11v-7z M12 0h11v7h-11v-7z M12 8h11v7h-11v-7z',
-    container: Layouts.QuadView
   },
   {
     id: '6_view',
