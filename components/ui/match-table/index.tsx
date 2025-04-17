@@ -12,6 +12,7 @@ interface MatchTableProps {
   event: Event;
   forceSmall?: boolean;
   allowSelection?: boolean;
+  selectedTeam?: string;
   hideHeader?: boolean;
 }
 
@@ -19,13 +20,19 @@ const MatchTable: React.FC<MatchTableProps> = ({
   event,
   forceSmall,
   allowSelection,
+  selectedTeam: initialSelectedTeam = null,
   hideHeader
 }) => {
   const t = useTranslate();
   const theme = useTheme();
   const isStacked = useMediaQuery(theme.breakpoints.down('sm')) || forceSmall;
   const matches = event.matches;
-  const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(
+    initialSelectedTeam
+      ? event.matches.flatMap(m => m.participants).find(t => t.teamKey === initialSelectedTeam) ||
+          null
+      : null
+  );
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
 
   const groupedMatches = useMemo(() => {
@@ -180,7 +187,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
                       match={match}
                       isStacked={isStacked}
                       onTeamClick={allowSelection ? handleTeamClick : undefined}
-                      selectedTeam={allowSelection ? selectedTeam : null}
+                      selectedTeam={selectedTeam}
                       onMatchClick={handleMatchClick}
                     />
                   ) : (
@@ -189,7 +196,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
                       match={match}
                       isStacked={isStacked}
                       onTeamClick={allowSelection ? handleTeamClick : undefined}
-                      selectedTeam={allowSelection ? selectedTeam : null}
+                      selectedTeam={selectedTeam}
                       onMatchClick={handleMatchClick}
                     />
                   )
@@ -200,7 +207,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
         </tbody>
       </table>
 
-      <TeamSelectionBar team={selectedTeam} rankings={event.rankings} />
+      {allowSelection && <TeamSelectionBar team={selectedTeam} rankings={event.rankings} />}
 
       <MatchDetailsModal
         open={selectedMatch !== null}

@@ -176,173 +176,175 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           )}
         </Box>
 
-        <Grid container direction="row" spacing={2} mt={4}>
+        <Grid container direction={{ xs: 'column-reverse', lg: 'row' }} spacing={2} mt={2}>
           {/* Team Information */}
           <Grid item xs={12} md={9}>
             {/* Team Events/Robot */}
-            <Card id="event-results">
-              {/* Nav Tabs */}
-              {(github || reveal || cad || notebook || images.length > 0) && (
-                <Tabs
-                  value={tab}
-                  onChange={(e, val) => setTab(val)}
-                  variant="fullWidth"
-                  scrollButtons="auto"
-                  className="mb-2 mt-0"
+            {/* Nav Tabs */}
+            {(github || reveal || cad || notebook || images.length > 0) && (
+              <Tabs
+                value={tab}
+                onChange={(e, val) => setTab(val)}
+                variant="fullWidth"
+                scrollButtons="auto"
+                className="mb-2 mt-0"
+              >
+                <Tab label={t('pages.team.event_results')} />
+                <Tab label={t('pages.team.robot_profile.title')} />
+              </Tabs>
+            )}
+
+            {/* Team Event Data*/}
+            {tab === 0 &&
+              team.events.map(event => (
+                <Card
+                  id={event.eventKey.toLowerCase()}
+                  key={event.eventKey}
+                  sx={{ mb: 3 }}
+                  variant="outlined"
                 >
-                  <Tab label={t('pages.team.event_results')} />
-                  <Tab label={t('pages.team.robot_profile.title')} />
-                </Tabs>
-              )}
-
-              <CardContent>
-                {/* Team Event Data*/}
-                {tab === 0 &&
-                  team.events.map(event => (
-                    <Card
-                      id={event.eventKey.toLowerCase()}
-                      key={event.eventKey}
-                      sx={{ mb: 3 }}
-                      variant="outlined"
-                    >
-                      <CardHeader
-                        title={
-                          <NextLink href={`/events/${event.eventKey}`} passHref>
-                            <Link fontSize="1.25rem" underline="none">
-                              {event.fullEventName}
-                            </Link>
-                          </NextLink>
-                        }
-                        subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
+                  <CardHeader
+                    title={
+                      <NextLink href={`/events/${event.eventKey}`} passHref>
+                        <Link fontSize="1.25rem" underline="none">
+                          {event.fullEventName}
+                        </Link>
+                      </NextLink>
+                    }
+                    subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
                     ${event.country} on ${readableDate(event.startDate)}`}
-                      />
-                      <CardContent sx={{ pt: 0 }}>
+                  />
+                  <CardContent sx={{ pt: 0 }}>
+                    {event.rankings[0] && (
+                      <Typography variant="body2" mb={1}>
+                        <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
+                        <b>
+                          {event.rankings[0].wins}-{event.rankings[0].losses}-
+                          {event.rankings[0].ties}
+                        </b>
                         {event.rankings[0] && (
-                          <Typography variant="body2" mb={1}>
-                            <b>Qual Rank #{event.rankings[0].rank}</b> with a record of{' '}
-                            <b>
-                              {event.rankings[0].wins}-{event.rankings[0].losses}-
-                              {event.rankings[0].ties}
-                            </b>
-                            {event.rankings[0] && (
-                              <a>
-                                {' '}
-                                and an OPR of <b>{event.rankings[0]?.opr?.toFixed(2) || 0}</b>
-                              </a>
-                            )}
-                          </Typography>
+                          <a>
+                            {' '}
+                            and an OPR of <b>{event.rankings[0]?.opr?.toFixed(2) || 0}</b>
+                          </a>
                         )}
-                        {event.awards.map(award => (
-                          <Typography key={award.awardKey} variant="body2" mb={1}>
-                            <TrophyIcon
-                              sx={{
-                                fontSize: '1.125em',
-                                marginRight: 1,
-                                verticalAlign: 'middle'
-                              }}
-                            />
-                            {award.award.awardDescription}
-                            {award.receiverName ? ` (${award.receiverName})` : ''}
-                          </Typography>
-                        ))}
-                        {event.matches.length > 0 && <MatchTable event={event} hideHeader />}
-                        {event.matches.length < 1 && <Typography variant="body1" />}
-                      </CardContent>
-                    </Card>
-                  ))}
-
-                {/* No Events this season */}
-                {tab === 0 && team.events.length < 1 && (
-                  <Typography variant="body1" sx={{ mt: 1 }}>
-                    {team.lastActive && team.lastActive !== CURRENT_SEASON
-                      ? t('pages.team.not_registered')
-                      : t('pages.team.no_results')}
-                  </Typography>
-                )}
-
-                {/* Team 'Robot' Page */}
-                {tab === 1 && (
-                  <Box>
-                    {(github || cad || notebook) && (
-                      <Typography variant="h6" className="mb-1">
-                        {team.teamNameShort} ❤️ Open Source
                       </Typography>
                     )}
-                    {github && (
-                      <Box className="m-2">
-                        <Fab
-                          href={github.mediaLink}
-                          target="_blank"
-                          className="text-white"
-                          style={{ backgroundColor: `#24292e` }}
-                          variant="extended"
-                        >
-                          <GitHub className="me-2" />
-                          GitHub
-                        </Fab>
-                      </Box>
+                    {event.awards.map(award => (
+                      <Typography key={award.awardKey} variant="body2" mb={1}>
+                        <TrophyIcon
+                          sx={{
+                            fontSize: '1.125em',
+                            marginRight: 1,
+                            verticalAlign: 'middle'
+                          }}
+                        />
+                        {award.award.awardDescription}
+                        {award.receiverName ? ` (${award.receiverName})` : ''}
+                      </Typography>
+                    ))}
+                    {event.matches.length > 0 && (
+                      <MatchTable event={event} hideHeader selectedTeam={team.teamKey} />
                     )}
-                    {cad && (
-                      <Box className="m-2">
-                        <Fab
-                          href={cad.mediaLink}
-                          target="_blank"
-                          className="text-white"
-                          style={{ backgroundColor: `#9c27b0` }}
-                          variant="extended"
-                        >
-                          <Create className="me-2" />
-                          CAD Design
-                        </Fab>
-                      </Box>
+                    {event.matches.length < 1 && (
+                      <Typography variant="body1" textAlign="center" color="text.secondary">
+                        Matches have not yet been reported for this event.
+                      </Typography>
                     )}
-                    {notebook && (
-                      <Box className="m-2">
-                        <Fab
-                          href={notebook.mediaLink}
-                          target="_blank"
-                          className="text-white"
-                          style={{ backgroundColor: `#0097a7` }}
-                          variant="extended"
-                        >
-                          <Book className="me-2" />
-                          {t('pages.team.robot_profile.engineering_notebook')}
-                        </Fab>
-                      </Box>
-                    )}
-                    {reveal && (
-                      <Box className="m-2">
-                        <Fab
-                          href={reveal.mediaLink}
-                          target="_blank"
-                          className="text-white"
-                          style={{ backgroundColor: `#b71c1c` }}
-                          variant="extended"
-                        >
-                          <YouTube className="me-2" />
-                          {t('pages.team.robot_profile.engineering_notebook')}
-                        </Fab>
-                      </Box>
-                    )}
-                    {(github || cad || notebook) && images.length > 0 && (
-                      <Divider className="mb-3 mt-3" />
-                    )}
-                    {images.length > 0 && (
-                      <Box className="m-2">
-                        <Typography variant="h6">{t('pages.team.robot_profile.photos')}</Typography>
-                        <ImageList variant="masonry">
-                          {images.map(m => (
-                            <ImageListItem className="w-100" key={m.mediaKey}>
-                              <NextImage src={m.mediaLink} alt="Team Media Image" />
-                            </ImageListItem>
-                          ))}
-                        </ImageList>
-                      </Box>
-                    )}
+                  </CardContent>
+                </Card>
+              ))}
+
+            {/* No Events this season */}
+            {tab === 0 && team.events.length < 1 && (
+              <Typography variant="body1" sx={{ mt: 1 }}>
+                {team.lastActive && team.lastActive !== CURRENT_SEASON
+                  ? t('pages.team.not_registered')
+                  : t('pages.team.no_results')}
+              </Typography>
+            )}
+
+            {/* Team 'Robot' Page */}
+            {tab === 1 && (
+              <Box>
+                {(github || cad || notebook) && (
+                  <Typography variant="h6" className="mb-1">
+                    {team.teamNameShort} ❤️ Open Source
+                  </Typography>
+                )}
+                {github && (
+                  <Box className="m-2">
+                    <Fab
+                      href={github.mediaLink}
+                      target="_blank"
+                      className="text-white"
+                      style={{ backgroundColor: `#24292e` }}
+                      variant="extended"
+                    >
+                      <GitHub className="me-2" />
+                      GitHub
+                    </Fab>
                   </Box>
                 )}
-              </CardContent>
-            </Card>
+                {cad && (
+                  <Box className="m-2">
+                    <Fab
+                      href={cad.mediaLink}
+                      target="_blank"
+                      className="text-white"
+                      style={{ backgroundColor: `#9c27b0` }}
+                      variant="extended"
+                    >
+                      <Create className="me-2" />
+                      CAD Design
+                    </Fab>
+                  </Box>
+                )}
+                {notebook && (
+                  <Box className="m-2">
+                    <Fab
+                      href={notebook.mediaLink}
+                      target="_blank"
+                      className="text-white"
+                      style={{ backgroundColor: `#0097a7` }}
+                      variant="extended"
+                    >
+                      <Book className="me-2" />
+                      {t('pages.team.robot_profile.engineering_notebook')}
+                    </Fab>
+                  </Box>
+                )}
+                {reveal && (
+                  <Box className="m-2">
+                    <Fab
+                      href={reveal.mediaLink}
+                      target="_blank"
+                      className="text-white"
+                      style={{ backgroundColor: `#b71c1c` }}
+                      variant="extended"
+                    >
+                      <YouTube className="me-2" />
+                      {t('pages.team.robot_profile.engineering_notebook')}
+                    </Fab>
+                  </Box>
+                )}
+                {(github || cad || notebook) && images.length > 0 && (
+                  <Divider className="mb-3 mt-3" />
+                )}
+                {images.length > 0 && (
+                  <Box className="m-2">
+                    <Typography variant="h6">{t('pages.team.robot_profile.photos')}</Typography>
+                    <ImageList variant="masonry">
+                      {images.map(m => (
+                        <ImageListItem className="w-100" key={m.mediaKey}>
+                          <NextImage src={m.mediaLink} alt="Team Media Image" />
+                        </ImageListItem>
+                      ))}
+                    </ImageList>
+                  </Box>
+                )}
+              </Box>
+            )}
           </Grid>
 
           {/* Nav */}
@@ -353,10 +355,10 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                   <Select
                     fullWidth
                     value={seasons.findIndex(s => s.seasonKey === selectedSeason.seasonKey)}
-                    variant="standard"
                     onChange={(val: SelectChangeEvent<number>) =>
                       pushNewFilter(seasons[val.target.value as number])
                     }
+                    size="small"
                   >
                     {seasons.map((season, i) => (
                       <MenuItem value={i} key={season.seasonKey}>
@@ -369,30 +371,17 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
               {team.events.length > 0 && (
                 <List dense>
-                  <ListItemButton onClick={() => scrollToEvent('info')} sx={{ fontWeight: 500 }}>
-                    {t('pages.team.team_info')}
-                  </ListItemButton>
-                  <ListItemButton
-                    onClick={() => scrollToEvent('event-results')}
-                    sx={{ fontWeight: 500 }}
-                  >
-                    {t('pages.team.event_results')}
-                  </ListItemButton>
-                  <ListItem sx={{ pt: 0, pr: 0 }}>
-                    <List dense>
-                      {team.events.map(event => (
-                        <ListItemButton
-                          key={event.eventKey}
-                          sx={{ fontSize: '0.875rem', px: 1.5 }}
-                          onClick={() => scrollToEvent(event.eventKey)}
-                        >
-                          {event.divisionName
-                            ? event.eventName + ' - ' + event.divisionName + ' Division'
-                            : event.eventName}
-                        </ListItemButton>
-                      ))}
-                    </List>
-                  </ListItem>
+                  {team.events.map(event => (
+                    <ListItemButton
+                      key={event.eventKey}
+                      sx={{ fontSize: '0.875rem', px: 1.5 }}
+                      onClick={() => scrollToEvent(event.eventKey)}
+                    >
+                      {event.divisionName
+                        ? event.eventName + ' - ' + event.divisionName + ' Division'
+                        : event.eventName}
+                    </ListItemButton>
+                  ))}
                 </List>
               )}
             </Card>
