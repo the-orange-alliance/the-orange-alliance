@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useTranslate } from '@/i18n/i18n';
 import { Card, CardContent, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import SEO from '@/components/seo';
 
 const Legal: NextPage = props => {

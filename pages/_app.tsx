@@ -16,6 +16,7 @@ import TOAAppContextProvider, { IAppContext } from '@/lib/toa-context';
 import TOAUser from '@/lib/models/toa-user';
 import { onAuthStateChanged } from 'firebase/auth';
 import { cloudMessaging, fetchUserData, getAuthInstance } from '@/providers/firebase-provider';
+import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -67,16 +68,18 @@ function MyApp({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
-        <ThemeProvider theme={theme}>
-          <TOAAppContextProvider value={value}>
-            <CssBaseline />
-            <DrawerLayout title="The Orange Alliance">
-              <Component {...pageProps} />
-            </DrawerLayout>
-            <Toaster />
-            {/* <AnalyticsScript /> */}
-          </TOAAppContextProvider>
-        </ThemeProvider>
+        <AppCacheProvider {...pageProps}>
+          <ThemeProvider theme={theme}>
+            <TOAAppContextProvider value={value}>
+              <CssBaseline />
+              <DrawerLayout title="The Orange Alliance">
+                <Component {...pageProps} />
+              </DrawerLayout>
+              <Toaster />
+              {/* <AnalyticsScript /> */}
+            </TOAAppContextProvider>
+          </ThemeProvider>
+        </AppCacheProvider>
       </UserLanguageProvider>
       <style jsx global>{`
         :root {

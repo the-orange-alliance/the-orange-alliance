@@ -12,7 +12,7 @@ import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSo
 import { useTranslate } from '@/i18n/i18n';
 import { fetchEventData, IRawEventProps, useEventData } from '@/lib/page-helpers/event-helper';
 import { getEventDescription, readableDate } from '@/lib/utils/common';
-import { Box, Container } from '@mui/system';
+import { Box, Container } from '@mui/material';
 import SEO from '@/components/seo';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
