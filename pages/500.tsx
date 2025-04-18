@@ -8,7 +8,7 @@ const InternalErrorPage = () => {
   const rand = useMemo(() => Math.floor(Math.random() * 3) + 1, []);
 
   return (
-    <Stack alignItems="center" py={8}>
+    <Stack alignItems="center" py={8} px={2} textAlign="center">
       <Image
         src={`/imgs/404-${rand}.png`}
         height={180}
