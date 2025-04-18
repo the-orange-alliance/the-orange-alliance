@@ -20,10 +20,8 @@ import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
 
 let toaGlobalData: IRawAppProps | null = null;
 
-function MyApp({
-  Component,
-  pageProps
-}: AppProps<{ initialState: IAppContext; userLanguage: string }>) {
+function MyApp(props: AppProps<{ initialState: IAppContext; userLanguage: string }>) {
+  const { Component, pageProps } = props;
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
@@ -63,23 +61,21 @@ function MyApp({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
+    <AppCacheProvider {...props}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <UserLanguageProvider defaultUserLanguage={pageProps.userLanguage}>
-        <AppCacheProvider {...pageProps}>
-          <ThemeProvider theme={theme}>
-            <TOAAppContextProvider value={value}>
-              <CssBaseline />
-              <DrawerLayout title="The Orange Alliance">
-                <Component {...pageProps} />
-              </DrawerLayout>
-              <Toaster />
-              {/* <AnalyticsScript /> */}
-            </TOAAppContextProvider>
-          </ThemeProvider>
-        </AppCacheProvider>
+        <ThemeProvider theme={theme}>
+          <TOAAppContextProvider value={value}>
+            <CssBaseline />
+            <DrawerLayout title="The Orange Alliance">
+              <Component {...pageProps} />
+            </DrawerLayout>
+            <Toaster />
+            {/* <AnalyticsScript /> */}
+          </TOAAppContextProvider>
+        </ThemeProvider>
       </UserLanguageProvider>
       <style jsx global>{`
         :root {
@@ -107,7 +103,7 @@ function MyApp({
           scroll-behavior: smooth;
         }
       `}</style>
-    </>
+    </AppCacheProvider>
   );
 }
 
