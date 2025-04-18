@@ -397,61 +397,41 @@ export const setNotifications = (
 
 /** Cloud Messaging Stuff **/
 
-const saveMessagingToken = (key: string): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    getToken().then(token => {
-      const headers = {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
+const saveMessagingToken = async (fcmToken: string) => {
+  const authToken = await getToken();
+  const headers = {
+    authorization: `Bearer ${authToken}`,
+    'Content-Type': 'application/json'
+  };
 
-      const body = { token: key };
-
-      fetch(toaBaseUrl + '/user/saveMessagingToken', {
-        headers: headers,
-        method: 'POST',
-        body: JSON.stringify(body)
-      })
-        .then(data => data.json())
-        .then(
-          (data: any) => {
-            resolve(data);
-          },
-          (err: any) => {
-            reject(err);
-          }
-        )
-        .catch(reject);
-    });
+  return fetch(toaBaseUrl + '/user/saveMessagingToken', {
+    headers: headers,
+    method: 'POST',
+    body: JSON.stringify({ token: fcmToken })
+  }).then(res => {
+    if (!res.ok) {
+      throw new Error('HTTP error: ' + res.status);
+    }
+    return res.json();
   });
 };
 
-const removeMessagingToken = (key: string): Promise<any> => {
-  return new Promise<any>((resolve, reject) => {
-    getToken().then(token => {
-      const headers = {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
+const removeMessagingToken = async (fcmToken: string) => {
+  const authToken = await getToken();
+  const headers = {
+    authorization: `Bearer ${authToken}`,
+    'Content-Type': 'application/json'
+  };
 
-      const body = { token: key };
-
-      fetch(toaBaseUrl + '/user/removeMessagingToken', {
-        headers: headers,
-        method: 'POST',
-        body: JSON.stringify(body)
-      })
-        .then(data => data.json())
-        .then(
-          (data: any) => {
-            resolve(data);
-          },
-          (err: any) => {
-            reject(err);
-          }
-        )
-        .catch(reject);
-    });
+  return fetch(toaBaseUrl + '/user/removeMessagingToken', {
+    headers: headers,
+    method: 'POST',
+    body: JSON.stringify({ token: fcmToken })
+  }).then(res => {
+    if (!res.ok) {
+      throw new Error('HTTP error: ' + res.status);
+    }
+    return res.json();
   });
 };
 
@@ -491,11 +471,6 @@ export const cloudMessaging = {
 
         if (permission !== 'granted') {
           reject('Permission not granted');
-        }
-
-        // Check if we have a messaging token
-        if ((await this.tokenInlocalforage()) !== null) {
-          resolve(false);
         }
 
         // Get token

@@ -24,7 +24,8 @@ const NotificationsCard = () => {
           .tokenInlocalforage()
           .then(token => {
             setNotificationsConsent('granted');
-            setNotificationsEnabled(!!token);
+            const isEnabled = (!!token && user?.cloudMessagingTokens?.includes(token)) || false;
+            setNotificationsEnabled(isEnabled);
           })
           .catch(() => setNotificationsConsent('unsupported'));
       } else {

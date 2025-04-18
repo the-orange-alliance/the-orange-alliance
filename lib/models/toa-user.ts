@@ -17,6 +17,7 @@ export default class TOAUser implements ISerializable {
   notifyTeams: string[];
   favoriteEvents: string[];
   notifyEvents: string[];
+  cloudMessagingTokens: string[];
   adminEvents: string[];
   adminLeagues: string[];
   individualAdminEvents: string[];
@@ -47,6 +48,7 @@ export default class TOAUser implements ISerializable {
     this.notifyTeams = [];
     this.favoriteEvents = [];
     this.notifyEvents = [];
+    this.cloudMessagingTokens = [];
     this.adminEvents = [];
     this.individualAdminEvents = [];
     this.eventsApiKeys = '';
@@ -78,6 +80,7 @@ export default class TOAUser implements ISerializable {
       notify_teams: this.notifyTeams,
       favorite_events: this.favoriteEvents,
       notify_events: this.notifyEvents,
+      fcm_tokens: this.cloudMessagingTokens,
       admin_events: this.adminEvents,
       individual_admin_events: this.individualAdminEvents,
       events_api_keys: this.eventsApiKeys,
@@ -107,6 +110,7 @@ export default class TOAUser implements ISerializable {
     user.apiKey = json.api_key;
     user.favoriteTeams = json.favorite_teams || [];
     user.notifyTeams = json.notify_teams || [];
+    user.cloudMessagingTokens = json.fcm_tokens || [];
     user.favoriteEvents = json.favorite_events || [];
     user.notifyEvents = json.notify_events || [];
     user.adminEvents = json.admin_events || [];
