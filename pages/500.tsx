@@ -1,28 +1,27 @@
+import { useMemo } from 'react';
 import Image from 'next/image';
-import { Grid, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useTranslate } from '@/i18n/i18n';
 
 const InternalErrorPage = () => {
   const t = useTranslate();
-  const rand = Math.floor(Math.random() * 3) + 1;
+  const rand = useMemo(() => Math.floor(Math.random() * 3) + 1, []);
 
   return (
-    <Grid container alignItems="center" justifyContent="center">
-      <Grid item sx={{ textAlign: 'center' }}>
-        <Image
-          src={`/imgs/404-${rand}.png`}
-          alt="404"
-          height={310}
-          width={310}
-          style={{
-            maxWidth: '100%',
-            height: 'auto'
-          }}
-        />
-        <Typography variant="h3">{t('pages.500.title')}</Typography>
-        <Typography variant="body1">{t('pages.500.short_info')}</Typography>
-      </Grid>
-    </Grid>
+    <Stack alignItems="center" py={8}>
+      <Image
+        src={`/imgs/404-${rand}.png`}
+        height={180}
+        width={180}
+        style={{ maxWidth: '100%', height: 'auto' }}
+        aria-hidden="true"
+        alt=""
+      />
+      <Typography variant="h1" mt={2} mb={1}>
+        {t('pages.500.title')}
+      </Typography>
+      <Typography variant="body1">{t('pages.500.short_info')}</Typography>
+    </Stack>
   );
 };
 
