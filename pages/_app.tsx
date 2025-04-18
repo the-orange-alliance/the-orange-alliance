@@ -17,6 +17,7 @@ import TOAUser from '@/lib/models/toa-user';
 import { onAuthStateChanged } from 'firebase/auth';
 import { cloudMessaging, fetchUserData, getAuthInstance } from '@/providers/firebase-provider';
 import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 let toaGlobalData: IRawAppProps | null = null;
 
@@ -73,7 +74,7 @@ function MyApp(props: AppProps<{ initialState: IAppContext; userLanguage: string
               <Component {...pageProps} />
             </DrawerLayout>
             <Toaster />
-            {/* <AnalyticsScript /> */}
+            <GoogleAnalytics gaId="G-D4VY485L1V" />
           </TOAAppContextProvider>
         </ThemeProvider>
       </UserLanguageProvider>
