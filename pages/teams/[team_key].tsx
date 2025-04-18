@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import NextImage from 'next/legacy/image';
+import NextImage from 'next/image';
 import {
   Typography,
   Card,
@@ -337,7 +337,14 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     <ImageList variant="masonry">
                       {images.map(m => (
                         <ImageListItem className="w-100" key={m.mediaKey}>
-                          <NextImage src={m.mediaLink} alt="Team Media Image" />
+                          <NextImage
+                            src={m.mediaLink}
+                            alt="Team Media Image"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto'
+                            }}
+                          />
                         </ImageListItem>
                       ))}
                     </ImageList>
