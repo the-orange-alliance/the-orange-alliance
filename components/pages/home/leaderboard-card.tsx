@@ -27,12 +27,12 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ quals, elims, overall
         <Typography variant="subtitle1" gutterBottom>
           {subtitle}
         </Typography>
-        <NextLink href={`/events/${match.event?.eventKey}`} passHref>
+        <NextLink href={`/events/${match.event?.eventKey}`} passHref legacyBehavior>
           <Link underline="none" fontSize="0.875rem" color="text.secondary" display="block">
             {match.event?.eventName}
           </Link>
         </NextLink>
-        <NextLink href={`/matches/${match.matchKey}`} passHref>
+        <NextLink href={`/matches/${match.matchKey}`} passHref legacyBehavior>
           <Link underline="none" fontWeight={500} display="block" mb={1}>
             {match.matchName}
           </Link>

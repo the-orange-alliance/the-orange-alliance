@@ -73,7 +73,6 @@ const EventPage: NextPage<IRawEventProps> = props => {
         ogImage={ogImage}
         url={`/events/${eventData.eventKey}`}
       />
-
       <Container sx={{ py: 6 }}>
         <Typography variant="h1">
           {startDate.getFullYear()} {eventData.fullEventName}
@@ -110,7 +109,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
           {streams && Array.isArray(streams) && streams.length > 0 && streams[0].isActive && (
             <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
               <StreamIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
-              <NextLink href={`/live?e=${eventData.eventKey}`} passHref>
+              <NextLink href={`/live?e=${eventData.eventKey}`} passHref legacyBehavior>
                 <Link color="secondary">{t('pages.event.stream_available')}</Link>
               </NextLink>
             </Typography>

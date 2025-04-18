@@ -60,7 +60,12 @@ const LiveStreamPanel = ({
               </Typography>
               <div className="stream-info__icons">
                 <Tooltip title={t('pages.streams.event_results')}>
-                  <NextLink href={`/events/${selectedStream.eventKey}`} passHref target="_blank">
+                  <NextLink
+                    href={`/events/${selectedStream.eventKey}`}
+                    passHref
+                    target="_blank"
+                    legacyBehavior
+                  >
                     <IconButton component="a" sx={{ color: '#fff' }}>
                       <EventResultsIcon />
                     </IconButton>
@@ -88,7 +93,6 @@ const LiveStreamPanel = ({
           </Button>
         )}
       </div>
-
       {/* Stream Selection Dialog */}
       <Dialog open={modalOpen}>
         <DialogTitle>{t('pages.streams.select_stream')}</DialogTitle>

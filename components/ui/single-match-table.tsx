@@ -62,7 +62,7 @@ const SimpleMatchTable = (props: IProps) => {
             <TableRow style={{ backgroundColor: 'var(--toa-colors-red-transparent)' }}>
               {redAlliance.map((p: MatchParticipant) => (
                 <TableCell key={p.matchParticipantKey} align="center">
-                  <NextLink href={`/teams/${p.teamKey}`} passHref>
+                  <NextLink href={`/teams/${p.teamKey}`} passHref legacyBehavior>
                     <Link
                       fontWeight={match.blueScore < match.redScore ? 700 : undefined}
                       underline="none"
@@ -82,7 +82,7 @@ const SimpleMatchTable = (props: IProps) => {
               {blueAlliance.map((p: MatchParticipant) => {
                 return (
                   <TableCell key={p.matchParticipantKey} align="center">
-                    <NextLink href={`/teams/${p.teamKey}`} passHref>
+                    <NextLink href={`/teams/${p.teamKey}`} passHref legacyBehavior>
                       <Link
                         fontWeight={match.blueScore > match.redScore ? 700 : undefined}
                         underline="none"

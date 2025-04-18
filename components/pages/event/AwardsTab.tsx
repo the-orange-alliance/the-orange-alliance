@@ -43,7 +43,7 @@ const AwardsTab: React.FC<AwardsTabProps> = ({ awards }) => {
                 {getAwardHeader(award, t)}
               </Typography>
             )}
-            <NextLink href={`/teams/${award.teamKey}`} passHref>
+            <NextLink href={`/teams/${award.teamKey}`} passHref legacyBehavior>
               <ListItemButton component="a" dense>
                 <ListItemIcon
                   sx={{

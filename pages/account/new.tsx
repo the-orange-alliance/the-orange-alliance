@@ -371,7 +371,7 @@ const AccountPage: NextPage = () => {
                 {/* API Docs */}
                 <Typography sx={{ marginTop: 2 }} variant="subtitle1">
                   Check out the{' '}
-                  <NextLink href="/apidocs" passHref>
+                  <NextLink href="/apidocs" passHref legacyBehavior>
                     <Link>API Documentation</Link>
                   </NextLink>{' '}
                   for more information.
