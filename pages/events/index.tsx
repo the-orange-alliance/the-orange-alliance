@@ -74,17 +74,14 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   return (
     <>
       <SEO title="Events" description="List of FIRST Tech Challenge events." url="/events" />
-
       <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
         {getSeasonYear(selectedSeason)} <em>FIRST</em> Tech Challenge Events
       </Typography>
-
       <FiltersCard
         onSeasonChange={handleSeasonSelect}
         onRegionChange={handleRegionSelect}
         fetching={isFetching}
       />
-
       {filteredEvents.length > 0 && (
         <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -126,11 +123,19 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
           )}
         </Card>
       )}
-
       {/* No Event Data */}
       {!isFetching && filteredEvents.length === 0 && (
         <CardContent sx={{ textAlign: 'center' }}>
-          <Image src="/imgs/empty-icon.svg" height={110} width={110} alt="Empty Illustration" />
+          <Image
+            src="/imgs/empty-icon.svg"
+            height={110}
+            width={110}
+            alt="Empty Illustration"
+            style={{
+              maxWidth: '100%',
+              height: 'auto'
+            }}
+          />
           <Typography variant="h6">{t('no_data.events_filter')}</Typography>
           <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
         </CardContent>

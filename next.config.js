@@ -1,15 +1,16 @@
+// @ts-check
+
 /** @type {import('next').NextConfig} */
-const path = require('path');
-
-const withTM = require('next-transpile-modules')([
-  'react-syntax-highlighter',
-  'swagger-client',
-  'swagger-ui-react'
-]);
-
-const cfg = {
+const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  transpilePackages: [
+    'firebase/app',
+    'firebase/auth',
+    'firebase/messaging',
+    'react-syntax-highlighter',
+    'swagger-client',
+    'swagger-ui-react'
+  ],
   async rewrites() {
     return [
       {
@@ -39,4 +40,8 @@ const cfg = {
   }
 };
 
-module.exports = withTM(cfg);
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+});
+
+module.exports = withBundleAnalyzer(nextConfig);

@@ -34,12 +34,12 @@ const EventItem: React.FC<EventItemProps> = ({ event, showWatch }) => {
   // TODO: figure out LTR
 
   return (
-    <NextLink href={`/events/${event.eventKey}`} passHref>
+    <NextLink href={`/events/${event.eventKey}`} passHref legacyBehavior>
       <ListItem
         disablePadding
         secondaryAction={
           showWatch && (
-            <NextLink href={`/live?e=${event.eventKey}`} passHref>
+            <NextLink href={`/live?e=${event.eventKey}`} passHref legacyBehavior>
               <IconButton edge="end" aria-label="Watch" color="success">
                 <VideocamRoundedIcon />
               </IconButton>

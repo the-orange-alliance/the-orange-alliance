@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useTranslate } from '@/i18n/i18n';
 import TeamItem from '@/components/ui/team-item';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 import { fetchTeamsData, IRawTeamsProps, parseTeamsProps } from '@/lib/page-helpers/teams-helper';
 import SEO from '@/components/seo';
 

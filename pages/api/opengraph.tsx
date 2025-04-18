@@ -2,7 +2,7 @@ import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
 export const config = {
-  runtime: 'experimental-edge'
+  runtime: 'edge'
 };
 
 const font = fetch(
@@ -39,6 +39,7 @@ const handler = async function (req: NextRequest) {
   }
 
   const data = JSON.parse(dataRaw);
+  console.log('data', data);
   const title = data.title;
   const description1 = data.description || data.description1;
   const description2 = data.description2;
@@ -49,12 +50,13 @@ const handler = async function (req: NextRequest) {
         style={{
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'flex-start',
           height: '100%',
           width: '100%',
           color: 'white',
           fontFamily: 'Roboto',
           background: 'black',
-          padding: 120
+          padding: 100
         }}
       >
         <span

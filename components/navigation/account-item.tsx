@@ -54,12 +54,12 @@ const AccountItem = () => {
             <Grid item>
               <Grid container direction="row">
                 <Grid item>
-                  <NextLink href="/account/login" passHref>
+                  <NextLink href="/account/login" passHref legacyBehavior>
                     <Button size="small">{t('drawer.mytoa.login')}</Button>
                   </NextLink>
                 </Grid>
                 <Grid item>
-                  <NextLink href="/account/register" passHref>
+                  <NextLink href="/account/register" passHref legacyBehavior>
                     <Button size="small">{t('drawer.mytoa.register')}</Button>
                   </NextLink>
                 </Grid>
@@ -68,7 +68,7 @@ const AccountItem = () => {
           </Grid>
         </Box>
       ) : (
-        <NextLink href="/account" passHref>
+        <NextLink href="/account" passHref legacyBehavior>
           <ButtonBase
             component="a"
             sx={{
@@ -109,7 +109,6 @@ const AccountItem = () => {
           </ButtonBase>
         </NextLink>
       )}
-
       <style jsx>{`
         .avatar {
           flex: none;

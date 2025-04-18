@@ -16,13 +16,12 @@ import TOAAppContextProvider, { IAppContext } from '@/lib/toa-context';
 import TOAUser from '@/lib/models/toa-user';
 import { onAuthStateChanged } from 'firebase/auth';
 import { cloudMessaging, fetchUserData, getAuthInstance } from '@/providers/firebase-provider';
+import { AppCacheProvider } from '@mui/material-nextjs/v15-pagesRouter';
 
 let toaGlobalData: IRawAppProps | null = null;
 
-function MyApp({
-  Component,
-  pageProps
-}: AppProps<{ initialState: IAppContext; userLanguage: string }>) {
+function MyApp(props: AppProps<{ initialState: IAppContext; userLanguage: string }>) {
+  const { Component, pageProps } = props;
   const globals = useAppData(pageProps.initialState);
   const [user, setUser] = useState<TOAUser | null>(null);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
@@ -62,7 +61,7 @@ function MyApp({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
+    <AppCacheProvider {...props}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
@@ -104,7 +103,7 @@ function MyApp({
           scroll-behavior: smooth;
         }
       `}</style>
-    </>
+    </AppCacheProvider>
   );
 }
 

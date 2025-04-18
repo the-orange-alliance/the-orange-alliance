@@ -27,7 +27,12 @@ const DivisionsSwitcher: React.FC<Props> = ({ eventKey, divisions }) => {
         {divisions.map(division => {
           const isSelected = division.eventKey === eventKey;
           return (
-            <NextLink key={division.eventKey} href={`/events/${division.eventKey}`} passHref>
+            <NextLink
+              key={division.eventKey}
+              href={`/events/${division.eventKey}`}
+              passHref
+              legacyBehavior
+            >
               <Button
                 size="small"
                 color={isSelected ? 'secondary' : 'inherit'}

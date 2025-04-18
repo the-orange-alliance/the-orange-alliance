@@ -20,7 +20,7 @@ const TeamItem: React.FC<TeamItemProps> = ({ team }) => {
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Link href={`/teams/${team.teamKey}`} passHref>
+    <Link href={`/teams/${team.teamKey}`} passHref legacyBehavior>
       <ListItemButton component="a">
         <ListItemAvatar sx={{ fontWeight: 700, textAlign: 'center', mr: 2 }}>
           {team.teamKey}

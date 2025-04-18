@@ -57,17 +57,18 @@ const FiltersCard = ({ fetching, forceReload, onSeasonChange, onRegionChange }: 
     router
       .push({ query: query }, undefined, { shallow: !forceReload })
       .then(() => setIsPageLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSeasonKey, selectedRegionKey, forceReload]);
 
   useEffect(() => {
     const season = seasons.find(s => s.seasonKey === selectedSeasonKey)!;
     onSeasonChange?.(season);
-  }, [selectedSeasonKey]);
+  }, [onSeasonChange, seasons, selectedSeasonKey]);
 
   useEffect(() => {
     const region = regions.find(r => r.regionKey === selectedRegionKey)!;
     onRegionChange?.(region);
-  }, [selectedRegionKey]);
+  }, [onRegionChange, regions, selectedRegionKey]);
 
   return (
     <Card sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>

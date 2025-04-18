@@ -77,7 +77,7 @@ const TeamSelectionBar: React.FC<TeamSelectionBarProps> = ({ team, rankings }) =
                   sx={{ color: '#92400e', bgcolor: '#fde68a' }}
                 />
               </Stack>
-              <NextLink href={`/teams/${rank.teamKey}`} passHref>
+              <NextLink href={`/teams/${rank.teamKey}`} passHref legacyBehavior>
                 <Button
                   size="small"
                   color="inherit"

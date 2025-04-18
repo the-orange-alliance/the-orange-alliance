@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '@/i18n/i18n';
@@ -23,6 +24,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
   selectedTeam: initialSelectedTeam = null,
   hideHeader
 }) => {
+  const router = useRouter();
   const t = useTranslate();
   const theme = useTheme();
   const isStacked = useMediaQuery(theme.breakpoints.down('sm')) || forceSmall;
@@ -75,8 +77,21 @@ const MatchTable: React.FC<MatchTableProps> = ({
     setSelectedTeam(current => (current && current.teamKey === team.teamKey ? null : team));
   };
 
+  const handleMatchUnselect = () => {
+    setSelectedMatch(null);
+    // Change the URL back to original
+    const query = router.query;
+    delete query.match_key;
+    router.push({ query, pathname: router.pathname }, undefined, { shallow: true });
+  };
+
   const handleMatchClick = (match: Match) => {
     setSelectedMatch(match);
+    // Change the URL to /matches/:matchKey
+    const query = { ...router.query, match_key: match.matchKey };
+    router.push({ query, pathname: router.pathname }, `/matches/${match.matchKey}`, {
+      shallow: true
+    });
     if (match.details.matchDetailKey === '') {
       TOAProvider.getAPI()
         .getMatchDetails(match.matchKey)
@@ -88,7 +103,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
           setSelectedMatch(copy);
         })
         .catch(err => {
-          setSelectedMatch(null);
+          handleMatchUnselect();
         });
     }
   };
@@ -216,7 +231,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
       <MatchDetailsModal
         open={selectedMatch !== null}
         match={selectedMatch}
-        onClose={() => setSelectedMatch(null)}
+        onClose={handleMatchUnselect}
       />
 
       <style jsx>{`

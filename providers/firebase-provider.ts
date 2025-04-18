@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -38,7 +38,7 @@ const firebaseConfig = {
   messagingSenderId: '495169296462',
   appId: '1:495169296462:web:a8543d9517ea3cea4e0b1f'
 };
-let app = firebase.initializeApp(firebaseConfig);
+let app = initializeApp(firebaseConfig);
 
 let auth = getAuth(app);
 let db = getDatabase(app);
@@ -46,7 +46,7 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 export const getAuthInstance = () => {
-  if (!app) app = firebase.initializeApp(firebaseConfig);
+  if (!app) app = initializeApp(firebaseConfig);
   if (!auth) auth = getAuth(app);
   return auth;
 };

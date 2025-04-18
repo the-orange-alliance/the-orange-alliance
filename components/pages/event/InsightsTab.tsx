@@ -47,6 +47,7 @@ const CardContentList = function ({ insight, season }: { insight: Insights; seas
       <NextLink
         href={insight.highScoreMatch ? `/matches/${insight.highScoreMatch.matchKey}` : '#'}
         passHref
+        legacyBehavior
       >
         <ListItemButton component="a" dense>
           <ListItemText

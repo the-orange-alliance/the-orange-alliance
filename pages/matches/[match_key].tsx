@@ -37,7 +37,7 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
       />
       <Container sx={{ py: 6 }}>
         <Typography variant="h1">{match.matchName}</Typography>
-        <NextLink href={`/events/${match.event.eventKey}`} passHref>
+        <NextLink href={`/events/${match.event.eventKey}`} passHref legacyBehavior>
           <Link
             component="a"
             fontSize="1.25rem"

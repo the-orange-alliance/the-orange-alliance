@@ -12,7 +12,7 @@ import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSo
 import { useTranslate } from '@/i18n/i18n';
 import { fetchEventData, IRawEventProps, useEventData } from '@/lib/page-helpers/event-helper';
 import { getEventDescription, readableDate } from '@/lib/utils/common';
-import { Box, Container } from '@mui/system';
+import { Box, Container } from '@mui/material';
 import SEO from '@/components/seo';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
 import { Event } from '@the-orange-alliance/api/lib/cjs/models';
@@ -73,7 +73,6 @@ const EventPage: NextPage<IRawEventProps> = props => {
         ogImage={ogImage}
         url={`/events/${eventData.eventKey}`}
       />
-
       <Container sx={{ py: 6 }}>
         <Typography variant="h1">
           {startDate.getFullYear()} {eventData.fullEventName}
@@ -110,7 +109,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
           {streams && Array.isArray(streams) && streams.length > 0 && streams[0].isActive && (
             <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
               <StreamIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
-              <NextLink href={`/live?e=${eventData.eventKey}`} passHref>
+              <NextLink href={`/live?e=${eventData.eventKey}`} passHref legacyBehavior>
                 <Link color="secondary">{t('pages.event.stream_available')}</Link>
               </NextLink>
             </Typography>

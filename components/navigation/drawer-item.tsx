@@ -18,11 +18,7 @@ interface DrawerItemProps {
 const LinkWrapper: React.ForwardRefRenderFunction<
   HTMLAnchorElement,
   { href: string } & React.AnchorHTMLAttributes<HTMLAnchorElement>
-> = ({ href, ...props }, ref) => (
-  <NextLink href={href}>
-    <a ref={ref} {...props} />
-  </NextLink>
-);
+> = ({ href, ...props }, ref) => <NextLink href={href} ref={ref} {...props}></NextLink>;
 
 const DrawerItem = ({ title, href, icon, isExternal, isActive }: DrawerItemProps) => {
   const theme = useTheme();

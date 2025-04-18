@@ -205,7 +205,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                 >
                   <CardHeader
                     title={
-                      <NextLink href={`/events/${event.eventKey}`} passHref>
+                      <NextLink href={`/events/${event.eventKey}`} passHref legacyBehavior>
                         <Link fontSize="1.25rem" underline="none">
                           {event.fullEventName}
                         </Link>
@@ -337,7 +337,14 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     <ImageList variant="masonry">
                       {images.map(m => (
                         <ImageListItem className="w-100" key={m.mediaKey}>
-                          <NextImage src={m.mediaLink} alt="Team Media Image" />
+                          <NextImage
+                            src={m.mediaLink}
+                            alt="Team Media Image"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto'
+                            }}
+                          />
                         </ImageListItem>
                       ))}
                     </ImageList>

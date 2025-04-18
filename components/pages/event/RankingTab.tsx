@@ -31,7 +31,7 @@ const RankingTab = (props: IProps) => {
             <TableRow key={row.team.teamNumber}>
               <TableCell>{row.rank}</TableCell>
               <TableCell>
-                <NextLink href={`/teams/${row.team.teamNumber}`} passHref>
+                <NextLink href={`/teams/${row.team.teamNumber}`} passHref legacyBehavior>
                   <Link underline="hover">
                     #{row.team.teamNumber} <Hidden smDown>{row.team.teamNameShort}</Hidden>
                   </Link>
