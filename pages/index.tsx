@@ -19,11 +19,14 @@ import LeaderboardCard from '@/components/pages/home/leaderboard-card';
 import EventItem from '@/components/ui/event-item';
 import Search from '@/components/navigation/search';
 import SEO from '@/components/seo';
+import EventType from '@the-orange-alliance/api/lib/cjs/models/types/EventType';
+import ChampionshipCoverage from '@/components/pages/home/championship';
 
 const Home: NextPage<IRawHomeProps> = props => {
   const { matchSize, teamSize, elimsHighScore, qualsHighScore, overallHighScore, todaysEvents } =
     useHomeData(props);
   const t = useTranslate();
+  const isChampionship = todaysEvents.some(event => event.eventTypeKey === EventType.WorldChamp);
 
   return (
     <>
@@ -76,6 +79,7 @@ const Home: NextPage<IRawHomeProps> = props => {
           </Box>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={6}>
+              {isChampionship && <ChampionshipCoverage events={todaysEvents} />}
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6}>
                   <StatisticCard
@@ -93,20 +97,22 @@ const Home: NextPage<IRawHomeProps> = props => {
                 </Grid>
               </Grid>
 
-              <Card sx={{ mt: 2 }}>
-                <CardHeader title={t('pages.home.todays_events')} />
-                <Divider />
-                <CardContent>
-                  {todaysEvents.length === 0 && (
-                    <Typography variant="subtitle1" color="text.secondary" mt={1}>
-                      {t('pages.home.no_events_today')}
-                    </Typography>
-                  )}
-                  {todaysEvents.map(event => (
-                    <EventItem key={event.eventKey} event={event} />
-                  ))}
-                </CardContent>
-              </Card>
+              {!isChampionship && (
+                <Card sx={{ mt: 2 }}>
+                  <CardHeader title={t('pages.home.todays_events')} />
+                  <Divider />
+                  <CardContent>
+                    {todaysEvents.length === 0 && (
+                      <Typography variant="subtitle1" color="text.secondary" mt={1}>
+                        {t('pages.home.no_events_today')}
+                      </Typography>
+                    )}
+                    {todaysEvents.map(event => (
+                      <EventItem key={event.eventKey} event={event} />
+                    ))}
+                  </CardContent>
+                </Card>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
               {/* This is temporary. ReactDOMServer does not support Suspense, yet. */}

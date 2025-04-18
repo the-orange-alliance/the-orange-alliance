@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '@/i18n/i18n';
@@ -27,12 +27,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
   const theme = useTheme();
   const isStacked = useMediaQuery(theme.breakpoints.down('sm')) || forceSmall;
   const matches = event.matches;
-  const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(
-    initialSelectedTeam
-      ? event.matches.flatMap(m => m.participants).find(t => t.teamKey === initialSelectedTeam) ||
-          null
-      : null
-  );
+  const [selectedTeam, setSelectedTeam] = useState<MatchParticipant | null>(null);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
 
   const groupedMatches = useMemo(() => {
@@ -97,6 +92,15 @@ const MatchTable: React.FC<MatchTableProps> = ({
         });
     }
   };
+
+  useEffect(() => {
+    if (initialSelectedTeam) {
+      const team = event.matches
+        .flatMap(m => m.participants)
+        .find(t => t.teamKey === initialSelectedTeam);
+      setSelectedTeam(team || null);
+    }
+  }, [initialSelectedTeam, event.matches]);
 
   return (
     <>

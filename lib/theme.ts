@@ -33,6 +33,10 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
       dark: '#06c',
       light: '#06c',
       main: '#06c'
+    },
+    // @ts-ignore
+    success: {
+      main: '#00a63e'
     }
   },
   shape: {
