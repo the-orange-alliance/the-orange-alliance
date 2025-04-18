@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Grid, Typography } from '@mui/material';
 import { useTranslate } from '@/i18n/i18n';
 import SEO from '@/components/seo';

@@ -1,6 +1,6 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { Badge, Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import EventItem from '@/components/ui/event-item';

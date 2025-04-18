@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import NextImage from 'next/image';
+import NextImage from 'next/legacy/image';
 import {
   Typography,
   Card,
