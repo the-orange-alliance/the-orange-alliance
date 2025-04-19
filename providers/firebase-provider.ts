@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import { initializeApp } from 'firebase/app';
 import {
   GithubAuthProvider,
@@ -18,7 +19,7 @@ import {
 import { getDatabase } from 'firebase/database';
 import TOAUser from '@/lib/models/toa-user';
 import { Event, EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import localforage from 'localforage';
 import {
   getMessaging,
@@ -447,7 +448,19 @@ export const cloudMessaging = {
       if (supported) {
         const messaging = getMessaging();
         onMessage(messaging, payload => {
-          if (payload.notification?.title) toast(payload.notification.title);
+          if (!payload.notification?.title) return;
+          const link = payload.fcmOptions?.link?.replace('https://theorangealliance.org', '');
+          toast.message(payload.notification.title, {
+            description: payload.notification.body,
+            dismissible: true,
+            duration: 30 * 1000,
+            action: link
+              ? {
+                  label: 'View',
+                  onClick: () => Router.push(link)
+                }
+              : undefined
+          });
         });
       }
     });

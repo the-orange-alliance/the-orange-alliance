@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster as ReactHotToaster } from 'react-hot-toast';
+import { Toaster as SonnerToaster } from 'sonner';
 import App from 'next/app';
 import type { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
@@ -73,7 +74,8 @@ function MyApp(props: AppProps<{ initialState: IAppContext; userLanguage: string
             <DrawerLayout title="The Orange Alliance">
               <Component {...pageProps} />
             </DrawerLayout>
-            <Toaster />
+            <ReactHotToaster />
+            <SonnerToaster closeButton />
             <GoogleAnalytics gaId="G-D4VY485L1V" />
           </TOAAppContextProvider>
         </ThemeProvider>
