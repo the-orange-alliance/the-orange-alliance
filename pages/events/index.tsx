@@ -17,6 +17,7 @@ import { getSeasonYear, getWeekName } from '@/lib/utils/common';
 import TOAProvider from '@/providers/toa-provider';
 import { useAppContext } from '@/lib/toa-context';
 import SEO from '@/components/seo';
+import { parseISO, startOfDay } from 'date-fns';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();
@@ -46,13 +47,13 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
     [initialEvents]
   );
 
-  const handleRegionSelect = useCallback((region: Region) => {
+  const handleRegionSelect = (region: Region) => {
     setSelectedRegion(region);
-  }, []);
+  };
 
-  const selectTab = useCallback((e: SyntheticEvent, val: string) => {
-    setSelectedWeek(val);
-  }, []);
+  const selectTab = (_: SyntheticEvent, selectedWeekKey: string) => {
+    setSelectedWeek(selectedWeekKey);
+  };
 
   useEffect(() => {
     const filteredEvents =
@@ -66,6 +67,18 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
       setSelectedWeek(weeks[0]?.weekKey);
     }
   }, [seasonEvents, selectedRegion.regionKey, selectedWeek]);
+
+  useEffect(() => {
+    const now = startOfDay(new Date());
+    const currentWeeks = weeks.filter(
+      week =>
+        startOfDay(parseISO(week.startDate)) <= now && startOfDay(parseISO(week.endDate)) >= now
+    );
+    if (currentWeeks.length > 0) {
+      setSelectedWeek(currentWeeks[currentWeeks.length - 1].weekKey);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getEventsByWeek = (week: Week) => {
     return filteredEvents.filter(event => event.weekKey === week.weekKey);
