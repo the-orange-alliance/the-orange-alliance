@@ -22,6 +22,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@the-orange-alliance/api": "^0.24.0",
     "@vercel/og": "^0.0.21",
+    "date-fns": "^4.1.0",
     "firebase": "^9.5.0",
     "localforage": "^1.10.0",
     "luxon": "^3.1.0",

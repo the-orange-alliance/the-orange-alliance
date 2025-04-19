@@ -63,7 +63,8 @@ const FiltersCard = ({ fetching, forceReload, onSeasonChange, onRegionChange }: 
   useEffect(() => {
     const season = seasons.find(s => s.seasonKey === selectedSeasonKey)!;
     onSeasonChange?.(season);
-  }, [onSeasonChange, seasons, selectedSeasonKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seasons, selectedSeasonKey]);
 
   useEffect(() => {
     const region = regions.find(r => r.regionKey === selectedRegionKey)!;
