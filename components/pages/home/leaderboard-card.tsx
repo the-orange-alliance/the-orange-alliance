@@ -27,9 +27,9 @@ const LeaderboardCard: React.FC<LeaderboardCardProps> = ({ quals, elims, overall
         <Typography variant="subtitle1" gutterBottom>
           {subtitle}
         </Typography>
-        <NextLink href={`/events/${match.event?.eventKey}`} passHref legacyBehavior>
+        <NextLink href={`/events/${match.event.eventKey}`} passHref legacyBehavior>
           <Link underline="none" fontSize="0.875rem" color="text.secondary" display="block">
-            {match.event?.eventName}
+            {match.event.fullEventName}
           </Link>
         </NextLink>
         <NextLink href={`/matches/${match.matchKey}`} passHref legacyBehavior>
