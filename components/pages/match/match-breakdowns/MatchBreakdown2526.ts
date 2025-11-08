@@ -1,78 +1,140 @@
 import Match from '@the-orange-alliance/api/lib/cjs/models/Match';
 import {
+  MatchBreakdownBoolField,
   MatchBreakdownField,
   MatchBreakdownRow,
   MatchBreakdownTitle,
   MatchBreakdownStringField
 } from '../match-breakdown-row';
-import MatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2425/MatchDetails';
-import AllianceDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2425/AllianceDetails';
+import { MatchDetails } from '@the-orange-alliance/api/lib/cjs/models';
+
+type Match2526AllianceDetails = {
+  alliance: 'Blue' | 'Red' | string;
+  team: number;
+
+  autoClassifiedArtifacts: number;
+  autoOverflowArtifacts: number;
+  autoClassifierState: ('NONE' | 'PURPLE' | 'GREEN')[];
+  robot1Auto: boolean;
+  robot2Auto: boolean;
+  autoLeavePoints: number;
+  autoArtifactPoints: number;
+  autoPatternPoints: number;
+
+  teleopClassifiedArtifacts: number;
+  teleopOverflowArtifacts: number;
+  teleopDepotArtifacts: number;
+  teleopClassifierState: ('NONE' | 'PURPLE' | 'GREEN')[];
+  robot1Teleop: 'NONE' | 'PARTIAL' | 'FULL';
+  robot2Teleop: 'NONE' | 'PARTIAL' | 'FULL';
+  teleopArtifactPoints: number;
+  teleopDepotPoints: number;
+  teleopPatternPoints: number;
+  teleopBasePoints: number;
+
+  autoPoints: number;
+  teleopPoints: number;
+
+  foulPointsCommitted: number;
+  preFoulTotal: number;
+
+  movementRP: boolean;
+  goalRP: boolean;
+  patternRP: boolean;
+
+  totalPoints: number;
+  majorFouls: number;
+  minorFouls: number;
+};
 
 export default class MatchBreakdown2526 {
-  calcAutoLocation(
-    robot: 'NONE' | 'OBSERVATION_ZONE' | 'ASCENT_1' | 'ASCENT_2' | 'ASCENT_3' | 'ASCENT'
-  ): string {
+  calcParkLocation(robot: 'NONE' | 'PARTIAL' | 'FULL'): string {
     switch (robot) {
-      case 'ASCENT':
-      case 'ASCENT_1':
-        return 'Ascent (+3)';
-      case 'ASCENT_2':
-        return 'Ascent (+15)';
-      case 'ASCENT_3':
-        return 'Ascent (+30)';
-      case 'OBSERVATION_ZONE':
-        return 'Observation (+3)';
+      case 'NONE':
+        return 'None';
+      case 'PARTIAL':
+        return 'Partial (+5)';
+      case 'FULL':
+        return 'Full (+10)';
       default:
         return 'None';
     }
   }
 
   getRows(match: Match): MatchBreakdownRow[] {
-    const details: MatchDetails = match.details as MatchDetails;
-    const red: AllianceDetails = details.redDtls;
-    const blue: AllianceDetails = details.blueDtls;
+    const details: any = (match.details as MatchDetails).toJSON();
+    const red: Match2526AllianceDetails = details.red;
+    const blue: Match2526AllianceDetails = details.blue;
 
     // TODO: Replace team 1 and 2 with actual team numbers?
     return [
       MatchBreakdownTitle('Autonomous', red.autoPoints, blue.autoPoints),
-      // MatchBreakdownField('Samples Net', red.autoSampleNet, blue.autoSampleNet, 2),
-      // MatchBreakdownField('Samples Low', red.autoSampleLow, blue.autoSampleLow, 4),
-      // MatchBreakdownField('Samples High', red.autoSampleHigh, blue.autoSampleHigh, 8),
-      // MatchBreakdownField('Specimens Low', red.autoSpecimenLow, blue.autoSpecimenLow, 6),
-      // MatchBreakdownField('Specimens High', red.autoSpecimenHigh, blue.autoSpecimenHigh, 10),
-      // MatchBreakdownStringField(
-      //   'Robot 1',
-      //   this.calcAutoLocation(red.robot1Auto),
-      //   this.calcAutoLocation(blue.robot1Auto)
-      // ),
-      // MatchBreakdownStringField(
-      //   'Robot 2',
-      //   this.calcAutoLocation(red.robot2Auto),
-      //   this.calcAutoLocation(blue.robot2Auto)
-      // ),
+      MatchBreakdownField(
+        'Classified Artifacts',
+        red.autoClassifiedArtifacts,
+        blue.autoClassifiedArtifacts,
+        3
+      ),
+      MatchBreakdownField(
+        'Overflow Artifacts',
+        red.autoOverflowArtifacts,
+        blue.autoOverflowArtifacts,
+        1
+      ),
+      MatchBreakdownField('Artifact Points', red.autoArtifactPoints, blue.autoArtifactPoints, 1),
+      MatchBreakdownField('Pattern Matches', red.autoPatternPoints, blue.autoPatternPoints, 2),
+      MatchBreakdownField('Leave (Auto)', red.autoLeavePoints, blue.autoLeavePoints, 3),
+      MatchBreakdownBoolField('Robot 1 Auto Leave', red.robot1Auto, blue.robot1Auto, 0),
+      MatchBreakdownBoolField('Robot 2 Auto Leave', red.robot2Auto, blue.robot2Auto, 0),
       MatchBreakdownTitle('Teleop', red.teleopPoints, blue.teleopPoints),
-      // MatchBreakdownField('Samples Net', red.teleopSampleNet, blue.teleopSampleNet, 2),
-      // MatchBreakdownField('Samples Low', red.teleopSampleLow, blue.teleopSampleLow, 4),
-      // MatchBreakdownField('Samples High', red.teleopSampleHigh, blue.teleopSampleHigh, 8),
-      // MatchBreakdownField('Specimens Low', red.teleopSpecimenLow, blue.teleopSpecimenLow, 6),
-      // MatchBreakdownField('Specimens High', red.teleopSpecimenHigh, blue.teleopSpecimenHigh, 10),
-      // MatchBreakdownStringField(
-      //   'Robot 1',
-      //   this.calcAutoLocation(red.robot1Teleop),
-      //   this.calcAutoLocation(blue.robot1Teleop)
-      // ),
-      // MatchBreakdownStringField(
-      //   'Robot 2',
-      //   this.calcAutoLocation(red.robot2Teleop),
-      //   this.calcAutoLocation(blue.robot2Teleop)
-      // ),
+      MatchBreakdownField(
+        'Classified Artifacts',
+        red.teleopClassifiedArtifacts,
+        blue.teleopClassifiedArtifacts,
+        3
+      ),
+      MatchBreakdownField(
+        'Overflow Artifacts',
+        red.teleopOverflowArtifacts,
+        blue.teleopOverflowArtifacts,
+        1
+      ),
+      MatchBreakdownField(
+        'Depot Artifacts',
+        red.teleopDepotArtifacts,
+        blue.teleopDepotArtifacts,
+        1
+      ),
+      MatchBreakdownField(
+        'Artifact Points',
+        red.teleopArtifactPoints,
+        blue.teleopArtifactPoints,
+        1
+      ),
+      MatchBreakdownField('Depot Points', red.teleopDepotPoints, blue.teleopDepotPoints, 1),
+      MatchBreakdownField('Pattern Matches', red.teleopPatternPoints, blue.teleopPatternPoints, 2),
+      MatchBreakdownField('Base Points', red.teleopBasePoints, blue.teleopBasePoints, 1),
+      MatchBreakdownStringField(
+        'Robot 1 Teleop',
+        this.calcParkLocation(red.robot1Teleop as any),
+        this.calcParkLocation(blue.robot1Teleop as any)
+      ),
+      MatchBreakdownStringField(
+        'Robot 2 Teleop',
+        this.calcParkLocation(red.robot2Teleop as any),
+        this.calcParkLocation(blue.robot2Teleop as any)
+      ),
       MatchBreakdownTitle(
         'Penalty',
         details.blueMinPen * 5 + details.blueMajPen * 15,
         details.redMinPen * 5 + details.redMajPen * 15
       ),
-      MatchBreakdownField('Minor Fouls', red.minorFouls, blue.minorFouls, 5),
-      MatchBreakdownField('Major Fouls', red.majorFouls, blue.majorFouls, 15)
+      MatchBreakdownBoolField('Movement RP', red.movementRP, blue.movementRP, 0, true),
+      MatchBreakdownBoolField('Goal RP', red.goalRP, blue.goalRP, 1, true),
+      MatchBreakdownBoolField('Pattern RP', red.patternRP, blue.patternRP, 1, true),
+      MatchBreakdownField('Minor Penalties', red.minorFouls, blue.minorFouls, 5),
+      MatchBreakdownField('Major Penalties', red.majorFouls, blue.majorFouls, 15),
+      MatchBreakdownTitle('Final', match.redScore, match.blueScore)
     ];
   }
 }

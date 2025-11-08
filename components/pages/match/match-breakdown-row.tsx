@@ -22,6 +22,7 @@ export class MatchBreakdownRow {
   redPoints: number;
   bluePoints: number;
   gameType: number;
+  isRp: boolean = false;
 
   redIcon: JSX.Element | null;
   blueIcon: JSX.Element | null;
@@ -33,7 +34,8 @@ export class MatchBreakdownRow {
     blue: number | string,
     redPoints: number,
     bluePoints: number,
-    gameType: number = -1
+    gameType: number = -1,
+    isRp: boolean = false
   ) {
     this.isTitle = isTitle;
     this.name = name;
@@ -42,6 +44,7 @@ export class MatchBreakdownRow {
     this.redPoints = redPoints;
     this.bluePoints = bluePoints;
     this.gameType = gameType;
+    this.isRp = isRp;
 
     const constants = new MatchBreakdownConstants();
     this.redIcon =
@@ -59,7 +62,9 @@ export class MatchBreakdownRow {
   }
 
   getRedPoints(): string {
-    if (this.isTitle) {
+    if (this.isRp) {
+      return this.red ? '(+1 RP)' : '';
+    } else if (this.isTitle) {
       return `${this.red} Points`;
     } else {
       return this.getString(this.red, 'red');
@@ -67,7 +72,9 @@ export class MatchBreakdownRow {
   }
 
   getBluePoints(): string {
-    if (this.isTitle) {
+    if (this.isRp) {
+      return this.red ? '(+1 RP)' : '';
+    } else if (this.isTitle) {
       return `${this.blue} Points`;
     } else {
       return this.getString(this.blue, 'blue');
@@ -297,7 +304,13 @@ export function MatchBreakdownVelocityVortexCapBallField(name: string, red: numb
   );
 }
 
-export function MatchBreakdownBoolField(name: string, red: boolean, blue: boolean, points: number) {
+export function MatchBreakdownBoolField(
+  name: string,
+  red: boolean,
+  blue: boolean,
+  points: number,
+  isRp: boolean = false
+) {
   const constants = new MatchBreakdownConstants();
   return new MatchBreakdownRow(
     false,
@@ -305,7 +318,9 @@ export function MatchBreakdownBoolField(name: string, red: boolean, blue: boolea
     red ? constants.trueValue : constants.falseValue,
     blue ? constants.trueValue : constants.falseValue,
     points,
-    points
+    points,
+    undefined,
+    isRp
   );
 }
 
