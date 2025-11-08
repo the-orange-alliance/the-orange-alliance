@@ -97,6 +97,7 @@ const MatchTable: React.FC<MatchTableProps> = ({
         .getMatchDetails(match.matchKey)
         .then(dtls => {
           const copy = new Match().fromJSON(match.toJSON());
+          console.log(dtls);
           copy.details = dtls;
           // Cache these details, so the next time we don't have to fetch them
           match.details = dtls;

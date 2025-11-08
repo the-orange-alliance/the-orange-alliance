@@ -18,6 +18,7 @@ interface MatchDetailsCardProps {
 }
 
 const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
+  console.log(match);
   const isRemote = match.redScore > -1 && match.blueScore === -1;
 
   let rows: MatchBreakdownRow[] = useMemo(() => {

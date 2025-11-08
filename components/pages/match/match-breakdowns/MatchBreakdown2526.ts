@@ -6,46 +6,8 @@ import {
   MatchBreakdownTitle,
   MatchBreakdownStringField
 } from '../match-breakdown-row';
-import { MatchDetails } from '@the-orange-alliance/api/lib/cjs/models';
-
-type Match2526AllianceDetails = {
-  alliance: 'Blue' | 'Red' | string;
-  team: number;
-
-  autoClassifiedArtifacts: number;
-  autoOverflowArtifacts: number;
-  autoClassifierState: ('NONE' | 'PURPLE' | 'GREEN')[];
-  robot1Auto: boolean;
-  robot2Auto: boolean;
-  autoLeavePoints: number;
-  autoArtifactPoints: number;
-  autoPatternPoints: number;
-
-  teleopClassifiedArtifacts: number;
-  teleopOverflowArtifacts: number;
-  teleopDepotArtifacts: number;
-  teleopClassifierState: ('NONE' | 'PURPLE' | 'GREEN')[];
-  robot1Teleop: 'NONE' | 'PARTIAL' | 'FULL';
-  robot2Teleop: 'NONE' | 'PARTIAL' | 'FULL';
-  teleopArtifactPoints: number;
-  teleopDepotPoints: number;
-  teleopPatternPoints: number;
-  teleopBasePoints: number;
-
-  autoPoints: number;
-  teleopPoints: number;
-
-  foulPointsCommitted: number;
-  preFoulTotal: number;
-
-  movementRP: boolean;
-  goalRP: boolean;
-  patternRP: boolean;
-
-  totalPoints: number;
-  majorFouls: number;
-  minorFouls: number;
-};
+import MatchDetails from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2526/MatchDetails';
+import AllianceDetails2526 from '@the-orange-alliance/api/lib/cjs/models/game-specifics/2526/AllianceDetails';
 
 export default class MatchBreakdown2526 {
   calcParkLocation(robot: 'NONE' | 'PARTIAL' | 'FULL'): string {
@@ -61,10 +23,24 @@ export default class MatchBreakdown2526 {
     }
   }
 
+  calcTotalRp(alliance: AllianceDetails2526): number {
+    let totalRp = 0;
+    if (alliance.movementRP) {
+      totalRp += 1;
+    }
+    if (alliance.goalRP) {
+      totalRp += 1;
+    }
+    if (alliance.patternRP) {
+      totalRp += 1;
+    }
+    return totalRp;
+  }
+
   getRows(match: Match): MatchBreakdownRow[] {
-    const details: any = (match.details as MatchDetails).toJSON();
-    const red: Match2526AllianceDetails = details.red;
-    const blue: Match2526AllianceDetails = details.blue;
+    const details: MatchDetails = match.details as MatchDetails;
+    const red: AllianceDetails2526 = details.redDtls;
+    const blue: AllianceDetails2526 = details.blueDtls;
 
     // TODO: Replace team 1 and 2 with actual team numbers?
     return [
@@ -129,11 +105,12 @@ export default class MatchBreakdown2526 {
         details.blueMinPen * 5 + details.blueMajPen * 15,
         details.redMinPen * 5 + details.redMajPen * 15
       ),
-      MatchBreakdownBoolField('Movement RP', red.movementRP, blue.movementRP, 0, true),
-      MatchBreakdownBoolField('Goal RP', red.goalRP, blue.goalRP, 1, true),
-      MatchBreakdownBoolField('Pattern RP', red.patternRP, blue.patternRP, 1, true),
       MatchBreakdownField('Minor Penalties', red.minorFouls, blue.minorFouls, 5),
       MatchBreakdownField('Major Penalties', red.majorFouls, blue.majorFouls, 15),
+      MatchBreakdownTitle('Ranking Points', this.calcTotalRp(red), this.calcTotalRp(blue)),
+      MatchBreakdownBoolField('Movement', red.movementRP, blue.movementRP, 0, true),
+      MatchBreakdownBoolField('Goal', red.goalRP, blue.goalRP, 1, true),
+      MatchBreakdownBoolField('Pattern', red.patternRP, blue.patternRP, 1, true),
       MatchBreakdownTitle('Final', match.redScore, match.blueScore)
     ];
   }

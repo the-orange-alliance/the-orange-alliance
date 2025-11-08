@@ -1,4 +1,5 @@
 import { Check, Close } from '@mui/icons-material';
+import { constants } from 'buffer';
 
 export class MatchBreakdownConstants {
   trueValue = -1000;
@@ -62,8 +63,9 @@ export class MatchBreakdownRow {
   }
 
   getRedPoints(): string {
+    const constants = new MatchBreakdownConstants();
     if (this.isRp) {
-      return this.red ? '(+1 RP)' : '';
+      return this.red === constants.trueValue ? '(+1 RP)' : '';
     } else if (this.isTitle) {
       return `${this.red} Points`;
     } else {
@@ -72,8 +74,9 @@ export class MatchBreakdownRow {
   }
 
   getBluePoints(): string {
+    const constants = new MatchBreakdownConstants();
     if (this.isRp) {
-      return this.red ? '(+1 RP)' : '';
+      return this.blue === constants.trueValue ? '(+1 RP)' : '';
     } else if (this.isTitle) {
       return `${this.blue} Points`;
     } else {
