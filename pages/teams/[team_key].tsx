@@ -178,7 +178,12 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
 
         <Grid container direction={{ xs: 'column-reverse', lg: 'row' }} spacing={2} mt={2}>
           {/* Team Information */}
-          <Grid item xs={12} md={9}>
+          <Grid
+            size={{
+              xs: 12,
+              md: 9
+            }}
+          >
             {/* Team Events/Robot */}
             {/* Nav Tabs */}
             {(github || reveal || cad || notebook || images.length > 0) && (
@@ -355,7 +360,12 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           </Grid>
 
           {/* Nav */}
-          <Grid item xs={12} md={3}>
+          <Grid
+            size={{
+              xs: 12,
+              md: 3
+            }}
+          >
             <Card sx={{ position: 'sticky', top: '5rem', px: 2, py: 3 }}>
               {team.rookieYear && (
                 <Box>

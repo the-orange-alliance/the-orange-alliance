@@ -78,17 +78,35 @@ const Home: NextPage<IRawHomeProps> = props => {
             <Search showDescription maxResults={5} sx={{ maxWidth: '22rem', mx: 'auto' }} />
           </Box>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 12,
+                md: 6
+              }}
+            >
               {isChampionship && <ChampionshipCoverage events={todaysEvents} />}
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid
+                  size={{
+                    xs: 12,
+                    sm: 12,
+                    md: 6
+                  }}
+                >
                   <StatisticCard
                     title={`${matchSize.toLocaleString('en-US')}`}
                     subtitle={t('pages.home.matches_played')}
                     icon={<MatchesIcon />}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid
+                  size={{
+                    xs: 12,
+                    sm: 12,
+                    md: 6
+                  }}
+                >
                   <StatisticCard
                     title={`${teamSize.toLocaleString('en-US')}`}
                     subtitle={t('pages.home.active_teams')}
@@ -114,7 +132,13 @@ const Home: NextPage<IRawHomeProps> = props => {
                 </Card>
               )}
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 12,
+                md: 6
+              }}
+            >
               {/* This is temporary. ReactDOMServer does not support Suspense, yet. */}
               <LeaderboardCard
                 overall={overallHighScore}

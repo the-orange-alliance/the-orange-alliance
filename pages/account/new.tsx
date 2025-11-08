@@ -265,11 +265,21 @@ const AccountPage: NextPage = () => {
 
           <Grid container direction="row" spacing={2}>
             {/* Left Column */}
-            <Grid item lg={7} md={12}>
+            <Grid
+              size={{
+                lg: 7,
+                md: 12
+              }}
+            >
               {/* Favorite Teams/Events */}
               <Card sx={{ p: 3 }}>
                 <Grid container direction="row" spacing={2} style={{ width: '100%' }}>
-                  <Grid item xs={12} sm={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}
+                  >
                     <Typography sx={{ ml: 1, mb: 1 }} variant="h6">
                       {t('general.teams')}
                     </Typography>
@@ -288,7 +298,12 @@ const AccountPage: NextPage = () => {
                       </List>
                     )}
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6
+                    }}
+                  >
                     <Typography sx={{ ml: 1, mb: 1 }} variant="h6">
                       {t('general.events')}
                     </Typography>
@@ -312,7 +327,12 @@ const AccountPage: NextPage = () => {
             </Grid>
 
             {/* Right Column */}
-            <Grid item lg={5} md={12}>
+            <Grid
+              size={{
+                lg: 5,
+                md: 12
+              }}
+            >
               {/* Notifications */}
 
               {notificationsConsent && (

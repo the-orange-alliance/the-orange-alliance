@@ -129,7 +129,8 @@ const Streams: NextPage<IRawStreamsProps> = props => {
           bgcolor: '#0a0a0a',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          overflow: 'hidden'
         }}
       >
         {LayoutContainer ? (

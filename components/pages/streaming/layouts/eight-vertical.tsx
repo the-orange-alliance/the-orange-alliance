@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import LiveStreamPanel from '../panel';
 import StreamingChat from '../chat';
@@ -10,39 +10,26 @@ interface EightVerticalViewProps {
 
 const EightVerticalView: React.FC<EightVerticalViewProps> = ({ streams, showChat }) => {
   return (
-    <Grid container sx={{ height: '100%' }}>
-      <Grid item container xs={showChat ? 9 : 12}>
-        <Grid item container xs={6} direction="column">
-          <Grid item xs={3}>
+    <Grid container sx={{ height: '100%', width: '100%' }}>
+      <Grid container size={showChat ? 9 : 12}>
+        <Stack direction="row" sx={{ height: '100%', width: '100%' }}>
+          <Stack direction="column" sx={{ width: '100%' }}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-        </Grid>
-        <Grid item container xs={6} direction="column">
-          <Grid item xs={3}>
+          </Stack>
+
+          <Stack direction="column" sx={{ width: '100%' }}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={3}>
             <LiveStreamPanel streams={streams} />
-          </Grid>
-        </Grid>
+          </Stack>
+        </Stack>
       </Grid>
       {showChat && (
-        <Grid item xs={3}>
+        <Grid size={3}>
           <StreamingChat />
         </Grid>
       )}

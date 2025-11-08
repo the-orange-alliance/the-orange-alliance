@@ -63,7 +63,13 @@ const SeasonInsights1819 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Landing */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Landing
           </Typography>
@@ -90,7 +96,13 @@ const SeasonInsights1819 = (props: IProps) => {
         </Grid>
 
         {/* Sample/Claiming */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Sample/Claiming
           </Typography>
@@ -118,7 +130,13 @@ const SeasonInsights1819 = (props: IProps) => {
         </Grid>
 
         {/* Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Parking
           </Typography>
@@ -145,7 +163,13 @@ const SeasonInsights1819 = (props: IProps) => {
         </Grid>
 
         {/* Tele Scoring */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             TeleOp Gold, Silver, and Depot
           </Typography>
@@ -174,7 +198,13 @@ const SeasonInsights1819 = (props: IProps) => {
         </Grid>
 
         {/* End Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Parking
           </Typography>

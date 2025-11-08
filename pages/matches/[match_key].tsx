@@ -52,7 +52,12 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
           </Link>
         </NextLink>
         <Grid container spacing={2} mt={2}>
-          <Grid item xs={12} md={4}>
+          <Grid
+            size={{
+              xs: 12,
+              md: 4
+            }}
+          >
             <Card>
               <CardContent>
                 {match.redScore === -1 &&
@@ -93,7 +98,12 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid
+            size={{
+              xs: 12,
+              md: 8
+            }}
+          >
             <Card>
               <MatchDetailsCard match={match} />
             </Card>

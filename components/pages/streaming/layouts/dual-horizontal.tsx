@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import LiveStreamPanel from '../panel';
 import StreamingChat from '../chat';
@@ -10,17 +10,15 @@ interface DualHorizontalViewProps {
 
 const DualHorizontalView: React.FC<DualHorizontalViewProps> = ({ streams, showChat }) => {
   return (
-    <Grid container sx={{ height: '100%' }}>
-      <Grid item container xs={showChat ? 9 : 12} direction="column">
-        <Grid item xs={6}>
+    <Grid container sx={{ height: '100%', width: '100%' }}>
+      <Grid size={showChat ? 9 : 12}>
+        <Stack direction="column" sx={{ height: '100%', width: '100%' }}>
           <LiveStreamPanel streams={streams} />
-        </Grid>
-        <Grid item xs={6}>
           <LiveStreamPanel streams={streams} />
-        </Grid>
+        </Stack>
       </Grid>
       {showChat && (
-        <Grid item xs={3}>
+        <Grid size={3}>
           <StreamingChat />
         </Grid>
       )}

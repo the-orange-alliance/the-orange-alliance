@@ -6,7 +6,7 @@ import InsightCell from '../InsightCell';
 const AutonBreakout = function ({ insight }: { insight: FreightFrenzyInsights }) {
   return (
     <Grid container sx={{ justifyContent: 'center', alignItems: 'stretch' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>Auton Breakout</Typography>
       </Grid>
       <InsightCell
@@ -61,7 +61,7 @@ const AutonBreakout = function ({ insight }: { insight: FreightFrenzyInsights })
 const TeleopBreakout = function ({ insight }: { insight: FreightFrenzyInsights }) {
   return (
     <Grid spacing={2} container sx={{ justifyContent: 'center' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>Teleop Breakout</Typography>
       </Grid>
       <InsightCell
@@ -91,7 +91,7 @@ const TeleopBreakout = function ({ insight }: { insight: FreightFrenzyInsights }
 const EndgameBreakout = function ({ insight }: { insight: FreightFrenzyInsights }) {
   return (
     <Grid spacing={2} container sx={{ justifyContent: 'center' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>End Game Breakout</Typography>
       </Grid>
       <InsightCell

@@ -241,7 +241,12 @@ const AdminTab = ({ event, streams }: IProps) => {
   return (
     <Grid container spacing={2} sx={{ p: 2 }}>
       {/* Left Column */}
-      <Grid item xs={12} md={6}>
+      <Grid
+        size={{
+          xs: 12,
+          md: 6
+        }}
+      >
         {/*<Card variant='outlined'>*/}
         {/*  <CardContent>*/}
         {/*    <Typography sx={{ mb: 4 }} variant="h6">*/}
@@ -260,7 +265,12 @@ const AdminTab = ({ event, streams }: IProps) => {
             </Typography>
             <Grid container direction="row" spacing={2}>
               {/* Edit Event Left Column */}
-              <Grid item xs={12} sm={6}>
+              <Grid
+                size={{
+                  xs: 12,
+                  sm: 6
+                }}
+              >
                 <TextField
                   variant="outlined"
                   fullWidth
@@ -302,7 +312,12 @@ const AdminTab = ({ event, streams }: IProps) => {
               </Grid>
 
               {/* Edit Event Right Column */}
-              <Grid item xs={12} sm={6}>
+              <Grid
+                size={{
+                  xs: 12,
+                  sm: 6
+                }}
+              >
                 <TextField
                   variant="outlined"
                   fullWidth
@@ -361,9 +376,13 @@ const AdminTab = ({ event, streams }: IProps) => {
           </CardContent>
         </Card>
       </Grid>
-
       {/* Right Column */}
-      <Grid item xs={12} md={6}>
+      <Grid
+        size={{
+          xs: 12,
+          md: 6
+        }}
+      >
         <Card variant="outlined">
           <CardContent>
             <Typography sx={{ mb: 4 }} variant="h6">

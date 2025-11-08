@@ -18,7 +18,6 @@ interface MatchDetailsCardProps {
 }
 
 const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
-  console.log(match);
   const isRemote = match.redScore > -1 && match.blueScore === -1;
 
   let rows: MatchBreakdownRow[] = useMemo(() => {
@@ -62,9 +61,8 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
   return rows.length > 0 ? (
     <Box>
       <Grid container>
-        <Grid xs={6} item />
+        <Grid size={6} />
         <Grid
-          xs={isRemote ? 6 : 3}
           sx={{
             p: 1,
             color: '#fff',
@@ -74,7 +72,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
             textAlign: 'center',
             lineHeight: 1.25
           }}
-          item
+          size={isRemote ? 6 : 3}
         >
           {!isRemote && (
             <span style={{ display: 'block', fontSize: '0.75em', fontWeight: 500 }}>Red</span>
@@ -83,7 +81,6 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
         </Grid>
         {!isRemote && (
           <Grid
-            xs={3}
             sx={{
               p: 1,
               color: '#fff',
@@ -93,7 +90,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
               textAlign: 'center',
               lineHeight: 1.25
             }}
-            item
+            size={3}
           >
             <span style={{ display: 'block', fontSize: '0.75em', fontWeight: 500 }}>Blue</span>
             {match.blueScore}
@@ -111,13 +108,12 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
             })
           })}
         >
-          <Grid xs={6} sx={{ px: 2, py: 1 }} item>
+          <Grid sx={{ px: 2, py: 1 }} size={6}>
             <Typography style={{ fontWeight: r.isTitle ? 'bold' : 'normal' }}>{r.name}</Typography>
           </Grid>
 
           {/* Red Details */}
           <Grid
-            xs={isRemote ? 6 : 3}
             sx={{
               padding: 1,
               backgroundColor: isRemote
@@ -125,7 +121,7 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
                 : 'var(--toa-colors-red-transparent)',
               textAlign: 'center'
             }}
-            item
+            size={isRemote ? 6 : 3}
           >
             <Typography
               display="inline-flex"
@@ -148,13 +144,12 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
           {/* Blue Details if we have a blue score (not a single-team match) */}
           {!isRemote && (
             <Grid
-              xs={3}
               sx={{
                 padding: 1,
                 backgroundColor: 'var(--toa-colors-blue-transparent)',
                 textAlign: 'center'
               }}
-              item
+              size={3}
             >
               <Typography
                 display="inline-flex"

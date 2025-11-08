@@ -3,7 +3,7 @@ import {
   Card,
   Divider,
   FormControl,
-  Grid2 as Grid,
+  Grid,
   InputLabel,
   LinearProgress,
   MenuItem,

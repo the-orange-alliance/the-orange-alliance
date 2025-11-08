@@ -19,12 +19,13 @@ const InsightCell = function ({
   const lang = useTranslate();
   return (
     <Grid
-      item
       container
-      xs={6}
-      md={4}
-      xl={3}
       sx={{ alignContent: 'space-between', padding: '.5em' }}
+      size={{
+        xs: 6,
+        md: 4,
+        xl: 3
+      }}
     >
       <Typography sx={{ textAlign: 'center', textTransform: 'uppercase', fontSize: '.75em' }}>
         {lang(`pages.event.subpages.insights.${year}.${translationKey}`)}

@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Table, TableHead, TableRow, TableCell, TableBody, Link, Hidden } from '@mui/material';
+import { Table, TableHead, TableRow, TableCell, TableBody, Link, Box } from '@mui/material';
 import { Ranking, Event } from '@the-orange-alliance/api/lib/cjs/models';
 import { useTranslate } from '@/i18n/i18n';
 
@@ -33,7 +33,10 @@ const RankingTab = (props: IProps) => {
               <TableCell>
                 <NextLink href={`/teams/${row.team.teamNumber}`} passHref legacyBehavior>
                   <Link underline="hover">
-                    #{row.team.teamNumber} <Hidden smDown>{row.team.teamNameShort}</Hidden>
+                    #{row.team.teamNumber}
+                    <Box component="span" sx={{ display: { xs: 'none', md: 'inline' }, ml: 1 }}>
+                      {row.team.teamNameShort}
+                    </Box>
                   </Link>
                 </NextLink>
               </TableCell>

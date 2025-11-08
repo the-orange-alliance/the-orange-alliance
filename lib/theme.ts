@@ -28,6 +28,11 @@ const getDesignTokens = (mode: PaletteMode): Theme => ({
       default: mode === 'dark' ? '#121212' : '#f5f6f7',
       paper: mode === 'dark' ? '#1a1a1a' : '#ffffff'
     },
+    // @ts-ignore
+    text: {
+      primary: mode === 'dark' ? '#ffffff' : 'rgba(0, 0, 0, 0.87)',
+      secondary: mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0, 0, 0, 0.6)'
+    },
     info: {
       contrastText: '#fff',
       dark: '#06c',

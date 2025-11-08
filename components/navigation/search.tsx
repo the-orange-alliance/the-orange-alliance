@@ -56,7 +56,7 @@ const Search: React.FC<SearchProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
-  const searchTimeout = useRef<NodeJS.Timeout | undefined>();
+  const searchTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const onSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     // Clear any set timeouts

@@ -18,7 +18,12 @@ const InsightsTab = (props: IProps) => {
   return (
     <Grid container spacing={2} sx={{ p: 2 }}>
       {qualInsights && (
-        <Grid item xs={12} sm={6}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6
+          }}
+        >
           <Card variant="outlined">
             <CardHeader title="Qualification"></CardHeader>
             <CardContent sx={{ py: 0 }}>
@@ -28,7 +33,12 @@ const InsightsTab = (props: IProps) => {
         </Grid>
       )}
       {elimInsights && (
-        <Grid item xs={12} sm={6}>
+        <Grid
+          size={{
+            xs: 12,
+            sm: 6
+          }}
+        >
           <Card variant="outlined">
             <CardHeader title="Playoff"></CardHeader>
             <CardContent sx={{ py: 0 }}>

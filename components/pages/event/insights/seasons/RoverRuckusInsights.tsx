@@ -6,10 +6,9 @@ import InsightCell from '../InsightCell';
 const AutonBreakout = function ({ insight }: { insight: RoverRuckusInsights }) {
   return (
     <Grid container sx={{ justifyContent: 'center', alignItems: 'stretch' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>Auton Breakout</Typography>
       </Grid>
-
       <InsightCell
         translationKey="successful_samples"
         value={insight.autoPercentSampling}
@@ -22,7 +21,7 @@ const AutonBreakout = function ({ insight }: { insight: RoverRuckusInsights }) {
 const TeleopBreakout = function ({ insight }: { insight: RoverRuckusInsights }) {
   return (
     <Grid spacing={2} container sx={{ justifyContent: 'center' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>Teleop Breakout</Typography>
       </Grid>
       <InsightCell
@@ -30,7 +29,6 @@ const TeleopBreakout = function ({ insight }: { insight: RoverRuckusInsights }) 
         value={insight.teleAvgDepotMinerals}
         year="1819"
       ></InsightCell>
-
       <InsightCell
         translationKey="gold_cargo_hold"
         value={insight.teleAvgGolds}
@@ -56,7 +54,7 @@ const TeleopBreakout = function ({ insight }: { insight: RoverRuckusInsights }) 
 const EndgameBreakout = function ({ insight }: { insight: RoverRuckusInsights }) {
   return (
     <Grid spacing={2} container sx={{ justifyContent: 'center' }}>
-      <Grid item xs={12}>
+      <Grid size={12}>
         <Typography>End Game Breakout</Typography>
       </Grid>
       <InsightCell

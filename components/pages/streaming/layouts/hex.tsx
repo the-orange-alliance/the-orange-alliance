@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import LiveStreamPanel from '../panel';
 import StreamingChat from '../chat';
@@ -10,35 +10,22 @@ interface HexViewProps {
 
 const HexView: React.FC<HexViewProps> = ({ streams, showChat }) => {
   return (
-    <Grid container sx={{ height: '100%' }}>
-      <Grid item container xs={showChat ? 9 : 12}>
-        <Grid item container xs={4} direction="column">
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-        </Grid>
-        <Grid item container xs={4} direction="column">
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-        </Grid>
-        <Grid item container xs={4} direction="column">
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-          <Grid item xs={6}>
-            <LiveStreamPanel streams={streams} />
-          </Grid>
-        </Grid>
+    <Grid container sx={{ height: '100%', width: '100%' }}>
+      <Grid container size={showChat ? 9 : 12}>
+        <Stack direction="row" sx={{ height: '50%', width: '100%' }}>
+          <LiveStreamPanel streams={streams} />
+          <LiveStreamPanel streams={streams} />
+          <LiveStreamPanel streams={streams} />
+        </Stack>
+
+        <Stack direction="row" sx={{ height: '50%', width: '100%' }}>
+          <LiveStreamPanel streams={streams} />
+          <LiveStreamPanel streams={streams} />
+          <LiveStreamPanel streams={streams} />
+        </Stack>
       </Grid>
       {showChat && (
-        <Grid item xs={3}>
+        <Grid size={3}>
           <StreamingChat />
         </Grid>
       )}

@@ -42,7 +42,22 @@ const firebaseConfig = {
 let app = initializeApp(firebaseConfig);
 
 let auth = getAuth(app);
-let db = getDatabase(app);
+// Don't initialize Realtime Database during server-side rendering or module
+// evaluation — calling getDatabase on the server can throw "Service database
+// is not available". Initialize lazily only on the client.
+let db: any = null;
+if (typeof window !== 'undefined') {
+  try {
+    db = getDatabase(app);
+  } catch (err) {
+    // If the database service is unavailable in this environment, don't crash
+    // the app. Log for debugging and continue (other Firebase services like
+    // Auth can still work).
+    // eslint-disable-next-line no-console
+    console.warn('Realtime Database not available:', err);
+    db = null;
+  }
+}
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 

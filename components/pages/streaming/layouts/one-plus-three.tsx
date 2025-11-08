@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { EventLiveStream } from '@the-orange-alliance/api/lib/cjs/models';
 import LiveStreamPanel from '../panel';
 import StreamingChat from '../chat';
@@ -10,23 +10,19 @@ interface OnePlusThreeViewProps {
 
 const OnePlusThreeView: React.FC<OnePlusThreeViewProps> = ({ streams, showChat }) => {
   return (
-    <Grid container sx={{ height: '100%' }}>
-      <Grid item xs={showChat ? 6 : 8}>
+    <Grid container sx={{ height: '100%', width: '100%' }}>
+      <Grid size={showChat ? 6 : 8}>
         <LiveStreamPanel streams={streams} />
       </Grid>
-      <Grid item container xs={showChat ? 3 : 4} direction="column">
-        <Grid item xs={4}>
+      <Grid size={showChat ? 3 : 4}>
+        <Stack sx={{ height: '100%', width: '100%' }} direction="column">
           <LiveStreamPanel streams={streams} />
-        </Grid>
-        <Grid item xs={4}>
           <LiveStreamPanel streams={streams} />
-        </Grid>
-        <Grid item xs={4}>
           <LiveStreamPanel streams={streams} />
-        </Grid>
+        </Stack>
       </Grid>
       {showChat && (
-        <Grid item xs={3}>
+        <Grid size={3}>
           <StreamingChat />
         </Grid>
       )}

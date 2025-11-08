@@ -70,7 +70,13 @@ const SeasonInsights2021 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Rings */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Rings
           </Typography>
@@ -99,7 +105,13 @@ const SeasonInsights2021 = (props: IProps) => {
         </Grid>
 
         {/* Navigated */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Navigation
           </Typography>
@@ -126,7 +138,13 @@ const SeasonInsights2021 = (props: IProps) => {
         </Grid>
 
         {/* Auto Wobbles */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Wobbles Delivered
           </Typography>
@@ -153,7 +171,13 @@ const SeasonInsights2021 = (props: IProps) => {
         </Grid>
 
         {/* Tele Rings */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             TeleOp Rings
           </Typography>
@@ -182,7 +206,13 @@ const SeasonInsights2021 = (props: IProps) => {
         </Grid>
 
         {/* PowerShots */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             PowerShots
           </Typography>
@@ -221,7 +251,13 @@ const SeasonInsights2021 = (props: IProps) => {
         </Grid>
 
         {/* End Wobbles */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Wobble Location
           </Typography>

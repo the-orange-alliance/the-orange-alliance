@@ -26,7 +26,6 @@ const AccountPage: NextPage = () => {
   return (
     <>
       <SEO title="Account Overview" description="Overview of your TOA account." url="/account" />
-
       {!user || !user.emailVerified ? (
         <Container
           sx={{
@@ -76,13 +75,23 @@ const AccountPage: NextPage = () => {
 
           <Grid container direction="row" spacing={2}>
             {/* Left Column */}
-            <Grid item lg={7} md={12}>
+            <Grid
+              size={{
+                lg: 7,
+                md: 12
+              }}
+            >
               {/* Favorite Teams/Events */}
               <FavoritesCard />
             </Grid>
 
             {/* Right Column */}
-            <Grid item lg={5} md={12}>
+            <Grid
+              size={{
+                lg: 5,
+                md: 12
+              }}
+            >
               {/* Notifications */}
               <NotificationsCard />
 
@@ -95,7 +104,6 @@ const AccountPage: NextPage = () => {
           </Grid>
         </Container>
       )}
-
       <style jsx>{`
         .profile-image {
           flex: none;

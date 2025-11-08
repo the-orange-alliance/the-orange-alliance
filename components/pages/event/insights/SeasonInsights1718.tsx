@@ -62,7 +62,13 @@ const SeasonInsights1718 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Glyphs */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Glyphs
           </Typography>
@@ -89,7 +95,13 @@ const SeasonInsights1718 = (props: IProps) => {
         </Grid>
 
         {/* Glyphs/Ciphers */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             TeleOp Glyphs and Ciphers
           </Typography>
@@ -117,7 +129,13 @@ const SeasonInsights1718 = (props: IProps) => {
         </Grid>
 
         {/* End Relics */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Relics
           </Typography>
@@ -146,7 +164,13 @@ const SeasonInsights1718 = (props: IProps) => {
         </Grid>
 
         {/* Relics Standing */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Relics Standing
           </Typography>
@@ -173,7 +197,13 @@ const SeasonInsights1718 = (props: IProps) => {
         </Grid>
 
         {/* End Balanced */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Balanced
           </Typography>

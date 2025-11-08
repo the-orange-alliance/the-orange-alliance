@@ -87,7 +87,13 @@ const SeasonInsights2122 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Signal Sleeves */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_signal_sleeves')}
           </Typography>
@@ -120,7 +126,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Auto Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_auto_parking')}
           </Typography>
@@ -160,7 +172,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Auto Cones */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_auto_cones')}
           </Typography>
@@ -221,7 +239,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Tele Cones */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_tele_cones')}
           </Typography>
@@ -275,7 +299,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Tele Terminals */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_tele_terminals')}
           </Typography>
@@ -315,7 +345,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Navigation */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_end_nav')}
           </Typography>
@@ -348,7 +384,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Beacons/Owned */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_end_beacons_owned')}
           </Typography>
@@ -388,7 +430,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Circuits */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             {t('pages.event.subpages.insights.2223.title_end_circuits')}
           </Typography>

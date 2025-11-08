@@ -1,6 +1,5 @@
-import React from 'react';
 import NextLink from 'next/link';
-import { Avatar, Box, Button, ButtonBase, Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonBase, Skeleton, Stack, Typography, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslate } from '@/i18n/i18n';
 import { useAppContext } from '@/lib/toa-context';
@@ -48,17 +47,15 @@ const AccountItem = () => {
           {/* <Box sx={{ mr: 3 }}>{icon}</Box> */}
 
           <Grid container direction="column" justifyContent="center">
-            <Grid item>
-              {t('drawer.mytoa.hello').replace('{{ name }}', t('drawer.mytoa.guest'))}
-            </Grid>
-            <Grid item>
-              <Grid container direction="row">
-                <Grid item>
+            <Grid>{t('drawer.mytoa.hello').replace('{{ name }}', t('drawer.mytoa.guest'))}</Grid>
+            <Grid>
+              <Grid container direction="row" spacing={1} alignItems="center">
+                <Grid>
                   <NextLink href="/account/login" passHref legacyBehavior>
                     <Button size="small">{t('drawer.mytoa.login')}</Button>
                   </NextLink>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <NextLink href="/account/register" passHref legacyBehavior>
                     <Button size="small">{t('drawer.mytoa.register')}</Button>
                   </NextLink>

@@ -88,14 +88,13 @@ const LoginPage: NextPage = () => {
   return (
     <>
       <SEO title="Sign in" url="/account/login" />
-
       <Grid container direction="column" alignContent="center">
-        <Grid item sx={{ marginTop: 7 }}>
+        <Grid sx={{ marginTop: 7 }}>
           <Card onKeyPress={handleKeyPress}>
             <CardContent>
               <Typography variant="h4">{t('pages.account.subpages.login.title')}</Typography>
               <Grid container direction="column" sx={{ marginTop: 0, width: 400 }} spacing={2}>
-                <Grid item>
+                <Grid>
                   <TextField
                     type="email"
                     variant="outlined"
@@ -106,7 +105,7 @@ const LoginPage: NextPage = () => {
                     label={t('pages.account.subpages.login.title')}
                   />
                 </Grid>
-                <Grid item>
+                <Grid>
                   <TextField
                     type="password"
                     variant="outlined"
@@ -117,20 +116,20 @@ const LoginPage: NextPage = () => {
                     label={t('pages.account.subpages.login.password')}
                   />
                 </Grid>
-                <Grid item>
+                <Grid>
                   <Button fullWidth variant="contained" onClick={loginEmail}>
                     {t('pages.account.subpages.login.login')}
                   </Button>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <Grid container direction="row" spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid size={6}>
                       <button className="login-with-button" onClick={loginGoogle}>
                         <Google />
                         {t('pages.account.subpages.login.login_google')}
                       </button>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid size={6}>
                       <button className="login-with-button" onClick={loginGithub}>
                         <GitHub />
                         {t('pages.account.subpages.login.login_github')}
@@ -143,7 +142,6 @@ const LoginPage: NextPage = () => {
           </Card>
         </Grid>
       </Grid>
-
       <style jsx>{`
         .login-with-button {
           font-size: 14px;

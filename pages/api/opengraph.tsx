@@ -39,7 +39,6 @@ const handler = async function (req: NextRequest) {
   }
 
   const data = JSON.parse(dataRaw);
-  console.log('data', data);
   const title = data.title;
   const description1 = data.description || data.description1;
   const description2 = data.description2;

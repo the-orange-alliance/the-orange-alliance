@@ -54,7 +54,13 @@ const InsightsTab = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Match Scores */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Average Match Scores
           </Typography>
@@ -94,7 +100,13 @@ const InsightsTab = (props: IProps) => {
         </Grid>
 
         {/* Win Margin */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Average Win Margin
           </Typography>
@@ -127,7 +139,13 @@ const InsightsTab = (props: IProps) => {
         </Grid>
 
         {/* Penalties */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Average Match Penalties
           </Typography>
@@ -166,11 +184,9 @@ const InsightsTab = (props: IProps) => {
           </ResponsiveContainer>
         </Grid>
       </Grid>
-
       <Typography variant="h5" align="center" sx={{ marginTop: 4 }}>
         <b>Season Specific</b>
       </Typography>
-
       {/* Season Specific */}
       {seasonKey === '2223' && <SeasonInsights2223 insights={insights} />}
       {seasonKey === '2122' && <SeasonInsights2122 insights={insights} />}

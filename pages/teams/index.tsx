@@ -25,7 +25,7 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
   const t = useTranslate();
   const [filteredTeams, setFilteredTeams] = useState<Team[]>(teams);
   const [page, setPage] = useState<number>(1);
-  const typingTimerRef = useRef<NodeJS.Timeout>();
+  const typingTimerRef = useRef<NodeJS.Timeout>(undefined);
 
   const handlePageChange = useCallback(
     (e: React.ChangeEvent<unknown>, page: number) => {
@@ -63,7 +63,6 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
   return (
     <>
       <SEO title="Teams" description="List of FIRST Tech Challenge teams." url="/teams" />
-
       <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
         <em>FIRST</em> Tech Challenge Teams
       </Typography>
@@ -74,14 +73,26 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
             <Input id="teams-search" onChange={handleQueryChange} />
           </FormControl>
           <Grid container>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 12,
+                md: 6
+              }}
+            >
               <List>
                 {[...currentTeams].splice(0, 10).map(team => (
                   <TeamItem key={team.teamKey} team={team} />
                 ))}
               </List>
             </Grid>
-            <Grid item xs={12} sm={12} md={6}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 12,
+                md: 6
+              }}
+            >
               <List>
                 {[...currentTeams].splice(10, 20).map(team => (
                   <TeamItem key={team.teamKey} team={team} />

@@ -90,7 +90,13 @@ const SeasonInsights2122 = (props: IProps) => {
     <>
       <Grid container spacing={4} justifyContent="center">
         {/* Auto Freight */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Freight
           </Typography>
@@ -120,7 +126,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Auto Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Parking
           </Typography>
@@ -150,7 +162,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Auto Bonuses */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             Autonomous Bonuses
           </Typography>
@@ -182,7 +200,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* Tele Freight */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             TeleOp Freight
           </Typography>
@@ -212,7 +236,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Delivered */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Delivered
           </Typography>
@@ -239,7 +269,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Balanced */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Balanced
           </Typography>
@@ -267,7 +303,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Capped */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Capped
           </Typography>
@@ -294,7 +336,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Carousel */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Carousel
           </Typography>
@@ -321,7 +369,13 @@ const SeasonInsights2122 = (props: IProps) => {
         </Grid>
 
         {/* End Parking */}
-        <Grid item sm={12} md={6} style={{ maxHeight: '300px' }}>
+        <Grid
+          style={{ maxHeight: '300px' }}
+          size={{
+            sm: 12,
+            md: 6
+          }}
+        >
           <Typography variant="h6" align="center">
             End Game Parking
           </Typography>

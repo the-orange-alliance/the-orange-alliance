@@ -12,12 +12,12 @@ interface SingleViewProps {
 
 const SingleView: React.FC<SingleViewProps> = ({ streams, showChat }) => {
   return (
-    <Grid container sx={{ height: '100%' }} columns={24}>
-      <Grid item xs={showChat ? 18 : 24}>
+    <Grid container sx={{ height: '100%', width: '100%' }} columns={24}>
+      <Grid size={showChat ? 18 : 24}>
         <LiveStreamPanel streams={streams} readFromQuery />
       </Grid>
       {showChat && (
-        <Grid item xs={6}>
+        <Grid size={6}>
           <StreamingChat />
         </Grid>
       )}

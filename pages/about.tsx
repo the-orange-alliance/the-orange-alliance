@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Card, Container, IconButton, Link, Typography } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { GitHub, LinkedIn } from '@mui/icons-material';
 import SEO from '@/components/seo';
 
@@ -37,13 +37,6 @@ const people: {
     linkedin: 'spzproductions'
   },
   {
-    name: 'Nathan Satterfield',
-    title: 'Board Member and Chief Operating Officer',
-    profile: 'nathan.png',
-    github: 'Nate2019',
-    linkedin: 'nathan-satterfield-730a38165'
-  },
-  {
     name: 'Ofek Ashery',
     title: 'Lead Developer',
     profile: 'ofek.png',
@@ -56,13 +49,6 @@ const people: {
     profile: 'noah.png',
     github: 'nholo1332',
     linkedin: 'noah-holoubek-3116a9171'
-  },
-  {
-    name: 'Dominic Hupp',
-    title: 'Developer',
-    profile: 'dominic.png',
-    github: 'Huppdo',
-    linkedin: 'dominic-hupp-3b051716a'
   }
 ];
 

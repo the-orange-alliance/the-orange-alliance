@@ -1,5 +1,5 @@
 import { Check, Close } from '@mui/icons-material';
-import { constants } from 'buffer';
+import { JSX } from 'react';
 
 export class MatchBreakdownConstants {
   trueValue = -1000;
