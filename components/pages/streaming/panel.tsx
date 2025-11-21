@@ -108,6 +108,11 @@ const LiveStreamPanel = ({
                   <ListItemText primary={s.streamName} />
                 </ListItemButton>
               ))}
+            {streams.length < 1 && (
+              <Typography variant="body2" color="textSecondary" sx={{ p: 2 }}>
+                No Streams Available
+              </Typography>
+            )}
           </List>
         </DialogContent>
       </Dialog>
