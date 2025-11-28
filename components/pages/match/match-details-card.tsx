@@ -8,7 +8,11 @@ import MatchBreakdown1920 from './match-breakdowns/MatchBreakdown1920';
 import MatchBreakdown2021 from './match-breakdowns/MatchBreakdown2021';
 import MatchBreakdown2122 from './match-breakdowns/MatchBreakdown2122';
 import MatchBreakdown2223 from './match-breakdowns/MatchBreakdown2223';
-import { MatchBreakdownRow, MatchBreakdownTitle } from './match-breakdown-row';
+import {
+  MatchBreakdownConstants,
+  MatchBreakdownRow,
+  MatchBreakdownTitle
+} from './match-breakdown-row';
 import MatchBreakdown2324 from './match-breakdowns/MatchBreakdown2324';
 import MatchBreakdown2425 from './match-breakdowns/MatchBreakdown2425';
 import MatchBreakdown2526 from './match-breakdowns/MatchBreakdown2526';
@@ -16,6 +20,8 @@ import MatchBreakdown2526 from './match-breakdowns/MatchBreakdown2526';
 interface MatchDetailsCardProps {
   match: Match;
 }
+
+const constants = new MatchBreakdownConstants();
 
 const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
   const isRemote = match.redScore > -1 && match.blueScore === -1;
@@ -128,11 +134,11 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
               sx={{
                 verticalAlign: 'bottom',
                 color:
-                  r.red !== 0
+                  r.red !== 0 && r.red !== constants.falseValue
                     ? isRemote
                       ? 'var(--toa-colors-tie)'
                       : 'var(--toa-colors-red)'
-                    : 'text.secondary',
+                    : 'text.disabled',
                 fontWeight: r.isTitle ? 700 : r.red !== 0 ? 500 : 400
               }}
             >
@@ -155,7 +161,10 @@ const MatchDetailsCard: React.FC<MatchDetailsCardProps> = ({ match }) => {
                 display="inline-flex"
                 sx={{
                   verticalAlign: 'bottom',
-                  color: r.blue !== 0 ? 'var(--toa-colors-blue)' : 'text.secondary',
+                  color:
+                    r.blue !== 0 && r.blue !== constants.falseValue
+                      ? 'var(--toa-colors-blue)'
+                      : 'text.disabled',
                   fontWeight: r.isTitle ? 700 : r.blue !== 0 ? 500 : 400
                 }}
               >

@@ -57,11 +57,9 @@ export default class MatchBreakdown2526 {
         blue.autoOverflowArtifacts,
         1
       ),
-      MatchBreakdownField('Artifact Points', red.autoArtifactPoints, blue.autoArtifactPoints, 1),
-      MatchBreakdownField('Pattern Matches', red.autoPatternPoints, blue.autoPatternPoints, 2),
-      MatchBreakdownField('Leave (Auto)', red.autoLeavePoints, blue.autoLeavePoints, 3),
-      MatchBreakdownBoolField('Robot 1 Auto Leave', red.robot1Auto, blue.robot1Auto, 0),
-      MatchBreakdownBoolField('Robot 2 Auto Leave', red.robot2Auto, blue.robot2Auto, 0),
+      MatchBreakdownField('Pattern Matches', red.autoPatternPoints, blue.autoPatternPoints, 1),
+      MatchBreakdownBoolField('Robot 1 Leave', red.robot1Auto, blue.robot1Auto, 3),
+      MatchBreakdownBoolField('Robot 2 Leave', red.robot2Auto, blue.robot2Auto, 3),
       MatchBreakdownTitle('Teleop', red.teleopPoints, blue.teleopPoints),
       MatchBreakdownField(
         'Classified Artifacts',
@@ -81,22 +79,14 @@ export default class MatchBreakdown2526 {
         blue.teleopDepotArtifacts,
         1
       ),
-      MatchBreakdownField(
-        'Artifact Points',
-        red.teleopArtifactPoints,
-        blue.teleopArtifactPoints,
-        1
-      ),
-      MatchBreakdownField('Depot Points', red.teleopDepotPoints, blue.teleopDepotPoints, 1),
-      MatchBreakdownField('Pattern Matches', red.teleopPatternPoints, blue.teleopPatternPoints, 2),
-      MatchBreakdownField('Base Points', red.teleopBasePoints, blue.teleopBasePoints, 1),
+      MatchBreakdownField('Pattern Matches', red.teleopPatternPoints, blue.teleopPatternPoints, 1),
       MatchBreakdownStringField(
-        'Robot 1 Teleop',
+        'Robot 1 Base',
         this.calcParkLocation(red.robot1Teleop as any),
         this.calcParkLocation(blue.robot1Teleop as any)
       ),
       MatchBreakdownStringField(
-        'Robot 2 Teleop',
+        'Robot 2 Base',
         this.calcParkLocation(red.robot2Teleop as any),
         this.calcParkLocation(blue.robot2Teleop as any)
       ),
