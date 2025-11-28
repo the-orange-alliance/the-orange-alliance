@@ -531,9 +531,7 @@
       "qualifications": "Qualifications"
     },
     "help": {
-      "bold": "<b>Bold</b> is Winning Alliance</small>",
-      "bold_and_black": "<b>Bold and Black</b> is Selected Team</small>",
-      "surrogate": "<b>*</b> is Surrogate"
+      "team_status": "<b>*</b> is Surrogate, <s>Strikethrough</s> is No Show"
     }
   },
   "no_data": {

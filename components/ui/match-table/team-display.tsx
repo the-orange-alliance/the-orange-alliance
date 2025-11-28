@@ -3,6 +3,7 @@ import NextLink from 'next/link';
 import { Box, Link } from '@mui/material';
 import type { Match, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchStations from '@the-orange-alliance/api/lib/cjs/models/types/MatchStations';
+import StationStatus from '@the-orange-alliance/api/lib/esm/models/types/StationStatus';
 
 interface MatchTeamDisplayProps {
   match: Match;
@@ -55,11 +56,15 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
           underline="none"
           sx={{
             display: 'block',
-            color: 'inherit',
             textAlign: 'center',
             fontWeight: win ? 700 : undefined,
-            padding: '0.5em 0.5em'
+            padding: '0.5em 0.5em',
+            color: team.stationStatus === StationStatus.SitOut ? 'text.disabled' : 'inherit',
+            textDecoration: team.stationStatus === StationStatus.SitOut ? 'line-through' : 'none'
           }}
+          title={`Team ${team.teamKey}${
+            team.stationStatus === StationStatus.Surrogate ? ' (Surrogate)' : ''
+          }${team.stationStatus === StationStatus.SitOut ? ' (No Show)' : ''}`}
           aria-label={`View Team #${team.teamKey}}`}
           onClick={e => {
             if (handleClick && !e.metaKey) {
@@ -69,6 +74,7 @@ const MatchTeamDisplay: React.FC<MatchTeamDisplayProps> = ({
           }}
         >
           {team.teamKey}
+          {team.stationStatus === StationStatus.Surrogate ? '*' : ''}
         </Link>
       </NextLink>
     </Box>
