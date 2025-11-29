@@ -4,12 +4,11 @@ import Team from '@the-orange-alliance/api/lib/cjs/models/Team';
 import {
   Card,
   CardContent,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
+  Container,
+  InputAdornment,
   List,
   Pagination,
+  TextField,
   Typography
 } from '@mui/material';
 import { useTranslate } from '@/i18n/i18n';
@@ -17,6 +16,7 @@ import TeamItem from '@/components/ui/team-item';
 import { Box } from '@mui/material';
 import { fetchTeamsData, IRawTeamsProps, parseTeamsProps } from '@/lib/page-helpers/teams-helper';
 import SEO from '@/components/seo';
+import { Search as SearchIcon } from '@mui/icons-material';
 
 const TEAMS_PER_PAGE = 20;
 
@@ -63,53 +63,52 @@ const TeamsPage: NextPage<IRawTeamsProps> = props => {
   return (
     <>
       <SEO title="Teams" description="List of FIRST Tech Challenge teams." url="/teams" />
-      <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
-        <em>FIRST</em> Tech Challenge Teams
-      </Typography>
-      <Card sx={{ margin: 2 }}>
-        <CardContent>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="teams-search">{t('pages.teams.filter')}</InputLabel>
-            <Input id="teams-search" onChange={handleQueryChange} />
-          </FormControl>
-          <Grid container>
-            <Grid
-              size={{
-                xs: 12,
-                sm: 12,
-                md: 6
+      <Container maxWidth="md" sx={{ py: 6 }}>
+        <Typography variant="h1">
+          <em>FIRST</em> Tech Challenge Teams
+        </Typography>
+        <Card sx={{ mt: 4 }}>
+          <CardContent>
+            <TextField
+              fullWidth
+              placeholder={t('pages.teams.filter')}
+              variant="outlined"
+              onChange={handleQueryChange}
+              sx={{ mb: 4 }}
+              size="small"
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }
               }}
-            >
-              <List>
-                {[...currentTeams].splice(0, 10).map(team => (
-                  <TeamItem key={team.teamKey} team={team} />
-                ))}
-              </List>
-            </Grid>
-            <Grid
-              size={{
-                xs: 12,
-                sm: 12,
-                md: 6
-              }}
-            >
-              <List>
-                {[...currentTeams].splice(10, 20).map(team => (
-                  <TeamItem key={team.teamKey} team={team} />
-                ))}
-              </List>
-            </Grid>
-          </Grid>
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <Pagination
-              count={Math.ceil(filteredTeams.length / TEAMS_PER_PAGE)}
-              color="primary"
-              page={page}
-              onChange={handlePageChange}
             />
-          </Box>
-        </CardContent>
-      </Card>
+
+            <List
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }
+              }}
+            >
+              {currentTeams.map(team => (
+                <TeamItem key={team.teamKey} team={team} />
+              ))}
+            </List>
+
+            <Box sx={{ mt: 2, width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <Pagination
+                count={Math.ceil(filteredTeams.length / TEAMS_PER_PAGE)}
+                color="primary"
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Box>
+          </CardContent>
+        </Card>
+      </Container>
     </>
   );
 };

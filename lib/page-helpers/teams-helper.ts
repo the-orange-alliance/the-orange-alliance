@@ -22,7 +22,8 @@ export const useTeamsData = (props: IRawTeamsProps): ITeamsProps =>
   useMemo(() => parseTeamsProps(props), [props]);
 
 export const fetchTeamsData = async (): Promise<IRawTeamsProps> => {
-  const data = await TOAProvider.getAPI().getTeams({ last_active: CURRENT_SEASON });
+  const data = await TOAProvider.getAPI().getTeams();
+  data.sort((a, b) => a.teamNumber - b.teamNumber);
 
   return {
     teams: data.map(t => undefinedToNull(t.toJSON()))

@@ -72,7 +72,7 @@ const FiltersCard = ({ fetching, forceReload, onSeasonChange, onRegionChange }: 
   }, [onRegionChange, regions, selectedRegionKey]);
 
   return (
-    <Card sx={{ marginTop: 2, marginLeft: 2, marginRight: 2 }}>
+    <Card sx={{ mt: 4 }}>
       {(fetching || isPageLoading) && <LinearProgress />}
       <Typography sx={{ margin: 2 }} variant="subtitle2">
         {t('pages.events.filter')}

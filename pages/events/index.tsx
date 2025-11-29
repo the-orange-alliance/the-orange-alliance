@@ -1,7 +1,7 @@
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Image from 'next/image';
-import { Badge, Box, Card, CardContent, Tab, Tabs, Typography } from '@mui/material';
+import { Badge, Box, Card, CardContent, Container, Tab, Tabs, Typography } from '@mui/material';
 import { Region, Season, Week } from '@the-orange-alliance/api/lib/cjs/models';
 import EventItem from '@/components/ui/event-item';
 import FiltersCard from '@/components/ui/filters-card';
@@ -87,72 +87,75 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   return (
     <>
       <SEO title="Events" description="List of FIRST Tech Challenge events." url="/events" />
-      <Typography variant="h1" sx={{ my: 4, mx: 2 }}>
-        {getSeasonYear(selectedSeason)} <em>FIRST</em> Tech Challenge Events
-      </Typography>
-      <FiltersCard
-        onSeasonChange={handleSeasonSelect}
-        onRegionChange={handleRegionSelect}
-        fetching={isFetching}
-      />
-      {filteredEvents.length > 0 && (
-        <Card sx={{ marginTop: 5, marginLeft: 2, marginRight: 2 }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={selectedWeek}
-              onChange={selectTab}
-              variant="scrollable"
-              scrollButtons="auto"
-            >
-              {weeks.map((week: Week) => (
-                <Tab
-                  key={week.weekKey}
-                  label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
-                  value={week.weekKey}
-                  iconPosition="top"
-                  icon={
-                    <Badge
-                      badgeContent={getEventsByWeek(week).length}
-                      max={9999}
-                      color="primary"
-                      sx={{ mb: 1 }}
-                    />
-                  }
-                  sx={{ px: 2, maxWidth: '14em' }}
-                />
-              ))}
-            </Tabs>
-          </Box>
-          {!isFetching && filteredEvents.length > 0 && (
-            <CardContent>
-              <Box sx={{ width: '100%' }}>
-                {filteredEvents.map(event => {
-                  if (event.weekKey === selectedWeek) {
-                    return <EventItem key={event.eventKey} event={event} />;
-                  }
-                })}
-              </Box>
-            </CardContent>
-          )}
-        </Card>
-      )}
-      {/* No Event Data */}
-      {!isFetching && filteredEvents.length === 0 && (
-        <CardContent sx={{ textAlign: 'center' }}>
-          <Image
-            src="/imgs/empty-icon.svg"
-            height={110}
-            width={110}
-            alt="Empty Illustration"
-            style={{
-              maxWidth: '100%',
-              height: 'auto'
-            }}
-          />
-          <Typography variant="h6">{t('no_data.events_filter')}</Typography>
-          <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
-        </CardContent>
-      )}
+      <Container sx={{ py: 6 }}>
+        <Typography variant="h1">
+          {getSeasonYear(selectedSeason)} <em>FIRST</em> Tech Challenge Events
+        </Typography>
+        <FiltersCard
+          onSeasonChange={handleSeasonSelect}
+          onRegionChange={handleRegionSelect}
+          fetching={isFetching}
+        />
+        {filteredEvents.length > 0 && (
+          <Card sx={{ mt: 4 }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={selectedWeek}
+                onChange={selectTab}
+                variant="scrollable"
+                scrollButtons="auto"
+              >
+                {weeks.map((week: Week) => (
+                  <Tab
+                    key={week.weekKey}
+                    label={<Box sx={{ mt: 1 }}>{getWeekName(week.weekKey)}</Box>}
+                    value={week.weekKey}
+                    iconPosition="top"
+                    icon={
+                      <Badge
+                        badgeContent={getEventsByWeek(week).length}
+                        max={9999}
+                        color="primary"
+                        sx={{ mb: 1 }}
+                      />
+                    }
+                    sx={{ px: 2, maxWidth: '14em' }}
+                  />
+                ))}
+              </Tabs>
+            </Box>
+            {!isFetching && filteredEvents.length > 0 && (
+              <CardContent>
+                <Box sx={{ width: '100%' }}>
+                  {filteredEvents.map(event => {
+                    if (event.weekKey === selectedWeek) {
+                      return <EventItem key={event.eventKey} event={event} />;
+                    }
+                  })}
+                </Box>
+              </CardContent>
+            )}
+          </Card>
+        )}
+        {/* No Event Data */}
+        {!isFetching && filteredEvents.length === 0 && (
+          <CardContent sx={{ py: 16, textAlign: 'center' }}>
+            <Image
+              src="/imgs/empty-icon.svg"
+              height={110}
+              width={110}
+              alt="Empty Illustration"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                marginBottom: '1rem'
+              }}
+            />
+            <Typography variant="h6">{t('no_data.events_filter')}</Typography>
+            <Typography variant="body1">{t('no_data.events_filter_long')}</Typography>
+          </CardContent>
+        )}
+      </Container>
     </>
   );
 };
