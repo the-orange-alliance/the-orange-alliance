@@ -26,7 +26,7 @@
     "firebase": "^12.5.0",
     "localforage": "^1.10.0",
     "luxon": "^3.7.2",
-    "next": "^16.0.7",
+    "next": "^16.0.10",
     "nprogress": "^0.2.0",
     "prettier": "^2.4.1",
     "react": "^19.2.0",
