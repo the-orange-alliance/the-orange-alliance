@@ -1,0 +1,17 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  update-server:
+    runs-on: ubuntu-latest
+    concurrency: deployment
+    steps:
+      - name: Deploy to Coolify
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://panel.filipkin.com/api/v1/deploy?uuid=kko0wwg48o8wk088kk000wsk&force=false'
+          method: 'GET'
+          timeout: 360000
+          bearerToken: '${{ secrets.COOLIFY_API_KEY }}'
