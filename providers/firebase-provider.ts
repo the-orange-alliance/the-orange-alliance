@@ -28,7 +28,7 @@ import {
   onMessage
 } from 'firebase/messaging';
 
-const toaBaseUrl = 'https://api.theorangealliance.org';
+const toaBaseUrl = 'https://api.theorangealliance.org/api';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA80KqLYvNeae3mX7HJuI7NPuty5zwxwnQ',
