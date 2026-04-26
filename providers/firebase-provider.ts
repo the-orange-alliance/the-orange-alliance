@@ -31,13 +31,12 @@ import {
 const toaBaseUrl = 'https://api.theorangealliance.org';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBi0Bn_WysaX9DSnpo-E5c-q0O6XBX7T_k',
-  authDomain: 'auth.theorangealliance.org',
-  databaseURL: 'https://the-orange-alliance.firebaseio.com',
-  projectId: 'the-orange-alliance',
-  storageBucket: 'the-orange-alliance.appspot.com',
-  messagingSenderId: '495169296462',
-  appId: '1:495169296462:web:a8543d9517ea3cea4e0b1f'
+  apiKey: 'AIzaSyA80KqLYvNeae3mX7HJuI7NPuty5zwxwnQ',
+  authDomain: 'the-orange-alliance-2.firebaseapp.com',
+  projectId: 'the-orange-alliance-2',
+  storageBucket: 'the-orange-alliance-2.firebasestorage.app',
+  messagingSenderId: '761051475768',
+  appId: '1:761051475768:web:f738bebbd40a56d34b1bcd'
 };
 let app = initializeApp(firebaseConfig);
 
