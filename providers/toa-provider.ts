@@ -19,7 +19,7 @@ class TOAProvider {
   public getAPI(): API {
     // Use local request if we're on the backend
     if (typeof window === 'undefined' && process.env.INTERNAL_API_URL) {
-      this.api.setCustomUrl('http://127.0.0.1:8008/api');
+      this.api.setCustomUrl(process.env.INTERNAL_API_URL + '/api');
     } else if (process.env.NEXT_PUBLIC_API_URL) {
       this.api.setCustomUrl(process.env.NEXT_PUBLIC_API_URL);
     }
