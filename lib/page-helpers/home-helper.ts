@@ -82,46 +82,40 @@ export const useHomeData = (props: IRawHomeProps): IHomeProps =>
   useMemo(() => parseHomeProps(props), [props]);
 
 export const fetchHomeData = async (): Promise<IRawHomeProps> => {
-  const empty: IRawHomeProps = {
-    teamSize: 0, matchSize: 0, overallHighScoreMatch: null, qualsHighScoreMatch: null,
-    elimsHighScoreMatch: null, overallHighScoreParticipants: [], qualsHighScoreParticipants: [],
-    elimsHighScoreParticipants: [], overallHighScoreEvent: null, qualsHighScoreEvent: null,
-    elimsHighScoreEvent: null, todaysEvents: []
-  };
-  try {
-    const now = new Date();
-    const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    const homePageResults = await Promise.all([
-      TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }).catch(() => 0),
-      TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }).catch(() => 0),
-      getHighScoreMatch('all', true).catch(() => undefined),
-      getHighScoreMatch('quals', false).catch(() => undefined),
-      getHighScoreMatch('elims', false).catch(() => undefined),
-      TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON, on: today, includeTeamCount: true }).catch(() => [])
-    ]);
-    const events = Array.isArray(homePageResults[5]) ? homePageResults[5] : [];
-    return {
-      teamSize: homePageResults[0] ?? 0,
-      matchSize: homePageResults[1] ?? 0,
-      overallHighScoreMatch: undefinedToNull(homePageResults[2]?.toJSON()),
-      qualsHighScoreMatch: undefinedToNull(homePageResults[3]?.toJSON()),
-      elimsHighScoreMatch: undefinedToNull(homePageResults[4]?.toJSON()),
-      overallHighScoreEvent: undefinedToNull(homePageResults[2]?.event.toJSON()),
-      qualsHighScoreEvent: undefinedToNull(homePageResults[3]?.event.toJSON()),
-      elimsHighScoreEvent: undefinedToNull(homePageResults[4]?.event.toJSON()),
-      overallHighScoreParticipants:
-        homePageResults[2]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
-      qualsHighScoreParticipants:
-        homePageResults[3]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
-      elimsHighScoreParticipants:
-        homePageResults[4]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
-      todaysEvents: events.map(e => ({
+  const now = new Date();
+  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const homePageResults = await Promise.all([
+    TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
+    TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
+    getHighScoreMatch('all', true),
+    getHighScoreMatch('quals', false),
+    getHighScoreMatch('elims', false),
+    TOAProvider.getAPI().getEvents({
+      season_key: CURRENT_SEASON,
+      on: today,
+      includeTeamCount: true
+    })
+  ]);
+  return {
+    teamSize: homePageResults[0],
+    matchSize: homePageResults[1],
+    overallHighScoreMatch: undefinedToNull(homePageResults[2]?.toJSON()),
+    qualsHighScoreMatch: undefinedToNull(homePageResults[3]?.toJSON()),
+    elimsHighScoreMatch: undefinedToNull(homePageResults[4]?.toJSON()),
+    overallHighScoreEvent: undefinedToNull(homePageResults[2]?.event.toJSON()),
+    qualsHighScoreEvent: undefinedToNull(homePageResults[3]?.event.toJSON()),
+    elimsHighScoreEvent: undefinedToNull(homePageResults[4]?.event.toJSON()),
+    overallHighScoreParticipants:
+      homePageResults[2]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    qualsHighScoreParticipants:
+      homePageResults[3]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    elimsHighScoreParticipants:
+      homePageResults[4]?.participants.map(p => undefinedToNull(p.toJSON())) ?? [],
+    todaysEvents:
+      homePageResults[5]?.map(e => ({
         ...undefinedToNull(e.toJSON()),
         match_count: e.matchCount,
         team_count: e.teamCount
-      }))
-    };
-  } catch {
-    return empty;
-  }
+      })) ?? []
+  };
 };

@@ -21,33 +21,21 @@ export const parseEventsProps = (props: IRawEventsProps): IEventsProps => {
 export const useEventsData = (props: IRawEventsProps): IEventsProps =>
   useMemo(() => parseEventsProps(props), [props]);
 
-const getApiBase = () =>
-  typeof window === 'undefined' && process.env.INTERNAL_API_URL
-    ? process.env.INTERNAL_API_URL
-    : (process.env.NEXT_PUBLIC_API_URL || 'https://api.theorangealliance.org');
-
 export const fetchEventsData = async (): Promise<IRawEventsProps> => {
-  try {
-    const res = await fetch(
-      `${getApiBase()}/event?season_key=${CURRENT_SEASON}&includeTeamCount=true`,
-      { headers: { 'x-application-origin': 'TOA-WebApp-1920' } }
-    );
-    const data = await res.json();
-    if (!Array.isArray(data)) return { events: [] };
-    const events = data.map((e: any) => new Event().fromJSON(e));
-    events.sort(
-      (a: Event, b: Event) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-    );
-    return {
-      events: events.map(e => ({
-        ...undefinedToNull(e.toJSON()),
-        team_count: (e as any).teamCount,
-        match_count: (e as any).matchCount
-      }))
-    };
-  } catch {
-    return { events: [] };
-  }
+  const data = await TOAProvider.getAPI().getEvents({
+    season_key: CURRENT_SEASON,
+    includeTeamCount: true
+  });
+  data.sort(
+    (a: Event, b: Event) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+  return {
+    events: data.map(e => ({
+      ...undefinedToNull(e.toJSON()),
+      team_count: e.teamCount,
+      match_count: e.matchCount
+    }))
+  };
 };
 
 export const organizeEventsByWeek = (events: Event[]): Week[] => {
