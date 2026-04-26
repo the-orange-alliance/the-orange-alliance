@@ -21,14 +21,22 @@ export const parseTeamsProps = (props: IRawTeamsProps): ITeamsProps => {
 export const useTeamsData = (props: IRawTeamsProps): ITeamsProps =>
   useMemo(() => parseTeamsProps(props), [props]);
 
+const getApiBase = () =>
+  typeof window === 'undefined' && process.env.INTERNAL_API_URL
+    ? process.env.INTERNAL_API_URL
+    : (process.env.NEXT_PUBLIC_API_URL || 'https://api.theorangealliance.org');
+
 export const fetchTeamsData = async (): Promise<IRawTeamsProps> => {
   try {
-    const data = await TOAProvider.getAPI().getTeams();
+    const res = await fetch(
+      `${getApiBase()}/team`,
+      { headers: { 'x-application-origin': 'TOA-WebApp-1920' } }
+    );
+    const data = await res.json();
     if (!Array.isArray(data)) return { teams: [] };
-    data.sort((a, b) => a.teamNumber - b.teamNumber);
-    return {
-      teams: data.map(t => undefinedToNull(t.toJSON()))
-    };
+    const teams = data.map((t: any) => new Team().fromJSON(t));
+    teams.sort((a, b) => a.teamNumber - b.teamNumber);
+    return { teams: teams.map(t => undefinedToNull(t.toJSON())) };
   } catch {
     return { teams: [] };
   }
