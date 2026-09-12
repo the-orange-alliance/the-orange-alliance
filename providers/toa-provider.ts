@@ -30,14 +30,22 @@ class TOAProvider {
         // The API drops null fields, so a failed join leaves `team` absent entirely.
         // EventParticipant.fromJSON and Ranking.fromJSON both dereference it without
         // a guard; AwardRecipient already checks, so leave award rows alone.
-        const clean = parsed.filter(
-          (row: any) =>
-            !(
-              row &&
-              row.team == null &&
-              (row.event_participant_key !== undefined || row.rank_key !== undefined)
-            )
-        );
+        const clean = parsed.filter((row: any) => {
+          if (!row) return true;
+          if (
+            row.team == null &&
+            (row.event_participant_key !== undefined || row.rank_key !== undefined)
+          ) {
+            return false;
+          }
+          // Same story for alliances: Alliance.fromJSON guards pick2 but not the
+          // captain or pick1, so an alliance built on a team we cannot resolve
+          // takes the page down. An alliance with no captain is not worth showing.
+          if (row.seed !== undefined && (row.captain == null || row.pick1 == null)) {
+            return false;
+          }
+          return true;
+        });
         if (clean.length !== parsed.length) {
           console.warn(
             `[TOA] dropped ${parsed.length - clean.length} row(s) with no matching team`
