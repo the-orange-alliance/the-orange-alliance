@@ -21,7 +21,7 @@ const InsightsPage: NextPage<IRawInsightsProps> = props => {
   const { elimsMultiTeam, combo, qualsMultiTeam, qualsSingleTeam, seasonKey } =
     parseInsightsProps(props);
 
-  const selectedSeason = seasons.find(s => s.seasonKey === seasonKey)!;
+  const selectedSeason = seasons.find(s => s.seasonKey === seasonKey);
 
   return (
     <>

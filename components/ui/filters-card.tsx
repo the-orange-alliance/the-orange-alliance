@@ -61,13 +61,17 @@ const FiltersCard = ({ fetching, forceReload, onSeasonChange, onRegionChange }: 
   }, [selectedSeasonKey, selectedRegionKey, forceReload]);
 
   useEffect(() => {
-    const season = seasons.find(s => s.seasonKey === selectedSeasonKey)!;
+    // A season the list does not carry yet (a freshly created one behind the
+    // cached /seasons response) used to hand undefined straight to the consumer.
+    const season = seasons.find(s => s.seasonKey === selectedSeasonKey);
+    if (!season) return;
     onSeasonChange?.(season);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seasons, selectedSeasonKey]);
 
   useEffect(() => {
-    const region = regions.find(r => r.regionKey === selectedRegionKey)!;
+    const region = regions.find(r => r.regionKey === selectedRegionKey);
+    if (!region) return;
     onRegionChange?.(region);
   }, [onRegionChange, regions, selectedRegionKey]);
 

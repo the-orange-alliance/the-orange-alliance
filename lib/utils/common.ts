@@ -129,7 +129,10 @@ export const getSeasonYear = (season: Season) => {
   return '20' + codeOne + '/' + codeTwo;
 };
 
-export const getSeasonString = (season: Season) => {
+export const getSeasonString = (season?: Season) => {
+  // Callers look a season up out of the /seasons list, which is cached for three
+  // days and so can lag a season that was just created. Missing is not a crash.
+  if (!season?.seasonKey) return '';
   const codeOne = season.seasonKey.toString().substring(0, 2);
   const codeTwo = season.seasonKey.toString().substring(2, 4);
   return '20' + codeOne + '/' + codeTwo + ' - ' + season.description;
