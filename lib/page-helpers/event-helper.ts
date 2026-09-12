@@ -36,7 +36,12 @@ export interface IEventProps {
 
 export const parseEventProps = (props: IRawEventProps): IEventProps => {
   const event = new Event().fromJSON(props.event);
-  event.teams = props.teams.map((t: any) => new EventParticipant().fromJSON(t));
+  // A participant whose team is missing from the teams collection comes back with
+  // team: null, and EventParticipant.fromJSON does not guard it. One such row used
+  // to take down the whole page, so drop it and show the rest of the event.
+  event.teams = props.teams
+    .filter((t: any) => t && t.team)
+    .map((t: any) => new EventParticipant().fromJSON(t));
   event.rankings = props.rankings.map((r: any) => new Ranking().fromJSON(r));
   event.matches = props.matches.map((m: any) => new Match().fromJSON(m));
   event.alliances = props.alliances.map((a: any) => new Alliance().fromJSON(a));
@@ -62,8 +67,15 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
     TOAProvider.getAPI().getEventMatches(eventKey),
     TOAProvider.getAPI().getEventAlliances(eventKey),
     TOAProvider.getAPI().getEventAwards(eventKey),
-    TOAProvider.getAPI().getEventInsights(eventKey, 'quals'),
-    TOAProvider.getAPI().getEventInsights(eventKey, 'elims'),
+    // Insights are a nice-to-have. The API computes them with self-calls that fail
+    // for any event that has match details, and a rejection here used to 404 the
+    // entire event page. Degrade to no insights instead.
+    TOAProvider.getAPI()
+      .getEventInsights(eventKey, 'quals')
+      .catch(() => [] as any[]),
+    TOAProvider.getAPI()
+      .getEventInsights(eventKey, 'elims')
+      .catch(() => [] as any[]),
     TOAProvider.getAPI().getEventStreams(eventKey)
   ]);
 
