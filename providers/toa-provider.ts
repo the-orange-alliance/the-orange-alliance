@@ -15,18 +15,27 @@ class TOAProvider {
   private constructor() {
     this.api = new API('', 'TOA-WebApp-1920');
 
-    // Debug logging: intercept arrToObj to log raw API responses before parse
+    // The API joins each event participant, ranking and award to a team. When a
+    // team_key has no matching team the join yields null, and the models call
+    // Team.fromJSON(null) without a guard, which throws and takes down whichever
+    // page asked for it. Drop those rows here, before the models see them.
     const origArrToObj = (this.api as any).arrToObj.bind(this.api);
     (this.api as any).arrToObj = function (model: any, text: string) {
       try {
         const parsed = JSON.parse(text);
         if (!Array.isArray(parsed)) {
-          console.error('[TOA-DEBUG] Non-array API response:', JSON.stringify(parsed).slice(0, 800));
-        } else {
-          console.log('[TOA-DEBUG] OK array response, length:', parsed.length);
+          console.error('[TOA] Non-array API response:', JSON.stringify(parsed).slice(0, 400));
+          return origArrToObj(model, text);
+        }
+        const clean = parsed.filter((row: any) => !(row && 'team' in row && row.team == null));
+        if (clean.length !== parsed.length) {
+          console.warn(
+            `[TOA] dropped ${parsed.length - clean.length} row(s) with no matching team`
+          );
+          return origArrToObj(model, JSON.stringify(clean));
         }
       } catch (e) {
-        console.error('[TOA-DEBUG] JSON parse failed on:', String(text).slice(0, 800));
+        console.error('[TOA] JSON parse failed on:', String(text).slice(0, 400));
       }
       return origArrToObj(model, text);
     };
@@ -46,4 +55,3 @@ class TOAProvider {
 }
 
 export default TOAProvider.getInstance();
-
