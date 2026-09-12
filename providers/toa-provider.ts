@@ -27,7 +27,17 @@ class TOAProvider {
           console.error('[TOA] Non-array API response:', JSON.stringify(parsed).slice(0, 400));
           return origArrToObj(model, text);
         }
-        const clean = parsed.filter((row: any) => !(row && 'team' in row && row.team == null));
+        // The API drops null fields, so a failed join leaves `team` absent entirely.
+        // EventParticipant.fromJSON and Ranking.fromJSON both dereference it without
+        // a guard; AwardRecipient already checks, so leave award rows alone.
+        const clean = parsed.filter(
+          (row: any) =>
+            !(
+              row &&
+              row.team == null &&
+              (row.event_participant_key !== undefined || row.rank_key !== undefined)
+            )
+        );
         if (clean.length !== parsed.length) {
           console.warn(
             `[TOA] dropped ${parsed.length - clean.length} row(s) with no matching team`
