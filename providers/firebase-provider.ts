@@ -28,7 +28,7 @@ import {
   onMessage
 } from 'firebase/messaging';
 
-const toaBaseUrl = 'https://api.theorangealliance.org/api';
+const toaBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.theorangealliance.org/api';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyA80KqLYvNeae3mX7HJuI7NPuty5zwxwnQ',
@@ -520,3 +520,42 @@ export const cloudMessaging = {
     });
   }
 };
+
+export type WriteKeyStatus = 'pending' | 'active' | 'expired' | 'rejected' | 'revoked';
+
+export interface WriteKey {
+  id: string;
+  event_key: string;
+  event_name: string | null;
+  scopes: string[];
+  purpose: string;
+  status: WriteKeyStatus;
+  expires_at: string | null;
+  requested_on: string;
+  api_key?: string;
+}
+
+// Event write keys (TOA-API /api/user/keys). A failed call rejects with the
+// API's own message.
+const writeKeyRequest = async (path: string, init?: RequestInit): Promise<any> => {
+  const token = await getToken();
+  const res = await fetch(toaBaseUrl + '/user/keys' + path, {
+    ...init,
+    headers: { authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(body?._message || `HTTP ${res.status}`);
+  return body;
+};
+
+export const fetchWriteKeys = (): Promise<WriteKey[]> => writeKeyRequest('');
+
+export const requestWriteKey = (
+  eventKey: string,
+  scopes: string[],
+  purpose: string
+): Promise<WriteKey> =>
+  writeKeyRequest('', {
+    method: 'POST',
+    body: JSON.stringify({ event_key: eventKey, scopes, purpose })
+  });

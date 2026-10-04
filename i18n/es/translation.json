@@ -104,6 +104,32 @@
         "generating_key": "Generando una clave API...",
         "docs": "Puede ver nuestros documentación completa de API en"
       },
+      "write_keys": {
+        "title": "Write keys",
+        "empty": "No write keys",
+        "request": "Request key",
+        "event": "Event",
+        "purpose": "Purpose",
+        "copy": "Copy",
+        "copied": "Copied",
+        "expires": "Expires",
+        "status": {
+          "pending": "Pending",
+          "active": "Active",
+          "expired": "Expired",
+          "rejected": "Rejected",
+          "revoked": "Revoked"
+        },
+        "scopes": {
+          "match_video": "Match videos",
+          "event_matches": "Match results",
+          "event_rankings": "Rankings",
+          "event_awards": "Awards",
+          "event_teams": "Teams",
+          "event_media": "Media and streams",
+          "event_info": "Event info"
+        }
+      },
       "account_settings": "Configuración de la cuenta",
       "reset_password": "Restablecer la contraseña",
       "reset_password_email": "Se ha enviado un correo electrónico de restablecimiento de contraseña.",

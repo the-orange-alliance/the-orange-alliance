@@ -21,9 +21,26 @@ import SEO from '@/components/seo';
 import { Event, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
 
+// The YouTube id of a match video URL, or null for anything that is not YouTube.
+const youTubeId = (url: string | null | undefined): string | null => {
+  if (!url) return null;
+  try {
+    const u = new URL(url.startsWith('http') ? url : `https://${url}`);
+    const host = u.hostname.replace(/^(www|m)\./, '');
+    if (host === 'youtu.be') return u.pathname.slice(1).split('/')[0] || null;
+    if (host !== 'youtube.com' && host !== 'youtube-nocookie.com') return null;
+    if (u.searchParams.get('v')) return u.searchParams.get('v');
+    const m = u.pathname.match(/^\/(embed|live|shorts|v)\/([\w-]+)/);
+    return m ? m[2] : null;
+  } catch {
+    return null;
+  }
+};
+
 const MatchPage: NextPage<IRawMatchProps> = props => {
   const { match, ogImage } = useMatchData(props);
   const t = useTranslate();
+  const videoId = youTubeId(match.videoURL);
 
   return (
     <>
@@ -104,6 +121,25 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
               md: 8
             }}
           >
+            {videoId && (
+              <Card sx={{ mb: 2 }}>
+                <Box sx={{ position: 'relative', width: '100%', aspectRatio: '16 / 9' }}>
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`}
+                    title={match.matchName}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 0
+                    }}
+                  />
+                </Box>
+              </Card>
+            )}
             <Card>
               <MatchDetailsCard match={match} />
             </Card>

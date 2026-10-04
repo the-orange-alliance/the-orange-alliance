@@ -112,6 +112,32 @@
         "generating_key": "Your API key is being generated, please check back in a few seconds...",
         "docs": "You can check out our full API Documentation"
       },
+      "write_keys": {
+        "title": "Write keys",
+        "empty": "No write keys",
+        "request": "Request key",
+        "event": "Event",
+        "purpose": "Purpose",
+        "copy": "Copy",
+        "copied": "Copied",
+        "expires": "Expires",
+        "status": {
+          "pending": "Pending",
+          "active": "Active",
+          "expired": "Expired",
+          "rejected": "Rejected",
+          "revoked": "Revoked"
+        },
+        "scopes": {
+          "match_video": "Match videos",
+          "event_matches": "Match results",
+          "event_rankings": "Rankings",
+          "event_awards": "Awards",
+          "event_teams": "Teams",
+          "event_media": "Media and streams",
+          "event_info": "Event info"
+        }
+      },
       "account_settings": "Account Settings",
       "reset_password": "Reset Password",
       "reset_password_email": "A password reset email has been sent.",

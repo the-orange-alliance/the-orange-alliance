@@ -104,6 +104,32 @@
         "generating_key": "正在生成API密钥...",
         "docs": "你可以参考我们完整的API文档"
       },
+      "write_keys": {
+        "title": "Write keys",
+        "empty": "No write keys",
+        "request": "Request key",
+        "event": "Event",
+        "purpose": "Purpose",
+        "copy": "Copy",
+        "copied": "Copied",
+        "expires": "Expires",
+        "status": {
+          "pending": "Pending",
+          "active": "Active",
+          "expired": "Expired",
+          "rejected": "Rejected",
+          "revoked": "Revoked"
+        },
+        "scopes": {
+          "match_video": "Match videos",
+          "event_matches": "Match results",
+          "event_rankings": "Rankings",
+          "event_awards": "Awards",
+          "event_teams": "Teams",
+          "event_media": "Media and streams",
+          "event_info": "Event info"
+        }
+      },
       "account_settings": "账户设置",
       "reset_password": "密码重置",
       "reset_password_email": "一封密码重置邮件已经发出",

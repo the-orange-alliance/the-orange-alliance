@@ -7,6 +7,7 @@ import SEO from '@/components/seo';
 import { useAppContext } from '@/lib/toa-context';
 import AccountSettingsCard from '@/components/pages/account/AccountSettingsCard';
 import APICard from '@/components/pages/account/APICard';
+import WriteKeysCard from '@/components/pages/account/WriteKeysCard';
 import NotificationsCard from '@/components/pages/account/NotificationsCard';
 import FavoritesCard from '@/components/pages/account/FavoritesCard';
 
@@ -97,6 +98,9 @@ const AccountPage: NextPage = () => {
 
               {/* API Key */}
               <APICard />
+
+              {/* Event write keys */}
+              <WriteKeysCard />
 
               {/* Account Settings */}
               <AccountSettingsCard />
