@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
 import Image from 'next/image';
 import { Badge, Box, Card, CardContent, Container, Tab, Tabs, Typography } from '@mui/material';
@@ -31,17 +31,29 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   const [weeks, setWeeks] = useState(organizeEventsByWeek(filteredEvents));
   const [selectedWeek, setSelectedWeek] = useState<string>(weeks[0]?.weekKey);
 
+  // The season whose events may be shown. A response for any other season
+  // (an earlier pick that answered late) is dropped, and a failed fetch shows
+  // no events instead of leaving the previous season's list on screen.
+  const requestedSeason = useRef<string>(CURRENT_SEASON);
+
   const handleSeasonSelect = useCallback(
     (season: Season) => {
       setSelectedSeason(season);
+      requestedSeason.current = season.seasonKey;
       if (season.seasonKey === CURRENT_SEASON) {
+        setFetching(false);
         setSeasonEvents(initialEvents);
       } else {
         setFetching(true);
+        setSeasonEvents([]);
         TOAProvider.getAPI()
           .getEvents({ season_key: season.seasonKey, includeTeamCount: true })
-          .then(setSeasonEvents)
-          .finally(() => setFetching(false));
+          .catch(() => [])
+          .then(events => {
+            if (requestedSeason.current !== season.seasonKey) return;
+            setSeasonEvents(events);
+            setFetching(false);
+          });
       }
     },
     [initialEvents]
