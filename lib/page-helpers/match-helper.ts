@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
-import { getMatchDetails } from '@the-orange-alliance/api/lib/cjs/models/game-specifics/GameData';
+import { getMatchDetails } from '@/lib/game-specifics';
 import TOAProvider from '@/providers/toa-provider';
 import { undefinedToNull } from '@/lib/utils/common';
 

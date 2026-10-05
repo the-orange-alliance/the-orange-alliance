@@ -1,4 +1,5 @@
 import { API } from '@the-orange-alliance/api/lib/cjs';
+import { MatchDetails2627 } from '@/lib/game-specifics/2627';
 
 class TOAProvider {
   private static _instance: TOAProvider;
@@ -56,6 +57,15 @@ class TOAProvider {
         console.error('[TOA] JSON parse failed on:', String(text).slice(0, 400));
       }
       return origArrToObj(model, text);
+    };
+
+    // The package has no 2627 details model and would build a bare one that
+    // drops both alliances. Build this season's from lib/game-specifics.
+    const origGetMatchDetails = this.api.getMatchDetails.bind(this.api);
+    this.api.getMatchDetails = async (matchKey: string) => {
+      if (matchKey.split('-')[0] !== '2627') return origGetMatchDetails(matchKey);
+      const text = await (this.api as any).fetch(`/match/${matchKey}/details`);
+      return (this.api as any).arrToObj(MatchDetails2627, text)[0];
     };
   }
 
