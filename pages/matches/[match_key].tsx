@@ -14,7 +14,7 @@ import {
 import { PlayCircleOutline, QueryBuilder } from '@mui/icons-material';
 import { useTranslate } from '@/i18n/i18n';
 import { fetchMatchData, IRawMatchProps, useMatchData } from '@/lib/page-helpers/match-helper';
-import { getEventDescription, readableDate } from '@/lib/utils/common';
+import { eventYear, getEventDescription, readableDate } from '@/lib/utils/common';
 import SingleMatchTable from '@/components/ui/single-match-table';
 import MatchDetailsCard from '@/components/pages/match/match-details-card';
 import SEO from '@/components/seo';
@@ -46,9 +46,9 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
     <>
       <SEO
         title={`${match.matchName} - ${match.event.fullEventName}`}
-        description={`Match results for ${match.matchName} at the ${new Date(
+        description={`Match results for ${match.matchName} at the ${eventYear(
           match.event.startDate
-        ).getFullYear()} ${match.event.fullEventName} in ${getEventDescription(match.event)}.`}
+        )} ${match.event.fullEventName} in ${getEventDescription(match.event)}.`}
         ogImage={ogImage}
         url={`/matches/${match.matchKey}`}
       />

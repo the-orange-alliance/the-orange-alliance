@@ -13,11 +13,11 @@ import {
 } from '@/lib/page-helpers/events-helper';
 import { useTranslate } from '@/i18n/i18n';
 import { CURRENT_SEASON } from '@/constants';
-import { getSeasonYear, getWeekName } from '@/lib/utils/common';
+import { eventDay, getSeasonYear, getWeekName } from '@/lib/utils/common';
 import TOAProvider from '@/providers/toa-provider';
 import { useAppContext } from '@/lib/toa-context';
 import SEO from '@/components/seo';
-import { parseISO, startOfDay } from 'date-fns';
+import { format } from 'date-fns';
 
 const EventsPage: NextPage<IRawEventsProps> = props => {
   const { regions, seasons } = useAppContext();
@@ -81,10 +81,10 @@ const EventsPage: NextPage<IRawEventsProps> = props => {
   }, [seasonEvents, selectedRegion.regionKey, selectedWeek]);
 
   useEffect(() => {
-    const now = startOfDay(new Date());
+    // The viewer's calendar day against each week's calendar days.
+    const today = format(new Date(), 'yyyy-MM-dd');
     const currentWeeks = weeks.filter(
-      week =>
-        startOfDay(parseISO(week.startDate)) <= now && startOfDay(parseISO(week.endDate)) >= now
+      week => eventDay(week.startDate) <= today && eventDay(week.endDate) >= today
     );
     if (currentWeeks.length > 0) {
       setSelectedWeek(currentWeeks[currentWeeks.length - 1].weekKey);

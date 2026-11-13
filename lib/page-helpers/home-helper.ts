@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Match, Event, MatchParticipant } from '@the-orange-alliance/api/lib/cjs/models';
 import TOAProvider from '@/providers/toa-provider';
 import { CURRENT_SEASON } from '@/constants';
-import { undefinedToNull } from '@/lib/utils/common';
+import { eventDay, todayIn, undefinedToNull } from '@/lib/utils/common';
 
 export interface IRawHomeProps {
   teamSize: number;
@@ -82,18 +82,29 @@ export const useHomeData = (props: IRawHomeProps): IHomeProps =>
   useMemo(() => parseHomeProps(props), [props]);
 
 export const fetchHomeData = async (): Promise<IRawHomeProps> => {
+  // "Today" is the venue's calendar day, which can be the day before or after the UTC day. Ask for
+  // all three UTC days, then keep the events whose own local day falls inside them.
   const now = new Date();
-  const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  const days = [-1, 0, 1].map(offset =>
+    new Date(now.getTime() + offset * 86400000).toISOString().slice(0, 10)
+  );
   const homePageResults = await Promise.all([
     TOAProvider.getAPI().getTeamCount({ last_active: CURRENT_SEASON }),
     TOAProvider.getAPI().getSeasonMatchCount({ season_key: CURRENT_SEASON, played: true }),
     getHighScoreMatch('all', true),
     getHighScoreMatch('quals', false),
     getHighScoreMatch('elims', false),
-    TOAProvider.getAPI().getEvents({
-      season_key: CURRENT_SEASON,
-      on: today,
-      includeTeamCount: true
+    Promise.all(
+      days.map(on =>
+        TOAProvider.getAPI().getEvents({ season_key: CURRENT_SEASON, on, includeTeamCount: true })
+      )
+    ).then(lists => {
+      const byKey = new Map<string, Event>();
+      for (const e of lists.flat()) byKey.set(e.eventKey, e);
+      return Array.from(byKey.values()).filter(e => {
+        const today = todayIn(e.timeZone, now);
+        return eventDay(e.startDate) <= today && eventDay(e.endDate) >= today;
+      });
     })
   ]);
   return {

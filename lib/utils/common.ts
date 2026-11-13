@@ -9,6 +9,33 @@ export function readableDate(date: Date | string): string {
   return `${shortMonth} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
+// Event dates are calendar days stored as midnight UTC (2026-11-12T00:00:00Z means Nov 12 at the
+// venue). They must be read in UTC: in a browser west of UTC, new Date(...).getDate() gives Nov 11.
+export function eventDay(date: Date | string): string {
+  if (!date) return '';
+  const d = typeof date === 'string' ? new Date(date) : date;
+  return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 10);
+}
+
+export function eventYear(date: Date | string): number {
+  return new Date(date).getUTCFullYear();
+}
+
+export function readableEventDate(date: Date | string): string {
+  if (!date) return '';
+  const d = typeof date === 'string' ? new Date(date) : date;
+  if (isNaN(d.getTime())) return '';
+  return `${getShortMonth(d.getUTCMonth())} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+}
+
+// Today's calendar day (YYYY-MM-DD) at a venue, or in UTC without a usable zone.
+export function todayIn(timeZone?: string | null, now: Date = new Date()): string {
+  try {
+    if (timeZone) return new Intl.DateTimeFormat('sv-SE', { timeZone }).format(now);
+  } catch (e) {}
+  return now.toISOString().slice(0, 10);
+}
+
 export function readableTime(date: Date | string): string {
   if (!date) return '';
   if (typeof date === 'string') date = new Date(date);
@@ -194,13 +221,13 @@ export function getLocationString(item: Team | Event) {
 
 export function getEventDescription(event: Event) {
   const location = getLocationString(event);
-  const startDate = DateTime.fromISO(event.startDate);
-  const endDate = DateTime.fromISO(event.endDate);
+  const startDate = DateTime.fromISO(event.startDate, { zone: 'utc' });
+  const endDate = DateTime.fromISO(event.endDate, { zone: 'utc' });
 
   if (startDate.hasSame(endDate, 'day')) {
     return `${location} on ${startDate.toLocaleString(DateTime.DATE_MED)}`;
   } else {
-    return `${location} from ${startDate.toFormat('MMM LL')} to ${endDate.toLocaleString(
+    return `${location} from ${startDate.toFormat('MMM d')} to ${endDate.toLocaleString(
       DateTime.DATE_MED
     )}`;
   }

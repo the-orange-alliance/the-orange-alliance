@@ -41,7 +41,7 @@ import {
 } from '@mui/icons-material';
 import { useTranslate } from '@/i18n/i18n';
 import { fetchTeamData, IRawTeamProps, useTeamData } from '@/lib/page-helpers/team-helper';
-import { getLocationString, getSeasonString, readableDate } from '@/lib/utils/common';
+import { getLocationString, getSeasonString, readableEventDate } from '@/lib/utils/common';
 import { CURRENT_SEASON } from '@/constants';
 import { Season, Team } from '@the-orange-alliance/api/lib/cjs/models';
 import MatchTable from '@/components/ui/match-table';
@@ -217,7 +217,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                       </NextLink>
                     }
                     subheader={`${event.city}, ${event.stateProv ? event.stateProv + ', ' : ''}
-                    ${event.country} on ${readableDate(event.startDate)}`}
+                    ${event.country} on ${readableEventDate(event.startDate)}`}
                   />
                   <CardContent sx={{ pt: 0 }}>
                     {event.rankings[0] && (

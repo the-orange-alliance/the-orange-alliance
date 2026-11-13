@@ -11,7 +11,7 @@ import {
 import { DataSource } from '@the-orange-alliance/api/lib/cjs/models/types/DataSource';
 import { useTranslate } from '@/i18n/i18n';
 import { fetchEventData, IRawEventProps, useEventData } from '@/lib/page-helpers/event-helper';
-import { getEventDescription, readableDate } from '@/lib/utils/common';
+import { eventYear, getEventDescription, readableEventDate } from '@/lib/utils/common';
 import { Box, Container } from '@mui/material';
 import SEO from '@/components/seo';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
@@ -43,7 +43,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
   const t = useTranslate();
   const { user } = useAppContext();
 
-  const startDate = new Date(eventData.startDate); // TODO: Use moment.js
+  const year = eventYear(eventData.startDate);
 
   const isEventAdmin =
     user &&
@@ -66,8 +66,8 @@ const EventPage: NextPage<IRawEventProps> = props => {
   return (
     <>
       <SEO
-        title={`${startDate.getFullYear()} ${eventData.fullEventName}`}
-        description={`Match results and rankings for the ${startDate.getFullYear()} ${
+        title={`${year} ${eventData.fullEventName}`}
+        description={`Match results and rankings for the ${year} ${
           eventData.fullEventName
         } in ${getEventDescription(eventData)}.`}
         ogImage={ogImage}
@@ -75,13 +75,13 @@ const EventPage: NextPage<IRawEventProps> = props => {
       />
       <Container sx={{ py: 6 }}>
         <Typography variant="h1">
-          {startDate.getFullYear()} {eventData.fullEventName}
+          {year} {eventData.fullEventName}
         </Typography>
 
         <Box mt={2} mb={4} ml={1}>
           <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
             <CalendarIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />
-            {readableDate(startDate)}
+            {readableEventDate(eventData.startDate)}
           </Typography>
           <Typography sx={{ mb: 1 }} fontSize="0.875rem" fontWeight={500}>
             <LocationIcon fontSize="inherit" sx={{ mr: 1, position: 'relative', top: '0.125em' }} />

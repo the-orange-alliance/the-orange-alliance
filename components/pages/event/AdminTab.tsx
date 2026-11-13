@@ -21,6 +21,8 @@ import { uploadToImgur } from '@/providers/ImgurProvider';
 import StreamType from '@the-orange-alliance/api/lib/cjs/models/types/StreamType';
 import { useAppContext } from '@/lib/toa-context';
 import toast from 'react-hot-toast';
+import { DateTime } from 'luxon';
+import { eventDay } from '@/lib/utils/common';
 
 interface IProps {
   event: Event;
@@ -106,10 +108,16 @@ const AdminTab = ({ event, streams }: IProps) => {
     setEditableEvent(temp);
   };
 
-  const muiDate = (date: string) => {
-    const d = new Date(date);
-    const pad = (n: number) => (n + 1 < 10 ? '0' + (n + 1) : n + 1);
-    return d.getFullYear() + '-' + pad(d.getMonth()) + '-' + pad(d.getDate());
+  // A stream runs from the venue's midnight on the first day to its midnight after the last day,
+  // stored as UTC "YYYY-MM-DD HH:mm:ss".
+  const streamWindow = () => {
+    const zone = event.timeZone || 'utc';
+    const at = (day: string, plusDays: number) =>
+      DateTime.fromISO(day, { zone })
+        .plus({ days: plusDays })
+        .toUTC()
+        .toFormat('yyyy-MM-dd HH:mm:ss');
+    return { start: at(eventDay(event.startDate), 0), end: at(eventDay(event.endDate), 1) };
   };
 
   const uploadImage = (file: File | null, id: string) => {
@@ -194,8 +202,9 @@ const AdminTab = ({ event, streams }: IProps) => {
       stream.streamType = streamType;
       stream.isActive = true;
       stream.streamURL = streamLink;
-      stream.startDateTime = new Date(event.startDate).toJSON().slice(0, 19).replace('T', ' ');
-      stream.endDateTime = new Date(event.endDate).toJSON().slice(0, 19).replace('T', ' ');
+      const win = streamWindow();
+      stream.startDateTime = win.start;
+      stream.endDateTime = win.end;
       stream.channelURL = channelLink;
 
       updateStream(stream)
@@ -211,11 +220,9 @@ const AdminTab = ({ event, streams }: IProps) => {
 
   const unlinkStream = () => {
     if (localStreams.length > 0 && localStreams[0]) {
-      localStreams[0].startDateTime = new Date(event.startDate)
-        .toJSON()
-        .slice(0, 19)
-        .replace('T', ' ');
-      localStreams[0].endDateTime = new Date(event.endDate).toJSON().slice(0, 19).replace('T', ' ');
+      const win = streamWindow();
+      localStreams[0].startDateTime = win.start;
+      localStreams[0].endDateTime = win.end;
       localStreams[0].isActive = false;
       updateStream(localStreams[0])
         .then(() => {
@@ -291,7 +298,7 @@ const AdminTab = ({ event, streams }: IProps) => {
                   variant="outlined"
                   type="date"
                   fullWidth
-                  value={muiDate(editableEvent.startDate)}
+                  value={eventDay(editableEvent.startDate)}
                   onChange={e =>
                     updateEventProp('start_date', new Date(e.target.value).toISOString())
                   }
@@ -302,7 +309,7 @@ const AdminTab = ({ event, streams }: IProps) => {
                   variant="outlined"
                   type="date"
                   fullWidth
-                  value={muiDate(editableEvent.startDate)}
+                  value={eventDay(editableEvent.endDate)}
                   onChange={e =>
                     updateEventProp('end_date', new Date(e.target.value).toISOString())
                   }
