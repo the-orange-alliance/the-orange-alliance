@@ -76,7 +76,7 @@ function MyApp(props: AppProps<{ initialState: IAppContext; userLanguage: string
             </DrawerLayout>
             <ReactHotToaster />
             <SonnerToaster closeButton />
-            <GoogleAnalytics gaId="G-D4VY485L1V" />
+            <GoogleAnalytics gaId="G-YQJL4TJ298" />
           </TOAAppContextProvider>
         </ThemeProvider>
       </UserLanguageProvider>
