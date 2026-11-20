@@ -29,7 +29,7 @@ const RankingTab = (props: IProps) => {
             {totalPoint ? (
               <>
                 <TableCell>{t('pages.event.subpages.rankings.points')}</TableCell>
-                <TableCell>{t('pages.event.subpages.rankings.wlt_record')}</TableCell>
+                <TableCell sx={{ whiteSpace: 'nowrap' }}>{t('pages.event.subpages.rankings.wlt_record')}</TableCell>
                 <TableCell>RP</TableCell>
               </>
             ) : (
@@ -61,7 +61,7 @@ const RankingTab = (props: IProps) => {
               {totalPoint ? (
                 <>
                   <TableCell>{row?.rankingPoints ?? 0}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ whiteSpace: 'nowrap' }}>
                     {row.wins ?? 0}-{row.losses ?? 0}-{row.ties ?? 0}
                   </TableCell>
                   <TableCell>{row?.tieBreakerPoints ?? 0}</TableCell>
