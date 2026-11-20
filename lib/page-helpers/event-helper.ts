@@ -25,6 +25,8 @@ export interface IRawEventProps {
   divisions: any[];
   streams: any;
   ogImage?: string;
+  // Event's ranking_mode; the API package's Event model drops it.
+  rankingMode?: string | null;
 }
 
 export interface IEventProps {
@@ -32,6 +34,7 @@ export interface IEventProps {
   streams: EventLiveStream[];
   ogImage?: string;
   divisions: Event[];
+  rankingMode: string | null;
 }
 
 export const parseEventProps = (props: IRawEventProps): IEventProps => {
@@ -53,11 +56,25 @@ export const parseEventProps = (props: IRawEventProps): IEventProps => {
   const divisions = props.divisions.map((e: any) => new Event().fromJSON(e));
 
   const streams = props.streams.map((s: any) => new EventLiveStream().fromJSON(s));
-  return { event, streams, divisions, ogImage: props.ogImage };
+  return { event, streams, divisions, ogImage: props.ogImage, rankingMode: props.rankingMode ?? null };
 };
 
 export const useEventData = (props: IRawEventProps): IEventProps =>
   useMemo(() => parseEventProps(props), [props]);
+
+type RawFetch = { fetch(url: string): Promise<string> };
+
+const fetchRankingMode = (eventKey: string): Promise<string | null> =>
+  (TOAProvider.getAPI() as unknown as RawFetch)
+    .fetch(`/event/${eventKey}`)
+    .then(text => {
+      const rows: { ranking_mode?: string | null }[] = JSON.parse(text);
+      return (Array.isArray(rows) ? rows[0]?.ranking_mode : null) ?? null;
+    })
+    .catch(err => {
+      console.error('[event-helper] ranking_mode fetch failed:', err);
+      return null;
+    });
 
 export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> => {
   const data = await Promise.all([
@@ -76,7 +93,8 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
     TOAProvider.getAPI()
       .getEventInsights(eventKey, 'elims')
       .catch(() => [] as any[]),
-    TOAProvider.getAPI().getEventStreams(eventKey)
+    TOAProvider.getAPI().getEventStreams(eventKey),
+    fetchRankingMode(eventKey)
   ]);
 
   const event = data[0];
@@ -128,6 +146,7 @@ export const fetchEventData = async (eventKey: string): Promise<IRawEventProps> 
     awards: awards.map(a => undefinedToNull(a.toJSON())),
     divisions: divisions.map(d => undefinedToNull(d.toJSON())),
     insights: newInsights,
-    streams: streams.map(s => undefinedToNull(s.toJSON()))
+    streams: streams.map(s => undefinedToNull(s.toJSON())),
+    rankingMode: data[9]
   };
 };

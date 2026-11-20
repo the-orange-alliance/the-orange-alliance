@@ -264,6 +264,8 @@
           "rank": "Rank",
           "team": "Team",
           "wlt_record": "W-L-T",
+          "points": "Points",
+          "total_point_banner": "Non-standard ranking: total alliance score",
           "qual_points": "Qualification Points",
           "ranking_points": "Ranking Points",
           "tie_breaker_points": "Tie Breaker Points",

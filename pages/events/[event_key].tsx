@@ -39,7 +39,7 @@ import { useMemo } from 'react';
 import DivisionsSwitcher from '@/components/pages/event/divisions-switcher';
 
 const EventPage: NextPage<IRawEventProps> = props => {
-  const { event: eventData, streams, divisions, ogImage } = useEventData(props);
+  const { event: eventData, streams, divisions, ogImage, rankingMode } = useEventData(props);
   const t = useTranslate();
   const { user } = useAppContext();
 
@@ -197,7 +197,7 @@ const EventPage: NextPage<IRawEventProps> = props => {
               </Box>
             )}
             <TabsContent value="rankings">
-              <RankingTab event={eventData} />
+              <RankingTab event={eventData} rankingMode={rankingMode} />
             </TabsContent>
             <TabsContent value="matches">
               <MatchesTab event={eventData} />
