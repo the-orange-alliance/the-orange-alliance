@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
 import {
@@ -20,6 +21,7 @@ import MatchDetailsCard from '@/components/pages/match/match-details-card';
 import SEO from '@/components/seo';
 import { Event, Match } from '@the-orange-alliance/api/lib/cjs/models';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
+import { fetchFTCVideosMatch, FTCVideosMatch } from '@/lib/utils/ftcvideos';
 
 // The YouTube id of a match video URL, or null for anything that is not YouTube.
 const youTubeId = (url: string | null | undefined): string | null => {
@@ -41,6 +43,16 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
   const { match, ogImage } = useMatchData(props);
   const t = useTranslate();
   const videoId = youTubeId(match.videoURL);
+  const [ftcVideo, setFtcVideo] = useState<FTCVideosMatch | null>(null);
+
+  // A match without a video of its own may have one on FTCVideos.org.
+  useEffect(() => {
+    setFtcVideo(null);
+    if (match.videoURL) return;
+    const controller = new AbortController();
+    fetchFTCVideosMatch(match, controller.signal).then(setFtcVideo);
+    return () => controller.abort();
+  }, [match]);
 
   return (
     <>
@@ -98,6 +110,18 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                       Watch Match
                     </Link>
                   </Stack>
+                ) : ftcVideo?.video ? (
+                  <Stack direction="row" spacing={1} alignItems="center" mb={2}>
+                    <PlayCircleOutline sx={{ fontSize: '1em' }} />
+                    <Link
+                      href={ftcVideo.video.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      color="secondary"
+                    >
+                      Watch Match
+                    </Link>
+                  </Stack>
                 ) : (
                   <Stack
                     direction="row"
@@ -128,6 +152,26 @@ const MatchPage: NextPage<IRawMatchProps> = props => {
                     src={`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`}
                     title={match.matchName}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 0
+                    }}
+                  />
+                </Box>
+              </Card>
+            )}
+            {!match.videoURL && ftcVideo && (
+              <Card sx={{ mb: 2 }}>
+                {/* The FTCVideos player: 16:9 video, then 36px of controls and credit */}
+                <Box sx={{ position: 'relative', width: '100%', pt: 'calc(56.25% + 36px)' }}>
+                  <iframe
+                    src={ftcVideo.embedUrl}
+                    title={match.matchName}
+                    allow="autoplay; encrypted-media; picture-in-picture"
                     allowFullScreen
                     style={{
                       position: 'absolute',
