@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
@@ -49,6 +49,7 @@ import { useAppContext } from '@/lib/toa-context';
 import { createOpengraphImageUrl } from '@/lib/opengraph';
 import SEO from '@/components/seo';
 import MyTOAFavorite, { myTOAType } from '@/components/ui/mytoa-favorite-button';
+import { fetchFTCVideosRobot, FTCVideosRobot } from '@/lib/utils/ftcvideos';
 
 import ListItemButton from '@mui/material/ListItemButton';
 
@@ -69,6 +70,22 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
   const [selectedSeason, setSelectedSeason] = useState<Season>(querySeason);
   const [fetching, setFetching] = useState<boolean>(false);
   const [tab, setTab] = useState<number>(0);
+  const [robot, setRobot] = useState<FTCVideosRobot | null>(null);
+
+  // The robot GIF FTCVideos.org made of this team in the selected season, if any.
+  useEffect(() => {
+    setRobot(null);
+    const controller = new AbortController();
+    fetchFTCVideosRobot(
+      selectedSeason?.seasonKey ?? CURRENT_SEASON,
+      team.teamNumber,
+      controller.signal
+    ).then(setRobot);
+    return () => controller.abort();
+  }, [selectedSeason?.seasonKey, team.teamNumber]);
+
+  const hasRobotTab = !!(github || reveal || cad || notebook || images.length > 0 || robot);
+  const shownTab = hasRobotTab ? tab : 0;
 
   const pushNewFilter = (season: Season) => {
     setFetching(true);
@@ -186,7 +203,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
           >
             {/* Team Events/Robot */}
             {/* Nav Tabs */}
-            {(github || reveal || cad || notebook || images.length > 0) && (
+            {hasRobotTab && (
               <Tabs
                 value={tab}
                 onChange={(e, val) => setTab(val)}
@@ -200,7 +217,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
             )}
 
             {/* Team Event Data*/}
-            {tab === 0 &&
+            {shownTab === 0 &&
               team.events.map(event => (
                 <Card
                   id={event.eventKey.toLowerCase()}
@@ -261,7 +278,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
               ))}
 
             {/* No Events this season */}
-            {tab === 0 && team.events.length < 1 && (
+            {shownTab === 0 && team.events.length < 1 && (
               <Typography variant="body1" sx={{ mt: 1 }}>
                 {team.lastActive && team.lastActive !== CURRENT_SEASON
                   ? t('pages.team.not_registered')
@@ -270,7 +287,7 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
             )}
 
             {/* Team 'Robot' Page */}
-            {tab === 1 && (
+            {shownTab === 1 && (
               <Box>
                 {(github || cad || notebook) && (
                   <Typography variant="h6" className="mb-1">
@@ -333,7 +350,25 @@ const TeamPage: NextPage<IRawTeamProps> = props => {
                     </Fab>
                   </Box>
                 )}
-                {(github || cad || notebook) && images.length > 0 && (
+                {robot && (
+                  <Box className="m-2">
+                    <Link href={robot.pageUrl} target="_blank" rel="noopener noreferrer">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={robot.gif}
+                        alt={`Robot of team ${team.teamNumber}`}
+                        style={{ maxWidth: '100%', height: 'auto' }}
+                      />
+                    </Link>
+                    <Typography variant="body2" color="text.secondary">
+                      Robot GIF from{' '}
+                      <Link href={robot.pageUrl} target="_blank" rel="noopener noreferrer">
+                        FTCVideos.org
+                      </Link>
+                    </Typography>
+                  </Box>
+                )}
+                {(github || cad || notebook || robot) && images.length > 0 && (
                   <Divider className="mb-3 mt-3" />
                 )}
                 {images.length > 0 && (
